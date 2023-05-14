@@ -364,3 +364,4 @@ MigrationBackup/
 /WebApi.App/appsettings.Production.json
 /WebApp.Services/KeyLocker.cs
 /ApiEndpoints.txt
+/Financial_Candlestick_Patterns/KeyLocker.cs
