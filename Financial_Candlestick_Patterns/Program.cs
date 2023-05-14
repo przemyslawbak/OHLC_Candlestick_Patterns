@@ -1,7 +1,8 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using Financial_Candlestick_Patterns;
 using Newtonsoft.Json;
-using System;
+
+//patterns: https://tickblaze.com/scripts/pattern
 
 KeyLocker _keys = new KeyLocker();
 Scrapper _scrapper = new Scrapper();
