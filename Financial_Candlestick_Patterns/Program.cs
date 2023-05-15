@@ -19,4 +19,4 @@ var data = JsonConvert.DeserializeObject<List<OhlcvObject>>(json).Select(x => ne
     Signal = false
 });
 
-Console.ReadLine(); 
+Console.ReadLine();
