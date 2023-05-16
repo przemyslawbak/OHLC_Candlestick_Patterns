@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace Financial_Candlestick_Patterns
+namespace Candlestick_Patterns
 {
     public class OhlcvObject
     {
