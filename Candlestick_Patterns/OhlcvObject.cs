@@ -18,5 +18,6 @@ namespace Candlestick_Patterns
 
         [JsonProperty(PropertyName = "volume")]
         public bool Signal { get; set; } = false;
+        public int Index { get; set; }
     }
 }

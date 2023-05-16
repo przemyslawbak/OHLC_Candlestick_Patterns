@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace Candlestick_Patterns
 {
@@ -22,16 +23,36 @@ namespace Candlestick_Patterns
                   .Where(i => data[i].Open > data[i].Close && data[i - 1].Close <= data[i].Open && data[i].Open <= data[i - 1].Open && data[i - 2].Open <= data[i].Close && data[i].Close <= data[i - 2].Close)
                   .Count();*/
 
-            var m = Enumerable.Range(2, data.Count - 1)
+            List<OhlcvObject> result = new List<OhlcvObject>();
+
+            var signalPositive = Enumerable.Range(2, data.Count - 1)
+                  .Where(i => data[i - 2].Open < data[i - 2].Close)
                   .Select(i => new OhlcvObject() 
-                  { 
+                  {
+                      Index = data[i].Index,
                       Open = data[i].Open,
                       High= data[i].High,
                       Low= data[i].Low,
                       Close = data[i].Close, 
-                      Signal = (data[i - 2].Open < data[i - 2].Close) ? true : false
-                  })
-                  .ToList();
+                      Signal= true
+                  });
+
+            var signalNegative = data.Where(x => !signalPositive.Any(y => x.Index == y.Index))
+                .Select(i => new OhlcvObject()
+                {
+                    Index = i.Index,
+                    Open = i.Open,
+                    High = i.High,
+                    Low = i.Low,
+                    Close = i.Close,
+                    Signal = false
+                });
+
+            result.AddRange(signalPositive);
+            result.AddRange(signalNegative);
+            result = result
+                .OrderByDescending(x => x.Index)
+                .ToList();
 
             /*for (var i = 0; i < data.Count; i++)
             {
