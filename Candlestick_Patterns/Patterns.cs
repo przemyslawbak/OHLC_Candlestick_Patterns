@@ -16,11 +16,22 @@ namespace Candlestick_Patterns
             Pattern Type:
             Bearish Reversal.*/
 
-            var m = Enumerable.Range(1, data.Count - 1)
+            /*var m = Enumerable.Range(1, data.Count - 1)
                   .Where(i => data[i - 2].Open < data[i - 2].Close && (data[i - 2].Close - data[i - 2].Open) / data[i - 2].Open > _minCandleSize)
                   .Where(i => data[i - 1].Open > data[i - 1].Close && data[i - 1].Low > data[i - 2].High)
                   .Where(i => data[i].Open > data[i].Close && data[i - 1].Close <= data[i].Open && data[i].Open <= data[i - 1].Open && data[i - 2].Open <= data[i].Close && data[i].Close <= data[i - 2].Close)
-                  .Count();
+                  .Count();*/
+
+            var m = Enumerable.Range(2, data.Count - 1)
+                  .Select(i => new OhlcvObject() 
+                  { 
+                      Open = data[i].Open,
+                      High= data[i].High,
+                      Low= data[i].Low,
+                      Close = data[i].Close, 
+                      Signal = (data[i - 2].Open < data[i - 2].Close) ? true : false
+                  })
+                  .ToList();
 
             /*for (var i = 0; i < data.Count; i++)
             {
