@@ -17,6 +17,7 @@ namespace Candlestick_Patterns
         public decimal Close { get; set; }
 
         [JsonProperty(PropertyName = "volume")]
+        public int Volume { get; set; }
         public bool Signal { get; set; } = false;
     }
 }
