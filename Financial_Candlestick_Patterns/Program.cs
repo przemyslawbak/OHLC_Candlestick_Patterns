@@ -12,18 +12,22 @@ Patterns _patterns;
 var key = _keys.GetApiKey();
 var url = "https://financialmodelingprep.com/api/v3/historical-chart/1min/%5EGSPC?apikey=" + key;
 var json = await _scrapper.GetHtml(url);
-var data = JsonConvert.DeserializeObject<List<OhlcvObject>>(json).Select(x => new OhlcvObject()
+var dataOhlcv = JsonConvert.DeserializeObject<List<OhlcvObject>>(json).Select(x => new OhlcvObject()
 {
     Open = x.Open,
     High = x.High,
     Low = x.Low,
     Close = x.Close,
-    Signal = false
+    Volume = x.Volume,
 }).ToList();
 
-_patterns = new Patterns(data);
+_patterns = new Patterns(dataOhlcv);
+var ohlcvs = _patterns.GetSignals("BullishTweezerBottom");
+var signalsCount = _patterns.GetSignalsCount("BearishLongBlackCandelstick");
+var bullishSignalsCount = _patterns.GetBullishSignalsCount();
+var bearishSignalsCount = _patterns.GetBearishSignalsCount();
 
-//todo: from Patterns get number of signals for method name
-//todo: from Patterns get number of signals for method name
+//todo: from Patterns get number of signals for all bullish or bearish
+//todo: add volume weightening
 
 Console.ReadLine();

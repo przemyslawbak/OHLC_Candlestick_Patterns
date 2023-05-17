@@ -1,4 +1,6 @@
-﻿namespace Candlestick_Patterns
+﻿using System.Reflection;
+
+namespace Candlestick_Patterns
 {
     public class Patterns
     {
@@ -44,7 +46,7 @@
 
         public List<OhlcvsObject> Bearish2Crows()
         {
-            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false }).ToList();
+            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false, Volume = x.Volume }).ToList();
 
             for (int i = 5; i < _data.Count; i++)
             {
@@ -66,7 +68,7 @@
         }
         public List<OhlcvsObject> Bearish3BlackCrows()
         {
-            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false }).ToList();
+            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false, Volume = x.Volume }).ToList();
 
             for (int i = 5; i < _data.Count; i++)
             {
@@ -88,7 +90,7 @@
         }
         public List<OhlcvsObject> Bearish3InsideDown()
         {
-            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false }).ToList();
+            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false, Volume = x.Volume }).ToList();
 
             for (int i = 5; i < _data.Count; i++)
             {
@@ -110,7 +112,7 @@
         }
         public List<OhlcvsObject> Bearish3OutsideDown()
         {
-            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false }).ToList();
+            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false, Volume = x.Volume }).ToList();
 
             for (int i = 5; i < _data.Count; i++)
             {
@@ -132,7 +134,7 @@
         }
         public List<OhlcvsObject> Bearish3LineStrike()
         {
-            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false }).ToList();
+            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false, Volume = x.Volume }).ToList();
 
             for (int i = 5; i < _data.Count; i++)
             {
@@ -157,7 +159,7 @@
         }
         public List<OhlcvsObject> BearishAdvanceBlock()
         {
-            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false }).ToList();
+            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false, Volume = x.Volume }).ToList();
 
             for (int i = 5; i < _data.Count; i++)
             {
@@ -179,7 +181,7 @@
         }
         public List<OhlcvsObject> BearishBeltHold()
         {
-            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false }).ToList();
+            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false, Volume = x.Volume }).ToList();
 
             for (int i = 5; i < _data.Count; i++)
             {
@@ -197,7 +199,7 @@
         }
         public List<OhlcvsObject> BearishBlackClosingMarubozu()
         {
-            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false }).ToList();
+            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false, Volume = x.Volume }).ToList();
 
             for (int i = 5; i < _data.Count; i++)
             {
@@ -211,7 +213,7 @@
         }
         public List<OhlcvsObject> BearishBlackMarubozu()
         {
-            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false }).ToList();
+            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false, Volume = x.Volume }).ToList();
 
             for (int i = 5; i < _data.Count; i++)
             {
@@ -225,7 +227,7 @@
         }
         public List<OhlcvsObject> BearishBlackOpeningMarubozu()
         {
-            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false }).ToList();
+            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false, Volume = x.Volume }).ToList();
 
             for (int i = 5; i < _data.Count; i++)
             {
@@ -239,7 +241,7 @@
         }
         public List<OhlcvsObject> BearishBreakaway()
         {
-            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false }).ToList();
+            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false, Volume = x.Volume }).ToList();
 
             for (int i = 5; i < _data.Count; i++)
             {
@@ -269,7 +271,7 @@
         }
         public List<OhlcvsObject> BearishDeliberation()
         {
-            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false }).ToList();
+            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false, Volume = x.Volume }).ToList();
 
             for (int i = 5; i < _data.Count; i++)
             {
@@ -291,7 +293,7 @@
         }
         public List<OhlcvsObject> BearishDarkCloudCover()
         {
-            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false }).ToList();
+            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false, Volume = x.Volume }).ToList();
 
             for (int i = 5; i < _data.Count; i++)
             {
@@ -309,7 +311,7 @@
         }
         public List<OhlcvsObject> BearishDojiStar()
         {
-            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false }).ToList();
+            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false, Volume = x.Volume }).ToList();
 
             for (int i = 5; i < _data.Count; i++)
             {
@@ -327,7 +329,7 @@
         }
         public List<OhlcvsObject> BearishDownsideGap3Methods()
         {
-            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false }).ToList();
+            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false, Volume = x.Volume }).ToList();
 
             for (int i = 5; i < _data.Count; i++)
             {
@@ -349,7 +351,7 @@
         }
         public List<OhlcvsObject> BearishDownsideTasukiGap()
         {
-            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false }).ToList();
+            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false, Volume = x.Volume }).ToList();
 
             for (int i = 5; i < _data.Count; i++)
             {
@@ -371,7 +373,7 @@
         }
         public List<OhlcvsObject> BearishDragonflyDoji()
         {
-            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false }).ToList();
+            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false, Volume = x.Volume }).ToList();
 
             for (int i = 5; i < _data.Count; i++)
             {
@@ -385,7 +387,7 @@
         }
         public List<OhlcvsObject> BearishEngulfing()
         {
-            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false }).ToList();
+            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false, Volume = x.Volume }).ToList();
 
             for (int i = 5; i < _data.Count; i++)
             {
@@ -403,7 +405,7 @@
         }
         public List<OhlcvsObject> BearishEveningDojiStar()
         {
-            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false }).ToList();
+            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false, Volume = x.Volume }).ToList();
 
             for (int i = 5; i < _data.Count; i++)
             {
@@ -425,7 +427,7 @@
         }
         public List<OhlcvsObject> BearishEveningStar()
         {
-            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false }).ToList();
+            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false, Volume = x.Volume }).ToList();
 
             for (int i = 5; i < _data.Count; i++)
             {
@@ -447,7 +449,7 @@
         }
         public List<OhlcvsObject> BearishFalling3Methods()
         {
-            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false }).ToList();
+            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false, Volume = x.Volume }).ToList();
 
             for (int i = 5; i < _data.Count; i++)
             {
@@ -477,7 +479,7 @@
         }
         public List<OhlcvsObject> BearishGravestoneDoji()
         {
-            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false }).ToList();
+            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false, Volume = x.Volume }).ToList();
 
             for (int i = 5; i < _data.Count; i++)
             {
@@ -493,33 +495,9 @@
             }
             return data;
         }
-        public List<OhlcvsObject> BearishHangingMan()
-        {
-            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false }).ToList();
-
-            for (int i = 5; i < _data.Count; i++)
-            {
-                // Check whether the first candlestick matches. 
-                if (_data[i - 0].Open < _data[i - 0].Close)
-                {
-                    if (Math.Abs(100 * (_data[i - 0].High - _data[i - 0].Close) / _data[i - 0].High) < (_maxDojiBodySize / 2) && Math.Abs(100 * (_data[i - 0].Open - _data[i - 0].Close) / _data[i - 0].Open) < _maxDojiBodySize && _data[i - 0].Open - _data[i - 0].Low > 2 * (_data[i - 0].Close - _data[i - 0].Open))
-                    {
-                        data[i].Signal = true;
-                    }
-                }
-                else
-                {
-                    if (Math.Abs(100 * (_data[i - 0].High - _data[i - 0].Open) / _data[i - 0].High) < (_maxDojiBodySize / 2) && Math.Abs(100 * (_data[i - 0].Open - _data[i - 0].Close) / _data[i - 0].Open) < _maxDojiBodySize && _data[i - 0].Close - _data[i - 0].Low > 2 * (_data[i - 0].Close - _data[i - 0].Open))
-                    {
-                        data[i].Signal = true;
-                    }
-                }
-            }
-            return data;
-        }
         public List<OhlcvsObject> BearishHarami()
         {
-            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false }).ToList();
+            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false, Volume = x.Volume }).ToList();
 
             for (int i = 5; i < _data.Count; i++)
             {
@@ -537,7 +515,7 @@
         }
         public List<OhlcvsObject> BearishIdentical3Crows()
         {
-            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false }).ToList();
+            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false, Volume = x.Volume }).ToList();
 
             for (int i = 5; i < _data.Count; i++)
             {
@@ -559,7 +537,7 @@
         }
         public List<OhlcvsObject> BearishHaramiCross()
         {
-            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false }).ToList();
+            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false, Volume = x.Volume }).ToList();
 
             for (int i = 5; i < _data.Count; i++)
             {
@@ -577,7 +555,7 @@
         }
         public List<OhlcvsObject> BearishInNeck()
         {
-            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false }).ToList();
+            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false, Volume = x.Volume }).ToList();
 
             for (int i = 5; i < _data.Count; i++)
             {
@@ -595,7 +573,7 @@
         }
         public List<OhlcvsObject> BearishKicking()
         {
-            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false }).ToList();
+            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false, Volume = x.Volume }).ToList();
 
             for (int i = 5; i < _data.Count; i++)
             {
@@ -613,7 +591,7 @@
         }
         public List<OhlcvsObject> BearishLongBlackCandelstick()
         {
-            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false }).ToList();
+            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false, Volume = x.Volume }).ToList();
 
             for (int i = 5; i < _data.Count; i++)
             {
@@ -627,7 +605,7 @@
         }
         public List<OhlcvsObject> BearishMeetingLines()
         {
-            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false }).ToList();
+            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false, Volume = x.Volume }).ToList();
 
             for (int i = 5; i < _data.Count; i++)
             {
@@ -645,7 +623,7 @@
         }
         public List<OhlcvsObject> BearishOnNeck()
         {
-            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false }).ToList();
+            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false, Volume = x.Volume }).ToList();
 
             for (int i = 5; i < _data.Count; i++)
             {
@@ -663,7 +641,7 @@
         }
         public List<OhlcvsObject> BearishSeparatingLines()
         {
-            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false }).ToList();
+            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false, Volume = x.Volume }).ToList();
 
             for (int i = 5; i < _data.Count; i++)
             {
@@ -681,7 +659,7 @@
         }
         public List<OhlcvsObject> BearishShootingStar()
         {
-            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false }).ToList();
+            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false, Volume = x.Volume }).ToList();
 
             for (int i = 5; i < _data.Count; i++)
             {
@@ -699,7 +677,7 @@
         }
         public List<OhlcvsObject> BearishSideBySideWhiteLines()
         {
-            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false }).ToList();
+            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false, Volume = x.Volume }).ToList();
 
             for (int i = 5; i < _data.Count; i++)
             {
@@ -721,7 +699,7 @@
         }
         public List<OhlcvsObject> BearishThrusting()
         {
-            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false }).ToList();
+            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false, Volume = x.Volume }).ToList();
 
             for (int i = 5; i < _data.Count; i++)
             {
@@ -739,7 +717,7 @@
         }
         public List<OhlcvsObject> BearishTriStar()
         {
-            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false }).ToList();
+            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false, Volume = x.Volume }).ToList();
 
             for (int i = 5; i < _data.Count; i++)
             {
@@ -761,7 +739,7 @@
         }
         public List<OhlcvsObject> BearishTweezerTop()
         {
-            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false }).ToList();
+            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false, Volume = x.Volume }).ToList();
 
             for (int i = 5; i < _data.Count; i++)
             {
@@ -779,7 +757,7 @@
         }
         public List<OhlcvsObject> BearishUpsideGap2Crows()
         {
-            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false }).ToList();
+            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false, Volume = x.Volume }).ToList();
 
             for (int i = 5; i < _data.Count; i++)
             {
@@ -801,7 +779,7 @@
         }
         public List<OhlcvsObject> Bullish3InsideUp()
         {
-            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false }).ToList();
+            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false, Volume = x.Volume }).ToList();
 
             for (int i = 5; i < _data.Count; i++)
             {
@@ -823,7 +801,7 @@
         }
         public List<OhlcvsObject> Bullish3OutsideUp()
         {
-            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false }).ToList();
+            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false, Volume = x.Volume }).ToList();
 
             for (int i = 5; i < _data.Count; i++)
             {
@@ -845,7 +823,7 @@
         }
         public List<OhlcvsObject> Bullish3StarsintheSouth()
         {
-            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false }).ToList();
+            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false, Volume = x.Volume }).ToList();
 
             for (int i = 5; i < _data.Count; i++)
             {
@@ -867,7 +845,7 @@
         }
         public List<OhlcvsObject> Bullish3WhiteSoldiers()
         {
-            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false }).ToList();
+            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false, Volume = x.Volume }).ToList();
 
             for (int i = 5; i < _data.Count; i++)
             {
@@ -889,7 +867,7 @@
         }
         public List<OhlcvsObject> Bullish3LineStrike()
         {
-            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false }).ToList();
+            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false, Volume = x.Volume }).ToList();
 
             for (int i = 5; i < _data.Count; i++)
             {
@@ -915,7 +893,7 @@
         }
         public List<OhlcvsObject> BullishBeltHold()
         {
-            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false }).ToList();
+            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false, Volume = x.Volume }).ToList();
 
             for (int i = 5; i < _data.Count; i++)
             {
@@ -933,7 +911,7 @@
         }
         public List<OhlcvsObject> BullishBreakaway()
         {
-            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false }).ToList();
+            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false, Volume = x.Volume }).ToList();
 
             for (int i = 5; i < _data.Count; i++)
             {
@@ -963,7 +941,7 @@
         }
         public List<OhlcvsObject> BullishConcealingBabySwallow()
         {
-            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false }).ToList();
+            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false, Volume = x.Volume }).ToList();
 
             for (int i = 5; i < _data.Count; i++)
             {
@@ -989,7 +967,7 @@
         }
         public List<OhlcvsObject> BullishDojiStar()
         {
-            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false }).ToList();
+            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false, Volume = x.Volume }).ToList();
 
             for (int i = 5; i < _data.Count; i++)
             {
@@ -1007,7 +985,7 @@
         }
         public List<OhlcvsObject> BullishDragonflyDoji()
         {
-            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false }).ToList();
+            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false, Volume = x.Volume }).ToList();
 
             for (int i = 5; i < _data.Count; i++)
             {
@@ -1021,7 +999,7 @@
         }
         public List<OhlcvsObject> BullishEngulfing()
         {
-            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false }).ToList();
+            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false, Volume = x.Volume }).ToList();
 
             for (int i = 5; i < _data.Count; i++)
             {
@@ -1039,7 +1017,7 @@
         }
         public List<OhlcvsObject> BullishGravestoneDoji()
         {
-            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false }).ToList();
+            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false, Volume = x.Volume }).ToList();
 
             for (int i = 5; i < _data.Count; i++)
             {
@@ -1057,7 +1035,7 @@
         }
         public List<OhlcvsObject> BullishHarami()
         {
-            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false }).ToList();
+            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false, Volume = x.Volume }).ToList();
 
             for (int i = 5; i < _data.Count; i++)
             {
@@ -1075,7 +1053,7 @@
         }
         public List<OhlcvsObject> BullishHaramiCross()
         {
-            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false }).ToList();
+            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false, Volume = x.Volume }).ToList();
 
             for (int i = 5; i < _data.Count; i++)
             {
@@ -1093,7 +1071,7 @@
         }
         public List<OhlcvsObject> BullishHomingPigeon()
         {
-            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false }).ToList();
+            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false, Volume = x.Volume }).ToList();
 
             for (int i = 5; i < _data.Count; i++)
             {
@@ -1111,7 +1089,7 @@
         }
         public List<OhlcvsObject> BullishInvertedHammer()
         {
-            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false }).ToList();
+            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false, Volume = x.Volume }).ToList();
 
             for (int i = 5; i < _data.Count; i++)
             {
@@ -1129,7 +1107,7 @@
         }
         public List<OhlcvsObject> BullishKicking()
         {
-            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false }).ToList();
+            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false, Volume = x.Volume }).ToList();
 
             for (int i = 5; i < _data.Count; i++)
             {
@@ -1147,7 +1125,7 @@
         }
         public List<OhlcvsObject> BullishLadderBottom()
         {
-            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false }).ToList();
+            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false, Volume = x.Volume }).ToList();
 
             for (int i = 5; i < _data.Count; i++)
             {
@@ -1177,7 +1155,7 @@
         }
         public List<OhlcvsObject> BullishLongWhiteCandlestick()
         {
-            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false }).ToList();
+            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false, Volume = x.Volume }).ToList();
 
             for (int i = 5; i < _data.Count; i++)
             {
@@ -1191,7 +1169,7 @@
         }
         public List<OhlcvsObject> BullishMatHold()
         {
-            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false }).ToList();
+            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false, Volume = x.Volume }).ToList();
 
             for (int i = 5; i < _data.Count; i++)
             {
@@ -1221,7 +1199,7 @@
         }
         public List<OhlcvsObject> BullishMatchingLow()
         {
-            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false }).ToList();
+            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false, Volume = x.Volume }).ToList();
 
             for (int i = 5; i < _data.Count; i++)
             {
@@ -1239,7 +1217,7 @@
         }
         public List<OhlcvsObject> BullishMeetingLines()
         {
-            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false }).ToList();
+            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false, Volume = x.Volume }).ToList();
 
             for (int i = 5; i < _data.Count; i++)
             {
@@ -1257,7 +1235,7 @@
         }
         public List<OhlcvsObject> BullishMorningDojiStar()
         {
-            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false }).ToList();
+            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false, Volume = x.Volume }).ToList();
 
             for (int i = 5; i < _data.Count; i++)
             {
@@ -1279,7 +1257,7 @@
         }
         public List<OhlcvsObject> BullishMorningStar()
         {
-            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false }).ToList();
+            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false, Volume = x.Volume }).ToList();
 
             for (int i = 5; i < _data.Count; i++)
             {
@@ -1301,7 +1279,7 @@
         }
         public List<OhlcvsObject> BullishPiercingLine()
         {
-            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false }).ToList();
+            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false, Volume = x.Volume }).ToList();
 
             for (int i = 5; i < _data.Count; i++)
             {
@@ -1319,7 +1297,7 @@
         }
         public List<OhlcvsObject> BullishRising3Methods()
         {
-            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false }).ToList();
+            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false, Volume = x.Volume }).ToList();
 
             for (int i = 5; i < _data.Count; i++)
             {
@@ -1349,7 +1327,7 @@
         }
         public List<OhlcvsObject> BullishSeparatingLines()
         {
-            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false }).ToList();
+            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false, Volume = x.Volume }).ToList();
 
             for (int i = 5; i < _data.Count; i++)
             {
@@ -1367,7 +1345,7 @@
         }
         public List<OhlcvsObject> BullishSideBySideWhiteLines()
         {
-            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false }).ToList();
+            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false, Volume = x.Volume }).ToList();
 
             for (int i = 5; i < _data.Count; i++)
             {
@@ -1389,7 +1367,7 @@
         }
         public List<OhlcvsObject> BullishStickSandwich()
         {
-            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false }).ToList();
+            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false, Volume = x.Volume }).ToList();
 
             for (int i = 5; i < _data.Count; i++)
             {
@@ -1410,7 +1388,7 @@
         }
         public List<OhlcvsObject> BullishTriStar()
         {
-            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false }).ToList();
+            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false, Volume = x.Volume }).ToList();
 
             for (int i = 5; i < _data.Count; i++)
             {
@@ -1432,7 +1410,7 @@
         }
         public List<OhlcvsObject> BullishTweezerBottom()
         {
-            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false }).ToList();
+            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false, Volume = x.Volume }).ToList();
 
             for (int i = 5; i < _data.Count; i++)
             {
@@ -1450,7 +1428,7 @@
         }
         public List<OhlcvsObject> BullishUnique3RiverBottom()
         {
-            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false }).ToList();
+            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false, Volume = x.Volume }).ToList();
 
             for (int i = 5; i < _data.Count; i++)
             {
@@ -1472,7 +1450,7 @@
         }
         public List<OhlcvsObject> BullishUpsideGap3Methods()
         {
-            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false }).ToList();
+            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false, Volume = x.Volume }).ToList();
 
             for (int i = 5; i < _data.Count; i++)
             {
@@ -1494,7 +1472,7 @@
         }
         public List<OhlcvsObject> BullishUpsideTasukiGap()
         {
-            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false }).ToList();
+            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false, Volume = x.Volume }).ToList();
 
             for (int i = 5; i < _data.Count; i++)
             {
@@ -1516,7 +1494,7 @@
         }
         public List<OhlcvsObject> BullishWhiteClosingMarubozu()
         {
-            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false }).ToList();
+            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false, Volume = x.Volume }).ToList();
 
             for (int i = 5; i < _data.Count; i++)
             {
@@ -1530,7 +1508,7 @@
         }
         public List<OhlcvsObject> BullishWhiteMarubozu()
         {
-            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false }).ToList();
+            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false, Volume = x.Volume }).ToList();
 
             for (int i = 5; i < _data.Count; i++)
             {
@@ -1544,7 +1522,7 @@
         }
         public List<OhlcvsObject> BullishWhiteOpeningMarubozu()
         {
-            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false }).ToList();
+            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false, Volume = x.Volume }).ToList();
 
             for (int i = 5; i < _data.Count; i++)
             {
@@ -1555,6 +1533,32 @@
                 }
             }
             return data;
+        }
+
+        public List<OhlcvsObject> GetSignals(string patternMethodName)
+        {
+            Type thisType = this.GetType();
+            MethodInfo theMethod = thisType.GetMethod(patternMethodName);
+
+            List<OhlcvsObject> result = (List<OhlcvsObject>)theMethod.Invoke(this, null);
+            return result;
+        }
+
+        public int GetSignalsCount(string patternMethodName)
+        {
+            List<OhlcvsObject> result = GetSignals(patternMethodName);
+
+            return result.Where(x => x.Signal == true).Count();
+        }
+
+        public int GetBullishSignalsCount()
+        {
+            throw new NotImplementedException();
+        }
+
+        public int GetBearishSignalsCount()
+        {
+            throw new NotImplementedException();
         }
     }
 }
