@@ -1,6 +1,4 @@
-﻿using static System.Runtime.InteropServices.JavaScript.JSType;
-
-namespace Candlestick_Patterns
+﻿namespace Candlestick_Patterns
 {
     public class Patterns
     {
@@ -26,23 +24,22 @@ namespace Candlestick_Patterns
         public Patterns(List<OhlcvObject> data)
         {
             _data = data;
-            _minCandleSize = data.Select(x => Math.Abs(x.Open - x.Close)).Average(x => x) * 3;
-            _maxShortCandleSize = data.Select(x => Math.Abs(x.Open - x.Close)).Average(x => x) / 3;
-            _minCandleDifference =
-            _maxDojiShadowSizes =
-            _maxDojiBodySize =
-            _minCandleShadowSize =
-            _inBarMaxChange =
-            _maxShadowSize =
-            _maxPriceDifference =
-            _maxCloseDifference =
-            _maxCandleBodySize =
-            _maxCandleShadowSize =
-            _maxDifference =
-            _maxShadowChange =
-            _maxCloseHighChange =
-            _maxCandleSize =
-            _maxOpenDifference = 
+            _minCandleSize = data.Select(x => Math.Abs(x.Open - x.Close)).Average(x => x) * 2;
+            _maxShortCandleSize = data.Select(x => Math.Abs(x.Open - x.Close)).Average(x => x) / 2;
+            _minCandleDifference = data.Select(x => Math.Abs(x.Open - x.Close)).Average(x => x) / 2;
+            _maxDojiShadowSizes = data.Select(x => Math.Abs(x.Open - x.Close)).Average(x => x) / 2;
+            _maxDojiBodySize = data.Select(x => Math.Abs(x.Open - x.Close)).Average(x => x) / 2;
+            _minCandleShadowSize = data.Select(x => Math.Abs(x.Open - x.Close)).Average(x => x) * 2;
+            _maxShadowSize = data.Select(x => Math.Abs(x.Open - x.Close)).Average(x => x) * 3;
+            _maxPriceDifference = data.Select(x => Math.Abs(x.Open - x.Close)).Average(x => x) * 3;
+            _maxCloseDifference = data.Select(x => Math.Abs(x.Open - x.Close)).Average(x => x) * 3;
+            _maxCandleBodySize = data.Select(x => Math.Abs(x.Open - x.Close)).Average(x => x) / 2;
+            _maxCandleShadowSize = data.Select(x => Math.Abs(x.Open - x.Close)).Average(x => x) / 2;
+            _maxDifference = data.Select(x => Math.Abs(x.Open - x.Close)).Average(x => x) / 2;
+            _maxShadowChange = data.Select(x => Math.Abs(x.Open - x.Close)).Average(x => x) / 2;
+            _maxCloseHighChange = data.Select(x => Math.Abs(x.Open - x.Close)).Average(x => x) * 3;
+            _maxCandleSize = data.Select(x => Math.Abs(x.Open - x.Close)).Average(x => x) / 2;
+            _maxOpenDifference = data.Select(x => Math.Abs(x.Open - x.Close)).Average(x => x) * 2;
         }
 
         public List<OhlcvObject> Bearish2Crows()
