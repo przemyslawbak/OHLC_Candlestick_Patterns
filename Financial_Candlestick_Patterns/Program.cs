@@ -7,7 +7,7 @@ using Newtonsoft.Json;
 
 KeyLocker _keys = new KeyLocker();
 Scrapper _scrapper = new Scrapper();
-Patterns _patterns = new Patterns();
+Patterns _patterns;
 
 var key = _keys.GetApiKey();
 var url = "https://financialmodelingprep.com/api/v3/historical-chart/1min/%5EGSPC?apikey=" + key;
@@ -22,6 +22,7 @@ var data = JsonConvert.DeserializeObject<List<OhlcvObject>>(json).Select((x, ind
     Signal = false
 }).ToList();
 
-data = _patterns.AddSignals(data);
+_patterns = new Patterns(data);
+data = _patterns.AddSignals();
 
 Console.ReadLine();
