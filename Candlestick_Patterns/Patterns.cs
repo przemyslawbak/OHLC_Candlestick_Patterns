@@ -1553,12 +1553,42 @@ namespace Candlestick_Patterns
 
         public int GetBullishSignalsCount()
         {
-            throw new NotImplementedException();
+            var bullish = GetAllMethods().Where(x => x.StartsWith("Bullish")).ToList();
+
+            List<int> bullishQty = new List<int>();
+
+            foreach (var methodName in bullish)
+            {
+                bullishQty.Add(GetSignalsCount(methodName));
+            }
+
+            return bullishQty.Sum(x => x);
         }
 
         public int GetBearishSignalsCount()
         {
-            throw new NotImplementedException();
+            var bearish = GetAllMethods().Where(x => x.StartsWith("Bearish")).ToList();
+
+            List<int> bearishhQty = new List<int>();
+
+            foreach (var methodName in bearish)
+            {
+                bearishhQty.Add(GetSignalsCount(methodName));
+            }
+
+            return bearishhQty.Sum(x => x);
+        }
+
+        private List<string> GetAllMethods()
+        {
+            List<string> methods = new List<string>();
+
+            foreach (MethodInfo item in typeof(Patterns).GetMethods())
+            {
+                methods.Add(item.Name);
+            }
+
+            return methods;
         }
     }
 }

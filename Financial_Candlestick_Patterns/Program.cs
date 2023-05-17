@@ -22,12 +22,11 @@ var dataOhlcv = JsonConvert.DeserializeObject<List<OhlcvObject>>(json).Select(x 
 }).ToList();
 
 _patterns = new Patterns(dataOhlcv);
-var ohlcvs = _patterns.GetSignals("BullishTweezerBottom");
-var signalsCount = _patterns.GetSignalsCount("BearishLongBlackCandelstick");
+//var ohlcvs = _patterns.GetSignals("BullishTweezerBottom");
+//var signalsCount = _patterns.GetSignalsCount("BearishLongBlackCandelstick");
 var bullishSignalsCount = _patterns.GetBullishSignalsCount();
 var bearishSignalsCount = _patterns.GetBearishSignalsCount();
 
-//todo: from Patterns get number of signals for all bullish or bearish
 //todo: add volume weightening
 
 Console.ReadLine();
