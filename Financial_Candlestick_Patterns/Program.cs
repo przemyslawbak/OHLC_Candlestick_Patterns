@@ -12,9 +12,8 @@ Patterns _patterns;
 var key = _keys.GetApiKey();
 var url = "https://financialmodelingprep.com/api/v3/historical-chart/1min/%5EGSPC?apikey=" + key;
 var json = await _scrapper.GetHtml(url);
-var data = JsonConvert.DeserializeObject<List<OhlcvObject>>(json).Select((x, index) => new OhlcvObject()
+var data = JsonConvert.DeserializeObject<List<OhlcvObject>>(json).Select(x => new OhlcvObject()
 {
-    Index = index,
     Open = x.Open,
     High = x.High,
     Low = x.Low,
@@ -23,6 +22,8 @@ var data = JsonConvert.DeserializeObject<List<OhlcvObject>>(json).Select((x, ind
 }).ToList();
 
 _patterns = new Patterns(data);
-data = _patterns.AddSignals();
+
+//todo: from Patterns get number of signals for method name
+//todo: from Patterns get number of signals for method name
 
 Console.ReadLine();

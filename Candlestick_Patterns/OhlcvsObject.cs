@@ -2,7 +2,7 @@
 
 namespace Candlestick_Patterns
 {
-    public class OhlcvObject
+    public class OhlcvsObject
     {
         [JsonProperty(PropertyName = "open")]
         public decimal Open { get; set; }
@@ -17,5 +17,6 @@ namespace Candlestick_Patterns
         public decimal Close { get; set; }
 
         [JsonProperty(PropertyName = "volume")]
+        public bool Signal { get; set; } = false;
     }
 }

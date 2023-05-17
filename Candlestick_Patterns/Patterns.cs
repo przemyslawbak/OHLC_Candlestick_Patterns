@@ -42,8 +42,9 @@
             _maxOpenDifference = data.Select(x => Math.Abs(x.Open - x.Close)).Average(x => x) * 2;
         }
 
-        public List<OhlcvObject> Bearish2Crows()
+        public List<OhlcvsObject> Bearish2Crows()
         {
+            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false }).ToList();
 
             for (int i = 5; i < _data.Count; i++)
             {
@@ -56,15 +57,17 @@
                         // Check whether the third candlestick matches. 
                         if (_data[i - 0].Open > _data[i - 0].Close && _data[i - 1].Close <= _data[i - 0].Open && _data[i - 0].Open <= _data[i - 1].Open && _data[i - 2].Open <= _data[i - 0].Close && _data[i - 0].Close <= _data[i - 2].Close)
                         {
-                            _data[i].Signal = true;
+                            data[i].Signal = true;
                         }
                     }
                 }
             }
-            return _data;
+            return data;
         }
-        public List<OhlcvObject> Bearish3BlackCrows()
+        public List<OhlcvsObject> Bearish3BlackCrows()
         {
+            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false }).ToList();
+
             for (int i = 5; i < _data.Count; i++)
             {
                 // Check whether the first candlestick matches. 
@@ -76,15 +79,17 @@
                         // Check whether the third candlestick matches. 
                         if (_data[i - 0].Open > _data[i - 0].Close && _data[i - 1].Close < _data[i - 0].Open && _data[i - 0].Open < _data[i - 1].Open && _data[i - 0].Close < _data[i - 1].Close && -100 * (_data[i - 0].Close - _data[i - 0].Open) / _data[i - 0].Open > _minCandleSize)
                         {
-                            _data[i].Signal = true;
+                            data[i].Signal = true;
                         }
                     }
                 }
             }
-            return _data;
+            return data;
         }
-        public List<OhlcvObject> Bearish3InsideDown()
+        public List<OhlcvsObject> Bearish3InsideDown()
         {
+            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false }).ToList();
+
             for (int i = 5; i < _data.Count; i++)
             {
                 // Check whether the first candlestick matches. 
@@ -96,15 +101,17 @@
                         // Check whether the third candlestick matches. 
                         if (_data[i - 0].Open > _data[i - 0].Close && _data[i - 0].Close < _data[i - 1].Close)
                         {
-                            _data[i].Signal = true;
+                            data[i].Signal = true;
                         }
                     }
                 }
             }
-            return _data;
+            return data;
         }
-        public List<OhlcvObject> Bearish3OutsideDown()
+        public List<OhlcvsObject> Bearish3OutsideDown()
         {
+            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false }).ToList();
+
             for (int i = 5; i < _data.Count; i++)
             {
                 // Check whether the first candlestick matches. 
@@ -116,15 +123,17 @@
                         // Check whether the third candlestick matches. 
                         if (_data[i - 0].Open > _data[i - 0].Close && _data[i - 0].Close < _data[i - 1].Close)
                         {
-                            _data[i].Signal = true;
+                            data[i].Signal = true;
                         }
                     }
                 }
             }
-            return _data;
+            return data;
         }
-        public List<OhlcvObject> Bearish3LineStrike()
+        public List<OhlcvsObject> Bearish3LineStrike()
         {
+            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false }).ToList();
+
             for (int i = 5; i < _data.Count; i++)
             {
                 // Check whether the first candlestick matches. 
@@ -138,16 +147,18 @@
                         {
                             if (_data[i - 0].Open < _data[i - 0].Close && _data[i - 0].Open <= _data[i - 1].Close && _data[i - 0].Close >= _data[i - 3].Open)
                             {
-                                _data[i].Signal = true;
+                                data[i].Signal = true;
                             }
                         }
                     }
                 }
             }
-            return _data;
+            return data;
         }
-        public List<OhlcvObject> BearishAdvanceBlock()
+        public List<OhlcvsObject> BearishAdvanceBlock()
         {
+            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false }).ToList();
+
             for (int i = 5; i < _data.Count; i++)
             {
                 // Check whether the first candlestick matches. 
@@ -159,15 +170,17 @@
                         // Check whether the third candlestick matches. 
                         if (_data[i - 0].Open < _data[i - 0].Close && _data[i - 1].Close > _data[i - 0].Open && _data[i - 0].Open > _data[i - 1].Open && _data[i - 0].Close > _data[i - 1].Close && ((100 + _minCandleDifference) / 100) * (_data[i - 0].Close - _data[i - 0].Open) < _data[i - 1].Close - _data[i - 1].Open && 100 * (_data[i - 0].Close - _data[i - 0].Open) / _data[i - 0].Open > _minCandleSize)
                         {
-                            _data[i].Signal = true;
+                            data[i].Signal = true;
                         }
                     }
                 }
             }
-            return _data;
+            return data;
         }
-        public List<OhlcvObject> BearishBeltHold()
+        public List<OhlcvsObject> BearishBeltHold()
         {
+            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false }).ToList();
+
             for (int i = 5; i < _data.Count; i++)
             {
                 // Check whether the first candlestick matches. 
@@ -176,50 +189,58 @@
                     // Check whether the second candlestick matches. 
                     if (_data[i - 0].Open == _data[i - 0].High && _data[i - 0].Open > _data[i - 0].Close && -100 * (_data[i - 0].Close - _data[i - 0].Open) / _data[i - 0].Open > _minCandleSize)
                     {
-                        _data[i].Signal = true;
+                        data[i].Signal = true;
                     }
                 }
             }
-            return _data;
+            return data;
         }
-        public List<OhlcvObject> BearishBlackClosingMarubozu()
+        public List<OhlcvsObject> BearishBlackClosingMarubozu()
         {
+            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false }).ToList();
+
             for (int i = 5; i < _data.Count; i++)
             {
                 // Check whether the first candlestick matches. 
                 if (_data[i - 0].Open > _data[i - 0].Close && _data[i - 0].High > _data[i - 0].Open && _data[i - 0].Close == _data[i - 0].Low && -100 * (_data[i - 0].Close - _data[i - 0].Open) / _data[i - 0].Open > _minCandleSize)
                 {
-                    _data[i].Signal = true;
+                    data[i].Signal = true;
                 }
             }
-            return _data;
+            return data;
         }
-        public List<OhlcvObject> BearishBlackMarubozu()
+        public List<OhlcvsObject> BearishBlackMarubozu()
         {
+            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false }).ToList();
+
             for (int i = 5; i < _data.Count; i++)
             {
                 // Check whether the first candlestick matches. 
                 if (_data[i - 0].Open > _data[i - 0].Close && _data[i - 0].High == _data[i - 0].Open && _data[i - 0].Close == _data[i - 0].Low && -100 * (_data[i - 0].Close - _data[i - 0].Open) / _data[i - 0].Open > _minCandleSize)
                 {
-                    _data[i].Signal = true;
+                    data[i].Signal = true;
                 }
             }
-            return _data;
+            return data;
         }
-        public List<OhlcvObject> BearishBlackOpeningMarubozu()
+        public List<OhlcvsObject> BearishBlackOpeningMarubozu()
         {
+            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false }).ToList();
+
             for (int i = 5; i < _data.Count; i++)
             {
                 // Check whether the first candlestick matches. 
                 if (_data[i - 0].Open > _data[i - 0].Close && _data[i - 0].High == _data[i - 0].Open && _data[i - 0].Close > _data[i - 0].Low && -100 * (_data[i - 0].Close - _data[i - 0].Open) / _data[i - 0].Open > _minCandleSize)
                 {
-                    _data[i].Signal = true;
+                    data[i].Signal = true;
                 }
             }
-            return _data;
+            return data;
         }
-        public List<OhlcvObject> BearishBreakaway()
+        public List<OhlcvsObject> BearishBreakaway()
         {
+            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false }).ToList();
+
             for (int i = 5; i < _data.Count; i++)
             {
                 // Check whether the first candlestick matches. 
@@ -237,17 +258,19 @@
                                 // Check whether the fifth candlestick matches. 
                                 if (_data[i - 0].Open > _data[i - 0].Close && _data[i - 0].Close > _data[i - 4].High && _data[i - 0].Close < _data[i - 3].Low)
                                 {
-                                    _data[i].Signal = true;
+                                    data[i].Signal = true;
                                 }
                             }
                         }
                     }
                 }
             }
-            return _data;
+            return data;
         }
-        public List<OhlcvObject> BearishDeliberation()
+        public List<OhlcvsObject> BearishDeliberation()
         {
+            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false }).ToList();
+
             for (int i = 5; i < _data.Count; i++)
             {
                 // Check whether the first candlestick matches. 
@@ -259,15 +282,17 @@
                         // Check whether the third candlestick matches. 
                         if (_data[i - 0].Open < _data[i - 0].Close && _data[i - 1].Close <= _data[i - 0].Open && 100 * (_data[i - 0].Close - _data[i - 0].Open) / _data[i - 0].Open < _minCandleSize)
                         {
-                            _data[i].Signal = true;
+                            data[i].Signal = true;
                         }
                     }
                 }
             }
-            return _data;
+            return data;
         }
-        public List<OhlcvObject> BearishDarkCloudCover()
+        public List<OhlcvsObject> BearishDarkCloudCover()
         {
+            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false }).ToList();
+
             for (int i = 5; i < _data.Count; i++)
             {
                 // Check whether the first candlestick matches. 
@@ -276,14 +301,16 @@
                     // Check whether the second candlestick matches. 
                     if (_data[i - 0].Open > _data[i - 0].Close && _data[i - 0].Open > _data[i - 1].High && _data[i - 0].Close < _data[i - 1].Open + ((_data[i - 1].Close - _data[i - 1].Open) / 2))
                     {
-                        _data[i].Signal = true;
+                        data[i].Signal = true;
                     }
                 }
             }
-            return _data;
+            return data;
         }
-        public List<OhlcvObject> BearishDojiStar()
+        public List<OhlcvsObject> BearishDojiStar()
         {
+            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false }).ToList();
+
             for (int i = 5; i < _data.Count; i++)
             {
                 // Check whether the first candlestick matches. 
@@ -292,14 +319,16 @@
                     // Check whether the second candlestick matches. 
                     if (_data[i - 1].High < _data[i - 0].Low && Math.Abs(100 * (_data[i - 0].Open - _data[i - 0].Close) / _data[i - 0].Open) < _maxDojiBodySize && Math.Abs(100 * (_data[i - 0].High - _data[i - 0].Low) / _data[i - 0].High) < _maxDojiShadowSizes)
                     {
-                        _data[i].Signal = true;
+                        data[i].Signal = true;
                     }
                 }
             }
-            return _data;
+            return data;
         }
-        public List<OhlcvObject> BearishDownsideGap3Methods()
+        public List<OhlcvsObject> BearishDownsideGap3Methods()
         {
+            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false }).ToList();
+
             for (int i = 5; i < _data.Count; i++)
             {
                 // Check whether the first candlestick matches. 
@@ -311,15 +340,17 @@
                         // Check whether the third candlestick matches. 
                         if (_data[i - 0].Open < _data[i - 0].Close && _data[i - 1].Close < _data[i - 0].Open && _data[i - 1].Open > _data[i - 0].Open && _data[i - 2].Close < _data[i - 0].Close)
                         {
-                            _data[i].Signal = true;
+                            data[i].Signal = true;
                         }
                     }
                 }
             }
-            return _data;
+            return data;
         }
-        public List<OhlcvObject> BearishDownsideTasukiGap()
+        public List<OhlcvsObject> BearishDownsideTasukiGap()
         {
+            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false }).ToList();
+
             for (int i = 5; i < _data.Count; i++)
             {
                 // Check whether the first candlestick matches. 
@@ -331,27 +362,31 @@
                         // Check whether the third candlestick matches. 
                         if (_data[i - 0].Open < _data[i - 0].Close && _data[i - 1].Close < _data[i - 0].Open && _data[i - 1].Open > _data[i - 0].Open && _data[i - 2].Low > _data[i - 0].Close && _data[i - 1].High < _data[i - 0].Close)
                         {
-                            _data[i].Signal = true;
+                            data[i].Signal = true;
                         }
                     }
                 }
             }
-            return _data;
+            return data;
         }
-        public List<OhlcvObject> BearishDragonflyDoji()
+        public List<OhlcvsObject> BearishDragonflyDoji()
         {
+            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false }).ToList();
+
             for (int i = 5; i < _data.Count; i++)
             {
                 // Check whether the first candlestick matches. 
                 if (Math.Abs(100 * (_data[i - 0].High - _data[i - 0].Close) / _data[i - 0].High) < _maxDojiBodySize && Math.Abs(100 * (_data[i - 0].Open - _data[i - 0].Close) / _data[i - 0].Open) < _maxDojiBodySize && Math.Abs(100 * (_data[i - 0].High - _data[i - 0].Low) / _data[i - 0].High) > _minCandleShadowSize)
                 {
-                    _data[i].Signal = true;
+                    data[i].Signal = true;
                 }
             }
-            return _data;
+            return data;
         }
-        public List<OhlcvObject> BearishEngulfing()
+        public List<OhlcvsObject> BearishEngulfing()
         {
+            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false }).ToList();
+
             for (int i = 5; i < _data.Count; i++)
             {
                 // Check whether the first candlestick matches. 
@@ -360,14 +395,16 @@
                     // Check whether the second candlestick matches. 
                     if (_data[i - 0].Open > _data[i - 0].Close && _data[i - 0].Open > _data[i - 1].Close && _data[i - 0].Close < _data[i - 1].Open && (-100 * (_data[i - 0].Close - _data[i - 0].Open) / _data[i - 0].Open > _minCandleSize))
                     {
-                        _data[i].Signal = true;
+                        data[i].Signal = true;
                     }
                 }
             }
-            return _data;
+            return data;
         }
-        public List<OhlcvObject> BearishEveningDojiStar()
+        public List<OhlcvsObject> BearishEveningDojiStar()
         {
+            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false }).ToList();
+
             for (int i = 5; i < _data.Count; i++)
             {
                 // Check whether the first candlestick matches. 
@@ -379,15 +416,17 @@
                         // Check whether the third candlestick matches. 
                         if (_data[i - 0].Open > _data[i - 0].Close && _data[i - 0].Close > _data[i - 2].Open && _data[i - 0].Close < _data[i - 2].Close && -100 * (_data[i - 0].Close - _data[i - 0].Open) / _data[i - 0].Open > _minCandleSize)
                         {
-                            _data[i].Signal = true;
+                            data[i].Signal = true;
                         }
                     }
                 }
             }
-            return _data;
+            return data;
         }
-        public List<OhlcvObject> BearishEveningStar()
+        public List<OhlcvsObject> BearishEveningStar()
         {
+            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false }).ToList();
+
             for (int i = 5; i < _data.Count; i++)
             {
                 // Check whether the first candlestick matches. 
@@ -399,15 +438,17 @@
                         // Check whether the third candlestick matches. 
                         if (_data[i - 0].Open > _data[i - 0].Close && _data[i - 0].Close > _data[i - 2].Open && _data[i - 0].Close < _data[i - 2].Close)
                         {
-                            _data[i].Signal = true;
+                            data[i].Signal = true;
                         }
                     }
                 }
             }
-            return _data;
+            return data;
         }
-        public List<OhlcvObject> BearishFalling3Methods()
+        public List<OhlcvsObject> BearishFalling3Methods()
         {
+            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false }).ToList();
+
             for (int i = 5; i < _data.Count; i++)
             {
                 // Check whether the first candlestick matches. 
@@ -425,17 +466,19 @@
                                 // Check whether the fifth candlestick matches. 
                                 if (_data[i - 0].Open > _data[i - 0].Close && _data[i - 0].Close < _data[i - 4].Close && (-100 * (_data[i - 0].Close - _data[i - 0].Open) / _data[i - 0].Open > _minCandleSize))
                                 {
-                                    _data[i].Signal = true;
+                                    data[i].Signal = true;
                                 }
                             }
                         }
                     }
                 }
             }
-            return _data;
+            return data;
         }
-        public List<OhlcvObject> BearishGravestoneDoji()
+        public List<OhlcvsObject> BearishGravestoneDoji()
         {
+            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false }).ToList();
+
             for (int i = 5; i < _data.Count; i++)
             {
                 // Check whether the first candlestick matches. 
@@ -444,14 +487,16 @@
                     // Check whether the second candlestick matches. 
                     if (_data[i - 1].High < _data[i - 0].Low && Math.Abs(100 * (_data[i - 0].Open - _data[i - 0].Close) / _data[i - 0].Open) < _maxDojiBodySize && _data[i - 0].Low == _data[i - 0].Open)
                     {
-                        _data[i].Signal = true;
+                        data[i].Signal = true;
                     }
                 }
             }
-            return _data;
+            return data;
         }
-        public List<OhlcvObject> BearishHangingMan()
+        public List<OhlcvsObject> BearishHangingMan()
         {
+            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false }).ToList();
+
             for (int i = 5; i < _data.Count; i++)
             {
                 // Check whether the first candlestick matches. 
@@ -459,21 +504,23 @@
                 {
                     if (Math.Abs(100 * (_data[i - 0].High - _data[i - 0].Close) / _data[i - 0].High) < (_maxDojiBodySize / 2) && Math.Abs(100 * (_data[i - 0].Open - _data[i - 0].Close) / _data[i - 0].Open) < _maxDojiBodySize && _data[i - 0].Open - _data[i - 0].Low > 2 * (_data[i - 0].Close - _data[i - 0].Open))
                     {
-                        _data[i].Signal = true;
+                        data[i].Signal = true;
                     }
                 }
                 else
                 {
                     if (Math.Abs(100 * (_data[i - 0].High - _data[i - 0].Open) / _data[i - 0].High) < (_maxDojiBodySize / 2) && Math.Abs(100 * (_data[i - 0].Open - _data[i - 0].Close) / _data[i - 0].Open) < _maxDojiBodySize && _data[i - 0].Close - _data[i - 0].Low > 2 * (_data[i - 0].Close - _data[i - 0].Open))
                     {
-                        _data[i].Signal = true;
+                        data[i].Signal = true;
                     }
                 }
             }
-            return _data;
+            return data;
         }
-        public List<OhlcvObject> BearishHarami()
+        public List<OhlcvsObject> BearishHarami()
         {
+            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false }).ToList();
+
             for (int i = 5; i < _data.Count; i++)
             {
                 // Check whether the first candlestick matches. 
@@ -482,14 +529,16 @@
                     // Check whether the second candlestick matches. 
                     if (_data[i - 0].Open > _data[i - 0].Close && _data[i - 0].Open < _data[i - 1].Close && _data[i - 0].Close > _data[i - 1].Open && (-100 * (_data[i - 0].Close - _data[i - 0].Open) / _data[i - 0].Open < _maxShortCandleSize))
                     {
-                        _data[i].Signal = true;
+                        data[i].Signal = true;
                     }
                 }
             }
-            return _data;
+            return data;
         }
-        public List<OhlcvObject> BearishIdentical3Crows()
+        public List<OhlcvsObject> BearishIdentical3Crows()
         {
+            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false }).ToList();
+
             for (int i = 5; i < _data.Count; i++)
             {
                 // Check whether the first candlestick matches. 
@@ -501,15 +550,17 @@
                         // Check whether the third candlestick matches. 
                         if (_data[i - 0].Open > _data[i - 0].Close && _data[i - 1].Close == _data[i - 0].Open && (100 * (_data[i - 0].Close - _data[i - 0].Open) / _data[i - 0].Open < -1 * _minCandleSize))
                         {
-                            _data[i].Signal = true;
+                            data[i].Signal = true;
                         }
                     }
                 }
             }
-            return _data;
+            return data;
         }
-        public List<OhlcvObject> BearishHaramiCross()
+        public List<OhlcvsObject> BearishHaramiCross()
         {
+            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false }).ToList();
+
             for (int i = 5; i < _data.Count; i++)
             {
                 // Check whether the first candlestick matches. 
@@ -518,14 +569,16 @@
                     // Check whether the second candlestick matches. 
                     if (Math.Abs(100 * (_data[i - 0].Open - _data[i - 0].Close) / _data[i - 0].Open) < _maxDojiBodySize && _data[i - 0].Open < _data[i - 1].Close && _data[i - 1].Open < _data[i - 0].Open)
                     {
-                        _data[i].Signal = true;
+                        data[i].Signal = true;
                     }
                 }
             }
-            return _data;
+            return data;
         }
-        public List<OhlcvObject> BearishInNeck()
+        public List<OhlcvsObject> BearishInNeck()
         {
+            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false }).ToList();
+
             for (int i = 5; i < _data.Count; i++)
             {
                 // Check whether the first candlestick matches. 
@@ -534,14 +587,16 @@
                     // Check whether the second candlestick matches. 
                     if (_data[i - 0].Open < _data[i - 0].Close && _data[i - 0].Open < _data[i - 1].Low && _data[i - 0].Close > _data[i - 1].Close && 100 * (_data[i - 0].Close - _data[i - 1].Close) / _data[i - 1].Close < _inBarMaxChange)
                     {
-                        _data[i].Signal = true;
+                        data[i].Signal = true;
                     }
                 }
             }
-            return _data;
+            return data;
         }
-        public List<OhlcvObject> BearishKicking()
+        public List<OhlcvsObject> BearishKicking()
         {
+            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false }).ToList();
+
             for (int i = 5; i < _data.Count; i++)
             {
                 // Check whether the first candlestick matches. 
@@ -550,26 +605,30 @@
                     // Check whether the second candlestick matches. 
                     if (_data[i - 0].Open < _data[i - 1].Open && _data[i - 0].Open > _data[i - 0].Close && 100 * (_data[i - 0].Close - _data[i - 0].Low) / _data[i - 0].Close < _maxShadowSize && 100 * (_data[i - 0].High - _data[i - 0].Open) / _data[i - 0].Open < _maxShadowSize && (-100 * (_data[i - 0].Close - _data[i - 0].Open) / _data[i - 0].Open > _minCandleSize))
                     {
-                        _data[i].Signal = true;
+                        data[i].Signal = true;
                     }
                 }
             }
-            return _data;
+            return data;
         }
-        public List<OhlcvObject> BearishLongBlackCandelstick()
+        public List<OhlcvsObject> BearishLongBlackCandelstick()
         {
+            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false }).ToList();
+
             for (int i = 5; i < _data.Count; i++)
             {
                 // Check whether the first candlestick matches. 
                 if (_data[i - 0].Open > _data[i - 0].Close && -100 * (_data[i - 0].Close - _data[i - 0].Open) / _data[i - 0].Open > _minCandleSize)
                 {
-                    _data[i].Signal = true;
+                    data[i].Signal = true;
                 }
             }
-            return _data;
+            return data;
         }
-        public List<OhlcvObject> BearishMeetingLines()
+        public List<OhlcvsObject> BearishMeetingLines()
         {
+            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false }).ToList();
+
             for (int i = 5; i < _data.Count; i++)
             {
                 // Check whether the first candlestick matches. 
@@ -578,14 +637,16 @@
                     // Check whether the second candlestick matches. 
                     if (_data[i - 0].Open > _data[i - 0].Close && _data[i - 0].Open > _data[i - 1].High && (100 * (_data[i - 0].Open - _data[i - 0].Close) / _data[i - 0].Close > _minCandleSize) && 100 * Math.Abs((_data[i - 0].Close - _data[i - 1].Close) / _data[i - 1].Close) < _maxCloseDifference)
                     {
-                        _data[i].Signal = true;
+                        data[i].Signal = true;
                     }
                 }
             }
-            return _data;
+            return data;
         }
-        public List<OhlcvObject> BearishOnNeck()
+        public List<OhlcvsObject> BearishOnNeck()
         {
+            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false }).ToList();
+
             for (int i = 5; i < _data.Count; i++)
             {
                 // Check whether the first candlestick matches. 
@@ -594,14 +655,16 @@
                     // Check whether the second candlestick matches. 
                     if (_data[i - 0].Open < _data[i - 0].Close && _data[i - 0].Open < _data[i - 1].Low && Math.Abs(100 * (_data[i - 0].Close - _data[i - 1].Low) / _data[i - 0].Close) < _maxPriceDifference)
                     {
-                        _data[i].Signal = true;
+                        data[i].Signal = true;
                     }
                 }
             }
-            return _data;
+            return data;
         }
-        public List<OhlcvObject> BearishSeparatingLines()
+        public List<OhlcvsObject> BearishSeparatingLines()
         {
+            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false }).ToList();
+
             for (int i = 5; i < _data.Count; i++)
             {
                 // Check whether the first candlestick matches. 
@@ -610,14 +673,16 @@
                     // Check whether the second candlestick matches. 
                     if (_data[i - 0].Open > _data[i - 0].Close && 100 * Math.Abs((_data[i - 0].Open - _data[i - 1].Open) / _data[i - 1].Open) < _maxCloseDifference)
                     {
-                        _data[i].Signal = true;
+                        data[i].Signal = true;
                     }
                 }
             }
-            return _data;
+            return data;
         }
-        public List<OhlcvObject> BearishShootingStar()
+        public List<OhlcvsObject> BearishShootingStar()
         {
+            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false }).ToList();
+
             for (int i = 5; i < _data.Count; i++)
             {
                 // Check whether the first candlestick matches. 
@@ -626,14 +691,16 @@
                     // Check whether the second candlestick matches. 
                     if (_data[i - 1].High < _data[i - 0].Low && 3 * Math.Abs(_data[i - 0].Open - _data[i - 0].Close) < _data[i - 0].High - _data[i - 0].Low && Math.Abs(100 * (_data[i - 0].Open - _data[i - 0].Close) / _data[i - 0].Open) < _maxCandleBodySize && 100 * (Math.Min(_data[i - 0].Open, _data[i - 0].Close) - _data[i - 0].Low) / Math.Min(_data[i - 0].Open, _data[i - 0].Close) < _maxCandleShadowSize)
                     {
-                        _data[i].Signal = true;
+                        data[i].Signal = true;
                     }
                 }
             }
-            return _data;
+            return data;
         }
-        public List<OhlcvObject> BearishSideBySideWhiteLines()
+        public List<OhlcvsObject> BearishSideBySideWhiteLines()
         {
+            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false }).ToList();
+
             for (int i = 5; i < _data.Count; i++)
             {
                 // Check whether the first candlestick matches. 
@@ -645,15 +712,17 @@
                         // Check whether the third candlestick matches. 
                         if (_data[i - 0].Open < _data[i - 0].Close && _data[i - 0].High < _data[i - 2].Low && Math.Abs(100 * (_data[i - 0].Open - _data[i - 1].Open) / _data[i - 0].Open) < _maxDifference && Math.Abs(100 * (_data[i - 0].Close - _data[i - 1].Close) / _data[i - 0].Close) < _maxDifference)
                         {
-                            _data[i].Signal = true;
+                            data[i].Signal = true;
                         }
                     }
                 }
             }
-            return _data;
+            return data;
         }
-        public List<OhlcvObject> BearishThrusting()
+        public List<OhlcvsObject> BearishThrusting()
         {
+            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false }).ToList();
+
             for (int i = 5; i < _data.Count; i++)
             {
                 // Check whether the first candlestick matches. 
@@ -662,14 +731,16 @@
                     // Check whether the second candlestick matches. 
                     if (_data[i - 0].Open < _data[i - 0].Close && _data[i - 0].Open < _data[i - 1].Close && _data[i - 0].Close > _data[i - 1].Close && _data[i - 0].Close < _data[i - 1].Close + (_data[i - 1].Open - _data[i - 1].Close) / 2)
                     {
-                        _data[i].Signal = true;
+                        data[i].Signal = true;
                     }
                 }
             }
-            return _data;
+            return data;
         }
-        public List<OhlcvObject> BearishTriStar()
+        public List<OhlcvsObject> BearishTriStar()
         {
+            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false }).ToList();
+
             for (int i = 5; i < _data.Count; i++)
             {
                 // Check whether the first candlestick matches. 
@@ -681,15 +752,17 @@
                         // Check whether the third candlestick matches. 
                         if ((Math.Abs(100 * (_data[i - 0].Open - _data[i - 0].Close) / _data[i - 0].Open) < _maxDojiBodySize))
                         {
-                            _data[i].Signal = true;
+                            data[i].Signal = true;
                         }
                     }
                 }
             }
-            return _data;
+            return data;
         }
-        public List<OhlcvObject> BearishTweezerTop()
+        public List<OhlcvsObject> BearishTweezerTop()
         {
+            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false }).ToList();
+
             for (int i = 5; i < _data.Count; i++)
             {
                 // Check whether the first candlestick matches. 
@@ -698,14 +771,16 @@
                     // Check whether the second candlestick matches. 
                     if (_data[i - 0].Open >= _data[i - 0].Close && _data[i - 0].High == _data[i - 1].High && (Math.Abs(100 * (_data[i - 0].Close - _data[i - 0].Open) / _data[i - 0].Open) < _maxShortCandleSize))
                     {
-                        _data[i].Signal = true;
+                        data[i].Signal = true;
                     }
                 }
             }
-            return _data;
+            return data;
         }
-        public List<OhlcvObject> BearishUpsideGap2Crows()
+        public List<OhlcvsObject> BearishUpsideGap2Crows()
         {
+            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false }).ToList();
+
             for (int i = 5; i < _data.Count; i++)
             {
                 // Check whether the first candlestick matches. 
@@ -717,15 +792,17 @@
                         // Check whether the third candlestick matches. 
                         if (_data[i - 0].Open > _data[i - 0].Close && _data[i - 0].Open > _data[i - 1].Open && _data[i - 0].Close < _data[i - 1].Close && _data[i - 0].Close > _data[i - 2].Close)
                         {
-                            _data[i].Signal = true;
+                            data[i].Signal = true;
                         }
                     }
                 }
             }
-            return _data;
+            return data;
         }
-        public List<OhlcvObject> Bullish3InsideUp()
+        public List<OhlcvsObject> Bullish3InsideUp()
         {
+            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false }).ToList();
+
             for (int i = 5; i < _data.Count; i++)
             {
                 // Check whether the first candlestick matches. 
@@ -737,15 +814,17 @@
                         // Check whether the third candlestick matches. 
                         if ((_data[i - 0].Open < _data[i - 0].Close && _data[i - 0].Close > _data[i - 1].Close))
                         {
-                            _data[i].Signal = true;
+                            data[i].Signal = true;
                         }
                     }
                 }
             }
-            return _data;
+            return data;
         }
-        public List<OhlcvObject> Bullish3OutsideUp()
+        public List<OhlcvsObject> Bullish3OutsideUp()
         {
+            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false }).ToList();
+
             for (int i = 5; i < _data.Count; i++)
             {
                 // Check whether the first candlestick matches. 
@@ -757,15 +836,17 @@
                         // Check whether the third candlestick matches. 
                         if (_data[i - 0].Open < _data[i - 0].Close && _data[i - 0].Close > _data[i - 1].Close)
                         {
-                            _data[i].Signal = true;
+                            data[i].Signal = true;
                         }
                     }
                 }
             }
-            return _data;
+            return data;
         }
-        public List<OhlcvObject> Bullish3StarsintheSouth()
+        public List<OhlcvsObject> Bullish3StarsintheSouth()
         {
+            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false }).ToList();
+
             for (int i = 5; i < _data.Count; i++)
             {
                 // Check whether the first candlestick matches. 
@@ -777,15 +858,17 @@
                         // Check whether the third candlestick matches. 
                         if (_data[i - 0].Open > _data[i - 0].Close && _data[i - 0].Open < _data[i - 1].High && _data[i - 0].Close > _data[i - 1].Low && 100 * (_data[i - 0].High - _data[i - 0].Open) / _data[i - 0].Open < _maxShadowChange && 100 * (_data[i - 0].Close - _data[i - 0].Low) / _data[i - 0].Low < _maxShadowChange)
                         {
-                            _data[i].Signal = true;
+                            data[i].Signal = true;
                         }
                     }
                 }
             }
-            return _data;
+            return data;
         }
-        public List<OhlcvObject> Bullish3WhiteSoldiers()
+        public List<OhlcvsObject> Bullish3WhiteSoldiers()
         {
+            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false }).ToList();
+
             for (int i = 5; i < _data.Count; i++)
             {
                 // Check whether the first candlestick matches. 
@@ -797,15 +880,17 @@
                         // Check whether the third candlestick matches. 
                         if (_data[i - 0].Open < _data[i - 0].Close && _data[i - 1].Close > _data[i - 0].Open && _data[i - 0].Open > _data[i - 1].Open && _data[i - 0].Close > _data[i - 1].Close && 100 * (_data[i - 0].High - _data[i - 0].Close) / _data[i - 0].Close < _maxCloseHighChange && 100 * (_data[i - 0].Close - _data[i - 0].Open) / _data[i - 0].Open > _minCandleSize)
                         {
-                            _data[i].Signal = true;
+                            data[i].Signal = true;
                         }
                     }
                 }
             }
-            return _data;
+            return data;
         }
-        public List<OhlcvObject> Bullish3LineStrike()
+        public List<OhlcvsObject> Bullish3LineStrike()
         {
+            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false }).ToList();
+
             for (int i = 5; i < _data.Count; i++)
             {
                 // Check whether the first candlestick matches. 
@@ -820,16 +905,18 @@
                             // Check whether the fourth candlestick matches. 
                             if (_data[i - 0].Open > _data[i - 0].Close && _data[i - 0].Open > _data[i - 1].Close && _data[i - 0].Close < _data[i - 3].Open)
                             {
-                                _data[i].Signal = true;
+                                data[i].Signal = true;
                             }
                         }
                     }
                 }
             }
-            return _data;
+            return data;
         }
-        public List<OhlcvObject> BullishBeltHold()
+        public List<OhlcvsObject> BullishBeltHold()
         {
+            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false }).ToList();
+
             for (int i = 5; i < _data.Count; i++)
             {
                 // Check whether the first candlestick matches. 
@@ -838,14 +925,16 @@
                     // Check whether the second candlestick matches. 
                     if (_data[i - 0].Open == _data[i - 0].Low && _data[i - 0].Open < _data[i - 0].Close && 100 * (_data[i - 0].High - _data[i - 0].Close) / _data[i - 0].Close < _maxCloseHighChange && 100 * (_data[i - 0].Close - _data[i - 0].Open) / _data[i - 0].Open > _minCandleSize)
                     {
-                        _data[i].Signal = true;
+                        data[i].Signal = true;
                     }
                 }
             }
-            return _data;
+            return data;
         }
-        public List<OhlcvObject> BullishBreakaway()
+        public List<OhlcvsObject> BullishBreakaway()
         {
+            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false }).ToList();
+
             for (int i = 5; i < _data.Count; i++)
             {
                 // Check whether the first candlestick matches. 
@@ -863,17 +952,19 @@
                                 // Check whether the fifth candlestick matches. 
                                 if (_data[i - 0].Open < _data[i - 0].Close && _data[i - 0].Close < _data[i - 4].Low && _data[i - 0].Close > _data[i - 3].High)
                                 {
-                                    _data[i].Signal = true;
+                                    data[i].Signal = true;
                                 }
                             }
                         }
                     }
                 }
             }
-            return _data;
+            return data;
         }
-        public List<OhlcvObject> BullishConcealingBabySwallow()
+        public List<OhlcvsObject> BullishConcealingBabySwallow()
         {
+            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false }).ToList();
+
             for (int i = 5; i < _data.Count; i++)
             {
                 // Check whether the first candlestick matches. 
@@ -888,16 +979,18 @@
                             // Check whether the fourth candlestick matches. 
                             if (_data[i - 0].Open > _data[i - 0].Close && _data[i - 0].Open >= _data[i - 1].High && _data[i - 0].Close < _data[i - 1].Low)
                             {
-                                _data[i].Signal = true;
+                                data[i].Signal = true;
                             }
                         }
                     }
                 }
             }
-            return _data;
+            return data;
         }
-        public List<OhlcvObject> BullishDojiStar()
+        public List<OhlcvsObject> BullishDojiStar()
         {
+            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false }).ToList();
+
             for (int i = 5; i < _data.Count; i++)
             {
                 // Check whether the first candlestick matches. 
@@ -906,26 +999,30 @@
                     // Check whether the second candlestick matches. 
                     if (_data[i - 0].High < _data[i - 1].Low && Math.Abs(100 * (_data[i - 0].Open - _data[i - 0].Close) / _data[i - 0].Open) < _maxDojiBodySize && Math.Abs(100 * (_data[i - 0].High - _data[i - 0].Low) / _data[i - 0].High) < _maxDojiShadowSizes)
                     {
-                        _data[i].Signal = true;
+                        data[i].Signal = true;
                     }
                 }
             }
-            return _data;
+            return data;
         }
-        public List<OhlcvObject> BullishDragonflyDoji()
+        public List<OhlcvsObject> BullishDragonflyDoji()
         {
+            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false }).ToList();
+
             for (int i = 5; i < _data.Count; i++)
             {
                 // Check whether the first candlestick matches. 
                 if (Math.Abs(100 * (_data[i - 0].High - _data[i - 0].Close) / _data[i - 0].High) < _maxDojiBodySize && Math.Abs(100 * (_data[i - 0].Open - _data[i - 0].Close) / _data[i - 0].Open) < _maxDojiBodySize && Math.Abs(100 * (_data[i - 0].High - _data[i - 0].Low) / _data[i - 0].High) > _minCandleShadowSize)
                 {
-                    _data[i].Signal = true;
+                    data[i].Signal = true;
                 }
             }
-            return _data;
+            return data;
         }
-        public List<OhlcvObject> BullishEngulfing()
+        public List<OhlcvsObject> BullishEngulfing()
         {
+            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false }).ToList();
+
             for (int i = 5; i < _data.Count; i++)
             {
                 // Check whether the first candlestick matches. 
@@ -934,14 +1031,16 @@
                     // Check whether the second candlestick matches. 
                     if (_data[i - 0].Open < _data[i - 0].Close && _data[i - 0].Open < _data[i - 1].Close && _data[i - 0].Close > _data[i - 1].Open && 100 * (_data[i - 0].Close - _data[i - 0].Open) / _data[i - 0].Open > _minCandleSize)
                     {
-                        _data[i].Signal = true;
+                        data[i].Signal = true;
                     }
                 }
             }
-            return _data;
+            return data;
         }
-        public List<OhlcvObject> BullishGravestoneDoji()
+        public List<OhlcvsObject> BullishGravestoneDoji()
         {
+            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false }).ToList();
+
             for (int i = 5; i < _data.Count; i++)
             {
                 // Check whether the first candlestick matches. 
@@ -950,14 +1049,16 @@
                     // Check whether the second candlestick matches. 
                     if (_data[i - 0].High < _data[i - 1].Open && Math.Abs(100 * (_data[i - 0].Open - _data[i - 0].Close) / _data[i - 0].Open) < _maxDojiBodySize && _data[i - 0].Low == _data[i - 0].Open)
                     {
-                        _data[i].Signal = true;
+                        data[i].Signal = true;
                     }
                 }
             }
-            return _data;
+            return data;
         }
-        public List<OhlcvObject> BullishHarami()
+        public List<OhlcvsObject> BullishHarami()
         {
+            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false }).ToList();
+
             for (int i = 5; i < _data.Count; i++)
             {
                 // Check whether the first candlestick matches. 
@@ -966,14 +1067,16 @@
                     // Check whether the second candlestick matches. 
                     if (_data[i - 0].Open < _data[i - 0].Close && _data[i - 0].Open > _data[i - 1].Close && _data[i - 0].Close < _data[i - 1].Open && (100 * (_data[i - 0].Close - _data[i - 0].Open) / _data[i - 0].Open < _maxShortCandleSize))
                     {
-                        _data[i].Signal = true;
+                        data[i].Signal = true;
                     }
                 }
             }
-            return _data;
+            return data;
         }
-        public List<OhlcvObject> BullishHaramiCross()
+        public List<OhlcvsObject> BullishHaramiCross()
         {
+            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false }).ToList();
+
             for (int i = 5; i < _data.Count; i++)
             {
                 // Check whether the first candlestick matches. 
@@ -982,14 +1085,16 @@
                     // Check whether the second candlestick matches. 
                     if (Math.Abs(100 * (_data[i - 0].Open - _data[i - 0].Close) / _data[i - 0].Open) < _maxDojiBodySize && _data[i - 0].Close < _data[i - 1].Open && _data[i - 1].Close < _data[i - 0].Close && _data[i - 0].Open < _data[i - 1].Open && _data[i - 1].Close < _data[i - 0].Open)
                     {
-                        _data[i].Signal = true;
+                        data[i].Signal = true;
                     }
                 }
             }
-            return _data;
+            return data;
         }
-        public List<OhlcvObject> BullishHomingPigeon()
+        public List<OhlcvsObject> BullishHomingPigeon()
         {
+            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false }).ToList();
+
             for (int i = 5; i < _data.Count; i++)
             {
                 // Check whether the first candlestick matches. 
@@ -998,14 +1103,16 @@
                     // Check whether the second candlestick matches. 
                     if (_data[i - 0].Open > _data[i - 0].Close && _data[i - 0].Open < _data[i - 1].Open && _data[i - 0].Close > _data[i - 1].Close && -100 * (_data[i - 0].Close - _data[i - 0].Open) / _data[i - 0].Open < _maxShortCandleSize)
                     {
-                        _data[i].Signal = true;
+                        data[i].Signal = true;
                     }
                 }
             }
-            return _data;
+            return data;
         }
-        public List<OhlcvObject> BullishInvertedHammer()
+        public List<OhlcvsObject> BullishInvertedHammer()
         {
+            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false }).ToList();
+
             for (int i = 5; i < _data.Count; i++)
             {
                 // Check whether the first candlestick matches. 
@@ -1014,14 +1121,16 @@
                     // Check whether the second candlestick matches. 
                     if (_data[i - 0].High < _data[i - 1].Open && _data[i - 0].High - _data[i - 0].Low > 3 * Math.Abs(_data[i - 0].Close - _data[i - 0].Open) && 100 * (_data[i - 0].Close - _data[i - 0].Low) / _data[i - 0].Close < _maxShadowSize && 100 * Math.Abs((_data[i - 0].Close - _data[i - 0].Open) / _data[i - 0].Open) < _maxCandleSize)
                     {
-                        _data[i].Signal = true;
+                        data[i].Signal = true;
                     }
                 }
             }
-            return _data;
+            return data;
         }
-        public List<OhlcvObject> BullishKicking()
+        public List<OhlcvsObject> BullishKicking()
         {
+            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false }).ToList();
+
             for (int i = 5; i < _data.Count; i++)
             {
                 // Check whether the first candlestick matches. 
@@ -1030,14 +1139,16 @@
                     // Check whether the second candlestick matches. 
                     if (_data[i - 0].Open > _data[i - 1].Open && _data[i - 0].Open < _data[i - 0].Close && 100 * (_data[i - 0].High - _data[i - 0].Close) / _data[i - 0].Close < _maxShadowSize && -100 * (_data[i - 0].Low - _data[i - 0].Open) / _data[i - 0].Open < _maxShadowSize && 100 * (_data[i - 0].Close - _data[i - 0].Open) / _data[i - 0].Open > _minCandleSize)
                     {
-                        _data[i].Signal = true;
+                        data[i].Signal = true;
                     }
                 }
             }
-            return _data;
+            return data;
         }
-        public List<OhlcvObject> BullishLadderBottom()
+        public List<OhlcvsObject> BullishLadderBottom()
         {
+            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false }).ToList();
+
             for (int i = 5; i < _data.Count; i++)
             {
                 // Check whether the first candlestick matches. 
@@ -1055,29 +1166,33 @@
                                 // Check whether the fifth candlestick matches. 
                                 if ((_data[i - 0].Open < _data[i - 0].Close && _data[i - 0].Open > _data[i - 1].Open))
                                 {
-                                    _data[i].Signal = true;
+                                    data[i].Signal = true;
                                 }
                             }
                         }
                     }
                 }
             }
-            return _data;
+            return data;
         }
-        public List<OhlcvObject> BullishLongWhiteCandlestick()
+        public List<OhlcvsObject> BullishLongWhiteCandlestick()
         {
+            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false }).ToList();
+
             for (int i = 5; i < _data.Count; i++)
             {
                 // Check whether the first candlestick matches. 
                 if (_data[i - 0].Open < _data[i - 0].Close && 100 * (_data[i - 0].Close - _data[i - 0].Open) / _data[i - 0].Open > _minCandleSize)
                 {
-                    _data[i].Signal = true;
+                    data[i].Signal = true;
                 }
             }
-            return _data;
+            return data;
         }
-        public List<OhlcvObject> BullishMatHold()
+        public List<OhlcvsObject> BullishMatHold()
         {
+            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false }).ToList();
+
             for (int i = 5; i < _data.Count; i++)
             {
                 // Check whether the first candlestick matches. 
@@ -1095,17 +1210,19 @@
                                 // Check whether the fifth candlestick matches. 
                                 if (_data[i - 0].Open < _data[i - 0].Close && _data[i - 0].Open > _data[i - 1].Open && _data[i - 0].Close > _data[i - 4].Close && _data[i - 0].Close > _data[i - 3].Open)
                                 {
-                                    _data[i].Signal = true;
+                                    data[i].Signal = true;
                                 }
                             }
                         }
                     }
                 }
             }
-            return _data;
+            return data;
         }
-        public List<OhlcvObject> BullishMatchingLow()
+        public List<OhlcvsObject> BullishMatchingLow()
         {
+            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false }).ToList();
+
             for (int i = 5; i < _data.Count; i++)
             {
                 // Check whether the first candlestick matches. 
@@ -1114,14 +1231,16 @@
                     // Check whether the second candlestick matches. 
                     if (_data[i - 0].Open > _data[i - 0].Close && _data[i - 0].Close == _data[i - 1].Close)
                     {
-                        _data[i].Signal = true;
+                        data[i].Signal = true;
                     }
                 }
             }
-            return _data;
+            return data;
         }
-        public List<OhlcvObject> BullishMeetingLines()
+        public List<OhlcvsObject> BullishMeetingLines()
         {
+            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false }).ToList();
+
             for (int i = 5; i < _data.Count; i++)
             {
                 // Check whether the first candlestick matches. 
@@ -1130,14 +1249,16 @@
                     // Check whether the second candlestick matches. 
                     if (_data[i - 0].Open < _data[i - 0].Close && _data[i - 0].Close < _data[i - 1].Close && -100 * (_data[i - 0].Open - _data[i - 0].Close) / _data[i - 0].Close > _minCandleSize && 100 * Math.Abs((_data[i - 0].Close - _data[i - 1].Close) / _data[i - 1].Close) < _maxCloseDifference)
                     {
-                        _data[i].Signal = true;
+                        data[i].Signal = true;
                     }
                 }
             }
-            return _data;
+            return data;
         }
-        public List<OhlcvObject> BullishMorningDojiStar()
+        public List<OhlcvsObject> BullishMorningDojiStar()
         {
+            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false }).ToList();
+
             for (int i = 5; i < _data.Count; i++)
             {
                 // Check whether the first candlestick matches. 
@@ -1149,15 +1270,17 @@
                         // Check whether the third candlestick matches.  
                         if ((_data[i - 0].Open < _data[i - 0].Close && _data[i - 1].Close < _data[i - 0].Close))
                         {
-                            _data[i].Signal = true;
+                            data[i].Signal = true;
                         }
                     }
                 }
             }
-            return _data;
+            return data;
         }
-        public List<OhlcvObject> BullishMorningStar()
+        public List<OhlcvsObject> BullishMorningStar()
         {
+            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false }).ToList();
+
             for (int i = 5; i < _data.Count; i++)
             {
                 // Check whether the first candlestick matches. 
@@ -1169,15 +1292,17 @@
                         // Check whether the third candlestick matches.  
                         if (_data[i - 0].Open < _data[i - 0].Close && _data[i - 1].Close < _data[i - 0].Close)
                         {
-                            _data[i].Signal = true;
+                            data[i].Signal = true;
                         }
                     }
                 }
             }
-            return _data;
+            return data;
         }
-        public List<OhlcvObject> BullishPiercingLine()
+        public List<OhlcvsObject> BullishPiercingLine()
         {
+            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false }).ToList();
+
             for (int i = 5; i < _data.Count; i++)
             {
                 // Check whether the first candlestick matches. 
@@ -1186,14 +1311,16 @@
                     // Check whether the second candlestick matches. 
                     if (_data[i - 0].Open < _data[i - 0].Close && _data[i - 0].Open < _data[i - 1].Close && _data[i - 0].Close > _data[i - 1].Close + (_data[i - 1].Open - _data[i - 1].Close) / 2)
                     {
-                        _data[i].Signal = true;
+                        data[i].Signal = true;
                     }
                 }
             }
-            return _data;
+            return data;
         }
-        public List<OhlcvObject> BullishRising3Methods()
+        public List<OhlcvsObject> BullishRising3Methods()
         {
+            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false }).ToList();
+
             for (int i = 5; i < _data.Count; i++)
             {
                 // Check whether the first candlestick matches. 
@@ -1211,17 +1338,19 @@
                                 // Check whether the fifth candlestick matches. 
                                 if (_data[i - 0].Open < _data[i - 0].Close && _data[i - 0].Open > _data[i - 1].Close && _data[i - 0].Close > _data[i - 4].Close)
                                 {
-                                    _data[i].Signal = true;
+                                    data[i].Signal = true;
                                 }
                             }
                         }
                     }
                 }
             }
-            return _data;
+            return data;
         }
-        public List<OhlcvObject> BullishSeparatingLines()
+        public List<OhlcvsObject> BullishSeparatingLines()
         {
+            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false }).ToList();
+
             for (int i = 5; i < _data.Count; i++)
             {
                 // Check whether the first candlestick matches. 
@@ -1230,14 +1359,16 @@
                     // Check whether the second candlestick matches. 
                     if (_data[i - 0].Open < _data[i - 0].Close && 100 * (_data[i - 0].Close - _data[i - 0].Open) / _data[i - 0].Open > _minCandleSize && 100 * Math.Abs((_data[i - 0].Open - _data[i - 1].Open) / _data[i - 1].Open) < _maxOpenDifference)
                     {
-                        _data[i].Signal = true;
+                        data[i].Signal = true;
                     }
                 }
             }
-            return _data;
+            return data;
         }
-        public List<OhlcvObject> BullishSideBySideWhiteLines()
+        public List<OhlcvsObject> BullishSideBySideWhiteLines()
         {
+            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false }).ToList();
+
             for (int i = 5; i < _data.Count; i++)
             {
                 // Check whether the first candlestick matches. 
@@ -1249,15 +1380,17 @@
                         // Check whether the third candlestick matches. 
                         if (_data[i - 0].Open < _data[i - 0].Close && 100 * Math.Abs((_data[i - 0].Open - _data[i - 1].Open) / _data[i - 1].Open) < _maxDifference && 100 * Math.Abs((_data[i - 0].Close - _data[i - 1].Close) / _data[i - 1].Close) < _maxDifference)
                         {
-                            _data[i].Signal = true;
+                            data[i].Signal = true;
                         }
                     }
                 }
             }
-            return _data;
+            return data;
         }
-        public List<OhlcvObject> BullishStickSandwich()
+        public List<OhlcvsObject> BullishStickSandwich()
         {
+            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false }).ToList();
+
             for (int i = 5; i < _data.Count; i++)
             {
                 // Check whether the first candlestick matches. 
@@ -1268,15 +1401,17 @@
                     {
                         if (_data[i - 0].Open > _data[i - 0].Close && _data[i - 2].Close == _data[i - 0].Close)
                         {
-                            _data[i].Signal = true;
+                            data[i].Signal = true;
                         }
                     }
                 }
             }
-            return _data;
+            return data;
         }
-        public List<OhlcvObject> BullishTriStar()
+        public List<OhlcvsObject> BullishTriStar()
         {
+            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false }).ToList();
+
             for (int i = 5; i < _data.Count; i++)
             {
                 // Check whether the first candlestick matches. 
@@ -1288,15 +1423,17 @@
                         // Check whether the third candlestick matches. 
                         if (Math.Abs(100 * (_data[i - 0].Open - _data[i - 0].Close) / _data[i - 0].Open) < _maxDojiBodySize)
                         {
-                            _data[i].Signal = true;
+                            data[i].Signal = true;
                         }
                     }
                 }
             }
-            return _data;
+            return data;
         }
-        public List<OhlcvObject> BullishTweezerBottom()
+        public List<OhlcvsObject> BullishTweezerBottom()
         {
+            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false }).ToList();
+
             for (int i = 5; i < _data.Count; i++)
             {
                 // Check whether the first candlestick matches. 
@@ -1305,14 +1442,16 @@
                     // Check whether the second candlestick matches. 
                     if (Math.Abs(100 * (_data[i - 0].Open - _data[i - 0].Close) / _data[i - 0].Open) < _maxShortCandleSize && _data[i - 0].Low == _data[i - 1].Low)
                     {
-                        _data[i].Signal = true;
+                        data[i].Signal = true;
                     }
                 }
             }
-            return _data;
+            return data;
         }
-        public List<OhlcvObject> BullishUnique3RiverBottom()
+        public List<OhlcvsObject> BullishUnique3RiverBottom()
         {
+            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false }).ToList();
+
             for (int i = 5; i < _data.Count; i++)
             {
                 // Check whether the first candlestick matches. 
@@ -1324,15 +1463,17 @@
                         // Check whether the third candlestick matches.  
                         if (_data[i - 0].Open < _data[i - 0].Close && 100 * (_data[i - 0].Close - _data[i - 0].Open) / _data[i - 0].Open < _maxShortCandleSize && _data[i - 1].Close > _data[i - 0].Close)
                         {
-                            _data[i].Signal = true;
+                            data[i].Signal = true;
                         }
                     }
                 }
             }
-            return _data;
+            return data;
         }
-        public List<OhlcvObject> BullishUpsideGap3Methods()
+        public List<OhlcvsObject> BullishUpsideGap3Methods()
         {
+            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false }).ToList();
+
             for (int i = 5; i < _data.Count; i++)
             {
                 // Check whether the first candlestick matches. 
@@ -1344,15 +1485,17 @@
                         // Check whether the third candlestick matches. 
                         if (_data[i - 0].Open > _data[i - 0].Close && _data[i - 1].Open < _data[i - 0].Open && _data[i - 2].Close > _data[i - 0].Close)
                         {
-                            _data[i].Signal = true;
+                            data[i].Signal = true;
                         }
                     }
                 }
             }
-            return _data;
+            return data;
         }
-        public List<OhlcvObject> BullishUpsideTasukiGap()
+        public List<OhlcvsObject> BullishUpsideTasukiGap()
         {
+            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false }).ToList();
+
             for (int i = 5; i < _data.Count; i++)
             {
                 // Check whether the first candlestick matches. 
@@ -1364,48 +1507,54 @@
                         // Check whether the third candlestick matches. 
                         if (_data[i - 0].Open > _data[i - 0].Close && _data[i - 1].Open < _data[i - 0].Open && _data[i - 0].Open < _data[i - 1].Close && _data[i - 1].Open > _data[i - 0].Close && _data[i - 2].Close < _data[i - 0].Close)
                         {
-                            _data[i].Signal = true;
+                            data[i].Signal = true;
                         }
                     }
                 }
             }
-            return _data;
+            return data;
         }
-        public List<OhlcvObject> BullishWhiteClosingMarubozu()
+        public List<OhlcvsObject> BullishWhiteClosingMarubozu()
         {
+            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false }).ToList();
+
             for (int i = 5; i < _data.Count; i++)
             {
                 // Check whether the first candlestick matches. 
                 if (_data[i - 0].Open < _data[i - 0].Close && _data[i - 0].Close == _data[i - 0].High && _data[i - 0].Open != _data[i - 0].Low && 100 * (_data[i - 0].Close - _data[i - 0].Open) / _data[i - 0].Open > _minCandleSize)
                 {
-                    _data[i].Signal = true;
+                    data[i].Signal = true;
                 }
             }
-            return _data;
+            return data;
         }
-        public List<OhlcvObject> BullishWhiteMarubozu()
+        public List<OhlcvsObject> BullishWhiteMarubozu()
         {
+            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false }).ToList();
+
             for (int i = 5; i < _data.Count; i++)
             {
                 // Check whether the first candlestick matches. 
                 if (_data[i - 0].Open < _data[i - 0].Close && _data[i - 0].Close == _data[i - 0].High && _data[i - 0].Open == _data[i - 0].Low && 100 * (_data[i - 0].Close - _data[i - 0].Open) / _data[i - 0].Open > _minCandleSize)
                 {
-                    _data[i].Signal = true;
+                    data[i].Signal = true;
                 }
             }
-            return _data;
+            return data;
         }
-        public List<OhlcvObject> BullishWhiteOpeningMarubozu()
+        public List<OhlcvsObject> BullishWhiteOpeningMarubozu()
         {
+            var data = _data.Select(x => new OhlcvsObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false }).ToList();
+
             for (int i = 5; i < _data.Count; i++)
             {
                 // Check whether the first candlestick matches. 
                 if (_data[i - 0].Open < _data[i - 0].Close && _data[i - 0].Close < _data[i - 0].High && _data[i - 0].Open == _data[i - 0].Low && 100 * (_data[i - 0].Close - _data[i - 0].Open) / _data[i - 0].Open > _minCandleSize)
                 {
-                    _data[i].Signal = true;
+                    data[i].Signal = true;
                 }
             }
-            return _data;
+            return data;
         }
     }
 }
