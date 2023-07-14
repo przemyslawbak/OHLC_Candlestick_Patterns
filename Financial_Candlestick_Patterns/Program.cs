@@ -1,28 +1,16 @@
 ﻿using Candlestick_Patterns;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using System;
-using System.Net.Http;
 
 Patterns _patterns;
-
-var client = new HttpClient();
-string url = string.Format("https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=IBM&interval=5min&outputsize=full&apikey=demo");
+string dataSampleFile = "json_data_sample.txt";
 string json = string.Empty;
 
-
-using (HttpResponseMessage response = await client.GetAsync(url))
+using (StreamReader r = new StreamReader(dataSampleFile))
 {
-    using (HttpContent content = response.Content)
-    {
-        json = content.ReadAsStringAsync().Result;
-    }
+    json = r.ReadToEnd();
 }
 
-var jObject = JObject.Parse(json);
-var dupa = jObject["Time Series (5min)"].ToString();
-
-var dataOhlcv = JsonConvert.DeserializeObject<List<OhlcvObject>>(dupa).Select(x => new OhlcvObject()
+var dataOhlcv = JsonConvert.DeserializeObject<List<OhlcvObject>>(json).Select(x => new OhlcvObject()
 {
     Open = x.Open,
     High = x.High,
