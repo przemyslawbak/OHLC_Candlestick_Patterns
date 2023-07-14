@@ -1,18 +1,28 @@
-﻿// See https://aka.ms/new-console-template for more information
-using Candlestick_Patterns;
-using Financial_Candlestick_Patterns;
+﻿using Candlestick_Patterns;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System;
+using System.Net.Http;
 
-//patterns: https://tickblaze.com/scripts/pattern
-
-KeyLocker _keys = new KeyLocker();
-Scrapper _scrapper = new Scrapper();
 Patterns _patterns;
 
-var key = _keys.GetApiKey();
-var url = "https://financialmodelingprep.com/api/v3/historical-chart/1min/%5EGSPC?apikey=" + key;
-var json = await _scrapper.GetHtml(url);
-var dataOhlcv = JsonConvert.DeserializeObject<List<OhlcvObject>>(json).Select(x => new OhlcvObject()
+var client = new HttpClient();
+string url = string.Format("https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=IBM&interval=5min&outputsize=full&apikey=demo");
+string json = string.Empty;
+
+
+using (HttpResponseMessage response = await client.GetAsync(url))
+{
+    using (HttpContent content = response.Content)
+    {
+        json = content.ReadAsStringAsync().Result;
+    }
+}
+
+var jObject = JObject.Parse(json);
+var dupa = jObject["Time Series (5min)"].ToString();
+
+var dataOhlcv = JsonConvert.DeserializeObject<List<OhlcvObject>>(dupa).Select(x => new OhlcvObject()
 {
     Open = x.Open,
     High = x.High,
@@ -22,8 +32,6 @@ var dataOhlcv = JsonConvert.DeserializeObject<List<OhlcvObject>>(json).Select(x 
 }).ToList();
 
 _patterns = new Patterns(dataOhlcv);
-//var ohlcvs = _patterns.GetSignals("BullishTweezerBottom");
-//var signalsCount = _patterns.GetSignalsCount("BearishLongBlackCandelstick");
 var bullishSignalsCount = _patterns.GetBullishSignalsCount();
 var bearishSignalsCount = _patterns.GetBearishSignalsCount();
 

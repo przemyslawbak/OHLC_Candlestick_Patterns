@@ -4,19 +4,19 @@ namespace Candlestick_Patterns
 {
     public class OhlcvObject
     {
-        [JsonProperty(PropertyName = "open")]
+        [JsonProperty(PropertyName = "1. open")]
         public decimal Open { get; set; }
 
-        [JsonProperty(PropertyName = "high")]
+        [JsonProperty(PropertyName = "2. high")]
         public decimal High { get; set; }
 
-        [JsonProperty(PropertyName = "low")]
+        [JsonProperty(PropertyName = "3. low")]
         public decimal Low { get; set; }
 
-        [JsonProperty(PropertyName = "close")]
+        [JsonProperty(PropertyName = "4. close")]
         public decimal Close { get; set; }
 
-        [JsonProperty(PropertyName = "volume")]
+        [JsonProperty(PropertyName = "5. volume")]
         public int Volume { get; set; }
     }
 }
