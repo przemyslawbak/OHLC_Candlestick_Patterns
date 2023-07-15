@@ -1538,7 +1538,7 @@ namespace Candlestick_Patterns
         public List<OhlcvObject> GetSignals(string patternMethodName)
         {
             Type thisType = this.GetType();
-            MethodInfo theMethod = thisType.GetMethod(patternMethodName);
+            MethodInfo theMethod = thisType.GetMethod(patternMethodName, BindingFlags.NonPublic | BindingFlags.Instance);
 
             List<OhlcvObject> result = (List<OhlcvObject>)theMethod.Invoke(this, null);
             return result;
@@ -1549,11 +1549,11 @@ namespace Candlestick_Patterns
             return GetSignals(patternMethodName).Where(x => x.Signal == true).Count();
         }
 
-        public IEnumerable<string> GetAllMethodNames()
+        public List<string> GetAllMethodNames()
         {
             List<string> methods = new List<string>();
 
-            foreach (MethodInfo item in typeof(Patterns).GetMethods())
+            foreach (MethodInfo item in typeof(Patterns).GetMethods(BindingFlags.NonPublic | BindingFlags.Instance))
             {
                 methods.Add(item.Name);
             }

@@ -2,7 +2,7 @@
 using Newtonsoft.Json;
 
 string json = string.Empty;
-
+ISignals _signals = new Signals();
 var client = new HttpClient();
 var url = "https://gist.githubusercontent.com/przemyslawbak/2058d9aeddfe09d2a26da81dfc16e5d0/raw/json_data_sample.txt";
 
@@ -23,7 +23,7 @@ var dataOhlcv = JsonConvert.DeserializeObject<List<OhlcvObject>>(json).Select(x 
     Volume = x.Volume,
 }).ToList();
 
-//var bullishSignalsCount = _patterns.GetBullishSignalsCount();
-//var bearishSignalsCount = _patterns.GetBearishSignalsCount();
+var bullishCount = _signals.GetBullishSignalsCount(dataOhlcv);
+var bearishCount = _signals.GetBearishSignalsCount(dataOhlcv);
 
 Console.ReadLine();

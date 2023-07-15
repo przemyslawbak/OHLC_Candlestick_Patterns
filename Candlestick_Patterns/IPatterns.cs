@@ -2,7 +2,7 @@
 {
     public interface IPatterns
     {
-        IEnumerable<string> GetAllMethodNames();
+        List<string> GetAllMethodNames();
         List<OhlcvObject> GetSignals(string patternName);
         int GetSignalsCount(string methodName);
     }
