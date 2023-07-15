@@ -38,7 +38,9 @@
 
         public List<OhlcvObject> GetOhlcvWithSignals(List<OhlcvObject> dataOhlcv, string patternName)
         {
-            throw new NotImplementedException();
+            _patterns = new Patterns(dataOhlcv);
+
+            return _patterns.GetSignals(patternName);
         }
 
         public int GetSignalsCount(List<OhlcvObject> dataOhlcv, string[] patternNames)

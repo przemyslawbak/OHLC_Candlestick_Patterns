@@ -44,7 +44,7 @@ namespace Candlestick_Patterns
             _maxOpenDifference = data.Select(x => Math.Abs(x.Open - x.Close)).Average(x => x) * 2;
         }
 
-        public List<OhlcvObject> Bearish2Crows()
+        private List<OhlcvObject> Bearish2Crows()
         {
             var data = _data.Select(x => new OhlcvObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false, Volume = x.Volume }).ToList();
 
@@ -66,7 +66,7 @@ namespace Candlestick_Patterns
             }
             return data;
         }
-        public List<OhlcvObject> Bearish3BlackCrows()
+        private List<OhlcvObject> Bearish3BlackCrows()
         {
             var data = _data.Select(x => new OhlcvObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false, Volume = x.Volume }).ToList();
 
@@ -88,7 +88,7 @@ namespace Candlestick_Patterns
             }
             return data;
         }
-        public List<OhlcvObject> Bearish3InsideDown()
+        private List<OhlcvObject> Bearish3InsideDown()
         {
             var data = _data.Select(x => new OhlcvObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false, Volume = x.Volume }).ToList();
 
@@ -110,7 +110,7 @@ namespace Candlestick_Patterns
             }
             return data;
         }
-        public List<OhlcvObject> Bearish3OutsideDown()
+        private List<OhlcvObject> Bearish3OutsideDown()
         {
             var data = _data.Select(x => new OhlcvObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false, Volume = x.Volume }).ToList();
 
@@ -132,7 +132,7 @@ namespace Candlestick_Patterns
             }
             return data;
         }
-        public List<OhlcvObject> Bearish3LineStrike()
+        private List<OhlcvObject> Bearish3LineStrike()
         {
             var data = _data.Select(x => new OhlcvObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false, Volume = x.Volume }).ToList();
 
@@ -157,7 +157,7 @@ namespace Candlestick_Patterns
             }
             return data;
         }
-        public List<OhlcvObject> BearishAdvanceBlock()
+        private List<OhlcvObject> BearishAdvanceBlock()
         {
             var data = _data.Select(x => new OhlcvObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false, Volume = x.Volume }).ToList();
 
@@ -179,7 +179,7 @@ namespace Candlestick_Patterns
             }
             return data;
         }
-        public List<OhlcvObject> BearishBeltHold()
+        private List<OhlcvObject> BearishBeltHold()
         {
             var data = _data.Select(x => new OhlcvObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false, Volume = x.Volume }).ToList();
 
@@ -197,7 +197,7 @@ namespace Candlestick_Patterns
             }
             return data;
         }
-        public List<OhlcvObject> BearishBlackClosingMarubozu()
+        private List<OhlcvObject> BearishBlackClosingMarubozu()
         {
             var data = _data.Select(x => new OhlcvObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false, Volume = x.Volume }).ToList();
 
@@ -211,7 +211,7 @@ namespace Candlestick_Patterns
             }
             return data;
         }
-        public List<OhlcvObject> BearishBlackMarubozu()
+        private List<OhlcvObject> BearishBlackMarubozu()
         {
             var data = _data.Select(x => new OhlcvObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false, Volume = x.Volume }).ToList();
 
@@ -225,7 +225,7 @@ namespace Candlestick_Patterns
             }
             return data;
         }
-        public List<OhlcvObject> BearishBlackOpeningMarubozu()
+        private List<OhlcvObject> BearishBlackOpeningMarubozu()
         {
             var data = _data.Select(x => new OhlcvObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false, Volume = x.Volume }).ToList();
 
@@ -239,7 +239,7 @@ namespace Candlestick_Patterns
             }
             return data;
         }
-        public List<OhlcvObject> BearishBreakaway()
+        private List<OhlcvObject> BearishBreakaway()
         {
             var data = _data.Select(x => new OhlcvObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false, Volume = x.Volume }).ToList();
 
@@ -269,7 +269,7 @@ namespace Candlestick_Patterns
             }
             return data;
         }
-        public List<OhlcvObject> BearishDeliberation()
+        private List<OhlcvObject> BearishDeliberation()
         {
             var data = _data.Select(x => new OhlcvObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false, Volume = x.Volume }).ToList();
 
@@ -291,7 +291,7 @@ namespace Candlestick_Patterns
             }
             return data;
         }
-        public List<OhlcvObject> BearishDarkCloudCover()
+        private List<OhlcvObject> BearishDarkCloudCover()
         {
             var data = _data.Select(x => new OhlcvObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false, Volume = x.Volume }).ToList();
 
@@ -309,7 +309,7 @@ namespace Candlestick_Patterns
             }
             return data;
         }
-        public List<OhlcvObject> BearishDojiStar()
+        private List<OhlcvObject> BearishDojiStar()
         {
             var data = _data.Select(x => new OhlcvObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false, Volume = x.Volume }).ToList();
 
@@ -327,7 +327,7 @@ namespace Candlestick_Patterns
             }
             return data;
         }
-        public List<OhlcvObject> BearishDownsideGap3Methods()
+        private List<OhlcvObject> BearishDownsideGap3Methods()
         {
             var data = _data.Select(x => new OhlcvObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false, Volume = x.Volume }).ToList();
 
@@ -349,7 +349,7 @@ namespace Candlestick_Patterns
             }
             return data;
         }
-        public List<OhlcvObject> BearishDownsideTasukiGap()
+        private List<OhlcvObject> BearishDownsideTasukiGap()
         {
             var data = _data.Select(x => new OhlcvObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false, Volume = x.Volume }).ToList();
 
@@ -371,7 +371,7 @@ namespace Candlestick_Patterns
             }
             return data;
         }
-        public List<OhlcvObject> BearishDragonflyDoji()
+        private List<OhlcvObject> BearishDragonflyDoji()
         {
             var data = _data.Select(x => new OhlcvObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false, Volume = x.Volume }).ToList();
 
@@ -385,7 +385,7 @@ namespace Candlestick_Patterns
             }
             return data;
         }
-        public List<OhlcvObject> BearishEngulfing()
+        private List<OhlcvObject> BearishEngulfing()
         {
             var data = _data.Select(x => new OhlcvObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false, Volume = x.Volume }).ToList();
 
@@ -403,7 +403,7 @@ namespace Candlestick_Patterns
             }
             return data;
         }
-        public List<OhlcvObject> BearishEveningDojiStar()
+        private List<OhlcvObject> BearishEveningDojiStar()
         {
             var data = _data.Select(x => new OhlcvObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false, Volume = x.Volume }).ToList();
 
@@ -425,7 +425,7 @@ namespace Candlestick_Patterns
             }
             return data;
         }
-        public List<OhlcvObject> BearishEveningStar()
+        private List<OhlcvObject> BearishEveningStar()
         {
             var data = _data.Select(x => new OhlcvObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false, Volume = x.Volume }).ToList();
 
@@ -447,7 +447,7 @@ namespace Candlestick_Patterns
             }
             return data;
         }
-        public List<OhlcvObject> BearishFalling3Methods()
+        private List<OhlcvObject> BearishFalling3Methods()
         {
             var data = _data.Select(x => new OhlcvObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false, Volume = x.Volume }).ToList();
 
@@ -477,7 +477,7 @@ namespace Candlestick_Patterns
             }
             return data;
         }
-        public List<OhlcvObject> BearishGravestoneDoji()
+        private List<OhlcvObject> BearishGravestoneDoji()
         {
             var data = _data.Select(x => new OhlcvObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false, Volume = x.Volume }).ToList();
 
@@ -495,7 +495,7 @@ namespace Candlestick_Patterns
             }
             return data;
         }
-        public List<OhlcvObject> BearishHarami()
+        private List<OhlcvObject> BearishHarami()
         {
             var data = _data.Select(x => new OhlcvObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false, Volume = x.Volume }).ToList();
 
@@ -513,7 +513,7 @@ namespace Candlestick_Patterns
             }
             return data;
         }
-        public List<OhlcvObject> BearishIdentical3Crows()
+        private List<OhlcvObject> BearishIdentical3Crows()
         {
             var data = _data.Select(x => new OhlcvObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false, Volume = x.Volume }).ToList();
 
@@ -535,7 +535,7 @@ namespace Candlestick_Patterns
             }
             return data;
         }
-        public List<OhlcvObject> BearishHaramiCross()
+        private List<OhlcvObject> BearishHaramiCross()
         {
             var data = _data.Select(x => new OhlcvObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false, Volume = x.Volume }).ToList();
 
@@ -553,7 +553,7 @@ namespace Candlestick_Patterns
             }
             return data;
         }
-        public List<OhlcvObject> BearishInNeck()
+        private List<OhlcvObject> BearishInNeck()
         {
             var data = _data.Select(x => new OhlcvObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false, Volume = x.Volume }).ToList();
 
@@ -571,7 +571,7 @@ namespace Candlestick_Patterns
             }
             return data;
         }
-        public List<OhlcvObject> BearishKicking()
+        private List<OhlcvObject> BearishKicking()
         {
             var data = _data.Select(x => new OhlcvObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false, Volume = x.Volume }).ToList();
 
@@ -589,7 +589,7 @@ namespace Candlestick_Patterns
             }
             return data;
         }
-        public List<OhlcvObject> BearishLongBlackCandelstick()
+        private List<OhlcvObject> BearishLongBlackCandelstick()
         {
             var data = _data.Select(x => new OhlcvObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false, Volume = x.Volume }).ToList();
 
@@ -603,7 +603,7 @@ namespace Candlestick_Patterns
             }
             return data;
         }
-        public List<OhlcvObject> BearishMeetingLines()
+        private List<OhlcvObject> BearishMeetingLines()
         {
             var data = _data.Select(x => new OhlcvObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false, Volume = x.Volume }).ToList();
 
@@ -621,7 +621,7 @@ namespace Candlestick_Patterns
             }
             return data;
         }
-        public List<OhlcvObject> BearishOnNeck()
+        private List<OhlcvObject> BearishOnNeck()
         {
             var data = _data.Select(x => new OhlcvObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false, Volume = x.Volume }).ToList();
 
@@ -639,7 +639,7 @@ namespace Candlestick_Patterns
             }
             return data;
         }
-        public List<OhlcvObject> BearishSeparatingLines()
+        private List<OhlcvObject> BearishSeparatingLines()
         {
             var data = _data.Select(x => new OhlcvObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false, Volume = x.Volume }).ToList();
 
@@ -657,7 +657,7 @@ namespace Candlestick_Patterns
             }
             return data;
         }
-        public List<OhlcvObject> BearishShootingStar()
+        private List<OhlcvObject> BearishShootingStar()
         {
             var data = _data.Select(x => new OhlcvObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false, Volume = x.Volume }).ToList();
 
@@ -675,7 +675,7 @@ namespace Candlestick_Patterns
             }
             return data;
         }
-        public List<OhlcvObject> BearishSideBySideWhiteLines()
+        private List<OhlcvObject> BearishSideBySideWhiteLines()
         {
             var data = _data.Select(x => new OhlcvObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false, Volume = x.Volume }).ToList();
 
@@ -697,7 +697,7 @@ namespace Candlestick_Patterns
             }
             return data;
         }
-        public List<OhlcvObject> BearishThrusting()
+        private List<OhlcvObject> BearishThrusting()
         {
             var data = _data.Select(x => new OhlcvObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false, Volume = x.Volume }).ToList();
 
@@ -715,7 +715,7 @@ namespace Candlestick_Patterns
             }
             return data;
         }
-        public List<OhlcvObject> BearishTriStar()
+        private List<OhlcvObject> BearishTriStar()
         {
             var data = _data.Select(x => new OhlcvObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false, Volume = x.Volume }).ToList();
 
@@ -737,7 +737,7 @@ namespace Candlestick_Patterns
             }
             return data;
         }
-        public List<OhlcvObject> BearishTweezerTop()
+        private List<OhlcvObject> BearishTweezerTop()
         {
             var data = _data.Select(x => new OhlcvObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false, Volume = x.Volume }).ToList();
 
@@ -755,7 +755,7 @@ namespace Candlestick_Patterns
             }
             return data;
         }
-        public List<OhlcvObject> BearishUpsideGap2Crows()
+        private List<OhlcvObject> BearishUpsideGap2Crows()
         {
             var data = _data.Select(x => new OhlcvObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false, Volume = x.Volume }).ToList();
 
@@ -777,7 +777,7 @@ namespace Candlestick_Patterns
             }
             return data;
         }
-        public List<OhlcvObject> Bullish3InsideUp()
+        private List<OhlcvObject> Bullish3InsideUp()
         {
             var data = _data.Select(x => new OhlcvObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false, Volume = x.Volume }).ToList();
 
@@ -799,7 +799,7 @@ namespace Candlestick_Patterns
             }
             return data;
         }
-        public List<OhlcvObject> Bullish3OutsideUp()
+        private List<OhlcvObject> Bullish3OutsideUp()
         {
             var data = _data.Select(x => new OhlcvObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false, Volume = x.Volume }).ToList();
 
@@ -821,7 +821,7 @@ namespace Candlestick_Patterns
             }
             return data;
         }
-        public List<OhlcvObject> Bullish3StarsintheSouth()
+        private List<OhlcvObject> Bullish3StarsintheSouth()
         {
             var data = _data.Select(x => new OhlcvObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false, Volume = x.Volume }).ToList();
 
@@ -843,7 +843,7 @@ namespace Candlestick_Patterns
             }
             return data;
         }
-        public List<OhlcvObject> Bullish3WhiteSoldiers()
+        private List<OhlcvObject> Bullish3WhiteSoldiers()
         {
             var data = _data.Select(x => new OhlcvObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false, Volume = x.Volume }).ToList();
 
@@ -865,7 +865,7 @@ namespace Candlestick_Patterns
             }
             return data;
         }
-        public List<OhlcvObject> Bullish3LineStrike()
+        private List<OhlcvObject> Bullish3LineStrike()
         {
             var data = _data.Select(x => new OhlcvObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false, Volume = x.Volume }).ToList();
 
@@ -891,7 +891,7 @@ namespace Candlestick_Patterns
             }
             return data;
         }
-        public List<OhlcvObject> BullishBeltHold()
+        private List<OhlcvObject> BullishBeltHold()
         {
             var data = _data.Select(x => new OhlcvObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false, Volume = x.Volume }).ToList();
 
@@ -909,7 +909,7 @@ namespace Candlestick_Patterns
             }
             return data;
         }
-        public List<OhlcvObject> BullishBreakaway()
+        private List<OhlcvObject> BullishBreakaway()
         {
             var data = _data.Select(x => new OhlcvObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false, Volume = x.Volume }).ToList();
 
@@ -939,7 +939,7 @@ namespace Candlestick_Patterns
             }
             return data;
         }
-        public List<OhlcvObject> BullishConcealingBabySwallow()
+        private List<OhlcvObject> BullishConcealingBabySwallow()
         {
             var data = _data.Select(x => new OhlcvObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false, Volume = x.Volume }).ToList();
 
@@ -965,7 +965,7 @@ namespace Candlestick_Patterns
             }
             return data;
         }
-        public List<OhlcvObject> BullishDojiStar()
+        private List<OhlcvObject> BullishDojiStar()
         {
             var data = _data.Select(x => new OhlcvObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false, Volume = x.Volume }).ToList();
 
@@ -983,7 +983,7 @@ namespace Candlestick_Patterns
             }
             return data;
         }
-        public List<OhlcvObject> BullishDragonflyDoji()
+        private List<OhlcvObject> BullishDragonflyDoji()
         {
             var data = _data.Select(x => new OhlcvObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false, Volume = x.Volume }).ToList();
 
@@ -997,7 +997,7 @@ namespace Candlestick_Patterns
             }
             return data;
         }
-        public List<OhlcvObject> BullishEngulfing()
+        private List<OhlcvObject> BullishEngulfing()
         {
             var data = _data.Select(x => new OhlcvObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false, Volume = x.Volume }).ToList();
 
@@ -1015,7 +1015,7 @@ namespace Candlestick_Patterns
             }
             return data;
         }
-        public List<OhlcvObject> BullishGravestoneDoji()
+        private List<OhlcvObject> BullishGravestoneDoji()
         {
             var data = _data.Select(x => new OhlcvObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false, Volume = x.Volume }).ToList();
 
@@ -1033,7 +1033,7 @@ namespace Candlestick_Patterns
             }
             return data;
         }
-        public List<OhlcvObject> BullishHarami()
+        private List<OhlcvObject> BullishHarami()
         {
             var data = _data.Select(x => new OhlcvObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false, Volume = x.Volume }).ToList();
 
@@ -1051,7 +1051,7 @@ namespace Candlestick_Patterns
             }
             return data;
         }
-        public List<OhlcvObject> BullishHaramiCross()
+        private List<OhlcvObject> BullishHaramiCross()
         {
             var data = _data.Select(x => new OhlcvObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false, Volume = x.Volume }).ToList();
 
@@ -1069,7 +1069,7 @@ namespace Candlestick_Patterns
             }
             return data;
         }
-        public List<OhlcvObject> BullishHomingPigeon()
+        private List<OhlcvObject> BullishHomingPigeon()
         {
             var data = _data.Select(x => new OhlcvObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false, Volume = x.Volume }).ToList();
 
@@ -1087,7 +1087,7 @@ namespace Candlestick_Patterns
             }
             return data;
         }
-        public List<OhlcvObject> BullishInvertedHammer()
+        private List<OhlcvObject> BullishInvertedHammer()
         {
             var data = _data.Select(x => new OhlcvObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false, Volume = x.Volume }).ToList();
 
@@ -1105,7 +1105,7 @@ namespace Candlestick_Patterns
             }
             return data;
         }
-        public List<OhlcvObject> BullishKicking()
+        private List<OhlcvObject> BullishKicking()
         {
             var data = _data.Select(x => new OhlcvObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false, Volume = x.Volume }).ToList();
 
@@ -1123,7 +1123,7 @@ namespace Candlestick_Patterns
             }
             return data;
         }
-        public List<OhlcvObject> BullishLadderBottom()
+        private List<OhlcvObject> BullishLadderBottom()
         {
             var data = _data.Select(x => new OhlcvObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false, Volume = x.Volume }).ToList();
 
@@ -1153,7 +1153,7 @@ namespace Candlestick_Patterns
             }
             return data;
         }
-        public List<OhlcvObject> BullishLongWhiteCandlestick()
+        private List<OhlcvObject> BullishLongWhiteCandlestick()
         {
             var data = _data.Select(x => new OhlcvObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false, Volume = x.Volume }).ToList();
 
@@ -1167,7 +1167,7 @@ namespace Candlestick_Patterns
             }
             return data;
         }
-        public List<OhlcvObject> BullishMatHold()
+        private List<OhlcvObject> BullishMatHold()
         {
             var data = _data.Select(x => new OhlcvObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false, Volume = x.Volume }).ToList();
 
@@ -1197,7 +1197,7 @@ namespace Candlestick_Patterns
             }
             return data;
         }
-        public List<OhlcvObject> BullishMatchingLow()
+        private List<OhlcvObject> BullishMatchingLow()
         {
             var data = _data.Select(x => new OhlcvObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false, Volume = x.Volume }).ToList();
 
@@ -1215,7 +1215,7 @@ namespace Candlestick_Patterns
             }
             return data;
         }
-        public List<OhlcvObject> BullishMeetingLines()
+        private List<OhlcvObject> BullishMeetingLines()
         {
             var data = _data.Select(x => new OhlcvObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false, Volume = x.Volume }).ToList();
 
@@ -1233,7 +1233,7 @@ namespace Candlestick_Patterns
             }
             return data;
         }
-        public List<OhlcvObject> BullishMorningDojiStar()
+        private List<OhlcvObject> BullishMorningDojiStar()
         {
             var data = _data.Select(x => new OhlcvObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false, Volume = x.Volume }).ToList();
 
@@ -1255,7 +1255,7 @@ namespace Candlestick_Patterns
             }
             return data;
         }
-        public List<OhlcvObject> BullishMorningStar()
+        private List<OhlcvObject> BullishMorningStar()
         {
             var data = _data.Select(x => new OhlcvObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false, Volume = x.Volume }).ToList();
 
@@ -1277,7 +1277,7 @@ namespace Candlestick_Patterns
             }
             return data;
         }
-        public List<OhlcvObject> BullishPiercingLine()
+        private List<OhlcvObject> BullishPiercingLine()
         {
             var data = _data.Select(x => new OhlcvObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false, Volume = x.Volume }).ToList();
 
@@ -1295,7 +1295,7 @@ namespace Candlestick_Patterns
             }
             return data;
         }
-        public List<OhlcvObject> BullishRising3Methods()
+        private List<OhlcvObject> BullishRising3Methods()
         {
             var data = _data.Select(x => new OhlcvObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false, Volume = x.Volume }).ToList();
 
@@ -1325,7 +1325,7 @@ namespace Candlestick_Patterns
             }
             return data;
         }
-        public List<OhlcvObject> BullishSeparatingLines()
+        private List<OhlcvObject> BullishSeparatingLines()
         {
             var data = _data.Select(x => new OhlcvObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false, Volume = x.Volume }).ToList();
 
@@ -1343,7 +1343,7 @@ namespace Candlestick_Patterns
             }
             return data;
         }
-        public List<OhlcvObject> BullishSideBySideWhiteLines()
+        private List<OhlcvObject> BullishSideBySideWhiteLines()
         {
             var data = _data.Select(x => new OhlcvObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false, Volume = x.Volume }).ToList();
 
@@ -1365,7 +1365,7 @@ namespace Candlestick_Patterns
             }
             return data;
         }
-        public List<OhlcvObject> BullishStickSandwich()
+        private List<OhlcvObject> BullishStickSandwich()
         {
             var data = _data.Select(x => new OhlcvObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false, Volume = x.Volume }).ToList();
 
@@ -1386,7 +1386,7 @@ namespace Candlestick_Patterns
             }
             return data;
         }
-        public List<OhlcvObject> BullishTriStar()
+        private List<OhlcvObject> BullishTriStar()
         {
             var data = _data.Select(x => new OhlcvObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false, Volume = x.Volume }).ToList();
 
@@ -1408,7 +1408,7 @@ namespace Candlestick_Patterns
             }
             return data;
         }
-        public List<OhlcvObject> BullishTweezerBottom()
+        private List<OhlcvObject> BullishTweezerBottom()
         {
             var data = _data.Select(x => new OhlcvObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false, Volume = x.Volume }).ToList();
 
@@ -1426,7 +1426,7 @@ namespace Candlestick_Patterns
             }
             return data;
         }
-        public List<OhlcvObject> BullishUnique3RiverBottom()
+        private List<OhlcvObject> BullishUnique3RiverBottom()
         {
             var data = _data.Select(x => new OhlcvObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false, Volume = x.Volume }).ToList();
 
@@ -1448,7 +1448,7 @@ namespace Candlestick_Patterns
             }
             return data;
         }
-        public List<OhlcvObject> BullishUpsideGap3Methods()
+        private List<OhlcvObject> BullishUpsideGap3Methods()
         {
             var data = _data.Select(x => new OhlcvObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false, Volume = x.Volume }).ToList();
 
@@ -1470,7 +1470,7 @@ namespace Candlestick_Patterns
             }
             return data;
         }
-        public List<OhlcvObject> BullishUpsideTasukiGap()
+        private List<OhlcvObject> BullishUpsideTasukiGap()
         {
             var data = _data.Select(x => new OhlcvObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false, Volume = x.Volume }).ToList();
 
@@ -1492,7 +1492,7 @@ namespace Candlestick_Patterns
             }
             return data;
         }
-        public List<OhlcvObject> BullishWhiteClosingMarubozu()
+        private List<OhlcvObject> BullishWhiteClosingMarubozu()
         {
             var data = _data.Select(x => new OhlcvObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false, Volume = x.Volume }).ToList();
 
@@ -1506,7 +1506,7 @@ namespace Candlestick_Patterns
             }
             return data;
         }
-        public List<OhlcvObject> BullishWhiteMarubozu()
+        private List<OhlcvObject> BullishWhiteMarubozu()
         {
             var data = _data.Select(x => new OhlcvObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false, Volume = x.Volume }).ToList();
 
@@ -1520,7 +1520,7 @@ namespace Candlestick_Patterns
             }
             return data;
         }
-        public List<OhlcvObject> BullishWhiteOpeningMarubozu()
+        private List<OhlcvObject> BullishWhiteOpeningMarubozu()
         {
             var data = _data.Select(x => new OhlcvObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = false, Volume = x.Volume }).ToList();
 
@@ -1535,7 +1535,7 @@ namespace Candlestick_Patterns
             return data;
         }
 
-        private List<OhlcvObject> GetSignals(string patternMethodName)
+        public List<OhlcvObject> GetSignals(string patternMethodName)
         {
             Type thisType = this.GetType();
             MethodInfo theMethod = thisType.GetMethod(patternMethodName);
@@ -1547,34 +1547,6 @@ namespace Candlestick_Patterns
         public int GetSignalsCount(string patternMethodName)
         {
             return GetSignals(patternMethodName).Where(x => x.Signal == true).Count();
-        }
-
-        private int GetBullishSignalsCount()
-        {
-            var bullish = GetAllMethods().Where(x => x.StartsWith("Bullish")).ToList();
-
-            List<int> bullishQty = new List<int>();
-
-            foreach (var methodName in bullish)
-            {
-                bullishQty.Add(GetSignalsCount(methodName));
-            }
-
-            return bullishQty.Sum(x => x);
-        }
-
-        private int GetBearishSignalsCount()
-        {
-            var bearish = GetAllMethods().Where(x => x.StartsWith("Bearish")).ToList();
-
-            List<int> bearishhQty = new List<int>();
-
-            foreach (var methodName in bearish)
-            {
-                bearishhQty.Add(GetSignalsCount(methodName));
-            }
-
-            return bearishhQty.Sum(x => x);
         }
 
         public IEnumerable<string> GetAllMethodNames()
