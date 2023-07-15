@@ -1,0 +1,6 @@
+﻿- test not present method name
+- handle not present method names
+- create pattern name dictionary?
+- create API docs
+- create README file
+- create NuGet
