@@ -1,7 +1,6 @@
 ﻿using Candlestick_Patterns;
 using Newtonsoft.Json;
 
-Patterns _patterns;
 string json = string.Empty;
 
 var client = new HttpClient();
@@ -24,8 +23,7 @@ var dataOhlcv = JsonConvert.DeserializeObject<List<OhlcvObject>>(json).Select(x 
     Volume = x.Volume,
 }).ToList();
 
-_patterns = new Patterns(dataOhlcv);
-var bullishSignalsCount = _patterns.GetBullishSignalsCount();
-var bearishSignalsCount = _patterns.GetBearishSignalsCount();
+//var bullishSignalsCount = _patterns.GetBullishSignalsCount();
+//var bearishSignalsCount = _patterns.GetBearishSignalsCount();
 
 Console.ReadLine();
