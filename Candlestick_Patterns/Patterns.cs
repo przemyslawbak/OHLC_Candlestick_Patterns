@@ -2,7 +2,7 @@
 
 namespace Candlestick_Patterns
 {
-    public class Patterns
+    public class Patterns : IPatterns
     {
         private readonly decimal _minCandleSize;
         private readonly decimal _maxShortCandleSize;
@@ -1535,7 +1535,7 @@ namespace Candlestick_Patterns
             return data;
         }
 
-        public List<OhlcvObject> GetSignals(string patternMethodName)
+        private List<OhlcvObject> GetSignals(string patternMethodName)
         {
             Type thisType = this.GetType();
             MethodInfo theMethod = thisType.GetMethod(patternMethodName);
@@ -1546,9 +1546,7 @@ namespace Candlestick_Patterns
 
         public int GetSignalsCount(string patternMethodName)
         {
-            List<OhlcvObject> result = GetSignals(patternMethodName);
-
-            return result.Where(x => x.Signal == true).Count();
+            return GetSignals(patternMethodName).Where(x => x.Signal == true).Count();
         }
 
         public int GetBullishSignalsCount()
@@ -1579,7 +1577,7 @@ namespace Candlestick_Patterns
             return bearishhQty.Sum(x => x);
         }
 
-        private List<string> GetAllMethods()
+        public IEnumerable<string> GetAllMethodNames()
         {
             List<string> methods = new List<string>();
 
