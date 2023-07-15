@@ -22,12 +22,23 @@
 
         public int GetBullishSignalsCount(List<OhlcvObject> dataOhlcv)
         {
-            throw new NotImplementedException();
+            _patterns = new Patterns(dataOhlcv);
+
+            var bullishMethodNames = _patterns.GetAllMethodNames().Where(x => x.StartsWith("Bearish")).ToList();
+
+            List<int> bullishQty = new List<int>();
+
+            foreach (var methodName in bullishMethodNames)
+            {
+                bullishQty.Add(_patterns.GetSignalsCount(methodName));
+            }
+
+            return bullishQty.Sum(x => x);
         }
 
         public List<OhlcvObject> GetOhlcvWithSignals(List<OhlcvObject> dataOhlcv, string patternName)
         {
-            throw new NotImplementedException();
+            _patterns = new Patterns(dataOhlcv);
         }
 
         public int GetSignalsCount(List<OhlcvObject> dataOhlcv, string[] patternNames)

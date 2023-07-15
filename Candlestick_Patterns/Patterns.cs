@@ -1549,7 +1549,7 @@ namespace Candlestick_Patterns
             return GetSignals(patternMethodName).Where(x => x.Signal == true).Count();
         }
 
-        public int GetBullishSignalsCount()
+        private int GetBullishSignalsCount()
         {
             var bullish = GetAllMethods().Where(x => x.StartsWith("Bullish")).ToList();
 
@@ -1563,7 +1563,7 @@ namespace Candlestick_Patterns
             return bullishQty.Sum(x => x);
         }
 
-        public int GetBearishSignalsCount()
+        private int GetBearishSignalsCount()
         {
             var bearish = GetAllMethods().Where(x => x.StartsWith("Bearish")).ToList();
 
