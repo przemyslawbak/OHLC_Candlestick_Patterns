@@ -25,5 +25,11 @@ var dataOhlcv = JsonConvert.DeserializeObject<List<OhlcvObject>>(json).Select(x 
 
 var bullishCount = _signals.GetBullishSignalsCount(dataOhlcv);
 var bearishCount = _signals.GetBearishSignalsCount(dataOhlcv);
+var signalsCountMulti = _signals.GetSignalsCount(dataOhlcv, new string[] { "BearishBeltHold", "BearishBlackClosingMarubozu" });
+var signalsCountSingle = _signals.GetSignalsCount(dataOhlcv, "BearishBlackClosingMarubozu" );
+var signalsCountMultiWeightened = _signals.GetSignalsIndex(dataOhlcv, new Dictionary<string, decimal>() { { "BearishBeltHold", 0.5M }, { "BearishBlackClosingMarubozu", 0.5M } });
+var signalsCountSingleWeightened = _signals.GetSignalsIndex(dataOhlcv, "BearishBlackClosingMarubozu", 0.5M );
+var ohlcSingleSignals = _signals.GetOhlcvWithSignals(dataOhlcv, "BearishBlackClosingMarubozu");
+var ohlcMultiSignals = _signals.GetOhlcvWithSignals(dataOhlcv, new string[] { "BearishBeltHold", "BearishBlackClosingMarubozu" });
 
 Console.ReadLine();

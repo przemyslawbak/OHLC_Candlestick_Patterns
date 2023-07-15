@@ -1541,6 +1541,7 @@ namespace Candlestick_Patterns
             MethodInfo theMethod = thisType.GetMethod(patternMethodName, BindingFlags.NonPublic | BindingFlags.Instance);
 
             List<OhlcvObject> result = (List<OhlcvObject>)theMethod.Invoke(this, null);
+
             return result;
         }
 
