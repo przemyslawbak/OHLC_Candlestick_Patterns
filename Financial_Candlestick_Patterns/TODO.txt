@@ -4,5 +4,5 @@ NO - create pattern name dictionary?
 OK - _inBarMaxChange value
 OK - create API docs
 OK - create README file
-- create NuGet
-- unit tests
+OK - create NuGet
+NO - unit tests
