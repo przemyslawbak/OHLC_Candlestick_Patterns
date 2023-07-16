@@ -80,79 +80,79 @@ Console.ReadLine();
 ```
 ## Pattern list
 
-Bearish 2 Crows
-Bearish 3 BlackCrows
-Bearish 3 Inside Down
-Bearish 3 Outside Down
-Bearish 3 Line Strike
-Bearish Advance Block
-Bearish Belt Hold
-Bearish Black Closing Marubozu
-Bearish Black Marubozu
-Bearish Black Opening Marubozu
-Bearish Breakaway
-Bearish Deliberation
-Bearish Dark Cloud Cover
-Bearish Doji Star
-Bearish Downside Gap 3 Methods
-Bearish Downside Tasuki Gap
-Bearish Dragonfly Doji
-Bearish Engulfing
-Bearish Evening Doji Star
-Bearish Evening Star
-Bearish Falling 3 Methods
-Bearish Gravestone Doji
-Bearish Harami
-Bearish Identical 3 Crows
-Bearish Harami Cross
-Bearish In Neck
-Bearish Kicking
-Bearish Long Black Candelstick
-Bearish Meeting Lines
-Bearish On Neck
-Bearish Separating Lines
-Bearish Shooting Star
-Bearish Side By Side White Lines
-Bearish Thrusting
-Bearish Tri Star
-Bearish Tweezer Top
-Bearish Upside Gap 2 Crows
-Bullish 3 Inside Up
-Bullish 3 Outside Up
-Bullish 3 Starsinthe South
-Bullish 3 White Soldiers
-Bullish 3 Line Strike
-Bullish Belt Hold
-Bullish Breakaway
-Bullish Concealing Baby Swallow
-Bullish Doji Star
-Bullish Dragonfly Doji
-Bullish Engulfing
-Bullish Gravestone Doji
-Bullish Harami
-Bullish Harami Cross
-Bullish Homing Pigeon
-Bullish Inverted Hammer
-Bullish Kicking
-Bullish Ladder Bottom
-Bullish Long White Candlestick
-Bullish Mat Hold
-Bullish Matching Low
-Bullish Meeting Lines
-Bullish Morning Doji Star
-Bullish Morning Star
-Bullish Piercing Line
-Bullish Rising 3 Methods
-Bullish Separating Lines
-Bullish Side By Side White Lines
-Bullish Stick Sandwich
-Bullish Tri Star
-Bullish Tweezer Bottom
-Bullish Unique 3 River Bottom
-Bullish Upside Gap 3 Methods
-Bullish Upside Tasuki Gap
-Bullish White Closing Marubozu
-Bullish White Marubozu
+Bearish 2 Crows,
+Bearish 3 BlackCrows,
+Bearish 3 Inside Down,
+Bearish 3 Outside Down,
+Bearish 3 Line Strike,
+Bearish Advance Block,
+Bearish Belt Hold,
+Bearish Black Closing Marubozu,
+Bearish Black Marubozu,
+Bearish Black Opening Marubozu,
+Bearish Breakaway,
+Bearish Deliberation,
+Bearish Dark Cloud Cover,
+Bearish Doji Star,
+Bearish Downside Gap 3 Methods,
+Bearish Downside Tasuki Gap,
+Bearish Dragonfly Doji,
+Bearish Engulfing,
+Bearish Evening Doji Star,
+Bearish Evening Star,
+Bearish Falling 3 Methods,
+Bearish Gravestone Doji,
+Bearish Harami,
+Bearish Identical 3 Crows,
+Bearish Harami Cross,
+Bearish In Neck,
+Bearish Kicking,
+Bearish Long Black Candelstick,
+Bearish Meeting Lines,
+Bearish On Neck,
+Bearish Separating Lines,
+Bearish Shooting Star,
+Bearish Side By Side White Lines,
+Bearish Thrusting,
+Bearish Tri Star,
+Bearish Tweezer Top,
+Bearish Upside Gap 2 Crows,
+Bullish 3 Inside Up,
+Bullish 3 Outside Up,
+Bullish 3 Starsinthe South,
+Bullish 3 White Soldiers,
+Bullish 3 Line Strike,
+Bullish Belt Hold,
+Bullish Breakaway,
+Bullish Concealing Baby Swallow,
+Bullish Doji Star,
+Bullish Dragonfly Doji,
+Bullish Engulfing,
+Bullish Gravestone Doji,
+Bullish Harami,
+Bullish Harami Cross,
+Bullish Homing Pigeon,
+Bullish Inverted Hammer,
+Bullish Kicking,
+Bullish Ladder Bottom,
+Bullish Long White Candlestick,
+Bullish Mat Hold,
+Bullish Matching Low,
+Bullish Meeting Lines,
+Bullish Morning Doji Star,
+Bullish Morning Star,
+Bullish Piercing Line,
+Bullish Rising 3 Methods,
+Bullish Separating Lines,
+Bullish Side By Side White Lines,
+Bullish Stick Sandwich,
+Bullish Tri Star,
+Bullish Tweezer Bottom,
+Bullish Unique 3 River Bottom,
+Bullish Upside Gap 3 Methods,
+Bullish Upside Tasuki Gap,
+Bullish White Closing Marubozu,
+Bullish White Marubozu,
 Bullish White Opening Marubozu
   
 ## Production
