@@ -4,6 +4,8 @@
 
 The project was created due to the lack of a similar library for C#. It was preceded by the research for algorithmic formulas for individual OHLC patterns. As a result, you can test the OHLC candlestick list for 37 bullish and 37 bearish OHLC price action patterns. A list of patterns and an example of use can be found below.
 
+NuGet package can be found here: https://www.nuget.org/packages/OHLC_Candlestick_Patterns
+
 ## Features
 
 1. Counting bullish signals that appear in the OHLC list.
@@ -27,6 +29,9 @@ The project was created due to the lack of a similar library for C#. It was prec
 ## Example usage
 
 The example of use is prepared for a console application in the .NET 7.0 framework using sample data placed in a file in GitHub Gist.
+
+To use this package please install latest NuGet version from: https://www.nuget.org/packages/OHLC_Candlestick_Patterns
+
 ```
 using Candlestick_Patterns;
 using Newtonsoft.Json;
