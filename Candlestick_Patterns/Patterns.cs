@@ -4,13 +4,13 @@ namespace Candlestick_Patterns
 {
     public class Patterns : IPatterns
     {
+        private readonly decimal _inBarMaxChange;
         private readonly decimal _minCandleSize;
         private readonly decimal _maxShortCandleSize;
         private readonly decimal _minCandleDifference;
         private readonly decimal _maxDojiShadowSizes;
         private readonly decimal _maxDojiBodySize;
         private readonly decimal _minCandleShadowSize;
-        private readonly decimal _inBarMaxChange;
         private readonly decimal _maxShadowSize;
         private readonly decimal _maxPriceDifference;
         private readonly decimal _maxCloseDifference;
@@ -1535,10 +1535,11 @@ namespace Candlestick_Patterns
             return data;
         }
 
-        public List<OhlcvObject> GetSignals(string patternMethodName)
+        public List<OhlcvObject> GetSignals(string patternName)
         {
+            var methodName = patternName.Trim().Replace(" ", "");
             Type thisType = this.GetType();
-            MethodInfo theMethod = thisType.GetMethod(patternMethodName, BindingFlags.NonPublic | BindingFlags.Instance);
+            MethodInfo theMethod = thisType.GetMethod(methodName, BindingFlags.NonPublic | BindingFlags.Instance);
 
             if (theMethod != null)
             {
@@ -1552,9 +1553,10 @@ namespace Candlestick_Patterns
             }
         }
 
-        public int GetSignalsCount(string patternMethodName)
+        public int GetSignalsCount(string patternName)
         {
-            return GetSignals(patternMethodName).Where(x => x.Signal == true).Count();
+            var methodName = patternName.Trim().Replace(" ", "");
+            return GetSignals(methodName).Where(x => x.Signal == true).Count();
         }
 
         public List<string> GetAllMethodNames()

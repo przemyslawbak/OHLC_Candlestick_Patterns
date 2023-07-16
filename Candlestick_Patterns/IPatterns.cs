@@ -4,6 +4,6 @@
     {
         List<string> GetAllMethodNames();
         List<OhlcvObject> GetSignals(string patternName);
-        int GetSignalsCount(string methodName);
+        int GetSignalsCount(string patternName);
     }
 }
