@@ -22,6 +22,7 @@ The project was created due to the lack of a similar library for C#. It was prec
   - .NET 7.0 Standars Class Library,
   - .NET 7.0 Console project for the presentation of examples,
   - XUnit for unit tests.
+  - Newtonsoft.Json in Console project
 
 ## Example usage
 
