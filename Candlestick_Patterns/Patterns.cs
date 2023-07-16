@@ -4,44 +4,45 @@ namespace Candlestick_Patterns
 {
     public class Patterns : IPatterns
     {
-        private readonly decimal _inBarMaxChange;
-        private readonly decimal _minCandleSize;
-        private readonly decimal _maxShortCandleSize;
-        private readonly decimal _minCandleDifference;
-        private readonly decimal _maxDojiShadowSizes;
-        private readonly decimal _maxDojiBodySize;
-        private readonly decimal _minCandleShadowSize;
-        private readonly decimal _maxShadowSize;
-        private readonly decimal _maxPriceDifference;
-        private readonly decimal _maxCloseDifference;
-        private readonly decimal _maxCandleBodySize;
-        private readonly decimal _maxCandleShadowSize;
-        private readonly decimal _maxDifference;
-        private readonly decimal _maxShadowChange;
-        private readonly decimal _maxCloseHighChange;
-        private readonly decimal _maxCandleSize;
-        private readonly decimal _maxOpenDifference;
+        private readonly decimal _insideBarMaxChange;
+        private readonly decimal _minimumCandleSize;
+        private readonly decimal _maximumShortCandleSize;
+        private readonly decimal _minimumCandleDifference;
+        private readonly decimal _maximumDojiShadowSizes;
+        private readonly decimal _maximumDojiBodySize;
+        private readonly decimal _minimumCandleShadowSize;
+        private readonly decimal _maximumShadowSize;
+        private readonly decimal _maximumPriceDifference;
+        private readonly decimal _maximumCloseDifference;
+        private readonly decimal _maximumCandleBodySize;
+        private readonly decimal _maximumCandleShadowSize;
+        private readonly decimal _maximumDifference;
+        private readonly decimal _maximumShadowChange;
+        private readonly decimal _maximumCloseHighChange;
+        private readonly decimal _maximumCandleSize;
+        private readonly decimal _maximumOpenDifference;
 
         private readonly List<OhlcvObject> _data;
         public Patterns(List<OhlcvObject> data)
         {
             _data = data;
-            _minCandleSize = data.Select(x => Math.Abs(x.Open - x.Close)).Average(x => x) * 2;
-            _maxShortCandleSize = data.Select(x => Math.Abs(x.Open - x.Close)).Average(x => x) / 2;
-            _minCandleDifference = data.Select(x => Math.Abs(x.Open - x.Close)).Average(x => x) / 2;
-            _maxDojiShadowSizes = data.Select(x => Math.Abs(x.Open - x.Close)).Average(x => x) / 2;
-            _maxDojiBodySize = data.Select(x => Math.Abs(x.Open - x.Close)).Average(x => x) / 2;
-            _minCandleShadowSize = data.Select(x => Math.Abs(x.Open - x.Close)).Average(x => x) * 2;
-            _maxShadowSize = data.Select(x => Math.Abs(x.Open - x.Close)).Average(x => x) * 3;
-            _maxPriceDifference = data.Select(x => Math.Abs(x.Open - x.Close)).Average(x => x) * 3;
-            _maxCloseDifference = data.Select(x => Math.Abs(x.Open - x.Close)).Average(x => x) * 3;
-            _maxCandleBodySize = data.Select(x => Math.Abs(x.Open - x.Close)).Average(x => x) / 2;
-            _maxCandleShadowSize = data.Select(x => Math.Abs(x.Open - x.Close)).Average(x => x) / 2;
-            _maxDifference = data.Select(x => Math.Abs(x.Open - x.Close)).Average(x => x) / 2;
-            _maxShadowChange = data.Select(x => Math.Abs(x.Open - x.Close)).Average(x => x) / 2;
-            _maxCloseHighChange = data.Select(x => Math.Abs(x.Open - x.Close)).Average(x => x) * 3;
-            _maxCandleSize = data.Select(x => Math.Abs(x.Open - x.Close)).Average(x => x) / 2;
-            _maxOpenDifference = data.Select(x => Math.Abs(x.Open - x.Close)).Average(x => x) * 2;
+            _insideBarMaxChange = data.Select(x => Math.Abs(x.Open - x.Close)).Average(x => x) / 2;
+            _minimumCandleSize = data.Select(x => Math.Abs(x.Open - x.Close)).Average(x => x) * 2;
+            _maximumShortCandleSize = data.Select(x => Math.Abs(x.Open - x.Close)).Average(x => x) / 2;
+            _minimumCandleDifference = data.Select(x => Math.Abs(x.Open - x.Close)).Average(x => x) / 2;
+            _maximumDojiShadowSizes = data.Select(x => Math.Abs(x.Open - x.Close)).Average(x => x) / 2;
+            _maximumDojiBodySize = data.Select(x => Math.Abs(x.Open - x.Close)).Average(x => x) / 2;
+            _minimumCandleShadowSize = data.Select(x => Math.Abs(x.Open - x.Close)).Average(x => x) * 2;
+            _maximumShadowSize = data.Select(x => Math.Abs(x.Open - x.Close)).Average(x => x) * 3;
+            _maximumPriceDifference = data.Select(x => Math.Abs(x.Open - x.Close)).Average(x => x) * 3;
+            _maximumCloseDifference = data.Select(x => Math.Abs(x.Open - x.Close)).Average(x => x) * 3;
+            _maximumCandleBodySize = data.Select(x => Math.Abs(x.Open - x.Close)).Average(x => x) / 2;
+            _maximumCandleShadowSize = data.Select(x => Math.Abs(x.Open - x.Close)).Average(x => x) / 2;
+            _maximumDifference = data.Select(x => Math.Abs(x.Open - x.Close)).Average(x => x) / 2;
+            _maximumShadowChange = data.Select(x => Math.Abs(x.Open - x.Close)).Average(x => x) / 2;
+            _maximumCloseHighChange = data.Select(x => Math.Abs(x.Open - x.Close)).Average(x => x) * 3;
+            _maximumCandleSize = data.Select(x => Math.Abs(x.Open - x.Close)).Average(x => x) / 2;
+            _maximumOpenDifference = data.Select(x => Math.Abs(x.Open - x.Close)).Average(x => x) * 2;
         }
 
         private List<OhlcvObject> Bearish2Crows()
@@ -50,13 +51,13 @@ namespace Candlestick_Patterns
 
             for (int i = 5; i < _data.Count; i++)
             {
-                // Check whether the first candlestick matches. 
-                if (_data[i - 2].Open < _data[i - 2].Close && 100 * (_data[i - 2].Close - _data[i - 2].Open) / _data[i - 2].Open > _minCandleSize)
+                
+                if (_data[i - 2].Open < _data[i - 2].Close && 100 * (_data[i - 2].Close - _data[i - 2].Open) / _data[i - 2].Open > _minimumCandleSize)
                 {
-                    // Check whether the second candlestick matches. 
+                    
                     if (_data[i - 1].Open > _data[i - 1].Close && _data[i - 1].Low > _data[i - 2].High)
                     {
-                        // Check whether the third candlestick matches. 
+                        
                         if (_data[i - 0].Open > _data[i - 0].Close && _data[i - 1].Close <= _data[i - 0].Open && _data[i - 0].Open <= _data[i - 1].Open && _data[i - 2].Open <= _data[i - 0].Close && _data[i - 0].Close <= _data[i - 2].Close)
                         {
                             data[i].Signal = true;
@@ -72,14 +73,14 @@ namespace Candlestick_Patterns
 
             for (int i = 5; i < _data.Count; i++)
             {
-                // Check whether the first candlestick matches. 
-                if (_data[i - 2].Open > _data[i - 2].Close && -100 * (_data[i - 2].Close - _data[i - 2].Open) / _data[i - 2].Open > _minCandleSize)
+                
+                if (_data[i - 2].Open > _data[i - 2].Close && -100 * (_data[i - 2].Close - _data[i - 2].Open) / _data[i - 2].Open > _minimumCandleSize)
                 {
-                    // Check whether the second candlestick matches. 
-                    if (_data[i - 1].Open > _data[i - 1].Close && _data[i - 1].Close < _data[i - 2].Close && _data[i - 2].Close <= _data[i - 1].Open && _data[i - 1].Open <= _data[i - 2].Open && -100 * (_data[i - 1].Close - _data[i - 1].Open) / _data[i - 1].Open > _minCandleSize)
+                    
+                    if (_data[i - 1].Open > _data[i - 1].Close && _data[i - 1].Close < _data[i - 2].Close && _data[i - 2].Close <= _data[i - 1].Open && _data[i - 1].Open <= _data[i - 2].Open && -100 * (_data[i - 1].Close - _data[i - 1].Open) / _data[i - 1].Open > _minimumCandleSize)
                     {
-                        // Check whether the third candlestick matches. 
-                        if (_data[i - 0].Open > _data[i - 0].Close && _data[i - 1].Close < _data[i - 0].Open && _data[i - 0].Open < _data[i - 1].Open && _data[i - 0].Close < _data[i - 1].Close && -100 * (_data[i - 0].Close - _data[i - 0].Open) / _data[i - 0].Open > _minCandleSize)
+                        
+                        if (_data[i - 0].Open > _data[i - 0].Close && _data[i - 1].Close < _data[i - 0].Open && _data[i - 0].Open < _data[i - 1].Open && _data[i - 0].Close < _data[i - 1].Close && -100 * (_data[i - 0].Close - _data[i - 0].Open) / _data[i - 0].Open > _minimumCandleSize)
                         {
                             data[i].Signal = true;
                         }
@@ -94,13 +95,13 @@ namespace Candlestick_Patterns
 
             for (int i = 5; i < _data.Count; i++)
             {
-                // Check whether the first candlestick matches. 
-                if (_data[i - 2].Open < _data[i - 2].Close && 100 * (_data[i - 2].Close - _data[i - 2].Open) / _data[i - 2].Open > _minCandleSize)
+                
+                if (_data[i - 2].Open < _data[i - 2].Close && 100 * (_data[i - 2].Close - _data[i - 2].Open) / _data[i - 2].Open > _minimumCandleSize)
                 {
-                    // Check whether the second candlestick matches. 
-                    if (_data[i - 1].Open > _data[i - 1].Close && _data[i - 1].Open < _data[i - 2].Close && _data[i - 1].Close > _data[i - 2].Open && -100 * (_data[i - 1].Close - _data[i - 1].Open) / _data[i - 1].Open < _maxShortCandleSize)
+                    
+                    if (_data[i - 1].Open > _data[i - 1].Close && _data[i - 1].Open < _data[i - 2].Close && _data[i - 1].Close > _data[i - 2].Open && -100 * (_data[i - 1].Close - _data[i - 1].Open) / _data[i - 1].Open < _maximumShortCandleSize)
                     {
-                        // Check whether the third candlestick matches. 
+                        
                         if (_data[i - 0].Open > _data[i - 0].Close && _data[i - 0].Close < _data[i - 1].Close)
                         {
                             data[i].Signal = true;
@@ -116,13 +117,13 @@ namespace Candlestick_Patterns
 
             for (int i = 5; i < _data.Count; i++)
             {
-                // Check whether the first candlestick matches. 
-                if (_data[i - 2].Open < _data[i - 2].Close && 100 * (_data[i - 2].Close - _data[i - 2].Open) / _data[i - 2].Open < _maxShortCandleSize)
+                
+                if (_data[i - 2].Open < _data[i - 2].Close && 100 * (_data[i - 2].Close - _data[i - 2].Open) / _data[i - 2].Open < _maximumShortCandleSize)
                 {
-                    // Check whether the second candlestick matches. 
-                    if (_data[i - 1].Open > _data[i - 1].Close && _data[i - 1].Open > _data[i - 2].Close && _data[i - 1].Close < _data[i - 2].Open && -100 * (_data[i - 1].Close - _data[i - 1].Open) / _data[i - 1].Open > _minCandleSize)
+                    
+                    if (_data[i - 1].Open > _data[i - 1].Close && _data[i - 1].Open > _data[i - 2].Close && _data[i - 1].Close < _data[i - 2].Open && -100 * (_data[i - 1].Close - _data[i - 1].Open) / _data[i - 1].Open > _minimumCandleSize)
                     {
-                        // Check whether the third candlestick matches. 
+                        
                         if (_data[i - 0].Open > _data[i - 0].Close && _data[i - 0].Close < _data[i - 1].Close)
                         {
                             data[i].Signal = true;
@@ -138,14 +139,14 @@ namespace Candlestick_Patterns
 
             for (int i = 5; i < _data.Count; i++)
             {
-                // Check whether the first candlestick matches. 
-                if (_data[i - 3].Open > _data[i - 3].Close && -100 * (_data[i - 3].Close - _data[i - 3].Open) / _data[i - 3].Open > _minCandleSize)
+                
+                if (_data[i - 3].Open > _data[i - 3].Close && -100 * (_data[i - 3].Close - _data[i - 3].Open) / _data[i - 3].Open > _minimumCandleSize)
                 {
-                    // Check whether the second candlestick matches. 
-                    if (_data[i - 2].Open > _data[i - 2].Close && _data[i - 3].Close < _data[i - 2].Open && _data[i - 2].Open < _data[i - 3].Open && _data[i - 2].Close < _data[i - 3].Close && -100 * (_data[i - 2].Close - _data[i - 2].Open) / _data[i - 2].Open > _minCandleSize)
+                    
+                    if (_data[i - 2].Open > _data[i - 2].Close && _data[i - 3].Close < _data[i - 2].Open && _data[i - 2].Open < _data[i - 3].Open && _data[i - 2].Close < _data[i - 3].Close && -100 * (_data[i - 2].Close - _data[i - 2].Open) / _data[i - 2].Open > _minimumCandleSize)
                     {
-                        // Check whether the third candlestick matches. 
-                        if (_data[i - 1].Open > _data[i - 1].Close && _data[i - 2].Close < _data[i - 1].Open && _data[i - 1].Open < _data[i - 2].Open && _data[i - 1].Close < _data[i - 2].Close && -100 * (_data[i - 1].Close - _data[i - 1].Open) / _data[i - 1].Open > _minCandleSize)
+                        
+                        if (_data[i - 1].Open > _data[i - 1].Close && _data[i - 2].Close < _data[i - 1].Open && _data[i - 1].Open < _data[i - 2].Open && _data[i - 1].Close < _data[i - 2].Close && -100 * (_data[i - 1].Close - _data[i - 1].Open) / _data[i - 1].Open > _minimumCandleSize)
                         {
                             if (_data[i - 0].Open < _data[i - 0].Close && _data[i - 0].Open <= _data[i - 1].Close && _data[i - 0].Close >= _data[i - 3].Open)
                             {
@@ -163,14 +164,14 @@ namespace Candlestick_Patterns
 
             for (int i = 5; i < _data.Count; i++)
             {
-                // Check whether the first candlestick matches. 
-                if (_data[i - 2].Open < _data[i - 2].Close && 100 * (_data[i - 2].Close - _data[i - 2].Open) / _data[i - 2].Open > _minCandleSize)
+                
+                if (_data[i - 2].Open < _data[i - 2].Close && 100 * (_data[i - 2].Close - _data[i - 2].Open) / _data[i - 2].Open > _minimumCandleSize)
                 {
-                    // Check whether the second candlestick matches. 
-                    if (_data[i - 1].Open < _data[i - 1].Close && _data[i - 2].Close > _data[i - 1].Open && _data[i - 1].Open > _data[i - 2].Open && _data[i - 1].Close > _data[i - 2].Close && ((100 + _minCandleDifference) / 100) * (_data[i - 1].Close - _data[i - 1].Open) < _data[i - 2].Close - _data[i - 2].Open && 100 * (_data[i - 1].Close - _data[i - 1].Open) / _data[i - 1].Open > _minCandleSize)
+                    
+                    if (_data[i - 1].Open < _data[i - 1].Close && _data[i - 2].Close > _data[i - 1].Open && _data[i - 1].Open > _data[i - 2].Open && _data[i - 1].Close > _data[i - 2].Close && ((100 + _minimumCandleDifference) / 100) * (_data[i - 1].Close - _data[i - 1].Open) < _data[i - 2].Close - _data[i - 2].Open && 100 * (_data[i - 1].Close - _data[i - 1].Open) / _data[i - 1].Open > _minimumCandleSize)
                     {
-                        // Check whether the third candlestick matches. 
-                        if (_data[i - 0].Open < _data[i - 0].Close && _data[i - 1].Close > _data[i - 0].Open && _data[i - 0].Open > _data[i - 1].Open && _data[i - 0].Close > _data[i - 1].Close && ((100 + _minCandleDifference) / 100) * (_data[i - 0].Close - _data[i - 0].Open) < _data[i - 1].Close - _data[i - 1].Open && 100 * (_data[i - 0].Close - _data[i - 0].Open) / _data[i - 0].Open > _minCandleSize)
+                        
+                        if (_data[i - 0].Open < _data[i - 0].Close && _data[i - 1].Close > _data[i - 0].Open && _data[i - 0].Open > _data[i - 1].Open && _data[i - 0].Close > _data[i - 1].Close && ((100 + _minimumCandleDifference) / 100) * (_data[i - 0].Close - _data[i - 0].Open) < _data[i - 1].Close - _data[i - 1].Open && 100 * (_data[i - 0].Close - _data[i - 0].Open) / _data[i - 0].Open > _minimumCandleSize)
                         {
                             data[i].Signal = true;
                         }
@@ -185,11 +186,11 @@ namespace Candlestick_Patterns
 
             for (int i = 5; i < _data.Count; i++)
             {
-                // Check whether the first candlestick matches. 
+                
                 if (_data[i - 1].High < _data[i - 0].Low)
                 {
-                    // Check whether the second candlestick matches. 
-                    if (_data[i - 0].Open == _data[i - 0].High && _data[i - 0].Open > _data[i - 0].Close && -100 * (_data[i - 0].Close - _data[i - 0].Open) / _data[i - 0].Open > _minCandleSize)
+                    
+                    if (_data[i - 0].Open == _data[i - 0].High && _data[i - 0].Open > _data[i - 0].Close && -100 * (_data[i - 0].Close - _data[i - 0].Open) / _data[i - 0].Open > _minimumCandleSize)
                     {
                         data[i].Signal = true;
                     }
@@ -203,8 +204,8 @@ namespace Candlestick_Patterns
 
             for (int i = 5; i < _data.Count; i++)
             {
-                // Check whether the first candlestick matches. 
-                if (_data[i - 0].Open > _data[i - 0].Close && _data[i - 0].High > _data[i - 0].Open && _data[i - 0].Close == _data[i - 0].Low && -100 * (_data[i - 0].Close - _data[i - 0].Open) / _data[i - 0].Open > _minCandleSize)
+                
+                if (_data[i - 0].Open > _data[i - 0].Close && _data[i - 0].High > _data[i - 0].Open && _data[i - 0].Close == _data[i - 0].Low && -100 * (_data[i - 0].Close - _data[i - 0].Open) / _data[i - 0].Open > _minimumCandleSize)
                 {
                     data[i].Signal = true;
                 }
@@ -217,8 +218,8 @@ namespace Candlestick_Patterns
 
             for (int i = 5; i < _data.Count; i++)
             {
-                // Check whether the first candlestick matches. 
-                if (_data[i - 0].Open > _data[i - 0].Close && _data[i - 0].High == _data[i - 0].Open && _data[i - 0].Close == _data[i - 0].Low && -100 * (_data[i - 0].Close - _data[i - 0].Open) / _data[i - 0].Open > _minCandleSize)
+                
+                if (_data[i - 0].Open > _data[i - 0].Close && _data[i - 0].High == _data[i - 0].Open && _data[i - 0].Close == _data[i - 0].Low && -100 * (_data[i - 0].Close - _data[i - 0].Open) / _data[i - 0].Open > _minimumCandleSize)
                 {
                     data[i].Signal = true;
                 }
@@ -231,8 +232,8 @@ namespace Candlestick_Patterns
 
             for (int i = 5; i < _data.Count; i++)
             {
-                // Check whether the first candlestick matches. 
-                if (_data[i - 0].Open > _data[i - 0].Close && _data[i - 0].High == _data[i - 0].Open && _data[i - 0].Close > _data[i - 0].Low && -100 * (_data[i - 0].Close - _data[i - 0].Open) / _data[i - 0].Open > _minCandleSize)
+                
+                if (_data[i - 0].Open > _data[i - 0].Close && _data[i - 0].High == _data[i - 0].Open && _data[i - 0].Close > _data[i - 0].Low && -100 * (_data[i - 0].Close - _data[i - 0].Open) / _data[i - 0].Open > _minimumCandleSize)
                 {
                     data[i].Signal = true;
                 }
@@ -245,19 +246,19 @@ namespace Candlestick_Patterns
 
             for (int i = 5; i < _data.Count; i++)
             {
-                // Check whether the first candlestick matches. 
-                if (_data[i - 4].Open < _data[i - 4].Close && 100 * (_data[i - 4].Close - _data[i - 4].Open) / _data[i - 4].Open > _minCandleSize)
+                
+                if (_data[i - 4].Open < _data[i - 4].Close && 100 * (_data[i - 4].Close - _data[i - 4].Open) / _data[i - 4].Open > _minimumCandleSize)
                 {
-                    // Check whether the second candlestick matches. 
-                    if (_data[i - 3].Open < _data[i - 3].Close && _data[i - 4].High < _data[i - 3].Low && 100 * (_data[i - 3].Close - _data[i - 3].Open) / _data[i - 3].Open < _minCandleSize)
+                    
+                    if (_data[i - 3].Open < _data[i - 3].Close && _data[i - 4].High < _data[i - 3].Low && 100 * (_data[i - 3].Close - _data[i - 3].Open) / _data[i - 3].Open < _minimumCandleSize)
                     {
-                        // Check whether the third candlestick matches. 
-                        if (_data[i - 3].Close < _data[i - 2].Close && Math.Abs((100 * (_data[i - 2].Close - _data[i - 2].Open) / _data[i - 2].Open)) < _minCandleSize)
+                        
+                        if (_data[i - 3].Close < _data[i - 2].Close && Math.Abs((100 * (_data[i - 2].Close - _data[i - 2].Open) / _data[i - 2].Open)) < _minimumCandleSize)
                         {
-                            // Check whether the fourth candlestick matches. 
-                            if (_data[i - 1].Open < _data[i - 1].Close && _data[i - 2].Close < _data[i - 1].Close && 100 * (_data[i - 1].Close - _data[i - 1].Open) / _data[i - 1].Open < _minCandleSize)
+                            
+                            if (_data[i - 1].Open < _data[i - 1].Close && _data[i - 2].Close < _data[i - 1].Close && 100 * (_data[i - 1].Close - _data[i - 1].Open) / _data[i - 1].Open < _minimumCandleSize)
                             {
-                                // Check whether the fifth candlestick matches. 
+                                
                                 if (_data[i - 0].Open > _data[i - 0].Close && _data[i - 0].Close > _data[i - 4].High && _data[i - 0].Close < _data[i - 3].Low)
                                 {
                                     data[i].Signal = true;
@@ -275,14 +276,14 @@ namespace Candlestick_Patterns
 
             for (int i = 5; i < _data.Count; i++)
             {
-                // Check whether the first candlestick matches. 
-                if (_data[i - 2].Open < _data[i - 2].Close && 100 * (_data[i - 2].Close - _data[i - 2].Open) / _data[i - 2].Open > _minCandleSize)
+                
+                if (_data[i - 2].Open < _data[i - 2].Close && 100 * (_data[i - 2].Close - _data[i - 2].Open) / _data[i - 2].Open > _minimumCandleSize)
                 {
-                    // Check whether the second candlestick matches. 
-                    if (_data[i - 1].Open < _data[i - 1].Close && _data[i - 2].Open < _data[i - 1].Open && _data[i - 2].Close < _data[i - 1].Close && 100 * (_data[i - 1].Close - _data[i - 1].Open) / _data[i - 1].Open > _minCandleSize)
+                    
+                    if (_data[i - 1].Open < _data[i - 1].Close && _data[i - 2].Open < _data[i - 1].Open && _data[i - 2].Close < _data[i - 1].Close && 100 * (_data[i - 1].Close - _data[i - 1].Open) / _data[i - 1].Open > _minimumCandleSize)
                     {
-                        // Check whether the third candlestick matches. 
-                        if (_data[i - 0].Open < _data[i - 0].Close && _data[i - 1].Close <= _data[i - 0].Open && 100 * (_data[i - 0].Close - _data[i - 0].Open) / _data[i - 0].Open < _minCandleSize)
+                        
+                        if (_data[i - 0].Open < _data[i - 0].Close && _data[i - 1].Close <= _data[i - 0].Open && 100 * (_data[i - 0].Close - _data[i - 0].Open) / _data[i - 0].Open < _minimumCandleSize)
                         {
                             data[i].Signal = true;
                         }
@@ -297,10 +298,10 @@ namespace Candlestick_Patterns
 
             for (int i = 5; i < _data.Count; i++)
             {
-                // Check whether the first candlestick matches. 
-                if (_data[i - 1].Open < _data[i - 1].Close && (100 * (_data[i - 1].Close - _data[i - 1].Open) / _data[i - 1].Open > _minCandleSize))
+                
+                if (_data[i - 1].Open < _data[i - 1].Close && (100 * (_data[i - 1].Close - _data[i - 1].Open) / _data[i - 1].Open > _minimumCandleSize))
                 {
-                    // Check whether the second candlestick matches. 
+                    
                     if (_data[i - 0].Open > _data[i - 0].Close && _data[i - 0].Open > _data[i - 1].High && _data[i - 0].Close < _data[i - 1].Open + ((_data[i - 1].Close - _data[i - 1].Open) / 2))
                     {
                         data[i].Signal = true;
@@ -315,11 +316,11 @@ namespace Candlestick_Patterns
 
             for (int i = 5; i < _data.Count; i++)
             {
-                // Check whether the first candlestick matches. 
-                if (_data[i - 1].Open < _data[i - 1].Close && 100 * (_data[i - 1].Close - _data[i - 1].Open) / _data[i - 1].Open > _minCandleSize)
+                
+                if (_data[i - 1].Open < _data[i - 1].Close && 100 * (_data[i - 1].Close - _data[i - 1].Open) / _data[i - 1].Open > _minimumCandleSize)
                 {
-                    // Check whether the second candlestick matches. 
-                    if (_data[i - 1].High < _data[i - 0].Low && Math.Abs(100 * (_data[i - 0].Open - _data[i - 0].Close) / _data[i - 0].Open) < _maxDojiBodySize && Math.Abs(100 * (_data[i - 0].High - _data[i - 0].Low) / _data[i - 0].High) < _maxDojiShadowSizes)
+                    
+                    if (_data[i - 1].High < _data[i - 0].Low && Math.Abs(100 * (_data[i - 0].Open - _data[i - 0].Close) / _data[i - 0].Open) < _maximumDojiBodySize && Math.Abs(100 * (_data[i - 0].High - _data[i - 0].Low) / _data[i - 0].High) < _maximumDojiShadowSizes)
                     {
                         data[i].Signal = true;
                     }
@@ -333,13 +334,13 @@ namespace Candlestick_Patterns
 
             for (int i = 5; i < _data.Count; i++)
             {
-                // Check whether the first candlestick matches. 
-                if (_data[i - 2].Open > _data[i - 2].Close && -100 * (_data[i - 2].Close - _data[i - 2].Open) / _data[i - 2].Open > _minCandleSize)
+                
+                if (_data[i - 2].Open > _data[i - 2].Close && -100 * (_data[i - 2].Close - _data[i - 2].Open) / _data[i - 2].Open > _minimumCandleSize)
                 {
-                    // Check whether the second candlestick matches. 
-                    if (_data[i - 1].Open > _data[i - 1].Close && _data[i - 2].Low > _data[i - 1].High && -100 * (_data[i - 1].Close - _data[i - 1].Open) / _data[i - 1].Open > _minCandleSize)
+                    
+                    if (_data[i - 1].Open > _data[i - 1].Close && _data[i - 2].Low > _data[i - 1].High && -100 * (_data[i - 1].Close - _data[i - 1].Open) / _data[i - 1].Open > _minimumCandleSize)
                     {
-                        // Check whether the third candlestick matches. 
+                        
                         if (_data[i - 0].Open < _data[i - 0].Close && _data[i - 1].Close < _data[i - 0].Open && _data[i - 1].Open > _data[i - 0].Open && _data[i - 2].Close < _data[i - 0].Close)
                         {
                             data[i].Signal = true;
@@ -355,13 +356,13 @@ namespace Candlestick_Patterns
 
             for (int i = 5; i < _data.Count; i++)
             {
-                // Check whether the first candlestick matches. 
-                if (_data[i - 2].Open > _data[i - 2].Close && -100 * (_data[i - 2].Close - _data[i - 2].Open) / _data[i - 2].Open > _minCandleSize)
+                
+                if (_data[i - 2].Open > _data[i - 2].Close && -100 * (_data[i - 2].Close - _data[i - 2].Open) / _data[i - 2].Open > _minimumCandleSize)
                 {
-                    // Check whether the second candlestick matches. 
-                    if (_data[i - 1].Open > _data[i - 1].Close && _data[i - 2].Low > _data[i - 1].High && -100 * (_data[i - 1].Close - _data[i - 1].Open) / _data[i - 1].Open > _minCandleSize)
+                    
+                    if (_data[i - 1].Open > _data[i - 1].Close && _data[i - 2].Low > _data[i - 1].High && -100 * (_data[i - 1].Close - _data[i - 1].Open) / _data[i - 1].Open > _minimumCandleSize)
                     {
-                        // Check whether the third candlestick matches. 
+                        
                         if (_data[i - 0].Open < _data[i - 0].Close && _data[i - 1].Close < _data[i - 0].Open && _data[i - 1].Open > _data[i - 0].Open && _data[i - 2].Low > _data[i - 0].Close && _data[i - 1].High < _data[i - 0].Close)
                         {
                             data[i].Signal = true;
@@ -377,8 +378,8 @@ namespace Candlestick_Patterns
 
             for (int i = 5; i < _data.Count; i++)
             {
-                // Check whether the first candlestick matches. 
-                if (Math.Abs(100 * (_data[i - 0].High - _data[i - 0].Close) / _data[i - 0].High) < _maxDojiBodySize && Math.Abs(100 * (_data[i - 0].Open - _data[i - 0].Close) / _data[i - 0].Open) < _maxDojiBodySize && Math.Abs(100 * (_data[i - 0].High - _data[i - 0].Low) / _data[i - 0].High) > _minCandleShadowSize)
+                
+                if (Math.Abs(100 * (_data[i - 0].High - _data[i - 0].Close) / _data[i - 0].High) < _maximumDojiBodySize && Math.Abs(100 * (_data[i - 0].Open - _data[i - 0].Close) / _data[i - 0].Open) < _maximumDojiBodySize && Math.Abs(100 * (_data[i - 0].High - _data[i - 0].Low) / _data[i - 0].High) > _minimumCandleShadowSize)
                 {
                     data[i].Signal = true;
                 }
@@ -391,11 +392,11 @@ namespace Candlestick_Patterns
 
             for (int i = 5; i < _data.Count; i++)
             {
-                // Check whether the first candlestick matches. 
-                if (_data[i - 1].Open < _data[i - 1].Close && (100 * (_data[i - 1].Close - _data[i - 1].Open) / _data[i - 1].Open < _maxShortCandleSize))
+                
+                if (_data[i - 1].Open < _data[i - 1].Close && (100 * (_data[i - 1].Close - _data[i - 1].Open) / _data[i - 1].Open < _maximumShortCandleSize))
                 {
-                    // Check whether the second candlestick matches. 
-                    if (_data[i - 0].Open > _data[i - 0].Close && _data[i - 0].Open > _data[i - 1].Close && _data[i - 0].Close < _data[i - 1].Open && (-100 * (_data[i - 0].Close - _data[i - 0].Open) / _data[i - 0].Open > _minCandleSize))
+                    
+                    if (_data[i - 0].Open > _data[i - 0].Close && _data[i - 0].Open > _data[i - 1].Close && _data[i - 0].Close < _data[i - 1].Open && (-100 * (_data[i - 0].Close - _data[i - 0].Open) / _data[i - 0].Open > _minimumCandleSize))
                     {
                         data[i].Signal = true;
                     }
@@ -409,14 +410,14 @@ namespace Candlestick_Patterns
 
             for (int i = 5; i < _data.Count; i++)
             {
-                // Check whether the first candlestick matches. 
-                if (_data[i - 2].Open < _data[i - 2].Close && 100 * (_data[i - 2].Close - _data[i - 2].Open) / _data[i - 2].Open > _minCandleSize)
+                
+                if (_data[i - 2].Open < _data[i - 2].Close && 100 * (_data[i - 2].Close - _data[i - 2].Open) / _data[i - 2].Open > _minimumCandleSize)
                 {
-                    // Check whether the second candlestick matches. 
-                    if (_data[i - 2].High < _data[i - 1].Low && Math.Abs(100 * (_data[i - 1].Open - _data[i - 1].Close) / _data[i - 1].Open) < _maxDojiBodySize && Math.Abs(100 * (_data[i - 1].High - _data[i - 1].Low) / _data[i - 1].High) < _maxDojiShadowSizes)
+                    
+                    if (_data[i - 2].High < _data[i - 1].Low && Math.Abs(100 * (_data[i - 1].Open - _data[i - 1].Close) / _data[i - 1].Open) < _maximumDojiBodySize && Math.Abs(100 * (_data[i - 1].High - _data[i - 1].Low) / _data[i - 1].High) < _maximumDojiShadowSizes)
                     {
-                        // Check whether the third candlestick matches. 
-                        if (_data[i - 0].Open > _data[i - 0].Close && _data[i - 0].Close > _data[i - 2].Open && _data[i - 0].Close < _data[i - 2].Close && -100 * (_data[i - 0].Close - _data[i - 0].Open) / _data[i - 0].Open > _minCandleSize)
+                        
+                        if (_data[i - 0].Open > _data[i - 0].Close && _data[i - 0].Close > _data[i - 2].Open && _data[i - 0].Close < _data[i - 2].Close && -100 * (_data[i - 0].Close - _data[i - 0].Open) / _data[i - 0].Open > _minimumCandleSize)
                         {
                             data[i].Signal = true;
                         }
@@ -431,13 +432,13 @@ namespace Candlestick_Patterns
 
             for (int i = 5; i < _data.Count; i++)
             {
-                // Check whether the first candlestick matches. 
-                if (_data[i - 2].Open < _data[i - 2].Close && 100 * (_data[i - 2].Close - _data[i - 2].Open) / _data[i - 2].Open > _minCandleSize)
+                
+                if (_data[i - 2].Open < _data[i - 2].Close && 100 * (_data[i - 2].Close - _data[i - 2].Open) / _data[i - 2].Open > _minimumCandleSize)
                 {
-                    // Check whether the second candlestick matches. 
-                    if (_data[i - 2].High < _data[i - 1].Low && Math.Abs(100 * (_data[i - 1].High - _data[i - 1].Low) / _data[i - 1].High) < _minCandleSize)
+                    
+                    if (_data[i - 2].High < _data[i - 1].Low && Math.Abs(100 * (_data[i - 1].High - _data[i - 1].Low) / _data[i - 1].High) < _minimumCandleSize)
                     {
-                        // Check whether the third candlestick matches. 
+                        
                         if (_data[i - 0].Open > _data[i - 0].Close && _data[i - 0].Close > _data[i - 2].Open && _data[i - 0].Close < _data[i - 2].Close)
                         {
                             data[i].Signal = true;
@@ -453,20 +454,20 @@ namespace Candlestick_Patterns
 
             for (int i = 5; i < _data.Count; i++)
             {
-                // Check whether the first candlestick matches. 
-                if (_data[i - 4].Open > _data[i - 4].Close && (-100 * (_data[i - 4].Close - _data[i - 4].Open) / _data[i - 4].Open > _minCandleSize))
+                
+                if (_data[i - 4].Open > _data[i - 4].Close && (-100 * (_data[i - 4].Close - _data[i - 4].Open) / _data[i - 4].Open > _minimumCandleSize))
                 {
-                    // Check whether the second candlestick matches. 
+                    
                     if (_data[i - 3].Open < _data[i - 3].Close && _data[i - 3].Close < _data[i - 4].Open && _data[i - 4].Close < _data[i - 3].Close)
                     {
-                        // Check whether the third candlestick matches. 
+                        
                         if ((_data[i - 2].Open < _data[i - 2].Close && _data[i - 2].Close < _data[i - 4].Open && _data[i - 3].Close < _data[i - 2].Close) || (_data[i - 2].Open > _data[i - 2].Close && _data[i - 2].Open < _data[i - 4].Open && _data[i - 3].Close < _data[i - 2].Open))
                         {
-                            // Check whether the fourth candlestick matches. 
+                            
                             if (_data[i - 1].Open < _data[i - 1].Close && _data[i - 1].Close < _data[i - 4].Open && Math.Max(_data[i - 2].Close, _data[i - 2].Open) < _data[i - 1].Close)
                             {
-                                // Check whether the fifth candlestick matches. 
-                                if (_data[i - 0].Open > _data[i - 0].Close && _data[i - 0].Close < _data[i - 4].Close && (-100 * (_data[i - 0].Close - _data[i - 0].Open) / _data[i - 0].Open > _minCandleSize))
+                                
+                                if (_data[i - 0].Open > _data[i - 0].Close && _data[i - 0].Close < _data[i - 4].Close && (-100 * (_data[i - 0].Close - _data[i - 0].Open) / _data[i - 0].Open > _minimumCandleSize))
                                 {
                                     data[i].Signal = true;
                                 }
@@ -483,11 +484,11 @@ namespace Candlestick_Patterns
 
             for (int i = 5; i < _data.Count; i++)
             {
-                // Check whether the first candlestick matches. 
-                if (_data[i - 1].Open < _data[i - 1].Close && 100 * (_data[i - 1].Close - _data[i - 1].Open) / _data[i - 1].Open > _minCandleSize)
+                
+                if (_data[i - 1].Open < _data[i - 1].Close && 100 * (_data[i - 1].Close - _data[i - 1].Open) / _data[i - 1].Open > _minimumCandleSize)
                 {
-                    // Check whether the second candlestick matches. 
-                    if (_data[i - 1].High < _data[i - 0].Low && Math.Abs(100 * (_data[i - 0].Open - _data[i - 0].Close) / _data[i - 0].Open) < _maxDojiBodySize && _data[i - 0].Low == _data[i - 0].Open)
+                    
+                    if (_data[i - 1].High < _data[i - 0].Low && Math.Abs(100 * (_data[i - 0].Open - _data[i - 0].Close) / _data[i - 0].Open) < _maximumDojiBodySize && _data[i - 0].Low == _data[i - 0].Open)
                     {
                         data[i].Signal = true;
                     }
@@ -501,11 +502,11 @@ namespace Candlestick_Patterns
 
             for (int i = 5; i < _data.Count; i++)
             {
-                // Check whether the first candlestick matches. 
-                if (_data[i - 1].Open < _data[i - 1].Close && (100 * (_data[i - 1].Close - _data[i - 1].Open) / _data[i - 1].Open > _minCandleSize))
+                
+                if (_data[i - 1].Open < _data[i - 1].Close && (100 * (_data[i - 1].Close - _data[i - 1].Open) / _data[i - 1].Open > _minimumCandleSize))
                 {
-                    // Check whether the second candlestick matches. 
-                    if (_data[i - 0].Open > _data[i - 0].Close && _data[i - 0].Open < _data[i - 1].Close && _data[i - 0].Close > _data[i - 1].Open && (-100 * (_data[i - 0].Close - _data[i - 0].Open) / _data[i - 0].Open < _maxShortCandleSize))
+                    
+                    if (_data[i - 0].Open > _data[i - 0].Close && _data[i - 0].Open < _data[i - 1].Close && _data[i - 0].Close > _data[i - 1].Open && (-100 * (_data[i - 0].Close - _data[i - 0].Open) / _data[i - 0].Open < _maximumShortCandleSize))
                     {
                         data[i].Signal = true;
                     }
@@ -519,14 +520,14 @@ namespace Candlestick_Patterns
 
             for (int i = 5; i < _data.Count; i++)
             {
-                // Check whether the first candlestick matches. 
-                if (_data[i - 2].Open > _data[i - 2].Close && (100 * (_data[i - 2].Close - _data[i - 2].Open) / _data[i - 2].Open < -1 * _minCandleSize))
+                
+                if (_data[i - 2].Open > _data[i - 2].Close && (100 * (_data[i - 2].Close - _data[i - 2].Open) / _data[i - 2].Open < -1 * _minimumCandleSize))
                 {
-                    // Check whether the second candlestick matches. 
-                    if (_data[i - 1].Open > _data[i - 1].Close && _data[i - 2].Close == _data[i - 1].Open && (100 * (_data[i - 1].Close - _data[i - 1].Open) / _data[i - 1].Open < -1 * _minCandleSize))
+                    
+                    if (_data[i - 1].Open > _data[i - 1].Close && _data[i - 2].Close == _data[i - 1].Open && (100 * (_data[i - 1].Close - _data[i - 1].Open) / _data[i - 1].Open < -1 * _minimumCandleSize))
                     {
-                        // Check whether the third candlestick matches. 
-                        if (_data[i - 0].Open > _data[i - 0].Close && _data[i - 1].Close == _data[i - 0].Open && (100 * (_data[i - 0].Close - _data[i - 0].Open) / _data[i - 0].Open < -1 * _minCandleSize))
+                        
+                        if (_data[i - 0].Open > _data[i - 0].Close && _data[i - 1].Close == _data[i - 0].Open && (100 * (_data[i - 0].Close - _data[i - 0].Open) / _data[i - 0].Open < -1 * _minimumCandleSize))
                         {
                             data[i].Signal = true;
                         }
@@ -541,11 +542,11 @@ namespace Candlestick_Patterns
 
             for (int i = 5; i < _data.Count; i++)
             {
-                // Check whether the first candlestick matches. 
-                if (_data[i - 1].Open < _data[i - 1].Close && (100 * (_data[i - 1].Close - _data[i - 1].Open) / _data[i - 1].Open > _minCandleSize))
+                
+                if (_data[i - 1].Open < _data[i - 1].Close && (100 * (_data[i - 1].Close - _data[i - 1].Open) / _data[i - 1].Open > _minimumCandleSize))
                 {
-                    // Check whether the second candlestick matches. 
-                    if (Math.Abs(100 * (_data[i - 0].Open - _data[i - 0].Close) / _data[i - 0].Open) < _maxDojiBodySize && _data[i - 0].Open < _data[i - 1].Close && _data[i - 1].Open < _data[i - 0].Open)
+                    
+                    if (Math.Abs(100 * (_data[i - 0].Open - _data[i - 0].Close) / _data[i - 0].Open) < _maximumDojiBodySize && _data[i - 0].Open < _data[i - 1].Close && _data[i - 1].Open < _data[i - 0].Open)
                     {
                         data[i].Signal = true;
                     }
@@ -559,11 +560,11 @@ namespace Candlestick_Patterns
 
             for (int i = 5; i < _data.Count; i++)
             {
-                // Check whether the first candlestick matches. 
-                if (_data[i - 1].Open > _data[i - 1].Close && (-100 * (_data[i - 1].Close - _data[i - 1].Open) / _data[i - 1].Open > _minCandleSize))
+                
+                if (_data[i - 1].Open > _data[i - 1].Close && (-100 * (_data[i - 1].Close - _data[i - 1].Open) / _data[i - 1].Open > _minimumCandleSize))
                 {
-                    // Check whether the second candlestick matches. 
-                    if (_data[i - 0].Open < _data[i - 0].Close && _data[i - 0].Open < _data[i - 1].Low && _data[i - 0].Close > _data[i - 1].Close && 100 * (_data[i - 0].Close - _data[i - 1].Close) / _data[i - 1].Close < _inBarMaxChange)
+                    
+                    if (_data[i - 0].Open < _data[i - 0].Close && _data[i - 0].Open < _data[i - 1].Low && _data[i - 0].Close > _data[i - 1].Close && 100 * (_data[i - 0].Close - _data[i - 1].Close) / _data[i - 1].Close < _insideBarMaxChange)
                     {
                         data[i].Signal = true;
                     }
@@ -577,11 +578,11 @@ namespace Candlestick_Patterns
 
             for (int i = 5; i < _data.Count; i++)
             {
-                // Check whether the first candlestick matches. 
-                if (_data[i - 1].Open < _data[i - 1].Close && 100 * (_data[i - 1].Open - _data[i - 1].Low) / _data[i - 1].Open < _maxShadowSize && 100 * (_data[i - 1].High - _data[i - 1].Close) / _data[i - 1].Close < _maxShadowSize && (100 * (_data[i - 1].Close - _data[i - 1].Open) / _data[i - 1].Open > _minCandleSize))
+                
+                if (_data[i - 1].Open < _data[i - 1].Close && 100 * (_data[i - 1].Open - _data[i - 1].Low) / _data[i - 1].Open < _maximumShadowSize && 100 * (_data[i - 1].High - _data[i - 1].Close) / _data[i - 1].Close < _maximumShadowSize && (100 * (_data[i - 1].Close - _data[i - 1].Open) / _data[i - 1].Open > _minimumCandleSize))
                 {
-                    // Check whether the second candlestick matches. 
-                    if (_data[i - 0].Open < _data[i - 1].Open && _data[i - 0].Open > _data[i - 0].Close && 100 * (_data[i - 0].Close - _data[i - 0].Low) / _data[i - 0].Close < _maxShadowSize && 100 * (_data[i - 0].High - _data[i - 0].Open) / _data[i - 0].Open < _maxShadowSize && (-100 * (_data[i - 0].Close - _data[i - 0].Open) / _data[i - 0].Open > _minCandleSize))
+                    
+                    if (_data[i - 0].Open < _data[i - 1].Open && _data[i - 0].Open > _data[i - 0].Close && 100 * (_data[i - 0].Close - _data[i - 0].Low) / _data[i - 0].Close < _maximumShadowSize && 100 * (_data[i - 0].High - _data[i - 0].Open) / _data[i - 0].Open < _maximumShadowSize && (-100 * (_data[i - 0].Close - _data[i - 0].Open) / _data[i - 0].Open > _minimumCandleSize))
                     {
                         data[i].Signal = true;
                     }
@@ -595,8 +596,8 @@ namespace Candlestick_Patterns
 
             for (int i = 5; i < _data.Count; i++)
             {
-                // Check whether the first candlestick matches. 
-                if (_data[i - 0].Open > _data[i - 0].Close && -100 * (_data[i - 0].Close - _data[i - 0].Open) / _data[i - 0].Open > _minCandleSize)
+                
+                if (_data[i - 0].Open > _data[i - 0].Close && -100 * (_data[i - 0].Close - _data[i - 0].Open) / _data[i - 0].Open > _minimumCandleSize)
                 {
                     data[i].Signal = true;
                 }
@@ -609,11 +610,11 @@ namespace Candlestick_Patterns
 
             for (int i = 5; i < _data.Count; i++)
             {
-                // Check whether the first candlestick matches. 
-                if (_data[i - 1].Open < _data[i - 1].Close && (100 * (_data[i - 1].Close - _data[i - 1].Open) / _data[i - 1].Open > _minCandleSize))
+                
+                if (_data[i - 1].Open < _data[i - 1].Close && (100 * (_data[i - 1].Close - _data[i - 1].Open) / _data[i - 1].Open > _minimumCandleSize))
                 {
-                    // Check whether the second candlestick matches. 
-                    if (_data[i - 0].Open > _data[i - 0].Close && _data[i - 0].Open > _data[i - 1].High && (100 * (_data[i - 0].Open - _data[i - 0].Close) / _data[i - 0].Close > _minCandleSize) && 100 * Math.Abs((_data[i - 0].Close - _data[i - 1].Close) / _data[i - 1].Close) < _maxCloseDifference)
+                    
+                    if (_data[i - 0].Open > _data[i - 0].Close && _data[i - 0].Open > _data[i - 1].High && (100 * (_data[i - 0].Open - _data[i - 0].Close) / _data[i - 0].Close > _minimumCandleSize) && 100 * Math.Abs((_data[i - 0].Close - _data[i - 1].Close) / _data[i - 1].Close) < _maximumCloseDifference)
                     {
                         data[i].Signal = true;
                     }
@@ -627,11 +628,11 @@ namespace Candlestick_Patterns
 
             for (int i = 5; i < _data.Count; i++)
             {
-                // Check whether the first candlestick matches. 
-                if (_data[i - 1].Open > _data[i - 1].Close && (-100 * (_data[i - 1].Close - _data[i - 1].Open) / _data[i - 1].Open > _minCandleSize))
+                
+                if (_data[i - 1].Open > _data[i - 1].Close && (-100 * (_data[i - 1].Close - _data[i - 1].Open) / _data[i - 1].Open > _minimumCandleSize))
                 {
-                    // Check whether the second candlestick matches. 
-                    if (_data[i - 0].Open < _data[i - 0].Close && _data[i - 0].Open < _data[i - 1].Low && Math.Abs(100 * (_data[i - 0].Close - _data[i - 1].Low) / _data[i - 0].Close) < _maxPriceDifference)
+                    
+                    if (_data[i - 0].Open < _data[i - 0].Close && _data[i - 0].Open < _data[i - 1].Low && Math.Abs(100 * (_data[i - 0].Close - _data[i - 1].Low) / _data[i - 0].Close) < _maximumPriceDifference)
                     {
                         data[i].Signal = true;
                     }
@@ -645,11 +646,11 @@ namespace Candlestick_Patterns
 
             for (int i = 5; i < _data.Count; i++)
             {
-                // Check whether the first candlestick matches. 
-                if (_data[i - 1].Open < _data[i - 1].Close && (100 * (_data[i - 1].Close - _data[i - 1].Open) / _data[i - 1].Open > _minCandleSize))
+                
+                if (_data[i - 1].Open < _data[i - 1].Close && (100 * (_data[i - 1].Close - _data[i - 1].Open) / _data[i - 1].Open > _minimumCandleSize))
                 {
-                    // Check whether the second candlestick matches. 
-                    if (_data[i - 0].Open > _data[i - 0].Close && 100 * Math.Abs((_data[i - 0].Open - _data[i - 1].Open) / _data[i - 1].Open) < _maxCloseDifference)
+                    
+                    if (_data[i - 0].Open > _data[i - 0].Close && 100 * Math.Abs((_data[i - 0].Open - _data[i - 1].Open) / _data[i - 1].Open) < _maximumCloseDifference)
                     {
                         data[i].Signal = true;
                     }
@@ -663,11 +664,11 @@ namespace Candlestick_Patterns
 
             for (int i = 5; i < _data.Count; i++)
             {
-                // Check whether the first candlestick matches. 
+                
                 if (_data[i - 1].Open < _data[i - 1].Close)
                 {
-                    // Check whether the second candlestick matches. 
-                    if (_data[i - 1].High < _data[i - 0].Low && 3 * Math.Abs(_data[i - 0].Open - _data[i - 0].Close) < _data[i - 0].High - _data[i - 0].Low && Math.Abs(100 * (_data[i - 0].Open - _data[i - 0].Close) / _data[i - 0].Open) < _maxCandleBodySize && 100 * (Math.Min(_data[i - 0].Open, _data[i - 0].Close) - _data[i - 0].Low) / Math.Min(_data[i - 0].Open, _data[i - 0].Close) < _maxCandleShadowSize)
+                    
+                    if (_data[i - 1].High < _data[i - 0].Low && 3 * Math.Abs(_data[i - 0].Open - _data[i - 0].Close) < _data[i - 0].High - _data[i - 0].Low && Math.Abs(100 * (_data[i - 0].Open - _data[i - 0].Close) / _data[i - 0].Open) < _maximumCandleBodySize && 100 * (Math.Min(_data[i - 0].Open, _data[i - 0].Close) - _data[i - 0].Low) / Math.Min(_data[i - 0].Open, _data[i - 0].Close) < _maximumCandleShadowSize)
                     {
                         data[i].Signal = true;
                     }
@@ -681,14 +682,14 @@ namespace Candlestick_Patterns
 
             for (int i = 5; i < _data.Count; i++)
             {
-                // Check whether the first candlestick matches. 
+                
                 if (_data[i - 2].Open > _data[i - 2].Close)
                 {
-                    // Check whether the second candlestick matches. 
+                    
                     if (_data[i - 1].Open < _data[i - 1].Close && _data[i - 1].High < _data[i - 2].Low)
                     {
-                        // Check whether the third candlestick matches. 
-                        if (_data[i - 0].Open < _data[i - 0].Close && _data[i - 0].High < _data[i - 2].Low && Math.Abs(100 * (_data[i - 0].Open - _data[i - 1].Open) / _data[i - 0].Open) < _maxDifference && Math.Abs(100 * (_data[i - 0].Close - _data[i - 1].Close) / _data[i - 0].Close) < _maxDifference)
+                        
+                        if (_data[i - 0].Open < _data[i - 0].Close && _data[i - 0].High < _data[i - 2].Low && Math.Abs(100 * (_data[i - 0].Open - _data[i - 1].Open) / _data[i - 0].Open) < _maximumDifference && Math.Abs(100 * (_data[i - 0].Close - _data[i - 1].Close) / _data[i - 0].Close) < _maximumDifference)
                         {
                             data[i].Signal = true;
                         }
@@ -703,10 +704,10 @@ namespace Candlestick_Patterns
 
             for (int i = 5; i < _data.Count; i++)
             {
-                // Check whether the first candlestick matches. 
+                
                 if (_data[i - 1].Open > _data[i - 1].Close)
                 {
-                    // Check whether the second candlestick matches. 
+                    
                     if (_data[i - 0].Open < _data[i - 0].Close && _data[i - 0].Open < _data[i - 1].Close && _data[i - 0].Close > _data[i - 1].Close && _data[i - 0].Close < _data[i - 1].Close + (_data[i - 1].Open - _data[i - 1].Close) / 2)
                     {
                         data[i].Signal = true;
@@ -721,14 +722,14 @@ namespace Candlestick_Patterns
 
             for (int i = 5; i < _data.Count; i++)
             {
-                // Check whether the first candlestick matches. 
-                if (Math.Abs(100 * (_data[i - 2].Open - _data[i - 2].Close) / _data[i - 2].Open) < _maxDojiBodySize)
+                
+                if (Math.Abs(100 * (_data[i - 2].Open - _data[i - 2].Close) / _data[i - 2].Open) < _maximumDojiBodySize)
                 {
-                    // Check whether the second candlestick matches. 
-                    if (Math.Abs(100 * (_data[i - 1].Open - _data[i - 1].Close) / _data[i - 1].Open) < _maxDojiBodySize && _data[i - 2].High < _data[i - 1].Low && _data[i - 0].High < _data[i - 1].Low)
+                    
+                    if (Math.Abs(100 * (_data[i - 1].Open - _data[i - 1].Close) / _data[i - 1].Open) < _maximumDojiBodySize && _data[i - 2].High < _data[i - 1].Low && _data[i - 0].High < _data[i - 1].Low)
                     {
-                        // Check whether the third candlestick matches. 
-                        if ((Math.Abs(100 * (_data[i - 0].Open - _data[i - 0].Close) / _data[i - 0].Open) < _maxDojiBodySize))
+                        
+                        if ((Math.Abs(100 * (_data[i - 0].Open - _data[i - 0].Close) / _data[i - 0].Open) < _maximumDojiBodySize))
                         {
                             data[i].Signal = true;
                         }
@@ -743,11 +744,11 @@ namespace Candlestick_Patterns
 
             for (int i = 5; i < _data.Count; i++)
             {
-                // Check whether the first candlestick matches. 
-                if (_data[i - 1].Open < _data[i - 1].Close && (100 * (_data[i - 1].Close - _data[i - 1].Open) / _data[i - 1].Open > _minCandleSize))
+                
+                if (_data[i - 1].Open < _data[i - 1].Close && (100 * (_data[i - 1].Close - _data[i - 1].Open) / _data[i - 1].Open > _minimumCandleSize))
                 {
-                    // Check whether the second candlestick matches. 
-                    if (_data[i - 0].Open >= _data[i - 0].Close && _data[i - 0].High == _data[i - 1].High && (Math.Abs(100 * (_data[i - 0].Close - _data[i - 0].Open) / _data[i - 0].Open) < _maxShortCandleSize))
+                    
+                    if (_data[i - 0].Open >= _data[i - 0].Close && _data[i - 0].High == _data[i - 1].High && (Math.Abs(100 * (_data[i - 0].Close - _data[i - 0].Open) / _data[i - 0].Open) < _maximumShortCandleSize))
                     {
                         data[i].Signal = true;
                     }
@@ -761,13 +762,13 @@ namespace Candlestick_Patterns
 
             for (int i = 5; i < _data.Count; i++)
             {
-                // Check whether the first candlestick matches. 
-                if (_data[i - 2].Open < _data[i - 2].Close && 100 * (_data[i - 2].Close - _data[i - 2].Open) / _data[i - 2].Open > _minCandleSize)
+                
+                if (_data[i - 2].Open < _data[i - 2].Close && 100 * (_data[i - 2].Close - _data[i - 2].Open) / _data[i - 2].Open > _minimumCandleSize)
                 {
-                    // Check whether the second candlestick matches. 
+                    
                     if (_data[i - 2].High < _data[i - 1].Low && _data[i - 1].Open > _data[i - 1].Close)
                     {
-                        // Check whether the third candlestick matches. 
+                        
                         if (_data[i - 0].Open > _data[i - 0].Close && _data[i - 0].Open > _data[i - 1].Open && _data[i - 0].Close < _data[i - 1].Close && _data[i - 0].Close > _data[i - 2].Close)
                         {
                             data[i].Signal = true;
@@ -783,13 +784,13 @@ namespace Candlestick_Patterns
 
             for (int i = 5; i < _data.Count; i++)
             {
-                // Check whether the first candlestick matches. 
-                if (_data[i - 2].Open > _data[i - 2].Close && (-100 * (_data[i - 2].Close - _data[i - 2].Open) / _data[i - 2].Open > _minCandleSize))
+                
+                if (_data[i - 2].Open > _data[i - 2].Close && (-100 * (_data[i - 2].Close - _data[i - 2].Open) / _data[i - 2].Open > _minimumCandleSize))
                 {
-                    // Check whether the second candlestick matches. 
-                    if (_data[i - 1].Open < _data[i - 1].Close && _data[i - 1].Open > _data[i - 2].Close && _data[i - 1].Close < _data[i - 2].Open && (100 * (_data[i - 1].Close - _data[i - 1].Open) / _data[i - 1].Open < _maxShortCandleSize))
+                    
+                    if (_data[i - 1].Open < _data[i - 1].Close && _data[i - 1].Open > _data[i - 2].Close && _data[i - 1].Close < _data[i - 2].Open && (100 * (_data[i - 1].Close - _data[i - 1].Open) / _data[i - 1].Open < _maximumShortCandleSize))
                     {
-                        // Check whether the third candlestick matches. 
+                        
                         if ((_data[i - 0].Open < _data[i - 0].Close && _data[i - 0].Close > _data[i - 1].Close))
                         {
                             data[i].Signal = true;
@@ -805,13 +806,13 @@ namespace Candlestick_Patterns
 
             for (int i = 5; i < _data.Count; i++)
             {
-                // Check whether the first candlestick matches. 
-                if (_data[i - 2].Open > _data[i - 2].Close && (-100 * (_data[i - 2].Close - _data[i - 2].Open) / _data[i - 2].Open < _maxShortCandleSize))
+                
+                if (_data[i - 2].Open > _data[i - 2].Close && (-100 * (_data[i - 2].Close - _data[i - 2].Open) / _data[i - 2].Open < _maximumShortCandleSize))
                 {
-                    // Check whether the second candlestick matches. 
-                    if (_data[i - 1].Open < _data[i - 1].Close && _data[i - 1].Open < _data[i - 2].Close && _data[i - 1].Close > _data[i - 2].Open && (100 * (_data[i - 1].Close - _data[i - 1].Open) / _data[i - 1].Open > _minCandleSize))
+                    
+                    if (_data[i - 1].Open < _data[i - 1].Close && _data[i - 1].Open < _data[i - 2].Close && _data[i - 1].Close > _data[i - 2].Open && (100 * (_data[i - 1].Close - _data[i - 1].Open) / _data[i - 1].Open > _minimumCandleSize))
                     {
-                        // Check whether the third candlestick matches. 
+                        
                         if (_data[i - 0].Open < _data[i - 0].Close && _data[i - 0].Close > _data[i - 1].Close)
                         {
                             data[i].Signal = true;
@@ -827,14 +828,14 @@ namespace Candlestick_Patterns
 
             for (int i = 5; i < _data.Count; i++)
             {
-                // Check whether the first candlestick matches. 
-                if (_data[i - 2].Open > _data[i - 2].Close && 100 * (_data[i - 2].High - _data[i - 2].Open) / _data[i - 2].Open < _maxShadowChange && 100 * (_data[i - 2].Close - _data[i - 2].Low) / _data[i - 2].Low > _minCandleSize && (-100 * (_data[i - 2].Close - _data[i - 2].Open) / _data[i - 2].Open > _minCandleSize))
+                
+                if (_data[i - 2].Open > _data[i - 2].Close && 100 * (_data[i - 2].High - _data[i - 2].Open) / _data[i - 2].Open < _maximumShadowChange && 100 * (_data[i - 2].Close - _data[i - 2].Low) / _data[i - 2].Low > _minimumCandleSize && (-100 * (_data[i - 2].Close - _data[i - 2].Open) / _data[i - 2].Open > _minimumCandleSize))
                 {
-                    // Check whether the second candlestick matches. 
-                    if (_data[i - 1].Open > _data[i - 1].Close && 100 * (_data[i - 1].High - _data[i - 1].Open) / _data[i - 1].Open < _maxShadowChange && _data[i - 1].Low > _data[i - 2].Low)
+                    
+                    if (_data[i - 1].Open > _data[i - 1].Close && 100 * (_data[i - 1].High - _data[i - 1].Open) / _data[i - 1].Open < _maximumShadowChange && _data[i - 1].Low > _data[i - 2].Low)
                     {
-                        // Check whether the third candlestick matches. 
-                        if (_data[i - 0].Open > _data[i - 0].Close && _data[i - 0].Open < _data[i - 1].High && _data[i - 0].Close > _data[i - 1].Low && 100 * (_data[i - 0].High - _data[i - 0].Open) / _data[i - 0].Open < _maxShadowChange && 100 * (_data[i - 0].Close - _data[i - 0].Low) / _data[i - 0].Low < _maxShadowChange)
+                        
+                        if (_data[i - 0].Open > _data[i - 0].Close && _data[i - 0].Open < _data[i - 1].High && _data[i - 0].Close > _data[i - 1].Low && 100 * (_data[i - 0].High - _data[i - 0].Open) / _data[i - 0].Open < _maximumShadowChange && 100 * (_data[i - 0].Close - _data[i - 0].Low) / _data[i - 0].Low < _maximumShadowChange)
                         {
                             data[i].Signal = true;
                         }
@@ -849,14 +850,14 @@ namespace Candlestick_Patterns
 
             for (int i = 5; i < _data.Count; i++)
             {
-                // Check whether the first candlestick matches. 
-                if (_data[i - 2].Open < _data[i - 2].Close && 100 * (_data[i - 2].High - _data[i - 2].Close) / _data[i - 2].Close < _maxCloseHighChange && 100 * (_data[i - 2].Close - _data[i - 2].Open) / _data[i - 2].Open > _minCandleSize)
+                
+                if (_data[i - 2].Open < _data[i - 2].Close && 100 * (_data[i - 2].High - _data[i - 2].Close) / _data[i - 2].Close < _maximumCloseHighChange && 100 * (_data[i - 2].Close - _data[i - 2].Open) / _data[i - 2].Open > _minimumCandleSize)
                 {
-                    // Check whether the second candlestick matches. 
-                    if (_data[i - 1].Open < _data[i - 1].Close && _data[i - 2].Close > _data[i - 1].Open && _data[i - 1].Open > _data[i - 2].Open && _data[i - 1].Close > _data[i - 2].Close && 100 * (_data[i - 1].High - _data[i - 1].Close) / _data[i - 1].Close < _maxCloseHighChange && 100 * (_data[i - 1].Close - _data[i - 1].Open) / _data[i - 1].Open > _minCandleSize)
+                    
+                    if (_data[i - 1].Open < _data[i - 1].Close && _data[i - 2].Close > _data[i - 1].Open && _data[i - 1].Open > _data[i - 2].Open && _data[i - 1].Close > _data[i - 2].Close && 100 * (_data[i - 1].High - _data[i - 1].Close) / _data[i - 1].Close < _maximumCloseHighChange && 100 * (_data[i - 1].Close - _data[i - 1].Open) / _data[i - 1].Open > _minimumCandleSize)
                     {
-                        // Check whether the third candlestick matches. 
-                        if (_data[i - 0].Open < _data[i - 0].Close && _data[i - 1].Close > _data[i - 0].Open && _data[i - 0].Open > _data[i - 1].Open && _data[i - 0].Close > _data[i - 1].Close && 100 * (_data[i - 0].High - _data[i - 0].Close) / _data[i - 0].Close < _maxCloseHighChange && 100 * (_data[i - 0].Close - _data[i - 0].Open) / _data[i - 0].Open > _minCandleSize)
+                        
+                        if (_data[i - 0].Open < _data[i - 0].Close && _data[i - 1].Close > _data[i - 0].Open && _data[i - 0].Open > _data[i - 1].Open && _data[i - 0].Close > _data[i - 1].Close && 100 * (_data[i - 0].High - _data[i - 0].Close) / _data[i - 0].Close < _maximumCloseHighChange && 100 * (_data[i - 0].Close - _data[i - 0].Open) / _data[i - 0].Open > _minimumCandleSize)
                         {
                             data[i].Signal = true;
                         }
@@ -871,16 +872,16 @@ namespace Candlestick_Patterns
 
             for (int i = 5; i < _data.Count; i++)
             {
-                // Check whether the first candlestick matches. 
-                if (_data[i - 3].Open < _data[i - 3].Close && 100 * (_data[i - 3].High - _data[i - 3].Close) / _data[i - 3].Close < _maxCloseHighChange && 100 * (_data[i - 3].Close - _data[i - 3].Open) / _data[i - 3].Open > _minCandleSize)
+                
+                if (_data[i - 3].Open < _data[i - 3].Close && 100 * (_data[i - 3].High - _data[i - 3].Close) / _data[i - 3].Close < _maximumCloseHighChange && 100 * (_data[i - 3].Close - _data[i - 3].Open) / _data[i - 3].Open > _minimumCandleSize)
                 {
-                    // Check whether the second candlestick matches. 
-                    if (_data[i - 2].Open < _data[i - 2].Close && _data[i - 3].Close > _data[i - 2].Open && _data[i - 2].Open > _data[i - 3].Open && _data[i - 2].Close > _data[i - 3].Close && 100 * (_data[i - 2].High - _data[i - 2].Close) / _data[i - 2].Close < _maxCloseHighChange && 100 * (_data[i - 2].Close - _data[i - 2].Open) / _data[i - 2].Open > _minCandleSize)
+                    
+                    if (_data[i - 2].Open < _data[i - 2].Close && _data[i - 3].Close > _data[i - 2].Open && _data[i - 2].Open > _data[i - 3].Open && _data[i - 2].Close > _data[i - 3].Close && 100 * (_data[i - 2].High - _data[i - 2].Close) / _data[i - 2].Close < _maximumCloseHighChange && 100 * (_data[i - 2].Close - _data[i - 2].Open) / _data[i - 2].Open > _minimumCandleSize)
                     {
-                        // Check whether the third candlestick matches. 
-                        if (_data[i - 1].Open < _data[i - 1].Close && _data[i - 2].Close > _data[i - 1].Open && _data[i - 1].Open > _data[i - 2].Open && _data[i - 1].Close > _data[i - 2].Close && 100 * (_data[i - 1].High - _data[i - 1].Close) / _data[i - 1].Close < _maxCloseHighChange && 100 * (_data[i - 1].Close - _data[i - 1].Open) / _data[i - 1].Open > _minCandleSize)
+                        
+                        if (_data[i - 1].Open < _data[i - 1].Close && _data[i - 2].Close > _data[i - 1].Open && _data[i - 1].Open > _data[i - 2].Open && _data[i - 1].Close > _data[i - 2].Close && 100 * (_data[i - 1].High - _data[i - 1].Close) / _data[i - 1].Close < _maximumCloseHighChange && 100 * (_data[i - 1].Close - _data[i - 1].Open) / _data[i - 1].Open > _minimumCandleSize)
                         {
-                            // Check whether the fourth candlestick matches. 
+                            
                             if (_data[i - 0].Open > _data[i - 0].Close && _data[i - 0].Open > _data[i - 1].Close && _data[i - 0].Close < _data[i - 3].Open)
                             {
                                 data[i].Signal = true;
@@ -897,11 +898,11 @@ namespace Candlestick_Patterns
 
             for (int i = 5; i < _data.Count; i++)
             {
-                // Check whether the first candlestick matches. 
+                
                 if (_data[i - 1].Low > _data[i - 0].High)
                 {
-                    // Check whether the second candlestick matches. 
-                    if (_data[i - 0].Open == _data[i - 0].Low && _data[i - 0].Open < _data[i - 0].Close && 100 * (_data[i - 0].High - _data[i - 0].Close) / _data[i - 0].Close < _maxCloseHighChange && 100 * (_data[i - 0].Close - _data[i - 0].Open) / _data[i - 0].Open > _minCandleSize)
+                    
+                    if (_data[i - 0].Open == _data[i - 0].Low && _data[i - 0].Open < _data[i - 0].Close && 100 * (_data[i - 0].High - _data[i - 0].Close) / _data[i - 0].Close < _maximumCloseHighChange && 100 * (_data[i - 0].Close - _data[i - 0].Open) / _data[i - 0].Open > _minimumCandleSize)
                     {
                         data[i].Signal = true;
                     }
@@ -915,19 +916,19 @@ namespace Candlestick_Patterns
 
             for (int i = 5; i < _data.Count; i++)
             {
-                // Check whether the first candlestick matches. 
-                if (_data[i - 4].Open > _data[i - 4].Close && (-100 * (_data[i - 4].Close - _data[i - 4].Open) / _data[i - 4].Open > _minCandleSize))
+                
+                if (_data[i - 4].Open > _data[i - 4].Close && (-100 * (_data[i - 4].Close - _data[i - 4].Open) / _data[i - 4].Open > _minimumCandleSize))
                 {
-                    // Check whether the second candlestick matches. 
-                    if (_data[i - 3].Open > _data[i - 3].Close && _data[i - 3].High < _data[i - 4].Low && (-100 * (_data[i - 3].Close - _data[i - 3].Open) / _data[i - 3].Open < _minCandleSize))
+                    
+                    if (_data[i - 3].Open > _data[i - 3].Close && _data[i - 3].High < _data[i - 4].Low && (-100 * (_data[i - 3].Close - _data[i - 3].Open) / _data[i - 3].Open < _minimumCandleSize))
                     {
-                        // Check whether the third candlestick matches. 
-                        if (_data[i - 3].Close > _data[i - 2].Close && Math.Abs((100 * (_data[i - 2].Close - _data[i - 2].Open) / _data[i - 2].Open)) < _minCandleSize)
+                        
+                        if (_data[i - 3].Close > _data[i - 2].Close && Math.Abs((100 * (_data[i - 2].Close - _data[i - 2].Open) / _data[i - 2].Open)) < _minimumCandleSize)
                         {
-                            // Check whether the fourth candlestick matches. 
-                            if (_data[i - 1].Open > _data[i - 1].Close && _data[i - 2].Close > _data[i - 1].Close && (-100 * (_data[i - 1].Close - _data[i - 1].Open) / _data[i - 1].Open < _minCandleSize))
+                            
+                            if (_data[i - 1].Open > _data[i - 1].Close && _data[i - 2].Close > _data[i - 1].Close && (-100 * (_data[i - 1].Close - _data[i - 1].Open) / _data[i - 1].Open < _minimumCandleSize))
                             {
-                                // Check whether the fifth candlestick matches. 
+                                
                                 if (_data[i - 0].Open < _data[i - 0].Close && _data[i - 0].Close < _data[i - 4].Low && _data[i - 0].Close > _data[i - 3].High)
                                 {
                                     data[i].Signal = true;
@@ -945,16 +946,16 @@ namespace Candlestick_Patterns
 
             for (int i = 5; i < _data.Count; i++)
             {
-                // Check whether the first candlestick matches. 
+                
                 if (_data[i - 3].Open > _data[i - 3].Close && _data[i - 3].High == _data[i - 3].Open && _data[i - 3].Low == _data[i - 3].Close)
                 {
-                    // Check whether the second candlestick matches. 
+                    
                     if (_data[i - 2].Open > _data[i - 2].Close && _data[i - 2].High == _data[i - 2].Open && _data[i - 2].Low == _data[i - 2].Close)
                     {
-                        // Check whether the third candlestick matches. 
+                        
                         if (_data[i - 1].Open > _data[i - 1].Close && _data[i - 1].Open < _data[i - 2].Close && _data[i - 1].High > _data[i - 2].Close)
                         {
-                            // Check whether the fourth candlestick matches. 
+                            
                             if (_data[i - 0].Open > _data[i - 0].Close && _data[i - 0].Open >= _data[i - 1].High && _data[i - 0].Close < _data[i - 1].Low)
                             {
                                 data[i].Signal = true;
@@ -971,11 +972,11 @@ namespace Candlestick_Patterns
 
             for (int i = 5; i < _data.Count; i++)
             {
-                // Check whether the first candlestick matches. 
-                if (_data[i - 1].Open > _data[i - 1].Close && -100 * (_data[i - 1].Close - _data[i - 1].Open) / _data[i - 1].Open > _minCandleSize)
+                
+                if (_data[i - 1].Open > _data[i - 1].Close && -100 * (_data[i - 1].Close - _data[i - 1].Open) / _data[i - 1].Open > _minimumCandleSize)
                 {
-                    // Check whether the second candlestick matches. 
-                    if (_data[i - 0].High < _data[i - 1].Low && Math.Abs(100 * (_data[i - 0].Open - _data[i - 0].Close) / _data[i - 0].Open) < _maxDojiBodySize && Math.Abs(100 * (_data[i - 0].High - _data[i - 0].Low) / _data[i - 0].High) < _maxDojiShadowSizes)
+                    
+                    if (_data[i - 0].High < _data[i - 1].Low && Math.Abs(100 * (_data[i - 0].Open - _data[i - 0].Close) / _data[i - 0].Open) < _maximumDojiBodySize && Math.Abs(100 * (_data[i - 0].High - _data[i - 0].Low) / _data[i - 0].High) < _maximumDojiShadowSizes)
                     {
                         data[i].Signal = true;
                     }
@@ -989,8 +990,8 @@ namespace Candlestick_Patterns
 
             for (int i = 5; i < _data.Count; i++)
             {
-                // Check whether the first candlestick matches. 
-                if (Math.Abs(100 * (_data[i - 0].High - _data[i - 0].Close) / _data[i - 0].High) < _maxDojiBodySize && Math.Abs(100 * (_data[i - 0].Open - _data[i - 0].Close) / _data[i - 0].Open) < _maxDojiBodySize && Math.Abs(100 * (_data[i - 0].High - _data[i - 0].Low) / _data[i - 0].High) > _minCandleShadowSize)
+                
+                if (Math.Abs(100 * (_data[i - 0].High - _data[i - 0].Close) / _data[i - 0].High) < _maximumDojiBodySize && Math.Abs(100 * (_data[i - 0].Open - _data[i - 0].Close) / _data[i - 0].Open) < _maximumDojiBodySize && Math.Abs(100 * (_data[i - 0].High - _data[i - 0].Low) / _data[i - 0].High) > _minimumCandleShadowSize)
                 {
                     data[i].Signal = true;
                 }
@@ -1003,11 +1004,11 @@ namespace Candlestick_Patterns
 
             for (int i = 5; i < _data.Count; i++)
             {
-                // Check whether the first candlestick matches. 
-                if (_data[i - 1].Open > _data[i - 1].Close && -100 * (_data[i - 1].Close - _data[i - 1].Open) / _data[i - 1].Open < _maxShortCandleSize)
+                
+                if (_data[i - 1].Open > _data[i - 1].Close && -100 * (_data[i - 1].Close - _data[i - 1].Open) / _data[i - 1].Open < _maximumShortCandleSize)
                 {
-                    // Check whether the second candlestick matches. 
-                    if (_data[i - 0].Open < _data[i - 0].Close && _data[i - 0].Open < _data[i - 1].Close && _data[i - 0].Close > _data[i - 1].Open && 100 * (_data[i - 0].Close - _data[i - 0].Open) / _data[i - 0].Open > _minCandleSize)
+                    
+                    if (_data[i - 0].Open < _data[i - 0].Close && _data[i - 0].Open < _data[i - 1].Close && _data[i - 0].Close > _data[i - 1].Open && 100 * (_data[i - 0].Close - _data[i - 0].Open) / _data[i - 0].Open > _minimumCandleSize)
                     {
                         data[i].Signal = true;
                     }
@@ -1021,11 +1022,11 @@ namespace Candlestick_Patterns
 
             for (int i = 5; i < _data.Count; i++)
             {
-                // Check whether the first candlestick matches. 
-                if (_data[i - 1].Open > _data[i - 1].Close && -100 * (_data[i - 1].Close - _data[i - 1].Open) / _data[i - 1].Open > _minCandleSize)
+                
+                if (_data[i - 1].Open > _data[i - 1].Close && -100 * (_data[i - 1].Close - _data[i - 1].Open) / _data[i - 1].Open > _minimumCandleSize)
                 {
-                    // Check whether the second candlestick matches. 
-                    if (_data[i - 0].High < _data[i - 1].Open && Math.Abs(100 * (_data[i - 0].Open - _data[i - 0].Close) / _data[i - 0].Open) < _maxDojiBodySize && _data[i - 0].Low == _data[i - 0].Open)
+                    
+                    if (_data[i - 0].High < _data[i - 1].Open && Math.Abs(100 * (_data[i - 0].Open - _data[i - 0].Close) / _data[i - 0].Open) < _maximumDojiBodySize && _data[i - 0].Low == _data[i - 0].Open)
                     {
                         data[i].Signal = true;
                     }
@@ -1039,11 +1040,11 @@ namespace Candlestick_Patterns
 
             for (int i = 5; i < _data.Count; i++)
             {
-                // Check whether the first candlestick matches. 
-                if (_data[i - 1].Open > _data[i - 1].Close && (-100 * (_data[i - 1].Close - _data[i - 1].Open) / _data[i - 1].Open > _minCandleSize))
+                
+                if (_data[i - 1].Open > _data[i - 1].Close && (-100 * (_data[i - 1].Close - _data[i - 1].Open) / _data[i - 1].Open > _minimumCandleSize))
                 {
-                    // Check whether the second candlestick matches. 
-                    if (_data[i - 0].Open < _data[i - 0].Close && _data[i - 0].Open > _data[i - 1].Close && _data[i - 0].Close < _data[i - 1].Open && (100 * (_data[i - 0].Close - _data[i - 0].Open) / _data[i - 0].Open < _maxShortCandleSize))
+                    
+                    if (_data[i - 0].Open < _data[i - 0].Close && _data[i - 0].Open > _data[i - 1].Close && _data[i - 0].Close < _data[i - 1].Open && (100 * (_data[i - 0].Close - _data[i - 0].Open) / _data[i - 0].Open < _maximumShortCandleSize))
                     {
                         data[i].Signal = true;
                     }
@@ -1057,11 +1058,11 @@ namespace Candlestick_Patterns
 
             for (int i = 5; i < _data.Count; i++)
             {
-                // Check whether the first candlestick matches. 
-                if (_data[i - 1].Open > _data[i - 1].Close && (-100 * (_data[i - 1].Close - _data[i - 1].Open) / _data[i - 1].Open > _minCandleSize))
+                
+                if (_data[i - 1].Open > _data[i - 1].Close && (-100 * (_data[i - 1].Close - _data[i - 1].Open) / _data[i - 1].Open > _minimumCandleSize))
                 {
-                    // Check whether the second candlestick matches. 
-                    if (Math.Abs(100 * (_data[i - 0].Open - _data[i - 0].Close) / _data[i - 0].Open) < _maxDojiBodySize && _data[i - 0].Close < _data[i - 1].Open && _data[i - 1].Close < _data[i - 0].Close && _data[i - 0].Open < _data[i - 1].Open && _data[i - 1].Close < _data[i - 0].Open)
+                    
+                    if (Math.Abs(100 * (_data[i - 0].Open - _data[i - 0].Close) / _data[i - 0].Open) < _maximumDojiBodySize && _data[i - 0].Close < _data[i - 1].Open && _data[i - 1].Close < _data[i - 0].Close && _data[i - 0].Open < _data[i - 1].Open && _data[i - 1].Close < _data[i - 0].Open)
                     {
                         data[i].Signal = true;
                     }
@@ -1075,11 +1076,11 @@ namespace Candlestick_Patterns
 
             for (int i = 5; i < _data.Count; i++)
             {
-                // Check whether the first candlestick matches. 
-                if (_data[i - 1].Open > _data[i - 1].Close && -100 * (_data[i - 1].Close - _data[i - 1].Open) / _data[i - 1].Open > _minCandleSize)
+                
+                if (_data[i - 1].Open > _data[i - 1].Close && -100 * (_data[i - 1].Close - _data[i - 1].Open) / _data[i - 1].Open > _minimumCandleSize)
                 {
-                    // Check whether the second candlestick matches. 
-                    if (_data[i - 0].Open > _data[i - 0].Close && _data[i - 0].Open < _data[i - 1].Open && _data[i - 0].Close > _data[i - 1].Close && -100 * (_data[i - 0].Close - _data[i - 0].Open) / _data[i - 0].Open < _maxShortCandleSize)
+                    
+                    if (_data[i - 0].Open > _data[i - 0].Close && _data[i - 0].Open < _data[i - 1].Open && _data[i - 0].Close > _data[i - 1].Close && -100 * (_data[i - 0].Close - _data[i - 0].Open) / _data[i - 0].Open < _maximumShortCandleSize)
                     {
                         data[i].Signal = true;
                     }
@@ -1093,11 +1094,11 @@ namespace Candlestick_Patterns
 
             for (int i = 5; i < _data.Count; i++)
             {
-                // Check whether the first candlestick matches. 
-                if (_data[i - 1].Open > _data[i - 1].Close && 100 * (_data[i - 1].Close - _data[i - 1].Low) / _data[i - 1].Close < _maxShadowSize)
+                
+                if (_data[i - 1].Open > _data[i - 1].Close && 100 * (_data[i - 1].Close - _data[i - 1].Low) / _data[i - 1].Close < _maximumShadowSize)
                 {
-                    // Check whether the second candlestick matches. 
-                    if (_data[i - 0].High < _data[i - 1].Open && _data[i - 0].High - _data[i - 0].Low > 3 * Math.Abs(_data[i - 0].Close - _data[i - 0].Open) && 100 * (_data[i - 0].Close - _data[i - 0].Low) / _data[i - 0].Close < _maxShadowSize && 100 * Math.Abs((_data[i - 0].Close - _data[i - 0].Open) / _data[i - 0].Open) < _maxCandleSize)
+                    
+                    if (_data[i - 0].High < _data[i - 1].Open && _data[i - 0].High - _data[i - 0].Low > 3 * Math.Abs(_data[i - 0].Close - _data[i - 0].Open) && 100 * (_data[i - 0].Close - _data[i - 0].Low) / _data[i - 0].Close < _maximumShadowSize && 100 * Math.Abs((_data[i - 0].Close - _data[i - 0].Open) / _data[i - 0].Open) < _maximumCandleSize)
                     {
                         data[i].Signal = true;
                     }
@@ -1111,11 +1112,11 @@ namespace Candlestick_Patterns
 
             for (int i = 5; i < _data.Count; i++)
             {
-                // Check whether the first candlestick matches. 
-                if (_data[i - 1].Open > _data[i - 1].Close && 100 * (_data[i - 1].High - _data[i - 1].Open) / _data[i - 1].Open < _maxShadowSize && -100 * (_data[i - 1].Low - _data[i - 1].Close) / _data[i - 1].Close < _maxShadowSize && -100 * (_data[i - 1].Close - _data[i - 1].Open) / _data[i - 1].Open > _minCandleSize)
+                
+                if (_data[i - 1].Open > _data[i - 1].Close && 100 * (_data[i - 1].High - _data[i - 1].Open) / _data[i - 1].Open < _maximumShadowSize && -100 * (_data[i - 1].Low - _data[i - 1].Close) / _data[i - 1].Close < _maximumShadowSize && -100 * (_data[i - 1].Close - _data[i - 1].Open) / _data[i - 1].Open > _minimumCandleSize)
                 {
-                    // Check whether the second candlestick matches. 
-                    if (_data[i - 0].Open > _data[i - 1].Open && _data[i - 0].Open < _data[i - 0].Close && 100 * (_data[i - 0].High - _data[i - 0].Close) / _data[i - 0].Close < _maxShadowSize && -100 * (_data[i - 0].Low - _data[i - 0].Open) / _data[i - 0].Open < _maxShadowSize && 100 * (_data[i - 0].Close - _data[i - 0].Open) / _data[i - 0].Open > _minCandleSize)
+                    
+                    if (_data[i - 0].Open > _data[i - 1].Open && _data[i - 0].Open < _data[i - 0].Close && 100 * (_data[i - 0].High - _data[i - 0].Close) / _data[i - 0].Close < _maximumShadowSize && -100 * (_data[i - 0].Low - _data[i - 0].Open) / _data[i - 0].Open < _maximumShadowSize && 100 * (_data[i - 0].Close - _data[i - 0].Open) / _data[i - 0].Open > _minimumCandleSize)
                     {
                         data[i].Signal = true;
                     }
@@ -1129,19 +1130,19 @@ namespace Candlestick_Patterns
 
             for (int i = 5; i < _data.Count; i++)
             {
-                // Check whether the first candlestick matches. 
-                if ((_data[i - 4].Open > _data[i - 4].Close && -100 * (_data[i - 4].Close - _data[i - 4].Open) / _data[i - 4].Open > _minCandleSize))
+                
+                if ((_data[i - 4].Open > _data[i - 4].Close && -100 * (_data[i - 4].Close - _data[i - 4].Open) / _data[i - 4].Open > _minimumCandleSize))
                 {
-                    // Check whether the second candlestick matches. 
-                    if ((_data[i - 3].Open > _data[i - 3].Close && _data[i - 3].Close < _data[i - 4].Close && _data[i - 4].Close <= _data[i - 3].Open && _data[i - 3].Open <= _data[i - 4].Open && -100 * (_data[i - 3].Close - _data[i - 3].Open) / _data[i - 3].Open > _minCandleSize))
+                    
+                    if ((_data[i - 3].Open > _data[i - 3].Close && _data[i - 3].Close < _data[i - 4].Close && _data[i - 4].Close <= _data[i - 3].Open && _data[i - 3].Open <= _data[i - 4].Open && -100 * (_data[i - 3].Close - _data[i - 3].Open) / _data[i - 3].Open > _minimumCandleSize))
                     {
-                        // Check whether the third candlestick matches. 
-                        if ((_data[i - 2].Open > _data[i - 2].Close && _data[i - 3].Close < _data[i - 2].Open && _data[i - 2].Open < _data[i - 3].Open && _data[i - 2].Close < _data[i - 3].Close && -100 * (_data[i - 2].Close - _data[i - 2].Open) / _data[i - 2].Open > _minCandleSize))
+                        
+                        if ((_data[i - 2].Open > _data[i - 2].Close && _data[i - 3].Close < _data[i - 2].Open && _data[i - 2].Open < _data[i - 3].Open && _data[i - 2].Close < _data[i - 3].Close && -100 * (_data[i - 2].Close - _data[i - 2].Open) / _data[i - 2].Open > _minimumCandleSize))
                         {
-                            // Check whether the fourth candlestick matches. 
+                            
                             if ((_data[i - 1].Open > _data[i - 1].Close && _data[i - 1].High - _data[i - 1].Open > 2 * (_data[i - 1].Open - _data[i - 1].Close)))
                             {
-                                // Check whether the fifth candlestick matches. 
+                                
                                 if ((_data[i - 0].Open < _data[i - 0].Close && _data[i - 0].Open > _data[i - 1].Open))
                                 {
                                     data[i].Signal = true;
@@ -1159,8 +1160,8 @@ namespace Candlestick_Patterns
 
             for (int i = 5; i < _data.Count; i++)
             {
-                // Check whether the first candlestick matches. 
-                if (_data[i - 0].Open < _data[i - 0].Close && 100 * (_data[i - 0].Close - _data[i - 0].Open) / _data[i - 0].Open > _minCandleSize)
+                
+                if (_data[i - 0].Open < _data[i - 0].Close && 100 * (_data[i - 0].Close - _data[i - 0].Open) / _data[i - 0].Open > _minimumCandleSize)
                 {
                     data[i].Signal = true;
                 }
@@ -1173,19 +1174,19 @@ namespace Candlestick_Patterns
 
             for (int i = 5; i < _data.Count; i++)
             {
-                // Check whether the first candlestick matches. 
-                if (_data[i - 4].Open < _data[i - 4].Close && 100 * (_data[i - 4].Close - _data[i - 4].Open) / _data[i - 4].Open > _minCandleSize)
+                
+                if (_data[i - 4].Open < _data[i - 4].Close && 100 * (_data[i - 4].Close - _data[i - 4].Open) / _data[i - 4].Open > _minimumCandleSize)
                 {
-                    // Check whether the second candlestick matches. 
-                    if (_data[i - 3].Open > _data[i - 3].Close && _data[i - 4].Close < _data[i - 3].Close && -100 * (_data[i - 4].Close - _data[i - 4].Open) / _data[i - 4].Open < _minCandleSize)
+                    
+                    if (_data[i - 3].Open > _data[i - 3].Close && _data[i - 4].Close < _data[i - 3].Close && -100 * (_data[i - 4].Close - _data[i - 4].Open) / _data[i - 4].Open < _minimumCandleSize)
                     {
-                        // Check whether the third candlestick matches. 
+                        
                         if ((_data[i - 2].Open < _data[i - 2].Close && _data[i - 2].Close < _data[i - 3].Open && _data[i - 2].Open > _data[i - 4].Open) || (_data[i - 2].Open > _data[i - 2].Close && _data[i - 2].Close > _data[i - 4].Open && _data[i - 2].Open < _data[i - 3].Open))
                         {
-                            // Check whether the fourth candlestick matches. 
+                            
                             if (_data[i - 1].Open > _data[i - 1].Close && _data[i - 2].Close > _data[i - 4].Open && _data[i - 2].Open < _data[i - 3].Open)
                             {
-                                // Check whether the fifth candlestick matches. 
+                                
                                 if (_data[i - 0].Open < _data[i - 0].Close && _data[i - 0].Open > _data[i - 1].Open && _data[i - 0].Close > _data[i - 4].Close && _data[i - 0].Close > _data[i - 3].Open)
                                 {
                                     data[i].Signal = true;
@@ -1203,10 +1204,10 @@ namespace Candlestick_Patterns
 
             for (int i = 5; i < _data.Count; i++)
             {
-                // Check whether the first candlestick matches. 
-                if (_data[i - 1].Open > _data[i - 1].Close && -100 * (_data[i - 1].Close - _data[i - 1].Open) / _data[i - 1].Open > _minCandleSize)
+                
+                if (_data[i - 1].Open > _data[i - 1].Close && -100 * (_data[i - 1].Close - _data[i - 1].Open) / _data[i - 1].Open > _minimumCandleSize)
                 {
-                    // Check whether the second candlestick matches. 
+                    
                     if (_data[i - 0].Open > _data[i - 0].Close && _data[i - 0].Close == _data[i - 1].Close)
                     {
                         data[i].Signal = true;
@@ -1221,11 +1222,11 @@ namespace Candlestick_Patterns
 
             for (int i = 5; i < _data.Count; i++)
             {
-                // Check whether the first candlestick matches. 
-                if (_data[i - 1].Open > _data[i - 1].Close && -100 * (_data[i - 1].Close - _data[i - 1].Open) / _data[i - 1].Open > _minCandleSize)
+                
+                if (_data[i - 1].Open > _data[i - 1].Close && -100 * (_data[i - 1].Close - _data[i - 1].Open) / _data[i - 1].Open > _minimumCandleSize)
                 {
-                    // Check whether the second candlestick matches. 
-                    if (_data[i - 0].Open < _data[i - 0].Close && _data[i - 0].Close < _data[i - 1].Close && -100 * (_data[i - 0].Open - _data[i - 0].Close) / _data[i - 0].Close > _minCandleSize && 100 * Math.Abs((_data[i - 0].Close - _data[i - 1].Close) / _data[i - 1].Close) < _maxCloseDifference)
+                    
+                    if (_data[i - 0].Open < _data[i - 0].Close && _data[i - 0].Close < _data[i - 1].Close && -100 * (_data[i - 0].Open - _data[i - 0].Close) / _data[i - 0].Close > _minimumCandleSize && 100 * Math.Abs((_data[i - 0].Close - _data[i - 1].Close) / _data[i - 1].Close) < _maximumCloseDifference)
                     {
                         data[i].Signal = true;
                     }
@@ -1239,13 +1240,13 @@ namespace Candlestick_Patterns
 
             for (int i = 5; i < _data.Count; i++)
             {
-                // Check whether the first candlestick matches. 
-                if (_data[i - 2].Open > _data[i - 2].Close && -100 * (_data[i - 2].Close - _data[i - 2].Open) / _data[i - 2].Open > _minCandleSize)
+                
+                if (_data[i - 2].Open > _data[i - 2].Close && -100 * (_data[i - 2].Close - _data[i - 2].Open) / _data[i - 2].Open > _minimumCandleSize)
                 {
-                    // Check whether the second candlestick matches. 
-                    if (_data[i - 1].High < _data[i - 2].Low && Math.Abs(100 * (_data[i - 1].Open - _data[i - 1].Close) / _data[i - 1].Open) < _maxDojiBodySize && Math.Abs(100 * (_data[i - 1].High - _data[i - 1].Low) / _data[i - 1].High) < _maxDojiShadowSizes)
+                    
+                    if (_data[i - 1].High < _data[i - 2].Low && Math.Abs(100 * (_data[i - 1].Open - _data[i - 1].Close) / _data[i - 1].Open) < _maximumDojiBodySize && Math.Abs(100 * (_data[i - 1].High - _data[i - 1].Low) / _data[i - 1].High) < _maximumDojiShadowSizes)
                     {
-                        // Check whether the third candlestick matches.  
+                         
                         if ((_data[i - 0].Open < _data[i - 0].Close && _data[i - 1].Close < _data[i - 0].Close))
                         {
                             data[i].Signal = true;
@@ -1261,13 +1262,13 @@ namespace Candlestick_Patterns
 
             for (int i = 5; i < _data.Count; i++)
             {
-                // Check whether the first candlestick matches. 
-                if (_data[i - 2].Open > _data[i - 2].Close && -100 * (_data[i - 2].Close - _data[i - 2].Open) / _data[i - 2].Open > _minCandleSize)
+                
+                if (_data[i - 2].Open > _data[i - 2].Close && -100 * (_data[i - 2].Close - _data[i - 2].Open) / _data[i - 2].Open > _minimumCandleSize)
                 {
-                    // Check whether the second candlestick matches. 
-                    if (_data[i - 1].High < _data[i - 2].Low && Math.Abs(100 * (_data[i - 1].Open - _data[i - 1].Close) / _data[i - 1].Open) < _maxShortCandleSize)
+                    
+                    if (_data[i - 1].High < _data[i - 2].Low && Math.Abs(100 * (_data[i - 1].Open - _data[i - 1].Close) / _data[i - 1].Open) < _maximumShortCandleSize)
                     {
-                        // Check whether the third candlestick matches.  
+                         
                         if (_data[i - 0].Open < _data[i - 0].Close && _data[i - 1].Close < _data[i - 0].Close)
                         {
                             data[i].Signal = true;
@@ -1283,10 +1284,10 @@ namespace Candlestick_Patterns
 
             for (int i = 5; i < _data.Count; i++)
             {
-                // Check whether the first candlestick matches. 
-                if (_data[i - 1].Open > _data[i - 1].Close && (-100 * (_data[i - 1].Close - _data[i - 1].Open) / _data[i - 1].Open > _minCandleSize))
+                
+                if (_data[i - 1].Open > _data[i - 1].Close && (-100 * (_data[i - 1].Close - _data[i - 1].Open) / _data[i - 1].Open > _minimumCandleSize))
                 {
-                    // Check whether the second candlestick matches. 
+                    
                     if (_data[i - 0].Open < _data[i - 0].Close && _data[i - 0].Open < _data[i - 1].Close && _data[i - 0].Close > _data[i - 1].Close + (_data[i - 1].Open - _data[i - 1].Close) / 2)
                     {
                         data[i].Signal = true;
@@ -1301,19 +1302,19 @@ namespace Candlestick_Patterns
 
             for (int i = 5; i < _data.Count; i++)
             {
-                // Check whether the first candlestick matches. 
-                if (_data[i - 4].Open < _data[i - 4].Close && 100 * (_data[i - 4].Close - _data[i - 4].Open) / _data[i - 4].Open > _minCandleSize)
+                
+                if (_data[i - 4].Open < _data[i - 4].Close && 100 * (_data[i - 4].Close - _data[i - 4].Open) / _data[i - 4].Open > _minimumCandleSize)
                 {
-                    // Check whether the second candlestick matches. 
-                    if (_data[i - 3].Open > _data[i - 3].Close && _data[i - 4].High > _data[i - 3].Open && _data[i - 4].Low < _data[i - 3].Close && -100 * (_data[i - 4].Close - _data[i - 4].Open) / _data[i - 4].Open < _minCandleSize)
+                    
+                    if (_data[i - 3].Open > _data[i - 3].Close && _data[i - 4].High > _data[i - 3].Open && _data[i - 4].Low < _data[i - 3].Close && -100 * (_data[i - 4].Close - _data[i - 4].Open) / _data[i - 4].Open < _minimumCandleSize)
                     {
-                        // Check whether the third candlestick matches. 
+                        
                         if (_data[i - 2].Open < _data[i - 3].Open && _data[i - 2].Close < _data[i - 3].Open && _data[i - 4].High > _data[i - 2].Open && _data[i - 4].High > _data[i - 2].Close && _data[i - 4].Low < _data[i - 2].Close && _data[i - 4].Low < _data[i - 2].Open)
                         {
-                            // Check whether the fourth candlestick matches. 
+                            
                             if (_data[i - 1].Open > _data[i - 1].Close && _data[i - 1].Close < Math.Min(_data[i - 2].Open, _data[i - 2].Close) && _data[i - 4].High > _data[i - 1].Open && _data[i - 4].Low < _data[i - 1].Close)
                             {
-                                // Check whether the fifth candlestick matches. 
+                                
                                 if (_data[i - 0].Open < _data[i - 0].Close && _data[i - 0].Open > _data[i - 1].Close && _data[i - 0].Close > _data[i - 4].Close)
                                 {
                                     data[i].Signal = true;
@@ -1331,11 +1332,11 @@ namespace Candlestick_Patterns
 
             for (int i = 5; i < _data.Count; i++)
             {
-                // Check whether the first candlestick matches. 
-                if (_data[i - 1].Open > _data[i - 1].Close && -100 * (_data[i - 1].Close - _data[i - 1].Open) / _data[i - 1].Open > _minCandleSize)
+                
+                if (_data[i - 1].Open > _data[i - 1].Close && -100 * (_data[i - 1].Close - _data[i - 1].Open) / _data[i - 1].Open > _minimumCandleSize)
                 {
-                    // Check whether the second candlestick matches. 
-                    if (_data[i - 0].Open < _data[i - 0].Close && 100 * (_data[i - 0].Close - _data[i - 0].Open) / _data[i - 0].Open > _minCandleSize && 100 * Math.Abs((_data[i - 0].Open - _data[i - 1].Open) / _data[i - 1].Open) < _maxOpenDifference)
+                    
+                    if (_data[i - 0].Open < _data[i - 0].Close && 100 * (_data[i - 0].Close - _data[i - 0].Open) / _data[i - 0].Open > _minimumCandleSize && 100 * Math.Abs((_data[i - 0].Open - _data[i - 1].Open) / _data[i - 1].Open) < _maximumOpenDifference)
                     {
                         data[i].Signal = true;
                     }
@@ -1349,14 +1350,14 @@ namespace Candlestick_Patterns
 
             for (int i = 5; i < _data.Count; i++)
             {
-                // Check whether the first candlestick matches. 
+                
                 if (_data[i - 2].Open < _data[i - 2].Close)
                 {
-                    // Check whether the second candlestick matches. 
+                    
                     if (_data[i - 1].Open < _data[i - 1].Close && _data[i - 1].Open > _data[i - 2].High)
                     {
-                        // Check whether the third candlestick matches. 
-                        if (_data[i - 0].Open < _data[i - 0].Close && 100 * Math.Abs((_data[i - 0].Open - _data[i - 1].Open) / _data[i - 1].Open) < _maxDifference && 100 * Math.Abs((_data[i - 0].Close - _data[i - 1].Close) / _data[i - 1].Close) < _maxDifference)
+                        
+                        if (_data[i - 0].Open < _data[i - 0].Close && 100 * Math.Abs((_data[i - 0].Open - _data[i - 1].Open) / _data[i - 1].Open) < _maximumDifference && 100 * Math.Abs((_data[i - 0].Close - _data[i - 1].Close) / _data[i - 1].Close) < _maximumDifference)
                         {
                             data[i].Signal = true;
                         }
@@ -1371,10 +1372,10 @@ namespace Candlestick_Patterns
 
             for (int i = 5; i < _data.Count; i++)
             {
-                // Check whether the first candlestick matches. 
+                
                 if (_data[i - 2].Open > _data[i - 2].Close)
                 {
-                    // Check whether the second candlestick matches. 
+                    
                     if (_data[i - 1].Open < _data[i - 1].Close && _data[i - 2].Close < _data[i - 1].Close)
                     {
                         if (_data[i - 0].Open > _data[i - 0].Close && _data[i - 2].Close == _data[i - 0].Close)
@@ -1392,14 +1393,14 @@ namespace Candlestick_Patterns
 
             for (int i = 5; i < _data.Count; i++)
             {
-                // Check whether the first candlestick matches. 
-                if (Math.Abs(100 * (_data[i - 2].Open - _data[i - 2].Close) / _data[i - 2].Open) < _maxDojiBodySize)
+                
+                if (Math.Abs(100 * (_data[i - 2].Open - _data[i - 2].Close) / _data[i - 2].Open) < _maximumDojiBodySize)
                 {
-                    // Check whether the second candlestick matches. 
-                    if (Math.Abs(100 * (_data[i - 1].Open - _data[i - 1].Close) / _data[i - 1].Open) < _maxDojiBodySize && _data[i - 1].High < _data[i - 2].Low && _data[i - 1].High < _data[i - 0].Low)
+                    
+                    if (Math.Abs(100 * (_data[i - 1].Open - _data[i - 1].Close) / _data[i - 1].Open) < _maximumDojiBodySize && _data[i - 1].High < _data[i - 2].Low && _data[i - 1].High < _data[i - 0].Low)
                     {
-                        // Check whether the third candlestick matches. 
-                        if (Math.Abs(100 * (_data[i - 0].Open - _data[i - 0].Close) / _data[i - 0].Open) < _maxDojiBodySize)
+                        
+                        if (Math.Abs(100 * (_data[i - 0].Open - _data[i - 0].Close) / _data[i - 0].Open) < _maximumDojiBodySize)
                         {
                             data[i].Signal = true;
                         }
@@ -1414,11 +1415,11 @@ namespace Candlestick_Patterns
 
             for (int i = 5; i < _data.Count; i++)
             {
-                // Check whether the first candlestick matches. 
-                if (100 * Math.Abs((_data[i - 1].Close - _data[i - 1].Open) / _data[i - 1].Open) > _minCandleSize)
+                
+                if (100 * Math.Abs((_data[i - 1].Close - _data[i - 1].Open) / _data[i - 1].Open) > _minimumCandleSize)
                 {
-                    // Check whether the second candlestick matches. 
-                    if (Math.Abs(100 * (_data[i - 0].Open - _data[i - 0].Close) / _data[i - 0].Open) < _maxShortCandleSize && _data[i - 0].Low == _data[i - 1].Low)
+                    
+                    if (Math.Abs(100 * (_data[i - 0].Open - _data[i - 0].Close) / _data[i - 0].Open) < _maximumShortCandleSize && _data[i - 0].Low == _data[i - 1].Low)
                     {
                         data[i].Signal = true;
                     }
@@ -1432,14 +1433,14 @@ namespace Candlestick_Patterns
 
             for (int i = 5; i < _data.Count; i++)
             {
-                // Check whether the first candlestick matches. 
-                if (_data[i - 2].Open > _data[i - 2].Close && -100 * (_data[i - 2].Close - _data[i - 2].Open) / _data[i - 2].Open > _minCandleSize)
+                
+                if (_data[i - 2].Open > _data[i - 2].Close && -100 * (_data[i - 2].Close - _data[i - 2].Open) / _data[i - 2].Open > _minimumCandleSize)
                 {
-                    // Check whether the second candlestick matches. 
-                    if (_data[i - 1].Open > _data[i - 1].Close && _data[i - 1].Open == _data[i - 1].High && 100 * (_data[i - 1].Close - _data[i - 1].Low) / _data[i - 1].Close > _minCandleSize)
+                    
+                    if (_data[i - 1].Open > _data[i - 1].Close && _data[i - 1].Open == _data[i - 1].High && 100 * (_data[i - 1].Close - _data[i - 1].Low) / _data[i - 1].Close > _minimumCandleSize)
                     {
-                        // Check whether the third candlestick matches.  
-                        if (_data[i - 0].Open < _data[i - 0].Close && 100 * (_data[i - 0].Close - _data[i - 0].Open) / _data[i - 0].Open < _maxShortCandleSize && _data[i - 1].Close > _data[i - 0].Close)
+                         
+                        if (_data[i - 0].Open < _data[i - 0].Close && 100 * (_data[i - 0].Close - _data[i - 0].Open) / _data[i - 0].Open < _maximumShortCandleSize && _data[i - 1].Close > _data[i - 0].Close)
                         {
                             data[i].Signal = true;
                         }
@@ -1454,13 +1455,13 @@ namespace Candlestick_Patterns
 
             for (int i = 5; i < _data.Count; i++)
             {
-                // Check whether the first candlestick matches. 
-                if (_data[i - 2].Open < _data[i - 2].Close && 100 * (_data[i - 2].Close - _data[i - 2].Open) / _data[i - 2].Open > _minCandleSize)
+                
+                if (_data[i - 2].Open < _data[i - 2].Close && 100 * (_data[i - 2].Close - _data[i - 2].Open) / _data[i - 2].Open > _minimumCandleSize)
                 {
-                    // Check whether the second candlestick matches. 
-                    if (_data[i - 1].Open < _data[i - 1].Close && _data[i - 1].Low > _data[i - 2].High && 100 * (_data[i - 1].Close - _data[i - 1].Open) / _data[i - 1].Open > _minCandleSize)
+                    
+                    if (_data[i - 1].Open < _data[i - 1].Close && _data[i - 1].Low > _data[i - 2].High && 100 * (_data[i - 1].Close - _data[i - 1].Open) / _data[i - 1].Open > _minimumCandleSize)
                     {
-                        // Check whether the third candlestick matches. 
+                        
                         if (_data[i - 0].Open > _data[i - 0].Close && _data[i - 1].Open < _data[i - 0].Open && _data[i - 2].Close > _data[i - 0].Close)
                         {
                             data[i].Signal = true;
@@ -1476,13 +1477,13 @@ namespace Candlestick_Patterns
 
             for (int i = 5; i < _data.Count; i++)
             {
-                // Check whether the first candlestick matches. 
+                
                 if (_data[i - 2].Open < _data[i - 2].Close)
                 {
-                    // Check whether the second candlestick matches. 
+                    
                     if (_data[i - 1].Open < _data[i - 1].Close && _data[i - 1].Low > _data[i - 2].High)
                     {
-                        // Check whether the third candlestick matches. 
+                        
                         if (_data[i - 0].Open > _data[i - 0].Close && _data[i - 1].Open < _data[i - 0].Open && _data[i - 0].Open < _data[i - 1].Close && _data[i - 1].Open > _data[i - 0].Close && _data[i - 2].Close < _data[i - 0].Close)
                         {
                             data[i].Signal = true;
@@ -1498,8 +1499,8 @@ namespace Candlestick_Patterns
 
             for (int i = 5; i < _data.Count; i++)
             {
-                // Check whether the first candlestick matches. 
-                if (_data[i - 0].Open < _data[i - 0].Close && _data[i - 0].Close == _data[i - 0].High && _data[i - 0].Open != _data[i - 0].Low && 100 * (_data[i - 0].Close - _data[i - 0].Open) / _data[i - 0].Open > _minCandleSize)
+                
+                if (_data[i - 0].Open < _data[i - 0].Close && _data[i - 0].Close == _data[i - 0].High && _data[i - 0].Open != _data[i - 0].Low && 100 * (_data[i - 0].Close - _data[i - 0].Open) / _data[i - 0].Open > _minimumCandleSize)
                 {
                     data[i].Signal = true;
                 }
@@ -1512,8 +1513,8 @@ namespace Candlestick_Patterns
 
             for (int i = 5; i < _data.Count; i++)
             {
-                // Check whether the first candlestick matches. 
-                if (_data[i - 0].Open < _data[i - 0].Close && _data[i - 0].Close == _data[i - 0].High && _data[i - 0].Open == _data[i - 0].Low && 100 * (_data[i - 0].Close - _data[i - 0].Open) / _data[i - 0].Open > _minCandleSize)
+                
+                if (_data[i - 0].Open < _data[i - 0].Close && _data[i - 0].Close == _data[i - 0].High && _data[i - 0].Open == _data[i - 0].Low && 100 * (_data[i - 0].Close - _data[i - 0].Open) / _data[i - 0].Open > _minimumCandleSize)
                 {
                     data[i].Signal = true;
                 }
@@ -1526,8 +1527,8 @@ namespace Candlestick_Patterns
 
             for (int i = 5; i < _data.Count; i++)
             {
-                // Check whether the first candlestick matches. 
-                if (_data[i - 0].Open < _data[i - 0].Close && _data[i - 0].Close < _data[i - 0].High && _data[i - 0].Open == _data[i - 0].Low && 100 * (_data[i - 0].Close - _data[i - 0].Open) / _data[i - 0].Open > _minCandleSize)
+                
+                if (_data[i - 0].Open < _data[i - 0].Close && _data[i - 0].Close < _data[i - 0].High && _data[i - 0].Open == _data[i - 0].Low && 100 * (_data[i - 0].Close - _data[i - 0].Open) / _data[i - 0].Open > _minimumCandleSize)
                 {
                     data[i].Signal = true;
                 }

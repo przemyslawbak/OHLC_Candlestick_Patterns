@@ -1,7 +1,7 @@
 ﻿OK - test not present method name
 OK - handle not present method names
 NO - create pattern name dictionary?
-- _inBarMaxChange value
+OK - _inBarMaxChange value
 - create API docs
 - create README file
 - create NuGet
