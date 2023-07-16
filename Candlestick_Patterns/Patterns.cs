@@ -1540,9 +1540,16 @@ namespace Candlestick_Patterns
             Type thisType = this.GetType();
             MethodInfo theMethod = thisType.GetMethod(patternMethodName, BindingFlags.NonPublic | BindingFlags.Instance);
 
-            List<OhlcvObject> result = (List<OhlcvObject>)theMethod.Invoke(this, null);
+            if (theMethod != null)
+            {
+                List<OhlcvObject> result = (List<OhlcvObject>)theMethod.Invoke(this, null);
 
-            return result;
+                return result;
+            }
+            else
+            {
+                return _data;
+            }
         }
 
         public int GetSignalsCount(string patternMethodName)

@@ -1,5 +1,5 @@
-﻿- test not present method name
-- handle not present method names
+﻿OK - test not present method name
+OK - handle not present method names
 - create pattern name dictionary?
 - create API docs
 - create README file
