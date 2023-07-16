@@ -365,3 +365,4 @@ MigrationBackup/
 /WebApp.Services/KeyLocker.cs
 /ApiEndpoints.txt
 /Financial_Candlestick_Patterns/KeyLocker.cs
+/Candlestick_Patterns/Patterns.cs
