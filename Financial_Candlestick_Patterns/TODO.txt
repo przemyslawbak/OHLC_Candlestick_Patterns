@@ -3,6 +3,6 @@ OK - handle not present method names
 NO - create pattern name dictionary?
 OK - _inBarMaxChange value
 OK - create API docs
-- create README file
+OK - create README file
 - create NuGet
 - unit tests
