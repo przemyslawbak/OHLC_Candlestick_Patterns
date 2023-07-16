@@ -21,15 +21,30 @@ var dataOhlcv = JsonConvert.DeserializeObject<List<OhlcvObject>>(json).Select(x 
     Low = x.Low,
     Close = x.Close,
     Volume = x.Volume,
-}).ToList();
+}).Reverse().ToList();
 
 var bullishCount = _signals.GetBullishSignalsCount(dataOhlcv);
+Console.WriteLine("Bullish signals count: {0}", bullishCount); //Bullish signals count: 89
+
 var bearishCount = _signals.GetBearishSignalsCount(dataOhlcv);
+Console.WriteLine("Bearish signals count: {0}", bearishCount); //Bearish signals count: 128
+
 var signalsCountMulti = _signals.GetSignalsCount(dataOhlcv, new string[] { "Bearish Belt Hold", "Bearish Black Closing Marubozu" });
+Console.WriteLine("Multiple patterns signals count: {0}", signalsCountMulti); //Multiple patterns signals count: 6
+
 var signalsCountSingle = _signals.GetSignalsCount(dataOhlcv, "Bearish Black Closing Marubozu");
+Console.WriteLine("Single pattern signals count: {0}", signalsCountSingle); //Single pattern signals count: 6
+
 var signalsCountMultiWeightened = _signals.GetSignalsIndex(dataOhlcv, new Dictionary<string, decimal>() { { "Bearish Belt Hold", 0.5M }, { "Bearish Black Closing Marubozu", 0.5M } });
+Console.WriteLine("Weightened index for selected multiple patterns: {0}", signalsCountMultiWeightened); //Weightened index for selected multiple patterns: 3,0
+
 var signalsCountSingleWeightened = _signals.GetSignalsIndex(dataOhlcv, "Bearish Black Closing Marubozu", 0.5M);
+Console.WriteLine("Weightened index for selected single pattern: {0}", signalsCountSingleWeightened); //Weightened index for selected single pattern: 3,0
+
 var ohlcSingleSignals = _signals.GetOhlcvWithSignals(dataOhlcv, "Bearish Black Closing Marubozu");
+Console.WriteLine("Signals for single pattern: {0}", ohlcSingleSignals.Where(x => x.Signal == true).Count()); //Signals for single pattern: 6
+
 var ohlcMultiSignals = _signals.GetOhlcvWithSignals(dataOhlcv, new string[] { "Bearish Belt Hold", "Bearish Black Closing Marubozu" });
+Console.WriteLine("Number of lists returned: {0}", ohlcMultiSignals.Count()); //Number of lists returned: 2
 
 Console.ReadLine();
