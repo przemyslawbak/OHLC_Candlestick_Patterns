@@ -1,4 +1,4 @@
-# Portfolio_Website
+# OHLC_Candlestick_Patterns
 
 ## Purpose
 
