@@ -23,8 +23,7 @@ NuGet package can be found here: https://www.nuget.org/packages/OHLC_Candlestick
   - C# language,
   - .NET 7.0 Standars Class Library,
   - .NET 7.0 Console project for the presentation of examples,
-  - XUnit for unit tests.
-  - Newtonsoft.Json in Console project
+  - Newtonsoft.Json in Console project.
 
 ## Example usage
 
@@ -32,7 +31,7 @@ The example of use is prepared for a console application in the .NET 7.0 framewo
 
 To use this package please install latest NuGet version from: https://www.nuget.org/packages/OHLC_Candlestick_Patterns
 
-```
+```cs
 using Candlestick_Patterns;
 using Newtonsoft.Json;
 
