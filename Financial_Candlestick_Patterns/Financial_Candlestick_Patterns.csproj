@@ -9,10 +9,7 @@
 
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="9.0.1" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\Candlestick_Patterns\Candlestick_Patterns.csproj" />
+    <PackageReference Include="OHLC_Candlestick_Patterns" Version="1.0.0" />
   </ItemGroup>
 
 </Project>

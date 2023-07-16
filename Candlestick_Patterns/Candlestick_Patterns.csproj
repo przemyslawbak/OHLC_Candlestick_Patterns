@@ -4,7 +4,43 @@
     <TargetFramework>net7.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <AssemblyVersion></AssemblyVersion>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <Version>1.0.0</Version>
+    <AssemblyName>OHLC_Candlestick_Patterns</AssemblyName>
+    <RootNamespace>OHLC_Candlestick_Patterns</RootNamespace>
+    <ApplicationIcon>stock-price-candlestick-graph-pngrepo-com.ico</ApplicationIcon>
+    <Authors>Przemyslaw Bak</Authors>
+    <Description>You can test the OHLC candlestick list for 37 bullish and 37 bearish OHLC price action patterns.</Description>
+    <Copyright>Przemyslaw Bak</Copyright>
+    <PackageProjectUrl>https://github.com/przemyslawbak/OHLC_Candlestick_Patterns</PackageProjectUrl>
+    <PackageIcon>stock-price-candlestick-graph-pngrepo-com.png</PackageIcon>
+    <RepositoryUrl>https://github.com/przemyslawbak/OHLC_Candlestick_Patterns</RepositoryUrl>
+    <PackageTags>ohlc, candlestick, patterns, ta, technical analysis, price, action, price action, analysis, quant</PackageTags>
+    <PackageReleaseNotes>Initial</PackageReleaseNotes>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="stock-price-candlestick-graph-pngrepo-com.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\..\..\..\..\stock-price-candlestick-graph-pngrepo-com.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Include="..\LICENSE">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Include="..\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="9.0.1" />
