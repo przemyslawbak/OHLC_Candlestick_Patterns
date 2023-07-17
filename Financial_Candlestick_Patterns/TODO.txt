@@ -6,3 +6,4 @@ OK - create API docs
 OK - create README file
 OK - create NuGet
 NO - unit tests
+- variable values modify via parameters
