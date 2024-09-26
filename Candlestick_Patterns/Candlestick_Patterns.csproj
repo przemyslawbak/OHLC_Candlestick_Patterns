@@ -7,7 +7,7 @@
     <AssemblyVersion></AssemblyVersion>
     <PackageReadmeFile>README_NuGet.md</PackageReadmeFile>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <Version>1.0.1</Version>
+    <Version>1.0.2</Version>
     <AssemblyName>OHLC_Candlestick_Patterns</AssemblyName>
     <RootNamespace>OHLC_Candlestick_Patterns</RootNamespace>
     <ApplicationIcon>stock-price-candlestick-graph-pngrepo-com.ico</ApplicationIcon>
@@ -44,7 +44,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="9.0.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>
 
 </Project>
