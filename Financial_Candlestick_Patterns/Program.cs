@@ -23,7 +23,13 @@ var dataOhlcv = JsonConvert.DeserializeObject<List<OhlcvObject>>(json).Select(x 
     Volume = x.Volume,
 }).Reverse().ToList();
 
-
+//_____
+var dataZigZag = JsonConvert.DeserializeObject<List<ZigZagObject>>(json).Select(x => new ZigZagObject()
+{
+    Date = x.Date,
+    Close = x.Close,
+}).Reverse().ToList();
+//______
 
 
 var bullishCount = _signals.GetBullishSignalsCount(dataOhlcv);
