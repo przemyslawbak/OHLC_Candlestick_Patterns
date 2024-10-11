@@ -29,6 +29,7 @@ var dataZigZag = JsonConvert.DeserializeObject<List<ZigZagObject>>(json).Select(
     Date = x.Date,
     Close = x.Close,
 }).Reverse().ToList();
+var zigzag = _signals.GetFormationSignalsCount(dataZigZag, " BearishDoubleTops");
 //______
 
 

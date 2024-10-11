@@ -65,5 +65,10 @@
         /// <param name="patternNames">Selected patterns</param>
         /// <returns>List of OHLC lists with updated signal values</returns>
         List<List<OhlcvObject>> GetOhlcvWithSignals(List<OhlcvObject> dataOhlcv, string[] patternNames);
+
+
+        //formations
+
+        int GetFormationSignalsCount(List<ZigZagObject> dataZigZag, string patternName);
     }
 }

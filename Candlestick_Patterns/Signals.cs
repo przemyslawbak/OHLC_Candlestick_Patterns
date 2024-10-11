@@ -3,6 +3,8 @@
     public class Signals : ISignals
     {
         IPatterns _patterns;
+        IFormations _formations;
+
 
         public int GetBearishSignalsCount(List<OhlcvObject> dataOhlcv)
         {
@@ -97,6 +99,12 @@
             }
 
             return count.Sum(x => x);
+        }
+
+        public int GetFormationSignalsCount(List<ZigZagObject> dataOhlcv, string patternName)
+        {
+            _formations = new Formations(dataOhlcv);
+            return _formations.GetFormationsSignalsCount(patternName);
         }
     }
 }
