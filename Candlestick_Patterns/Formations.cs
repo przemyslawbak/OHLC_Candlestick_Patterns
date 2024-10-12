@@ -9,6 +9,7 @@ namespace Candlestick_Patterns
         private readonly decimal _percentageMargin;
         private readonly List<int> _formationsLenght;
         private readonly decimal _minShift;
+        private readonly List<double> _advance;
         private List<(decimal point, DateTime utc)> _peaksFromZigZag;
 
         public Formations(List<ZigZagObject> data)
@@ -19,6 +20,7 @@ namespace Candlestick_Patterns
             _percentageMargin = (decimal) 0.035; 
             _formationsLenght = new List<int>() { 4, 7 };
             _minShift = 2;
+            _advance = new List<double>() { 0.10, 0.20 };
         }
 
         private List<ZigZagObject> BearishDoubleTops()
@@ -53,7 +55,52 @@ namespace Candlestick_Patterns
 
             return points;
         }
-        
+
+        private List<ZigZagObject> BearishTripleTops() 
+        {
+            var count = 0;
+            var dateList = new List<DateTime>();
+            var points = _peaksFromZigZag.Select(x => new ZigZagObject() { Date = x.utc, Close = x.point, Signal = false }).ToList();
+            for (int i = 3; i < points.Count - 3; i++)
+            {
+                if (!dateList.Contains(points[i].Date))
+                {
+                    if (points[i - 2].Close < points[i].Close && points[i - 1].Close > points[i].Close && points[i+1].Close> points[i].Close && points[i + 3].Close > points[i+2].Close)
+                    {
+                        var neck = new List<decimal>() { points[i].Close, points[i - 3].Close, points[i + 2].Close };
+                        var change = (Math.Abs((points[i - 1].Close - points[i + 1].Close)) / points[i - 1].Close);
+                        var change1 = (Math.Abs((points[i + 1].Close - points[i + 3].Close)) / points[i + 1].Close);
+                        var diff1 = Math.Abs((points[i - 1].Close - points[i].Close) / points[i - 1].Close);
+                        var diff2 = Math.Abs((points[i + 1].Close - points[i+2].Close) / points[i + 1].Close);
+                        if (Math.Abs((neck.Min() - neck.Average())/neck.Min()) < _percentageMargin)
+                        {
+                            if (points[i - 1].Close > neck.Average() && points[i + 1].Close > neck.Average() && change < (decimal) _advance.Max())
+                            {
+                                if (points[i + 3].Close > neck.Average() && change1 < _percentageMargin && Math.Abs(diff1 - diff2) < _percentageMargin)
+                                {
+                                    if (Math.Abs((points[i - 3].Close - points[i + 2].Close) / points[i - 3].Close) < _percentageMargin)
+                                    {
+                                        for (int x = -3; x < 4; x++)
+                                        {
+                                            dateList.Add(points[i + x].Date);
+                                        }
+
+                                        if (dateList.Count >= _formationsLenght.Max())
+                                        {
+                                            points[i].Signal = true;
+                                            count++;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            return points;
+        }
+
         private List<(decimal point, DateTime utc)> PeaksFromZigZag()
         {
             var change = 0M;
@@ -103,6 +150,7 @@ namespace Candlestick_Patterns
                     directionUp = true;
                 }
             }
+           
             return Allpoints;
         }
 
