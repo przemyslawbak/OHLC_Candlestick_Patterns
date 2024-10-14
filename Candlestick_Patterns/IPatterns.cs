@@ -3,7 +3,7 @@
     public interface IPatterns
     {
         List<string> GetAllMethodNames();
-        List<OhlcvObject> GetSignals(string patternName);
+        List<OhlcvObject> GetPatternsSignalsQuantities(string patternName);
         int GetSignalsCount(string patternName);
     }
 }

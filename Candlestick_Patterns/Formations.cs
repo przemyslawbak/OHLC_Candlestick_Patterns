@@ -196,7 +196,7 @@ namespace Candlestick_Patterns
             return methods;
         }
 
-        public List<ZigZagObject> GetFormationsSignals(string patternName)
+        public List<ZigZagObject> GetFormationsSignalsQuantities(string patternName)
         {
             var methodName = patternName.Trim().Replace(" ", "");
             Type thisType = this.GetType();
@@ -215,7 +215,7 @@ namespace Candlestick_Patterns
         public int GetFormationsSignalsCount(string patternName)
         {
             var methodName = patternName.Trim().Replace(" ", "");
-            return GetFormationsSignals(methodName).Where(x => x.Signal == true).Count();
+            return GetFormationsSignalsQuantities(methodName).Where(x => x.Signal == true).Count();
         }
     }
 }

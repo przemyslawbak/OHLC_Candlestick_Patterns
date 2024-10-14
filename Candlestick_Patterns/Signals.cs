@@ -6,7 +6,7 @@
         IFormations _formations;
 
 
-        public int GetBearishSignalsCount(List<OhlcvObject> dataOhlcv)
+        public int GetPatternsBearishSignalsCount(List<OhlcvObject> dataOhlcv)
         {
             _patterns = new Patterns(dataOhlcv);
 
@@ -22,7 +22,7 @@
             return count.Sum(x => x);
         }
 
-        public int GetBullishSignalsCount(List<OhlcvObject> dataOhlcv)
+        public int GetPatternsBullishSignalsCount(List<OhlcvObject> dataOhlcv)
         {
             _patterns = new Patterns(dataOhlcv);
 
@@ -38,14 +38,14 @@
             return count.Sum(x => x);
         }
 
-        public List<OhlcvObject> GetOhlcvWithSignals(List<OhlcvObject> dataOhlcv, string patternName)
+        public List<OhlcvObject> GetPatternsOhlcvWithSignals(List<OhlcvObject> dataOhlcv, string patternName)
         {
             _patterns = new Patterns(dataOhlcv);
 
-            return _patterns.GetSignals(patternName);
+            return _patterns.GetPatternsSignalsQuantities(patternName);
         }
 
-        public List<List<OhlcvObject>> GetOhlcvWithSignals(List<OhlcvObject> dataOhlcv, string[] patternNames)
+        public List<List<OhlcvObject>> GetPatternsOhlcvWithSignals(List<OhlcvObject> dataOhlcv, string[] patternNames)
         {
             _patterns = new Patterns(dataOhlcv);
 
@@ -53,13 +53,13 @@
 
             foreach (var methodName in patternNames)
             {
-                list.Add(_patterns.GetSignals(methodName));
+                list.Add(_patterns.GetPatternsSignalsQuantities(methodName));
             }
 
             return list;
         }
 
-        public int GetSignalsCount(List<OhlcvObject> dataOhlcv, string[] patternNames)
+        public int GetPatternsSignalsCount(List<OhlcvObject> dataOhlcv, string[] patternNames)
         {
             _patterns = new Patterns(dataOhlcv);
 
@@ -73,21 +73,21 @@
             return count.Sum(x => x);
         }
 
-        public int GetSignalsCount(List<OhlcvObject> dataOhlcv, string patternName)
+        public int GetPatternsSignalsCount(List<OhlcvObject> dataOhlcv, string patternName)
         {
             _patterns = new Patterns(dataOhlcv);
 
             return _patterns.GetSignalsCount(patternName);
         }
 
-        public decimal GetSignalsIndex(List<OhlcvObject> dataOhlcv, string patternName, decimal weight)
+        public decimal GetPatternsSignalsIndex(List<OhlcvObject> dataOhlcv, string patternName, decimal weight)
         {
             _patterns = new Patterns(dataOhlcv);
 
             return _patterns.GetSignalsCount(patternName) * weight;
         }
 
-        public decimal GetSignalsIndex(List<OhlcvObject> dataOhlcv, Dictionary<string, decimal> patternNamesWithWeights)
+        public decimal GetPatternsSignalsIndex(List<OhlcvObject> dataOhlcv, Dictionary<string, decimal> patternNamesWithWeights)
         {
             _patterns = new Patterns(dataOhlcv);
 
