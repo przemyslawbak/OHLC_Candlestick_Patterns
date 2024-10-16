@@ -23,15 +23,8 @@ var dataOhlcv = JsonConvert.DeserializeObject<List<OhlcvObject>>(json).Select(x 
     Volume = x.Volume,
 }).Reverse().ToList();
 
-//_____
-var dataZigZag = JsonConvert.DeserializeObject<List<ZigZagObject>>(json).Select(x => new ZigZagObject()
-{
-    Date = x.Date,
-    Close = x.Close,
-}).Reverse().ToList();
-var zigzag = _signals.GetFormationSignalsCount(dataZigZag, " BearishDoubleTops");
-//______
 
+var formationsSignalsCountSingle = _signals.GetFormationSignalsCount(dataOhlcv, "BearishDoubleTops");
 
 var bullishCount = _signals.GetPatternsBullishSignalsCount(dataOhlcv);
 Console.WriteLine("Bullish signals count: {0}", bullishCount); //Bullish signals count: 89

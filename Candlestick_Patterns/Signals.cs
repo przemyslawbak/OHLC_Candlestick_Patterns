@@ -101,7 +101,7 @@
             return count.Sum(x => x);
         }
 
-        public int GetFormationSignalsCount(List<ZigZagObject> dataOhlcv, string patternName)
+        public int GetFormationSignalsCount(List<OhlcvObject> dataOhlcv, string patternName)
         {
             _formations = new Formations(dataOhlcv);
             return _formations.GetFormationsSignalsCount(patternName);

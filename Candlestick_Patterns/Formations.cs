@@ -1,20 +1,25 @@
-﻿using System.Reflection;
+﻿using Newtonsoft.Json;
+using System.Reflection;
 
 namespace Candlestick_Patterns
 {
     public class Formations : IFormations
     {
+        private readonly List<OhlcvObject> _dataOhlcv;
         private readonly List<ZigZagObject> _data;
+
         private readonly decimal _priceMovement;
         private readonly decimal _percentageMargin;
         private readonly List<int> _formationsLenght;
         private readonly decimal _minShift;
         private readonly List<double> _advance;
-        private List<(decimal point, DateTime utc)> _peaksFromZigZag;
+        private List<decimal> _peaksFromZigZag;
 
-        public Formations(List<ZigZagObject> data)
+        public Formations(List<OhlcvObject> dataOhlcv)
         {
-            _data = data;
+            _dataOhlcv = dataOhlcv;
+            _data = GetCloseAndSignalsData(dataOhlcv);
+
             _priceMovement = 0.002M; 
             _peaksFromZigZag = PeaksFromZigZag();
             _percentageMargin = (decimal) 0.035; 
@@ -25,28 +30,26 @@ namespace Candlestick_Patterns
 
         private List<ZigZagObject> BearishDoubleTops()
         {
-            var count = 0;
-            var dateList = new List<DateTime>();
-            var points = _peaksFromZigZag.Select(x => new ZigZagObject() { Date = x.utc, Close = x.point, Signal = false }).ToList();
-            for (int i = 2; i < points.Count-2; i++)
+            var dateList = new List<decimal>();
+            var points = _peaksFromZigZag.Select(x => new ZigZagObject() { Close = x, Signal = false }).ToList();
+            for (int i = 4; i < points.Count; i++)
             {
-                if (!dateList.Contains(points[i].Date))
+                if (!dateList.Contains(points[i].Close))
                 {
-                    if (points[i - 2].Close < points[i].Close && points[i].Close > points[i + 2].Close)
+                    if (points[i - 4].Close < points[i - 2].Close && points[i - 2].Close > points[i].Close)
                     {
-                        var neck = points[i].Close;
-                        var change = (Math.Abs((points[i - 1].Close - points[i + 1].Close)) / points[i - 1].Close);
-                        if (points[i - 1].Close > neck && points[i + 1].Close > neck && change < _percentageMargin)
+                        var neck = points[i - 2].Close;
+                        var change = (Math.Abs((points[i - 1].Close - points[i - 3].Close)) / points[i - 3].Close);
+                        if (points[i - 3].Close > neck && points[i - 1].Close > neck && change < _percentageMargin)
                         {
-                            for (int x = -2; x < 3; x++)
+                            for (int x = -4; x < 1; x++)
                             {
-                                dateList.Add(points[i + x].Date);
+                                dateList.Add(points[i + x].Close);
                             }
 
-                            if (dateList.Count >= _formationsLenght.Min())
+                            if (dateList.Count > _formationsLenght.Min())
                             {
                                 points[i].Signal = true;
-                                count++;
                             }
                         }
                     }
@@ -58,37 +61,35 @@ namespace Candlestick_Patterns
 
         private List<ZigZagObject> BearishTripleTops() 
         {
-            var count = 0;
-            var dateList = new List<DateTime>();
-            var points = _peaksFromZigZag.Select(x => new ZigZagObject() { Date = x.utc, Close = x.point, Signal = false }).ToList();
-            for (int i = 3; i < points.Count - 3; i++)
+            var dateList = new List<decimal>();
+            var points = _peaksFromZigZag.Select(x => new ZigZagObject() {Close = x, Signal = false }).ToList();
+            for (int i = 6; i < points.Count; i++)
             {
-                if (!dateList.Contains(points[i].Date))
+                if (!dateList.Contains(points[i].Close))
                 {
-                    if (points[i - 2].Close < points[i].Close && points[i - 1].Close > points[i].Close && points[i+1].Close> points[i].Close && points[i + 3].Close > points[i+2].Close)
+                    if (points[i - 6].Close < points[i - 5].Close && points[i - 4].Close < points[i - 3].Close && points[i - 2].Close < points[i - 3].Close && points[i].Close < points[i - 1].Close)
                     {
-                        var neck = new List<decimal>() { points[i].Close, points[i - 3].Close, points[i + 2].Close };
-                        var change = (Math.Abs((points[i - 1].Close - points[i + 1].Close)) / points[i - 1].Close);
-                        var change1 = (Math.Abs((points[i + 1].Close - points[i + 3].Close)) / points[i + 1].Close);
-                        var diff1 = Math.Abs((points[i - 1].Close - points[i].Close) / points[i - 1].Close);
-                        var diff2 = Math.Abs((points[i + 1].Close - points[i+2].Close) / points[i + 1].Close);
-                        if (Math.Abs((neck.Min() - neck.Average())/neck.Min()) < _percentageMargin)
+                        var neck = new List<decimal>() { points[i - 2].Close, points[i - 4].Close };
+                        var change = (Math.Abs((points[i - 1].Close - points[i - 2].Close)) / points[i - 2].Close);
+                        var change1 = (Math.Abs((points[i - 3].Close - points[i - 4].Close)) / points[i - 4].Close);
+                        var diff1 = Math.Abs((points[i - 1].Close - points[i - 3].Close) / points[i - 3].Close);
+                        var diff2 = Math.Abs((points[i - 5].Close - points[i - 3].Close) / points[i - 5].Close);
+                        if (Math.Abs((neck.Min() - neck.Average()) / neck.Min()) < _percentageMargin)
                         {
-                            if (points[i - 1].Close > neck.Average() && points[i + 1].Close > neck.Average() && change < (decimal) _advance.Max())
+                            if (points[i - 5].Close > neck.Average() && points[i - 3].Close > neck.Average() && change < (decimal)_advance.Max())
                             {
-                                if (points[i + 3].Close > neck.Average() && change1 < _percentageMargin && Math.Abs(diff1 - diff2) < _percentageMargin)
+                                if (points[i - 1].Close > neck.Average() && change1 < _percentageMargin && Math.Abs(diff1 - diff2) < _percentageMargin)
                                 {
-                                    if (Math.Abs((points[i - 3].Close - points[i + 2].Close) / points[i - 3].Close) < _percentageMargin)
+                                    if (points[i - 6].Close < neck.Min() && points[i].Close < neck.Min())
                                     {
-                                        for (int x = -3; x < 4; x++)
+                                        for (int x = -6; x < 1; x++)
                                         {
-                                            dateList.Add(points[i + x].Date);
+                                            dateList.Add(points[i + x].Close);
                                         }
 
                                         if (dateList.Count >= _formationsLenght.Max())
                                         {
                                             points[i].Signal = true;
-                                            count++;
                                         }
                                     }
                                 }
@@ -103,25 +104,25 @@ namespace Candlestick_Patterns
 
         private List<ZigZagObject> BullishDoubleBottoms()
         {
-            var dateList = new List<DateTime>();
-            var points = _peaksFromZigZag.Select(x => new ZigZagObject() { Date = x.utc, Close = x.point, Signal = false }).ToList();
-            for (int i = 2; i < points.Count - 2; i++)
+            var dateList = new List<decimal>();
+            var points = _peaksFromZigZag.Select(x => new ZigZagObject() {Close = x, Signal = false }).ToList();
+            for (int i = 4; i < points.Count; i++)
             {
-                if (!dateList.Contains(points[i].Date))
+                if (!dateList.Contains(points[i].Close))
                 {
-                    if (points[i - 2].Close > points[i].Close && points[i].Close < points[i + 2].Close)
+                    if (points[i - 4].Close > points[i - 2].Close && points[i - 2].Close < points[i].Close)
                     {
-                        var neck = points[i].Close;
-                        var change = (Math.Abs((points[i - 1].Close - points[i + 1].Close)) / points[i - 1].Close);
+                        var neck = points[i - 2].Close;
+                        var change = (Math.Abs((points[i - 3].Close - points[i - 1].Close)) / points[i - 3].Close);
 
-                        if (Math.Abs((points[i - 1].Close - neck)/ points[i - 1].Close ) < (decimal)_advance.Max() && Math.Abs( (points[i + 1].Close - neck)/ neck) < (decimal)_advance.Max() && points[i + 1].Close < neck && change < _percentageMargin )
+                        if (Math.Abs((points[i - 3].Close - neck) / points[i - 3].Close) < (decimal)_advance.Max() && Math.Abs((points[i - 1].Close - neck) / neck) < (decimal)_advance.Max() && points[i - 1].Close < neck && change < _percentageMargin)
                         {
-                            for (int x = -2; x < 3; x++)
+                            for (int x = -4; x < 1; x++)
                             {
-                                dateList.Add(points[i + x].Date);
+                                dateList.Add(points[i + x].Close);
                             }
 
-                            if (dateList.Count >= _formationsLenght.Min())
+                            if (dateList.Count > _formationsLenght.Min())
                             {
                                 points[i].Signal = true;
                             }
@@ -133,30 +134,66 @@ namespace Candlestick_Patterns
             return points;
         }
 
-        private List<(decimal point, DateTime utc)> PeaksFromZigZag()
+        private List<ZigZagObject> BullishTripleBottoms()
+        {
+            var dateList = new List<decimal>();
+            var points = _peaksFromZigZag.Select(x => new ZigZagObject() { Close = x, Signal = false }).ToList();
+            for (int i = 6; i < points.Count; i++)
+            {
+                if (!dateList.Contains(points[i].Close))
+                {
+                    if (points[i].Close > points[i - 5].Close && points[i - 4].Close > points[i - 3].Close && points[i - 2].Close > points[i - 1].Close)
+                    {
+                        if (points[i - 6].Close > points[i - 4].Close && points[i - 4].Close < points[i - 2].Close)
+                        {
+                            var neck = new List<decimal>() { points[i - 4].Close, points[i - 2].Close };
+                            var change = (Math.Abs((points[i - 5].Close - points[i - 3].Close)) / points[i - 5].Close);
+                            var change2 = (Math.Abs((points[i - 1].Close - points[i - 3].Close)) / points[i - 3].Close);
+                            var diff1 = Math.Abs((points[i - 5].Close - neck.Average()) / points[i - 5].Close);
+                            var diff2 = Math.Abs((points[i - 1].Close - neck.Average()) / points[i - 1].Close);
+                            if (Math.Abs(diff1 - diff2) < _percentageMargin && change < _percentageMargin && change2 < _percentageMargin)
+                            {
+                                for (int x = -6; x < 1; x++)
+                                {
+                                    dateList.Add(points[i + x].Close);
+                                }
+
+                                if (dateList.Count >= _formationsLenght.Max())
+                                {
+                                    points[i].Signal = true;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            return points;
+        }
+
+        private List<decimal> PeaksFromZigZag()
         {
             var change = 0M;
-            var zigZagList = new List<(decimal point, DateTime utc)>();
-            var data = _data.Select(x => new ZigZagObject() { Date = x.Date,  Close = x.Close, Signal = false }).ToList();
+            var zigZagList = new List<decimal>();
+            var dataZigZag = _data.Select(x => new ZigZagObject() {Close = x.Close, Signal = false }).ToList();
 
             for (int i = 1; i < _data.Count; i++)
             {
                 if (zigZagList.Count == 0)
                 { 
                     change = _data[0].Close * _priceMovement;
-                    zigZagList.Add((_data[0].Close, _data[0].Date));
+                    zigZagList.Add(_data[0].Close);
                 }
                 else
                 {
-                    change = zigZagList.Last().point * _priceMovement;
+                    change = zigZagList.Last() * _priceMovement;
                 }
 
-                var lastPoint = zigZagList.Last().point;
+                var lastPoint = zigZagList.Last();
                 if (_data[i].Close < (lastPoint - change) || _data[i].Close > (lastPoint + change))
                 {
                     var point = _data[i].Close;
-                    var utc = _data[i].Date;
-                    zigZagList.Add((point,utc));
+                    zigZagList.Add((point));
                     change = point * _priceMovement; 
                 }
             }
@@ -164,26 +201,26 @@ namespace Candlestick_Patterns
             return GetValleysAndPeaksFromZigZAg(zigZagList);
         }
 
-        private List<(decimal point, DateTime utc)>  GetValleysAndPeaksFromZigZAg(List<(decimal point, DateTime utc)> zigZagList)
+        private List<decimal>  GetValleysAndPeaksFromZigZAg(List<decimal> zigZagList)
         {
-            var Allpoints = new List<(decimal point, DateTime utc)>();
+            var allPoints = new List<decimal>();
 
-            bool directionUp = zigZagList[0].point <= zigZagList[1].point;
+            bool directionUp = zigZagList[0] <= zigZagList[1];
             for (int i = 1; i < zigZagList.Count - 1; i++)
             {
-                if (directionUp && zigZagList[i + 1].point < zigZagList[i].point)
+                if (directionUp && zigZagList[i + 1] < zigZagList[i])
                 {
-                    Allpoints.Add((zigZagList[i].point, zigZagList[i].utc));
+                    allPoints.Add(zigZagList[i]);
                     directionUp = false;
                 }
-                else if (!directionUp && zigZagList[i + 1].point > zigZagList[i].point)
+                else if (!directionUp && zigZagList[i + 1] > zigZagList[i])
                 {
-                    Allpoints.Add((zigZagList[i].point, zigZagList[i].utc));
+                    allPoints.Add(zigZagList[i]);
                     directionUp = true;
                 }
             }
 
-            return Allpoints;
+            return allPoints;
         }
 
         public List<string> GetFormationsAllMethodNames()
@@ -216,6 +253,17 @@ namespace Candlestick_Patterns
         {
             var methodName = patternName.Trim().Replace(" ", "");
             return GetFormationsSignalsQuantities(methodName).Where(x => x.Signal == true).Count();
+        }
+
+        private List<ZigZagObject> GetCloseAndSignalsData(List<OhlcvObject> data)
+        {
+            var dataToShapeZigZag = data.Select(x => new ZigZagObject()
+            {
+                Signal = x.Signal,
+                Close = x.Close,
+            }).Reverse().ToList();
+
+            return dataToShapeZigZag;
         }
     }
 }

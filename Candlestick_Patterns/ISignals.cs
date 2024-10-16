@@ -69,6 +69,6 @@
 
         //formations
 
-        int GetFormationSignalsCount(List<ZigZagObject> dataZigZag, string patternName);
+        int GetFormationSignalsCount(List<OhlcvObject> dataOhlcv, string patternName);
     }
 }
