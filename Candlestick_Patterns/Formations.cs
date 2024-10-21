@@ -1,6 +1,4 @@
-﻿using Newtonsoft.Json;
-using System.ComponentModel.DataAnnotations;
-using System.Reflection;
+﻿using System.Reflection;
 
 namespace Candlestick_Patterns
 {
@@ -165,6 +163,76 @@ namespace Candlestick_Patterns
                                 }
                             }
                         }
+                    }
+                }
+            }
+
+            return points;
+        }
+        private List<ZigZagObject> BearishHeadAndShoulders()
+        {
+            var dateList = new List<decimal>();
+            var points = _peaksFromZigZag.Select(x => new ZigZagObject() { Close = x, Signal = false }).ToList();
+            for (int i = 6; i < points.Count; i++)
+            {
+                if (!dateList.Contains(points[i].Close))
+                {
+                    if (points[i - 3].Close > points[i - 4].Close && points[i - 4].Close < points[i - 5].Close && points[i - 6].Close < points[i - 5].Close && points[i - 3].Close > points[i - 2].Close && points[i - 2].Close < points[i - 1].Close && points[i - 1].Close > points[i].Close)
+                    {
+                        var neckline = new List<decimal>() { points[i - 4].Close, points[i - 2].Close };
+                        var change = Math.Abs((neckline.Max() - neckline.Min()) / neckline.Min());
+                        if (change < _percentageMargin && points[i - 6].Close < neckline.Min() && points[i].Close < neckline.Min())
+                        {
+                            for (int x = -6; x < 1; x++)
+                            {
+                                dateList.Add(points[i + x].Close);
+                            }
+
+                            if (dateList.Count >= _formationsLenght.Max())
+                            {
+                                points[i].Signal = true;
+                            }
+                        }
+                    }
+                }
+            }
+
+            return points;
+        }
+
+        private List<ZigZagObject> BullishCupAndHandle()
+        {
+            var dateList = new List<decimal>();
+            var points = _peaksFromZigZag.Select(x => new ZigZagObject() { Close = x, Signal = false }).ToList();
+            for (int i = 13; i < points.Count; i++)
+            {
+                if (!dateList.Contains(points[i].Close))
+                {
+                    if(points[i].Close> points[i - 1].Close && points[i - 1].Close< points[i - 3].Close && points[i - 5].Close < points[i - 3].Close && points[i - 4].Close > points[i -2].Close && points[i - 4].Close < points[i].Close && points[i - 5].Close< points[i - 3].Close)
+                    {
+                        if(points[i - 7].Close < points[i - 5].Close && points[i - 7].Close > points[i - 9].Close && points[i - 6].Close > points[i - 8].Close && points[i - 11].Close > points[i - 9].Close && points[i - 13].Close> points[i - 11].Close)
+                        {
+                            var diff1 = Math.Abs(points[i - 2].Close - points[i - 3].Close);
+                            var diff2 = Math.Abs(points[i - 5].Close - points[i - 4 ].Close);
+                            var diff3 = Math.Abs(points[i - 5].Close - points[i - 6].Close);
+                            var diff4 = Math.Abs(points[i - 7].Close - points[i - 6].Close);
+                            var change1 = Math.Abs((points[i - 8].Close - points[i - 10].Close) / points[i - 10].Close);
+                            var change2 = Math.Abs((points[i - 7].Close - points[i - 11].Close) / points[i - 11].Close);
+
+                            if (diff2 >= _minShift * diff1 && diff2 > diff3 && diff3 < diff4 && change1 < _percentageMargin && change2 < _percentageMargin)
+                            {
+                                for (int x = -13; x < 1; x++)
+                                {
+                                    dateList.Add(points[i + x].Close);
+                                }
+
+                                if (dateList.Count >= _minShift * _formationsLenght.Max())
+                                {
+                                    points[i].Signal = true;
+                                }
+                            }
+                        }
+                    
                     }
                 }
             }
