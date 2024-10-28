@@ -343,6 +343,42 @@ namespace Candlestick_Patterns
             return points;
         }
 
+        private List<ZigZagObject> BearishDescendingTriangle()
+        {
+            var dateList = new List<decimal>();
+            var points = _peaksFromZigZag.Select(x => new ZigZagObject() { Close = x, Signal = false }).ToList();
+            for (int i = 3; i < points.Count - 3; i++)
+            {
+                if (!dateList.Contains(points[i].Close))
+                {
+                    if (Math.Abs((points[i].Close - points[i - 2].Close) / points[i - 2].Close) < _percentageMargin)
+                    {
+                        if (points[i - 3].Close > points[i - 1].Close && points[i + 1].Close < points[i - 1].Close)
+                        {
+                            var change1 = Math.Abs((points[i].Close - points[i + 1].Close) / points[i].Close);
+                            var change2 = Math.Abs((points[i - 2].Close - points[i - 1].Close) / points[i - 2].Close);
+                            var diff1 = Math.Abs(points[i].Close - points[i - 1].Close);
+                            var diff2 = Math.Abs(points[i - 2].Close - points[i - 3].Close);
+                            if (change2 > change1 && diff2 > diff1)
+                            {
+                                for (int x = -3; x < 4; x++)
+                                {
+                                    dateList.Add(points[i + x].Close);
+                                }
+
+                                if (dateList.Count >= _formationsLenght.Max())
+                                {
+                                    points[i].Signal = true;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            return points;
+        }
+       
         private List<decimal> PeaksFromZigZag()
         {
             var change = 0M;
