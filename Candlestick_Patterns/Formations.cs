@@ -492,6 +492,45 @@ namespace Candlestick_Patterns
             return points;
         }
 
+        private List<ZigZagObject> BullishBullFlagsPennants()
+        {
+            var dateList = new List<decimal>();
+            var points = _peaksFromZigZag.Select(x => new ZigZagObject() { Close = x, Signal = false }).ToList();
+            for (int i = 6; i < points.Count; i++)
+            {
+                if (!dateList.Contains(points[i].Close))
+                {
+                    if (points[i - 4].Close > points[i - 3].Close && (points[i - 4].Close > points[i - 5].Close && points[i - 3].Close > points[i - 5].Close))
+                    {
+                        if (points[i - 2].Close > points[i - 3].Close && points[i - 2].Close < points[i - 4].Close && points[i - 1].Close < points[i - 3].Close)
+                        {
+                            var diff1 = Math.Abs(points[i - 3].Close - points[i - 2].Close);
+                            var diff2 = Math.Abs(points[i - 3].Close - points[i - 4].Close);
+                            var diff3 = Math.Abs(points[i - 1].Close - points[i - 2].Close);
+                            var diff4 = Math.Abs(points[i - 5].Close - points[i - 4].Close);
+                            if (Math.Abs((points[i - 3].Close - points[i - 1].Close) / points[i - 3].Close) < _percentageMargin && Math.Abs((points[i - 3].Close - points[i - 1].Close) / points[i - 3].Close) < _percentageMargin)
+                            {
+                                if (_minShift * diff1 <= diff4 && _minShift * diff3 < diff4)
+                                {
+                                    for (int x = -6; x < 1; x++)
+                                    {
+                                        dateList.Add(points[i + x].Close);
+                                    }
+
+                                    if (dateList.Count >= _formationsLenght.Max())
+                                    {
+                                        points[i].Signal = true;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            return new List<ZigZagObject>();
+        }
+
         private List<decimal> PeaksFromZigZag()
         {
             var change = 0M;
