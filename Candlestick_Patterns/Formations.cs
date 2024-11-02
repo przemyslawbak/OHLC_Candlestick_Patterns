@@ -531,6 +531,43 @@ namespace Candlestick_Patterns
             return new List<ZigZagObject>();
         }
 
+        private List<ZigZagObject> BullishAscendingPriceChannel()
+        {
+            var dateList = new List<decimal>();
+            var points = _peaksFromZigZag.Select(x => new ZigZagObject() { Close = x, Signal = false }).ToList();
+            for (int i = 6; i < points.Count; i++)
+            {
+                if (!dateList.Contains(points[i].Close))
+                {
+                    if (points[i - 3].Close > points[i - 5].Close && points[i - 1].Close > points[i - 3].Close)
+                    {
+                        if (points[i - 4].Close < points[i - 2].Close && points[i - 2].Close < points[i].Close && points[i - 4].Close > points[i - 6].Close)
+                        {
+                            var diff1 = Math.Abs(points[i - 3].Close - points[i - 4].Close);
+                            var diff2 = Math.Abs(points[i - 2].Close - points[i - 1].Close);
+                            var change1 = Math.Abs((points[i - 2].Close - points[i - 4].Close) / points[i - 4].Close);
+                            var change2 = Math.Abs((points[i - 1].Close - points[i - 3].Close) / points[i - 3].Close);
+
+                            if (Math.Abs((diff2 - diff1) / diff1) <= _percentageMargin && change1 <= _percentageMargin && change2 <= _percentageMargin)
+                            {
+                                for (int x = -6; x < 1; x++)
+                                {
+                                    dateList.Add(points[i + x].Close);
+                                }
+
+                                if (dateList.Count >= _formationsLenght.Max())
+                                {
+                                    points[i].Signal = true;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            return points;
+        }
+
         private List<decimal> PeaksFromZigZag()
         {
             var change = 0M;
