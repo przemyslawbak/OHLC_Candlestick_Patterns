@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 string json = string.Empty;
 ISignals _signals = new Signals();
 var client = new HttpClient();
-var url = "https://gist.githubusercontent.com/przemyslawbak/2058d9aeddfe09d2a26da81dfc16e5d0/raw/json_data_sample.txt";
+var url = "https://gist.githubusercontent.com/przemyslawbak/c90528453d512a8d85ad2deea5cf6ad2/raw/aapl_us_d.csv";
 
 using (HttpResponseMessage response = await client.GetAsync(url))
 {
@@ -23,31 +23,30 @@ var dataOhlcv = JsonConvert.DeserializeObject<List<OhlcvObject>>(json).Select(x 
     Volume = x.Volume,
 }).Reverse().ToList();
 
-
 var formationsSignalsCountSingle = _signals.GetFormationSignalsCount(dataOhlcv, "BearishDoubleTops");
 
 var bullishCount = _signals.GetPatternsBullishSignalsCount(dataOhlcv);
-Console.WriteLine("Bullish signals count: {0}", bullishCount); //Bullish signals count: 89
+Console.WriteLine("Bullish signals count: {0}", bullishCount); //Bullish signals count:
 
 var bearishCount = _signals.GetPatternsBearishSignalsCount(dataOhlcv);
-Console.WriteLine("Bearish signals count: {0}", bearishCount); //Bearish signals count: 128
+Console.WriteLine("Bearish signals count: {0}", bearishCount); //Bearish signals count:
 
 var signalsCountMulti = _signals.GetPatternsSignalsCount(dataOhlcv, new string[] { "Bearish Belt Hold", "Bearish Black Closing Marubozu" });
-Console.WriteLine("Multiple patterns signals count: {0}", signalsCountMulti); //Multiple patterns signals count: 6
+Console.WriteLine("Multiple patterns signals count: {0}", signalsCountMulti); //Multiple patterns signals count:
 
 var signalsCountSingle = _signals.GetPatternsSignalsCount(dataOhlcv, "Bearish Black Closing Marubozu");
-Console.WriteLine("Single pattern signals count: {0}", signalsCountSingle); //Single pattern signals count: 6
+Console.WriteLine("Single pattern signals count: {0}", signalsCountSingle); //Single pattern signals count:
 
 var signalsCountMultiWeightened = _signals.GetPatternsSignalsIndex(dataOhlcv, new Dictionary<string, decimal>() { { "Bearish Belt Hold", 0.5M }, { "Bearish Black Closing Marubozu", 0.5M } });
-Console.WriteLine("Weightened index for selected multiple patterns: {0}", signalsCountMultiWeightened); //Weightened index for selected multiple patterns: 3,0
+Console.WriteLine("Weightened index for selected multiple patterns: {0}", signalsCountMultiWeightened); //Weightened index for selected multiple patterns:
 
 var signalsCountSingleWeightened = _signals.GetPatternsSignalsIndex(dataOhlcv, "Bearish Black Closing Marubozu", 0.5M);
-Console.WriteLine("Weightened index for selected single pattern: {0}", signalsCountSingleWeightened); //Weightened index for selected single pattern: 3,0
+Console.WriteLine("Weightened index for selected single pattern: {0}", signalsCountSingleWeightened); //Weightened index for selected single pattern:
 
 var ohlcSingleSignals = _signals.GetPatternsOhlcvWithSignals(dataOhlcv, "Bearish Black Closing Marubozu");
-Console.WriteLine("Signals for single pattern: {0}", ohlcSingleSignals.Where(x => x.Signal == true).Count()); //Signals for single pattern: 6
+Console.WriteLine("Signals for single pattern: {0}", ohlcSingleSignals.Where(x => x.Signal == true).Count()); //Signals for single pattern:
 
 var ohlcMultiSignals = _signals.GetPatternsOhlcvWithSignals(dataOhlcv, new string[] { "Bearish Belt Hold", "Bearish Black Closing Marubozu" });
-Console.WriteLine("Number of lists returned: {0}", ohlcMultiSignals.Count()); //Number of lists returned: 2
+Console.WriteLine("Number of lists returned: {0}", ohlcMultiSignals.Count()); //Number of lists returned:
 
 Console.ReadLine();
