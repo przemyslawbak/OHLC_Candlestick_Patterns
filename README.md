@@ -52,14 +52,22 @@ Bullish Rounding Bottom Pattern
 Continuation Diamond Formation
 
 ## Pattern list
+| Bearish 2 Crows | Bearish 3 BlackCrows | Bearish 3 Inside Down | Bearish 3 Outside Down | Bearish 3 Line Strike | Bearish Advance Block | Bearish Belt Hold |
+| :-------------: | :-------------: | :-------------: | :-------------: | :-------------: | :-------------: | :-------------: |
+| ![Bearish 2 Crows](https://github.com/user-attachments/assets/f2ffd966-328b-4401-bcc9-0a0f1723a681) | ![Bearish 3 BlackCrows](https://github.com/user-attachments/assets/5009a177-403a-4fa1-ad7b-44a3db56be5e) | ![Bearish 3 Inside Down](https://github.com/user-attachments/assets/1f6cd28d-f07d-4473-8efa-580fd2b2df7c) | ![Bearish 3 Outside Dow](https://github.com/user-attachments/assets/beaa8ff8-b9e7-4b9c-ada6-946bb338adc3) | ![Bearish 3 Line Strike](https://github.com/user-attachments/assets/4635e682-9d40-4ad2-803c-11ce13f51b2d) | ![Bearish Advance Block](https://github.com/user-attachments/assets/89399eec-a091-477d-a874-b2906e8c86f0) | ![Bearish Belt Hold](https://github.com/user-attachments/assets/a1794664-05c0-4d26-9ed0-fee74d383bce)
 
-Bearish 2 Crows,
-Bearish 3 BlackCrows,
-Bearish 3 Inside Down,
-Bearish 3 Outside Down,
-Bearish 3 Line Strike,
-Bearish Advance Block,
-Bearish Belt Hold,
+
+
+
+
+
+
+
+
+
+
+
+
 Bearish Black Closing Marubozu,
 Bearish Black Marubozu,
 Bearish Black Opening Marubozu,
