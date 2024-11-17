@@ -56,6 +56,9 @@ Continuation Diamond Formation
 | :-------------: | :-------------: | :-------------: | :-------------: | :-------------: | :-------------: | :-------------: |
 | ![Bearish 2 Crows](https://github.com/user-attachments/assets/f2ffd966-328b-4401-bcc9-0a0f1723a681) | ![Bearish 3 BlackCrows](https://github.com/user-attachments/assets/5009a177-403a-4fa1-ad7b-44a3db56be5e) | ![Bearish 3 Inside Down](https://github.com/user-attachments/assets/1f6cd28d-f07d-4473-8efa-580fd2b2df7c) | ![Bearish 3 Outside Dow](https://github.com/user-attachments/assets/beaa8ff8-b9e7-4b9c-ada6-946bb338adc3) | ![Bearish 3 Line Strike](https://github.com/user-attachments/assets/4635e682-9d40-4ad2-803c-11ce13f51b2d) | ![Bearish Advance Block](https://github.com/user-attachments/assets/89399eec-a091-477d-a874-b2906e8c86f0) | ![Bearish Belt Hold](https://github.com/user-attachments/assets/a1794664-05c0-4d26-9ed0-fee74d383bce)
 
+| Bearish Black Closing Marubozu | Bearish Black Marubozu | Bearish Black Opening Marubozu | Bearish Breakaway | Bearish Deliberation | Bearish Dark Cloud Cover | Bearish Doji Star |
+| :-------------: | :-------------: | :-------------: | :-------------: | :-------------: | :-------------: | :-------------: |
+|![Bearish Black Closing Marubozu](https://github.com/user-attachments/assets/f0c881c4-4ed6-46e0-90b1-871731592d98)|![Bearish Black Marubozu](https://github.com/user-attachments/assets/b8954d91-080e-4f3a-948f-f5a79cb175f4)|![Bearish Black Opening Marubozu](https://github.com/user-attachments/assets/eb268e2a-b9e9-40ae-8244-9f5db83869fe)|![Bearish Breakaway](https://github.com/user-attachments/assets/5ca94f1e-d9c2-4dc2-b798-e11636e97183)|![Bearish Deliberation](https://github.com/user-attachments/assets/8dea0b19-4f7b-49db-924f-e5aea7c9025c)|![Bearish Dark Cloud Cover](https://github.com/user-attachments/assets/5459b34f-ae92-413c-8310-279687c2d9e8)|![Bearish Doji Star](https://github.com/user-attachments/assets/d541ee12-2f3e-4020-909a-72faa57d28d7)|
 
 
 
@@ -68,13 +71,10 @@ Continuation Diamond Formation
 
 
 
-Bearish Black Closing Marubozu,
-Bearish Black Marubozu,
-Bearish Black Opening Marubozu,
-Bearish Breakaway,
-Bearish Deliberation,
-Bearish Dark Cloud Cover,
-Bearish Doji Star,
+
+
+
+
 Bearish Downside Gap 3 Methods,
 Bearish Downside Tasuki Gap,
 Bearish Dragonfly Doji,
