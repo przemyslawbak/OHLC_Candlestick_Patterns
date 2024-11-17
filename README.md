@@ -12,10 +12,12 @@ NuGet package can be found here: https://www.nuget.org/packages/OHLC_Candlestick
 2. Counting bearish signals that appear in the OHLC list.
 3. Counting the number of signals that appear in the OHLC list for selected multiple patterns.
 4. Counting the number of signals that appear in the OHLC list for selected single pattern.
-5. Calculates the weighted index for the selected single pattern.
-6. Calculates the weighted index for the selected multiple patterns.
-7. Calculates signals for selected single pattern.
-8. Calculates signals for selected multiply patterns.
+5. Counting the number of signals that appear in the OHLC list for selected formation.
+6. Calculates the weighted index for the selected single pattern.
+7. Calculates the weighted index for the selected multiple patterns.
+8. Calculates signals for selected single pattern.
+9. Calculates signals for selected multiply patterns.
+10. Calculates signals for selected single formation.
 
 ## Technology
 
@@ -57,6 +59,8 @@ var dataOhlcv = JsonConvert.DeserializeObject<List<OhlcvObject>>(json).Select(x 
     Volume = x.Volume,
 }).Reverse().ToList();
 
+var formationsSignalsCountSingle = _signals.GetFormationSignalsCount(dataOhlcv, "BearishDoubleTops");
+
 var bullishCount = _signals.GetBullishSignalsCount(dataOhlcv);
 Console.WriteLine("Bullish signals count: {0}", bullishCount);
 //Bullish signals count: 89
@@ -91,6 +95,27 @@ Console.WriteLine("Number of lists returned: {0}", ohlcMultiSignals.Count());
 
 Console.ReadLine();
 ```
+## Formation list
+
+Bearish Double Tops
+Bearish Triple Tops
+Bearish Head And Shoulders
+Bearish Descending Triangle
+Bearish Rising Wedge
+Bearish Bear Flags Pennants
+Bullish Double Bottoms
+Bullish Triple Bottoms
+Bullish Cup And Handle
+Bullish Inverse Head And Shoulders
+Bullish Ascending Triangle
+Bullish Symmetric Triangle
+Bullish Falling Wedge
+Bullish Bull Flags Pennants
+Bullish Ascending Price Channel
+Bullish Descending Price Channel
+Bullish Rounding Bottom Pattern
+Continuation Diamond Formation
+
 ## Pattern list
 
 Bearish 2 Crows,
