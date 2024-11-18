@@ -8,16 +8,10 @@ NuGet package can be found here: https://www.nuget.org/packages/OHLC_Candlestick
 
 ## Features
 
-1. Counting bullish signals that appear in the OHLC list.
-2. Counting bearish signals that appear in the OHLC list.
-3. Counting the number of signals that appear in the OHLC list for selected multiple patterns.
-4. Counting the number of signals that appear in the OHLC list for selected single pattern.
-5. Counting the number of signals that appear in the OHLC list for selected formation.
-6. Calculates the weighted index for the selected single pattern.
-7. Calculates the weighted index for the selected multiple patterns.
-8. Calculates signals for selected single pattern.
-9. Calculates signals for selected multiply patterns.
-10. Calculates signals for selected single formation.
+- Counting bullish or bearish signals that appear in the OHLC list.
+- Gives number of signals that appear in the OHLC list for selected multiple, single patterns or formation.
+- Computes weightened index for the selected multiple or single pattern.
+- Calculating signals for selected multiply, single pattern or formation.
 
 ## Technology
 
@@ -30,7 +24,7 @@ Solution is using:
 ## Formation list
 
 Bearish Double Tops
-![Bearish Double Tops]()
+<img width="100" height="100" alt="Bearish Double Tops" src="">
 
 Bearish Triple Tops
 
@@ -54,11 +48,12 @@ Continuation Diamond Formation
 ## Pattern list
 | Bearish 2 Crows | Bearish 3 BlackCrows | Bearish 3 Inside Down | Bearish 3 Outside Down | Bearish 3 Line Strike | Bearish Advance Block | Bearish Belt Hold |
 | :-------------: | :-------------: | :-------------: | :-------------: | :-------------: | :-------------: | :-------------: |
-| ![Bearish 2 Crows](https://github.com/user-attachments/assets/f2ffd966-328b-4401-bcc9-0a0f1723a681) | ![Bearish 3 BlackCrows](https://github.com/user-attachments/assets/5009a177-403a-4fa1-ad7b-44a3db56be5e) | ![Bearish 3 Inside Down](https://github.com/user-attachments/assets/1f6cd28d-f07d-4473-8efa-580fd2b2df7c) | ![Bearish 3 Outside Dow](https://github.com/user-attachments/assets/beaa8ff8-b9e7-4b9c-ada6-946bb338adc3) | ![Bearish 3 Line Strike](https://github.com/user-attachments/assets/4635e682-9d40-4ad2-803c-11ce13f51b2d) | ![Bearish Advance Block](https://github.com/user-attachments/assets/89399eec-a091-477d-a874-b2906e8c86f0) | ![Bearish Belt Hold](https://github.com/user-attachments/assets/a1794664-05c0-4d26-9ed0-fee74d383bce)
+| <img width="100" height="100" alt="Bearish 2 Crows" src="https://github.com/user-attachments/assets/f2ffd966-328b-4401-bcc9-0a0f1723a681"> | <img width="100" height="100" alt="Bearish 3 BlackCrows" src="https://github.com/user-attachments/assets/5009a177-403a-4fa1-ad7b-44a3db56be5e"> | <img width="100" height="100" alt="Bearish 3 Inside Down" src="https://github.com/user-attachments/assets/1f6cd28d-f07d-4473-8efa-580fd2b2df7c"> | <img width="100" height="100" alt="Bearish 3 Outside Dow" src="https://github.com/user-attachments/assets/beaa8ff8-b9e7-4b9c-ada6-946bb338adc3"> | <img width="100" height="100" alt="Bearish 3 Line Strike" src="https://github.com/user-attachments/assets/4635e682-9d40-4ad2-803c-11ce13f51b2d"> | <img width="100" height="100" alt="Bearish Advance Block" src="https://github.com/user-attachments/assets/89399eec-a091-477d-a874-b2906e8c86f0"> | <img width="100" height="100" alt="Bearish Belt Hold" src="https://github.com/user-attachments/assets/a1794664-05c0-4d26-9ed0-fee74d383bce">
+
 
 | Bearish Black Closing Marubozu | Bearish Black Marubozu | Bearish Black Opening Marubozu | Bearish Breakaway | Bearish Deliberation | Bearish Dark Cloud Cover | Bearish Doji Star |
 | :-------------: | :-------------: | :-------------: | :-------------: | :-------------: | :-------------: | :-------------: |
-|![Bearish Black Closing Marubozu](https://github.com/user-attachments/assets/f0c881c4-4ed6-46e0-90b1-871731592d98)|![Bearish Black Marubozu](https://github.com/user-attachments/assets/b8954d91-080e-4f3a-948f-f5a79cb175f4)|![Bearish Black Opening Marubozu](https://github.com/user-attachments/assets/eb268e2a-b9e9-40ae-8244-9f5db83869fe)|![Bearish Breakaway](https://github.com/user-attachments/assets/5ca94f1e-d9c2-4dc2-b798-e11636e97183)|![Bearish Deliberation](https://github.com/user-attachments/assets/8dea0b19-4f7b-49db-924f-e5aea7c9025c)|![Bearish Dark Cloud Cover](https://github.com/user-attachments/assets/5459b34f-ae92-413c-8310-279687c2d9e8)|![Bearish Doji Star](https://github.com/user-attachments/assets/d541ee12-2f3e-4020-909a-72faa57d28d7)|
+|<img width="100" height="100" alt="Bearish Black Closing Marubozu" src="https://github.com/user-attachments/assets/f0c881c4-4ed6-46e0-90b1-871731592d98">|<img width="100" height="100" alt="Bearish Black Marubozu" src="https://github.com/user-attachments/assets/b8954d91-080e-4f3a-948f-f5a79cb175f4">|<img width="100" height="100" alt="Bearish Black Opening Marubozu" src="https://github.com/user-attachments/assets/eb268e2a-b9e9-40ae-8244-9f5db83869fe">|<img width="100" height="100" alt="Bearish Breakaway" src="https://github.com/user-attachments/assets/5ca94f1e-d9c2-4dc2-b798-e11636e97183">|<img width="100" height="100" alt="Bearish Deliberation" src="https://github.com/user-attachments/assets/8dea0b19-4f7b-49db-924f-e5aea7c9025c">|<img width="100" height="100" alt="Bearish Dark Cloud Cover" src="https://github.com/user-attachments/assets/5459b34f-ae92-413c-8310-279687c2d9e8">|<img width="100" height="100" alt="Bearish Doji Star" src="https://github.com/user-attachments/assets/d541ee12-2f3e-4020-909a-72faa57d28d7">|
 
 
 
@@ -147,62 +142,62 @@ using Candlestick_Patterns;
 using Newtonsoft.Json;
 
 string json = string.Empty;
-ISignals _signals = new Signals();
-var client = new HttpClient();
+ISignals _signals = new Signals src="">;
+var client = new HttpClient src="">;
 var url = "https://gist.githubusercontent.com/przemyslawbak/c90528453d512a8d85ad2deea5cf6ad2/raw/aapl_us_d.csv";
 
-using (HttpResponseMessage response = await client.GetAsync(url))
+using  src="HttpResponseMessage response = await client.GetAsync src="url">">
 {
-    using (HttpContent content = response.Content)
+    using  src="HttpContent content = response.Content">
     {
-        json = content.ReadAsStringAsync().Result;
+        json = content.ReadAsStringAsync src="">.Result;
     }
 }
 
-var dataOhlcv = JsonConvert.DeserializeObject<List<OhlcvObject>>(json).Select(x => new OhlcvObject()
+var dataOhlcv = JsonConvert.DeserializeObject<List<OhlcvObject>> src="json">.Select src="x => new OhlcvObject src="">
 {
     Open = x.Open,
     High = x.High,
     Low = x.Low,
     Close = x.Close,
     Volume = x.Volume,
-}).Reverse().ToList();
+}">.Reverse src="">.ToList src="">;
 
-var formationsSignalsCountSingle = _signals.GetFormationSignalsCount(dataOhlcv, "BearishDoubleTops");
+var formationsSignalsCountSingle = _signals.GetFormationSignalsCount src="dataOhlcv, "BearishDoubleTops"">;
 
-var bullishCount = _signals.GetBullishSignalsCount(dataOhlcv);
-Console.WriteLine("Bullish signals count: {0}", bullishCount);
+var bullishCount = _signals.GetBullishSignalsCount src="dataOhlcv">;
+Console.WriteLine src=""Bullish signals count: {0}", bullishCount">;
 //Bullish signals count: 89
 
-var bearishCount = _signals.GetBearishSignalsCount(dataOhlcv);
-Console.WriteLine("Bearish signals count: {0}", bearishCount);
+var bearishCount = _signals.GetBearishSignalsCount src="dataOhlcv">;
+Console.WriteLine src=""Bearish signals count: {0}", bearishCount">;
 //Bearish signals count: 128
 
-var signalsCountMulti = _signals.GetSignalsCount(dataOhlcv, new string[] { "Bearish Belt Hold", "Bearish Black Closing Marubozu" });
-Console.WriteLine("Multiple patterns signals count: {0}", signalsCountMulti);
+var signalsCountMulti = _signals.GetSignalsCount src="dataOhlcv, new string[" { "Bearish Belt Hold", "Bearish Black Closing Marubozu" }">;
+Console.WriteLine src=""Multiple patterns signals count: {0}", signalsCountMulti">;
 //Multiple patterns signals count: 6
 
-var signalsCountSingle = _signals.GetSignalsCount(dataOhlcv, "Bearish Black Closing Marubozu");
-Console.WriteLine("Single pattern signals count: {0}", signalsCountSingle);
+var signalsCountSingle = _signals.GetSignalsCount src="dataOhlcv, "Bearish Black Closing Marubozu"">;
+Console.WriteLine src=""Single pattern signals count: {0}", signalsCountSingle">;
 //Single pattern signals count: 6
 
-var signalsCountMultiWeightened = _signals.GetSignalsIndex(dataOhlcv, new Dictionary<string, decimal>() { { "Bearish Belt Hold", 0.5M }, { "Bearish Black Closing Marubozu", 0.5M } });
-Console.WriteLine("Weightened index for selected multiple patterns: {0}", signalsCountMultiWeightened);
+var signalsCountMultiWeightened = _signals.GetSignalsIndex src="dataOhlcv, new Dictionary<string, decimal> src=""> { { "Bearish Belt Hold", 0.5M }, { "Bearish Black Closing Marubozu", 0.5M } }">;
+Console.WriteLine src=""Weightened index for selected multiple patterns: {0}", signalsCountMultiWeightened">;
 //Weightened index for selected multiple patterns: 3,0
 
-var signalsCountSingleWeightened = _signals.GetSignalsIndex(dataOhlcv, "Bearish Black Closing Marubozu", 0.5M);
-Console.WriteLine("Weightened index for selected single pattern: {0}", signalsCountSingleWeightened);
+var signalsCountSingleWeightened = _signals.GetSignalsIndex src="dataOhlcv, "Bearish Black Closing Marubozu", 0.5M">;
+Console.WriteLine src=""Weightened index for selected single pattern: {0}", signalsCountSingleWeightened">;
 //Weightened index for selected single pattern: 3,0
 
-var ohlcSingleSignals = _signals.GetOhlcvWithSignals(dataOhlcv, "Bearish Black Closing Marubozu");
-Console.WriteLine("Signals for single pattern: {0}", ohlcSingleSignals.Where(x => x.Signal == true).Count());
+var ohlcSingleSignals = _signals.GetOhlcvWithSignals src="dataOhlcv, "Bearish Black Closing Marubozu"">;
+Console.WriteLine src=""Signals for single pattern: {0}", ohlcSingleSignals.Where src="x => x.Signal == true">.Count src="">">;
 //Signals for single pattern: 6
 
-var ohlcMultiSignals = _signals.GetOhlcvWithSignals(dataOhlcv, new string[] { "Bearish Belt Hold", "Bearish Black Closing Marubozu" });
-Console.WriteLine("Number of lists returned: {0}", ohlcMultiSignals.Count());
+var ohlcMultiSignals = _signals.GetOhlcvWithSignals src="dataOhlcv, new string[" { "Bearish Belt Hold", "Bearish Black Closing Marubozu" }">;
+Console.WriteLine src=""Number of lists returned: {0}", ohlcMultiSignals.Count src="">">;
 //Number of lists returned: 2
 
-Console.ReadLine();
+Console.ReadLine src="">;
 ```
   
 ## Production
