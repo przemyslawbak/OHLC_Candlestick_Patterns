@@ -65,7 +65,7 @@ Continuation Diamond Formation
 
 | Bearish Meeting Lines | Bearish On Neck | Bearish Separating Lines | Bearish Shooting Star | Bearish Side By Side White Lines | Bearish Thrusting | Bearish Tri Star |
 | :-------------: | :-------------: | :-------------: | :-------------: | :-------------: | :-------------: | :-------------: |
-|
+|<img width="100" height="100" alt="Bearish Meeting Lines" src="https://github.com/user-attachments/assets/0a8f3b86-4ad7-473e-9297-266fe6242005">|<img width="100" height="100" alt="Bearish On Neck" src="https://github.com/user-attachments/assets/076586d8-78d6-4994-b79f-50b60b5cf11c">|<img width="100" height="100" alt="Bearish Separating Lines" src="https://github.com/user-attachments/assets/adbd067b-ce88-480c-a8a3-0925ca80fddc">|<img width="100" height="100" alt="Bearish Shooting Star" src="https://github.com/user-attachments/assets/57deea44-ba71-4d33-ae67-7abc20bab7aa">|<img width="100" height="100" alt="Bearish Side By Side White Lines" src="https://github.com/user-attachments/assets/3db5f529-fd1a-4f3a-b0b3-9f50dcb9588f">|<img width="100" height="100" alt="Bearish Thrusting" src="https://github.com/user-attachments/assets/f9c719cf-3ff9-414f-b58b-c75e5fa8d583">|<img width="100" height="100" alt="Bearish Tri Star" src="https://github.com/user-attachments/assets/bf01eeab-dab1-4199-a3c0-dc10d3895ff5">|
 
 | Bearish Tweezer Top | Bearish Upside Gap 2 Crows | Bullish 3 Inside Up | Bullish 3 Outside Up | Bullish 3 Starsinthe South | Bullish 3 White Soldiers | Bullish 3 Line Strike |
 | :-------------: | :-------------: | :-------------: | :-------------: | :-------------: | :-------------: | :-------------: |
