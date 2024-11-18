@@ -26,7 +26,7 @@ namespace OHLC_Candlestick_Patterns
 
         private decimal CalculateFibonacciPoint(List<ZigZagObject> points, int one, int two, int three, decimal fibonacci, int i)
         {
-            var point = Math.Abs(points[i - one].Close - points[i - two].Close) * fibonacci * points[i - three].Close;
+            var point = (Math.Abs(points[i - one].Close - points[i - two].Close) * fibonacci) + points[i - three].Close;
             return point;
         }
 
