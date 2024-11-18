@@ -59,68 +59,37 @@ Continuation Diamond Formation
 | :-------------: | :-------------: | :-------------: | :-------------: | :-------------: | :-------------: | :-------------: |
 |<img width="100" height="100" alt="Bearish Downside Gap 3 Methods" src="https://github.com/user-attachments/assets/18d25e77-cc51-4157-abb1-e3fe429415c0">|<img width="100" height="100" alt="Bearish Downside Tasuki Gap" src="https://github.com/user-attachments/assets/d2c34eee-fb0d-49cf-a887-a7d7884e379d">|<img width="100" height="100" alt="Bearish Dragonfly Doji" src="https://github.com/user-attachments/assets/27aaa54b-6b87-4c08-a45c-c66d2dd105d1">|<img width="100" height="100" alt="Bearish Engulfing" src="https://github.com/user-attachments/assets/6517919a-5eec-4047-a939-afcfa6638203">|<img width="100" height="100" alt="Bearish Evening Doji Star" src="https://github.com/user-attachments/assets/1454ba68-531d-476f-8ede-ff4249628d97">|<img width="100" height="100" alt="Bearish Evening Star" src="https://github.com/user-attachments/assets/59bef85f-dbca-456b-bc07-fd0dd64431ad">|<img width="100" height="100" alt="Bearish Falling 3 Methods" src="https://github.com/user-attachments/assets/b3ad2332-30d2-46c7-bed7-cb5bef1d6363">|
 
+| Bearish Gravestone Doji | Bearish Harami | Bearish Identical 3 Crows | Bearish Harami Cross | Bearish In Neck | Bearish Kicking | Bearish Long Black Candelstick |
+| :-------------: | :-------------: | :-------------: | :-------------: | :-------------: | :-------------: | :-------------: |
+|
 
+| Bearish Meeting Lines | Bearish On Neck | Bearish Separating Lines | Bearish Shooting Star | Bearish Side By Side White Lines | Bearish Thrusting | Bearish Tri Star |
+| :-------------: | :-------------: | :-------------: | :-------------: | :-------------: | :-------------: | :-------------: |
+|
 
+| Bearish Tweezer Top | Bearish Upside Gap 2 Crows | Bullish 3 Inside Up | Bullish 3 Outside Up | Bullish 3 Starsinthe South | Bullish 3 White Soldiers | Bullish 3 Line Strike |
+| :-------------: | :-------------: | :-------------: | :-------------: | :-------------: | :-------------: | :-------------: |
+|
 
+| Bullish Belt Hold | Bullish Breakaway | Bullish Concealing Baby Swallow | Bullish Doji Star | Bullish Dragonfly Doji | Bullish Engulfing | Bullish Gravestone Doji |
+| :-------------: | :-------------: | :-------------: | :-------------: | :-------------: | :-------------: | :-------------: |
+|
 
+| Bullish Kicking | Bullish Breakaway | Bullish Concealing Baby Swallow | Bullish Harami | Bullish Harami Cross | Bullish Homing Pigeon | Bullish Inverted Hammer |
+| :-------------: | :-------------: | :-------------: | :-------------: | :-------------: | :-------------: | :-------------: |
+|
 
+| Bullish Ladder Bottom | Bullish Long White Candlestick | Bullish Mat Hold | Bullish Matching Low | Bullish Meeting Lines | Bullish Morning Doji Star | Bullish Morning Star |
+| :-------------: | :-------------: | :-------------: | :-------------: | :-------------: | :-------------: | :-------------: |
+|
 
+| Bullish Piercing Line | Bullish Rising 3 Methods | Bullish Separating Lines | Bullish Side By Side White Lines | Bullish Stick Sandwich | Bullish Tri Star | Bullish Tweezer Bottom |
+| :-------------: | :-------------: | :-------------: | :-------------: | :-------------: | :-------------: | :-------------: |
+|
 
-
-
-Bearish Gravestone Doji,
-Bearish Harami,
-Bearish Identical 3 Crows,
-Bearish Harami Cross,
-Bearish In Neck,
-Bearish Kicking,
-Bearish Long Black Candelstick,
-Bearish Meeting Lines,
-Bearish On Neck,
-Bearish Separating Lines,
-Bearish Shooting Star,
-Bearish Side By Side White Lines,
-Bearish Thrusting,
-Bearish Tri Star,
-Bearish Tweezer Top,
-Bearish Upside Gap 2 Crows,
-Bullish 3 Inside Up,
-Bullish 3 Outside Up,
-Bullish 3 Starsinthe South,
-Bullish 3 White Soldiers,
-Bullish 3 Line Strike,
-Bullish Belt Hold,
-Bullish Breakaway,
-Bullish Concealing Baby Swallow,
-Bullish Doji Star,
-Bullish Dragonfly Doji,
-Bullish Engulfing,
-Bullish Gravestone Doji,
-Bullish Harami,
-Bullish Harami Cross,
-Bullish Homing Pigeon,
-Bullish Inverted Hammer,
-Bullish Kicking,
-Bullish Ladder Bottom,
-Bullish Long White Candlestick,
-Bullish Mat Hold,
-Bullish Matching Low,
-Bullish Meeting Lines,
-Bullish Morning Doji Star,
-Bullish Morning Star,
-Bullish Piercing Line,
-Bullish Rising 3 Methods,
-Bullish Separating Lines,
-Bullish Side By Side White Lines,
-Bullish Stick Sandwich,
-Bullish Tri Star,
-Bullish Tweezer Bottom,
-Bullish Unique 3 River Bottom,
-Bullish Upside Gap 3 Methods,
-Bullish Upside Tasuki Gap,
-Bullish White Closing Marubozu,
-Bullish White Marubozu,
-Bullish White Opening Marubozu
+| Bullish Unique 3 River Bottom | Bullish Upside Gap 3 Methods | Bullish Upside Tasuki Gap | Bullish White Closing Marubozu | Bullish White Marubozu | Bullish White Opening Marubozu |
+| :-------------: | :-------------: | :-------------: | :-------------: | :-------------: | :-------------: |
+|
 
 ## Example usage
 
