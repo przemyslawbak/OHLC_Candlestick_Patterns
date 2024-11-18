@@ -55,6 +55,9 @@ Continuation Diamond Formation
 | :-------------: | :-------------: | :-------------: | :-------------: | :-------------: | :-------------: | :-------------: |
 |<img width="100" height="100" alt="Bearish Black Closing Marubozu" src="https://github.com/user-attachments/assets/f0c881c4-4ed6-46e0-90b1-871731592d98">|<img width="100" height="100" alt="Bearish Black Marubozu" src="https://github.com/user-attachments/assets/b8954d91-080e-4f3a-948f-f5a79cb175f4">|<img width="100" height="100" alt="Bearish Black Opening Marubozu" src="https://github.com/user-attachments/assets/eb268e2a-b9e9-40ae-8244-9f5db83869fe">|<img width="100" height="100" alt="Bearish Breakaway" src="https://github.com/user-attachments/assets/5ca94f1e-d9c2-4dc2-b798-e11636e97183">|<img width="100" height="100" alt="Bearish Deliberation" src="https://github.com/user-attachments/assets/8dea0b19-4f7b-49db-924f-e5aea7c9025c">|<img width="100" height="100" alt="Bearish Dark Cloud Cover" src="https://github.com/user-attachments/assets/5459b34f-ae92-413c-8310-279687c2d9e8">|<img width="100" height="100" alt="Bearish Doji Star" src="https://github.com/user-attachments/assets/d541ee12-2f3e-4020-909a-72faa57d28d7">|
 
+| Bearish Downside Gap 3 Methods | Bearish Downside Tasuki Gap | Bearish Dragonfly Doji | Bearish Engulfing | Bearish Evening Doji Star | Bearish Evening Star | Bearish Falling 3 Methods |
+| :-------------: | :-------------: | :-------------: | :-------------: | :-------------: | :-------------: | :-------------: |
+|<img width="100" height="100" alt="Bearish Downside Gap 3 Methods" src="https://github.com/user-attachments/assets/18d25e77-cc51-4157-abb1-e3fe429415c0">|<img width="100" height="100" alt="Bearish Downside Tasuki Gap" src="https://github.com/user-attachments/assets/d2c34eee-fb0d-49cf-a887-a7d7884e379d">|<img width="100" height="100" alt="Bearish Dragonfly Doji" src="https://github.com/user-attachments/assets/27aaa54b-6b87-4c08-a45c-c66d2dd105d1">|<img width="100" height="100" alt="Bearish Engulfing" src="https://github.com/user-attachments/assets/6517919a-5eec-4047-a939-afcfa6638203">|<img width="100" height="100" alt="Bearish Evening Doji Star" src="https://github.com/user-attachments/assets/1454ba68-531d-476f-8ede-ff4249628d97">|<img width="100" height="100" alt="Bearish Evening Star" src="https://github.com/user-attachments/assets/59bef85f-dbca-456b-bc07-fd0dd64431ad">|<img width="100" height="100" alt="Bearish Falling 3 Methods" src="https://github.com/user-attachments/assets/b3ad2332-30d2-46c7-bed7-cb5bef1d6363">|
 
 
 
@@ -65,18 +68,6 @@ Continuation Diamond Formation
 
 
 
-
-
-
-
-
-Bearish Downside Gap 3 Methods,
-Bearish Downside Tasuki Gap,
-Bearish Dragonfly Doji,
-Bearish Engulfing,
-Bearish Evening Doji Star,
-Bearish Evening Star,
-Bearish Falling 3 Methods,
 Bearish Gravestone Doji,
 Bearish Harami,
 Bearish Identical 3 Crows,
