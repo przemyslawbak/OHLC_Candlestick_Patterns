@@ -70,5 +70,6 @@
         //formations
 
         int GetFormationSignalsCount(List<OhlcvObject> dataOhlcv, string patternName);
+        int GetFibonacciSignalsCount(List<OhlcvObject> dataOhlcv, string patternName);
     }
 }

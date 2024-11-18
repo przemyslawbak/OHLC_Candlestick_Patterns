@@ -4,6 +4,7 @@
     {
         IPatterns _patterns;
         IFormations _formations;
+        IFibonacci _fibonacci;
 
 
         public int GetPatternsBearishSignalsCount(List<OhlcvObject> dataOhlcv)
@@ -105,6 +106,12 @@
         {
             _formations = new Formations(dataOhlcv);
             return _formations.GetFormationsSignalsCount(patternName);
+        } 
+
+        public int GetFibonacciSignalsCount(List<OhlcvObject> dataOhlcv, string patternName)
+        {
+            _fibonacci = new Fibonacci(dataOhlcv);
+            return _fibonacci.GetFibonacciSignalsCount(patternName);
         }
     }
 }

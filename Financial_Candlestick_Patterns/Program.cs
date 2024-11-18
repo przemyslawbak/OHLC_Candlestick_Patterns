@@ -23,6 +23,8 @@ var dataOhlcv = JsonConvert.DeserializeObject<List<OhlcvObject>>(json).Select(x 
     Volume = x.Volume,
 }).Reverse().ToList();
 
+var fibSingle = _signals.GetFibonacciSignalsCount(dataOhlcv, "Bearish3Drive");
+
 var formationsSignalsCountSingle = _signals.GetFormationSignalsCount(dataOhlcv, "BearishDoubleTops");
 
 var bullishCount = _signals.GetPatternsBullishSignalsCount(dataOhlcv);
