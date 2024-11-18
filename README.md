@@ -61,7 +61,7 @@ Continuation Diamond Formation
 
 | Bearish Gravestone Doji | Bearish Harami | Bearish Identical 3 Crows | Bearish Harami Cross | Bearish In Neck | Bearish Kicking | Bearish Long Black Candelstick |
 | :-------------: | :-------------: | :-------------: | :-------------: | :-------------: | :-------------: | :-------------: |
-|
+|<img width="100" height="100" alt="Bearish Gravestone Doji" src="https://github.com/user-attachments/assets/bf244842-dd05-4273-a52f-8aed07075275">|<img width="100" alt="Bearish Harami" src="https://github.com/user-attachments/assets/b5cb10f5-8edf-4b5d-acf7-921968b2d948">|<img width="100" height="100" alt="Bearish Identical 3 Crows" src="https://github.com/user-attachments/assets/3124bd79-0cd4-4665-8e2a-6830b9d30054">|<img width="100" height="100" alt="Bearish Harami Cross" src="https://github.com/user-attachments/assets/bc8fd2f0-db78-4bac-8699-8e36886ebd3a">|<img width="100" height="100" alt="Bearish In Neck" src="https://github.com/user-attachments/assets/41b0a7d3-97d7-4228-8034-a809181dc54d">|<img width="100" height="100" alt="Bearish Kicking" src="https://github.com/user-attachments/assets/321db1d6-4c36-4fc3-8e6b-418468a60625">|<img width="100" height="100" alt="Bearish Long Black Candelstick" src="https://github.com/user-attachments/assets/91d27248-5cfd-415d-9290-86d78c001fb4">|
 
 | Bearish Meeting Lines | Bearish On Neck | Bearish Separating Lines | Bearish Shooting Star | Bearish Side By Side White Lines | Bearish Thrusting | Bearish Tri Star |
 | :-------------: | :-------------: | :-------------: | :-------------: | :-------------: | :-------------: | :-------------: |
