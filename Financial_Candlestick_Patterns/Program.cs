@@ -24,6 +24,7 @@ var dataOhlcv = JsonConvert.DeserializeObject<List<OhlcvObject>>(json).Select(x 
 }).Reverse().ToList();
 
 var fibSingle = _signals.GetFibonacciSignalsCount(dataOhlcv, "Bearish3Drive");
+var otherFibSingle = _signals.GetFibonacciSignalsCount(dataOhlcv, "Bullish3Drive");
 
 var formationsSignalsCountSingle = _signals.GetFormationSignalsCount(dataOhlcv, "BearishDoubleTops");
 

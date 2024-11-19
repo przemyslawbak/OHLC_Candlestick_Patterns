@@ -7,22 +7,27 @@ namespace Candlestick_Patterns
 {
     public class Fibonacci : IFibonacci
     {
-        private readonly List<ZigZagObject> _data;
+        private static List<ZigZagObject> _data { get; set; }
 
-        private readonly decimal _priceMovement1;
-        private readonly Fibonacci3DrivePattern _pattern;
+        private static decimal _priceMovement1 { get; set; }
 
-        private List<decimal> _peaksFromZigZag;
+        private static Fibonacci3DrivePattern _pattern { get; set; }
+
+        private static List<decimal> _peaksFromZigZag { get; set; }
 
         public List<OhlcvObject> _dataOhlcv { get; }
-
+        public static bool isDataLoaded { get; set; } = false;
         internal Fibonacci(List<OhlcvObject> dataOhlcv)
         {
-            _dataOhlcv = dataOhlcv;
-            _data = SetPeaksVallyes.GetCloseAndSignalsData(dataOhlcv);
-            _peaksFromZigZag = SetPeaksVallyes.PeaksFromZigZag(_data);
-            _priceMovement1 = 0.002M;
-            _pattern = new Fibonacci3DrivePattern();
+            if (isDataLoaded == false)
+            {
+                isDataLoaded = true;
+                _dataOhlcv = dataOhlcv;
+                _data = SetPeaksVallyes.GetCloseAndSignalsData(dataOhlcv);
+                _peaksFromZigZag = SetPeaksVallyes.PeaksFromZigZag(_data);
+                _priceMovement1 = 0.002M;
+                _pattern = new Fibonacci3DrivePattern();
+            }
         }
 
         private List<ZigZagObject> Bearish3Drive()
