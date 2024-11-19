@@ -79,16 +79,16 @@ Continuation Diamond Formation
 | :-------------: | :-------------: | :-------------: | :-------------: | :-------------: | :-------------: | :-------------: |
 |<img width="100" height="100" alt="Bullish Kicking" src="https://github.com/user-attachments/assets/b56c7d97-a5a5-4769-acea-afc21cc5bf62">|<img width="100" height="100" alt="Bullish White Marubozu" src="https://github.com/user-attachments/assets/a711d05a-726c-4237-95b6-effd3812688d">|<img width="100" height="100" alt="Bullish White Opening Marubozu" src="https://github.com/user-attachments/assets/fb7215a1-136a-4c60-b0bb-f6455bb8a5f1">|<img width="100" height="100" alt="Bullish Harami" src="https://github.com/user-attachments/assets/621a7121-a8e9-4d84-8039-9555bcdabca8">|<img width="100" height="100" alt="Bullish Harami Cross" src="https://github.com/user-attachments/assets/4d29d6a0-fec1-4bef-ac27-ce627c0a999c">|<img width="100" height="100" alt="Bullish Homing Pigeon" src="https://github.com/user-attachments/assets/ded15ac0-41c7-4638-8d51-a256039896d6">|<img width="100" height="100" alt="Bullish Inverted Hammer" src="https://github.com/user-attachments/assets/84d933bc-4f37-46aa-bf3e-ccecf36ac69f">|
 
-
-
-
-
-
-
-
 | Bullish Ladder Bottom | Bullish Long White Candlestick | Bullish Mat Hold | Bullish Matching Low | Bullish Meeting Lines | Bullish Morning Doji Star | Bullish Morning Star |
 | :-------------: | :-------------: | :-------------: | :-------------: | :-------------: | :-------------: | :-------------: |
-|
+|<img width="100" height="100" alt="Bullish Ladder Bottom" src="https://github.com/user-attachments/assets/580e0f81-bff2-4d1a-9275-fcb5b446b13e">|<img width="100" height="100" alt="Bullish Long White Candlestick" src="https://github.com/user-attachments/assets/04e503e2-2fe5-4cbd-9080-cac1de7947b1">|<img width="100" height="100" alt="Bullish Mat Hold" src="https://github.com/user-attachments/assets/3f34b146-5a86-48f0-85ef-5776ff2dc939">|<img width="100" height="100" alt="Bullish Matching Low" src="https://github.com/user-attachments/assets/1c4a35c8-5b2f-4845-85e0-ff34d951b0b1">|<img width="100" height="100" alt="Bullish Meeting Lines" src="https://github.com/user-attachments/assets/ea81fe86-9ad8-49e9-93bf-d080c2208a7f">|<img width="100" height="100" alt="Bullish Morning Doji Star" src="https://github.com/user-attachments/assets/caf25fc6-7adf-46de-a43e-cee9f1fe080d">|<img width="100" height="100" alt="Bullish Morning Star" src="https://github.com/user-attachments/assets/a5de0e3c-ef63-4fb3-8cd4-530cd7b52aa4">|
+
+
+
+
+
+
+
 
 | Bullish Piercing Line | Bullish Rising 3 Methods | Bullish Separating Lines | Bullish Side By Side White Lines | Bullish Stick Sandwich | Bullish Tri Star | Bullish Tweezer Bottom |
 | :-------------: | :-------------: | :-------------: | :-------------: | :-------------: | :-------------: | :-------------: |
