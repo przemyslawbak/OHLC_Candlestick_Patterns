@@ -87,16 +87,9 @@ Continuation Diamond Formation
 | :-------------: | :-------------: | :-------------: | :-------------: | :-------------: | :-------------: | :-------------: |
 |<img width="100" height="100" alt="Bullish Piercing Line" src="https://github.com/user-attachments/assets/7adc02a9-96e5-490c-a42b-d8caed19bb90">|<img width="100" height="100" alt="Bullish Rising 3 Methods" src="https://github.com/user-attachments/assets/638373a6-08de-438d-9cb7-d8c59e0116d4">|<img width="100" height="100" alt="Bullish Separating Lines" src="https://github.com/user-attachments/assets/640f37c0-bd37-4cae-938b-ddf6fb899fbf">|<img width="100" height="100" alt="Bullish Side By Side White Lines" src="https://github.com/user-attachments/assets/a86fed99-7000-4e2d-aa92-0c856e29b342">|<img width="100" height="100" alt="Bullish Stick Sandwich" src="https://github.com/user-attachments/assets/f553d30b-449c-418b-a88d-28e644668eae">|<img width="100" height="100" alt="Bullish Tri Star" src="https://github.com/user-attachments/assets/384896c3-8495-4258-a4dc-b470c51d7072">|<img width="100" height="100" alt="Bullish Tweezer Bottom" src="https://github.com/user-attachments/assets/e13952dd-c873-4802-9481-1959eb4a3310">|
 
-
-
-
-
-
-
-
 | Bullish Unique 3 River Bottom | Bullish Upside Gap 3 Methods | Bullish Upside Tasuki Gap | Bullish White Closing Marubozu |
 | :-------------: | :-------------: | :-------------: | :-------------: |
-|
+|<img width="100" height="100" alt="Bullish Unique 3 River Bottom" src="https://github.com/user-attachments/assets/f2f66429-db0f-4bdc-b4b8-f744d20b7922">|<img width="100" height="100" alt="Bullish Upside Gap 3 Methods" src="https://github.com/user-attachments/assets/b7f8a96e-da94-4b68-88f7-06e4cf76c03b">|<img width="100" height="100" alt="Bullish Upside Tasuki Gap" src="https://github.com/user-attachments/assets/2c2ebb02-d7df-471a-9805-2cf6d567d57e">|<img width="100" height="100" alt="Bullish White Opening Marubozu" src="https://github.com/user-attachments/assets/58e6fc5e-6a50-4f75-9cc7-adbfb5cbbd3d">|
 
 ## Example usage
 
