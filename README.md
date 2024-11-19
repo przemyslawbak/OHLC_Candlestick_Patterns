@@ -75,9 +75,16 @@ Continuation Diamond Formation
 | :-------------: | :-------------: | :-------------: | :-------------: | :-------------: | :-------------: | :-------------: |
 |<img width="100" height="100" alt="Bullish Belt Hold" src="https://github.com/user-attachments/assets/3e0acdd7-2b8c-4343-be0e-93ba42b17db1">|<img width="100" height="100" alt="Bullish Breakaway" src="https://github.com/user-attachments/assets/d8f80540-f58d-4206-98b2-67a967a9e963">|<img width="100" height="100" alt="Bullish Concealing Baby Swallow" src="https://github.com/user-attachments/assets/2d901db7-bd2d-4476-b9d6-2d5f00cb28e7">|<img width="100" height="100" alt="Bullish Doji Star" src="https://github.com/user-attachments/assets/702f3156-5b9a-4c15-ae24-3a1fbebd3468">|<img width="100" height="100" alt="Bullish Dragonfly Doji" src="https://github.com/user-attachments/assets/e12c2497-b748-4661-a216-f4134e2ddc1e">|<img width="100" height="100" alt="Bullish Engulfing" src="https://github.com/user-attachments/assets/389d1062-0678-4912-bc80-1fb201d2c060">|<img width="100" height="100" alt="Bullish Gravestone Doji" src="https://github.com/user-attachments/assets/104a8250-83a5-4374-8263-8e0849b9a9ac">|
 
-| Bullish Kicking | Bullish Breakaway | Bullish Concealing Baby Swallow | Bullish Harami | Bullish Harami Cross | Bullish Homing Pigeon | Bullish Inverted Hammer |
+| Bullish Kicking | Bullish White Marubozu | Bullish White Opening Marubozu | Bullish Harami | Bullish Harami Cross | Bullish Homing Pigeon | Bullish Inverted Hammer |
 | :-------------: | :-------------: | :-------------: | :-------------: | :-------------: | :-------------: | :-------------: |
-|
+|<img width="100" height="100" alt="Bullish Kicking" src="https://github.com/user-attachments/assets/b56c7d97-a5a5-4769-acea-afc21cc5bf62">|<img width="100" height="100" alt="Bullish White Marubozu" src="https://github.com/user-attachments/assets/a711d05a-726c-4237-95b6-effd3812688d">|<img width="100" height="100" alt="Bullish White Opening Marubozu" src="https://github.com/user-attachments/assets/fb7215a1-136a-4c60-b0bb-f6455bb8a5f1">|<img width="100" height="100" alt="Bullish Harami" src="https://github.com/user-attachments/assets/621a7121-a8e9-4d84-8039-9555bcdabca8">|<img width="100" height="100" alt="Bullish Harami Cross" src="https://github.com/user-attachments/assets/4d29d6a0-fec1-4bef-ac27-ce627c0a999c">|<img width="100" height="100" alt="Bullish Homing Pigeon" src="https://github.com/user-attachments/assets/ded15ac0-41c7-4638-8d51-a256039896d6">|<img width="100" height="100" alt="Bullish Inverted Hammer" src="https://github.com/user-attachments/assets/84d933bc-4f37-46aa-bf3e-ccecf36ac69f">|
+
+
+
+
+
+
+
 
 | Bullish Ladder Bottom | Bullish Long White Candlestick | Bullish Mat Hold | Bullish Matching Low | Bullish Meeting Lines | Bullish Morning Doji Star | Bullish Morning Star |
 | :-------------: | :-------------: | :-------------: | :-------------: | :-------------: | :-------------: | :-------------: |
@@ -87,8 +94,8 @@ Continuation Diamond Formation
 | :-------------: | :-------------: | :-------------: | :-------------: | :-------------: | :-------------: | :-------------: |
 |
 
-| Bullish Unique 3 River Bottom | Bullish Upside Gap 3 Methods | Bullish Upside Tasuki Gap | Bullish White Closing Marubozu | Bullish White Marubozu | Bullish White Opening Marubozu |
-| :-------------: | :-------------: | :-------------: | :-------------: | :-------------: | :-------------: |
+| Bullish Unique 3 River Bottom | Bullish Upside Gap 3 Methods | Bullish Upside Tasuki Gap | Bullish White Closing Marubozu |
+| :-------------: | :-------------: | :-------------: | :-------------: |
 |
 
 ## Example usage
