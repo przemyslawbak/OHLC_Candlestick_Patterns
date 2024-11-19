@@ -73,7 +73,7 @@ Continuation Diamond Formation
 
 | Bullish Belt Hold | Bullish Breakaway | Bullish Concealing Baby Swallow | Bullish Doji Star | Bullish Dragonfly Doji | Bullish Engulfing | Bullish Gravestone Doji |
 | :-------------: | :-------------: | :-------------: | :-------------: | :-------------: | :-------------: | :-------------: |
-|
+|<img width="100" height="100" alt="Bullish Belt Hold" src="https://github.com/user-attachments/assets/3e0acdd7-2b8c-4343-be0e-93ba42b17db1">|<img width="100" height="100" alt="Bullish Breakaway" src="https://github.com/user-attachments/assets/d8f80540-f58d-4206-98b2-67a967a9e963">|<img width="100" height="100" alt="Bullish Concealing Baby Swallow" src="https://github.com/user-attachments/assets/2d901db7-bd2d-4476-b9d6-2d5f00cb28e7">|<img width="100" height="100" alt="Bullish Doji Star" src="https://github.com/user-attachments/assets/702f3156-5b9a-4c15-ae24-3a1fbebd3468">|<img width="100" height="100" alt="Bullish Dragonfly Doji" src="https://github.com/user-attachments/assets/e12c2497-b748-4661-a216-f4134e2ddc1e">|<img width="100" height="100" alt="Bullish Engulfing" src="https://github.com/user-attachments/assets/389d1062-0678-4912-bc80-1fb201d2c060">|<img width="100" height="100" alt="Bullish Gravestone Doji" src="https://github.com/user-attachments/assets/104a8250-83a5-4374-8263-8e0849b9a9ac">|
 
 | Bullish Kicking | Bullish Breakaway | Bullish Concealing Baby Swallow | Bullish Harami | Bullish Harami Cross | Bullish Homing Pigeon | Bullish Inverted Hammer |
 | :-------------: | :-------------: | :-------------: | :-------------: | :-------------: | :-------------: | :-------------: |
