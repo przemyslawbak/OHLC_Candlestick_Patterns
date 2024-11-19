@@ -69,7 +69,7 @@ Continuation Diamond Formation
 
 | Bearish Tweezer Top | Bearish Upside Gap 2 Crows | Bullish 3 Inside Up | Bullish 3 Outside Up | Bullish 3 Starsinthe South | Bullish 3 White Soldiers | Bullish 3 Line Strike |
 | :-------------: | :-------------: | :-------------: | :-------------: | :-------------: | :-------------: | :-------------: |
-|
+|<img width="100" height="100" alt="Bearish Tweezer Top" src="https://github.com/user-attachments/assets/6d24528d-7b00-4665-835f-cb7e8a292902">|<img width="100" height="100" alt="Bearish Upside Gap 2 Crows" src="https://github.com/user-attachments/assets/6b9c9e23-768a-45d4-97a8-5a6259ebbaa5">|<img width="100" height="100" alt="Bullish 3 Inside Up" src="https://github.com/user-attachments/assets/cf816fe0-8259-4bca-9f87-ff506c1f979a">|<img width="100" height="100" alt="Bullish 3 Outside Up" src="https://github.com/user-attachments/assets/6e3b8cdc-7aed-42e2-95cf-4dac071c03b6">|<img width="100" height="100" alt="Bullish 3 Starsinthe South" src="https://github.com/user-attachments/assets/8e974cee-9560-4b15-bcf9-5c69be1f7abd">|<img width="100" height="100" alt="Bullish 3 White Soldiers" src="https://github.com/user-attachments/assets/0ab9c95a-633b-4a72-8f80-856768cbc868">|<img width="100" height="100" alt="Bullish 3 Line Strike" src="https://github.com/user-attachments/assets/c157f3aa-cde2-49bd-8e0e-7cfd32e24114">|
 
 | Bullish Belt Hold | Bullish Breakaway | Bullish Concealing Baby Swallow | Bullish Doji Star | Bullish Dragonfly Doji | Bullish Engulfing | Bullish Gravestone Doji |
 | :-------------: | :-------------: | :-------------: | :-------------: | :-------------: | :-------------: | :-------------: |
