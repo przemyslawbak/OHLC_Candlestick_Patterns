@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System;
+using System.Reflection;
 
 namespace Candlestick_Patterns
 {
@@ -239,6 +240,46 @@ namespace Candlestick_Patterns
 
             return points;
         }
+        
+        private List<ZigZagObject> BearishInverseCupAndHandle()
+        {
+            var dateList = new List<decimal>();
+            var points = _peaksFromZigZag.Select(x => new ZigZagObject() { Close = x, Signal = false }).ToList();
+            for (int i = 11; i < points.Count; i++)
+            {
+                if (!dateList.Contains(points[i].Close))
+                {
+                    if(points[i].Close < points[i - 1].Close && points[i - 1].Close > points[i - 3].Close && points[i - 5].Close < points[i - 3].Close && points[i - 4].Close < points[i -2].Close && points[i - 4].Close > points[i].Close && points[i - 8].Close > points[i - 5].Close && points[i - 10].Close > points[i - 5].Close && points[i - 9].Close > points[i - 10].Close && points[i - 9].Close > points[i - 8].Close)
+                    {
+                        if(points[i - 7].Close > points[i - 4].Close && points[i - 7].Close < points[i - 9].Close && points[i - 8].Close < points[i - 11].Close && points[i - 11].Close > points[i - 9].Close && points[i].Close < points[i - 11].Close)
+                        {
+                            var diffHandle1 = Math.Abs(points[i - 2].Close - points[i - 3].Close);
+                            var diffHandle2 = Math.Abs(points[i - 4].Close - points[i - 3].Close);
+
+                            var change1 = Math.Abs(points[i - 8].Close - points[i - 7].Close);
+                            var change2 = Math.Abs(points[i - 10].Close - points[i - 11].Close);
+
+                            if (change1 >= diffHandle1 && change2 > diffHandle2 && Math.Abs(change1 - change2)/change2 < _percentageMargin && Math.Abs(diffHandle1 - diffHandle2)/diffHandle2 < _percentageMargin)
+                            {
+                                for (int x = -11; x < 1; x++)
+                                {
+                                    dateList.Add(points[i + x].Close);
+                                }
+
+                                if (dateList.Count >= _minShift * (decimal) _formationsLenght.Average())
+                                {
+                                    points[i].Signal = true;
+                                }
+                            }
+                        }
+                    
+                    }
+                }
+            }
+
+            return points;
+        }
+
         private List<ZigZagObject> BullishInverseHeadAndShoulders()
         {
             var dateList = new List<decimal>();
@@ -311,7 +352,7 @@ namespace Candlestick_Patterns
             return points;
         }
 
-        private List<ZigZagObject> BullishSymmetricTriangle()
+        private List<ZigZagObject> ContinuationSymmetricTriangle()
         {
             var dateList = new List<decimal>();
             var points = _peaksFromZigZag.Select(x => new ZigZagObject() { Close = x, Signal = false }).ToList();
@@ -568,7 +609,7 @@ namespace Candlestick_Patterns
             return points;
         }
 
-        private List<ZigZagObject> BullishDescendingPriceChannel()
+        private List<ZigZagObject> BearishDescendingPriceChannel()
         {
             var dateList = new List<decimal>();
             var points = _peaksFromZigZag.Select(x => new ZigZagObject() { Close = x, Signal = false }).ToList();
@@ -624,6 +665,46 @@ namespace Candlestick_Patterns
                             var change2 = Math.Abs(points[i - 9].Close - points[i - 10].Close);
 
                             if (diff1 >= _minShift * diff2 && diff3 >= _minShift * diff2 && Math.Abs((change1 - change2) / change2) <= (decimal)_advance.Average()) ;
+                            {
+                                for (int x = -12; x < 1; x++)
+                                {
+                                    dateList.Add(points[i + x].Close);
+                                }
+
+                                if (dateList.Count >= _minShift * _formationsLenght.Max() - 1)
+                                {
+                                    points[i].Signal = true;
+                                }
+                            }
+
+                        }
+                    }
+                }
+            }
+
+            return points;
+        }
+
+        private List<ZigZagObject> BearishRoundingTopPattern()
+        {
+            var dateList = new List<decimal>();
+            var points = _peaksFromZigZag.Select(x => new ZigZagObject() { Close = x, Signal = false }).ToList();
+            for (int i = 12; i < points.Count; i++)
+            {
+                if (!dateList.Contains(points[i].Close))
+                {
+                    if (points[i].Close < points[i - 1].Close && points[i - 2].Close > points[i].Close && points[i - 2].Close < points[i - 3].Close && points[i - 3].Close > points[i - 4].Close)
+                    {
+                        if (points[i - 7].Close > points[i - 6].Close && points[i - 12].Close < points[i - 8].Close && points[i - 11].Close < points[i - 9].Close)
+                        {
+                            //
+                            var diff1 = Math.Abs(points[i - 7].Close - points[i - 8].Close);
+                            var diff2 = Math.Abs(points[i - 6].Close - points[i - 7].Close);
+
+                            var change1 = Math.Abs(points[i - 5].Close - points[i - 9].Close);
+                            var change2 = Math.Abs(points[i - 6].Close - points[i - 8].Close);
+
+                            if (Math.Abs((diff1 - diff2) / diff1) <= (decimal)_advance.Average() && Math.Abs((change1 - change2) / change1) <= (decimal)_advance.Average())
                             {
                                 for (int x = -12; x < 1; x++)
                                 {
