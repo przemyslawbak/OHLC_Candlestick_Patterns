@@ -32,18 +32,20 @@ Bearish Head And Shoulders
 Bearish Descending Triangle
 Bearish Rising Wedge
 Bearish Bear Flags Pennants
+Bearish Descending Price Channel
+Bearish Inverse Cup And Handle
+Bearish Rounding Top Pattern
 Bullish Double Bottoms
 Bullish Triple Bottoms
 Bullish Cup And Handle
 Bullish Inverse Head And Shoulders
 Bullish Ascending Triangle
-Bullish Symmetric Triangle
 Bullish Falling Wedge
 Bullish Bull Flags Pennants
 Bullish Ascending Price Channel
-Bullish Descending Price Channel
 Bullish Rounding Bottom Pattern
 Continuation Diamond Formation
+Continuation Symmetric Triangle
 
 ## Pattern list
 | Bearish 2 Crows | Bearish 3 BlackCrows | Bearish 3 Inside Down | Bearish 3 Outside Down | Bearish 3 Line Strike | Bearish Advance Block | Bearish Belt Hold |
