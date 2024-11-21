@@ -2,40 +2,19 @@
 
 namespace OHLC_Candlestick_Patterns
 {
-    internal interface IFibonacci3DrivePattern
+    internal class Fibonacci3DrivePattern: SupportClass
     {
-        internal List<ZigZagObject> ThreeDrivePattern(string pattern, List<decimal> _peaksFromZigZag, decimal _priceMovement);
-    }
-
-    internal class Fibonacci3DrivePattern : IFibonacci3DrivePattern
-    {
-        private List<decimal> PointsRange(decimal point, decimal _priceMovement) => new List<decimal>()
-        {
-            point - (point * _priceMovement),
-            point + (point * _priceMovement),
-        };
-
-        private bool CheckPoint(decimal point, decimal pointAD, decimal _priceMovement, bool checkPoint)
-        {
-            if (PointsRange(pointAD, _priceMovement).First() >= point && PointsRange(pointAD, _priceMovement).Last() <= point)
-            {
-                checkPoint = true;
-            }
-            return checkPoint;
-        }
-
         private decimal CalculateFibonacciPoint(List<ZigZagObject> points, int one, int two, int three, decimal fibonacci, int i)
         {
             var point = (Math.Abs(points[i - one].Close - points[i - two].Close) * fibonacci) + points[i - three].Close;
             return point;
         }
 
-        public List<ZigZagObject> ThreeDrivePattern(string pattern, List<decimal> _peaksFromZigZag, decimal _priceMovement)
+        internal List<ZigZagObject> ThreeDrivePattern(string pattern, List<ZigZagObject> points, decimal _priceMovement)
         {
             bool checkD, checkC, checkB, checkA;
             decimal pointD, pointC, pointB, pointA;
             var dateList = new List<decimal>();
-            var points = _peaksFromZigZag.Select(x => new ZigZagObject() { Close = x, Signal = false }).ToList();
 
             for (int i = 5; i < points.Count; i++)
             {
@@ -56,6 +35,7 @@ namespace OHLC_Candlestick_Patterns
                             {
                                 dateList.Add(points[i + x].Close);
                             }
+
                             points[i].Signal = true;
                         }
                     }
@@ -99,6 +79,7 @@ namespace OHLC_Candlestick_Patterns
                     return true;
                 }
             }
+
             if (pattern == "bearish")
             {
                 if (points[i].Close > points[i - 1].Close && points[i - 1].Close < points[i - 2].Close && points[i - 2].Close > points[i - 3].Close && points[i - 3].Close < points[i - 4].Close && points[i - 4].Close > points[i - 5].Close)
