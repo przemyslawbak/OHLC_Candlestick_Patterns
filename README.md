@@ -25,12 +25,17 @@ Solution is using:
 
 | Bearish Double Tops | Bearish Triple Tops | Bearish Head And Shoulders |
 | :-------------: | :-------------: | :-------------: |
-|<img width="300" height="200" alt="Bearish Double Tops" src="https://github.com/user-attachments/assets/4029b114-9e55-4e23-a3b1-2bf5556a8763">|<img width="300" height="200" alt="Bearish Triple Tops" src="https://github.com/user-attachments/assets/53d9fd75-3dcd-4e5d-8183-3844c13f0f8e">|<img width="300" height="200" alt="Bearish Head And Shoulders" src="https://github.com/user-attachments/assets/10deabeb-1591-4ac2-bb3c-af54ef46f635">|
+|<img width="300" height="200" alt="Bearish Double Tops" src="https://github.com/user-attachments/assets/9def0ae9-d7b1-40fe-9aaf-32b9f63ea991">|<img width="300" height="200" alt="Bearish Triple Tops" src="https://github.com/user-attachments/assets/53d9fd75-3dcd-4e5d-8183-3844c13f0f8e">|<img width="300" height="200" alt="Bearish Head And Shoulders" src="https://github.com/user-attachments/assets/10deabeb-1591-4ac2-bb3c-af54ef46f635">|
+
+| Bearish Descending Triangle | Bearish Rising Wedge | Bearish Bear Flags Pennants |
+| :-------------: | :-------------: | :-------------: |
+|<img width="300" height="200" alt="Bearish Descending Triangle" src="https://github.com/user-attachments/assets/642e6eca-e1ea-48a8-aa62-0a2775cb884f">|<img width="300" height="200" alt="Bearish Rising Wedge" src="https://github.com/user-attachments/assets/43130987-a617-4d37-892b-848b926c9593">|<img width="300" height="200" alt="Bearish Bear Flags Pennants" src="https://github.com/user-attachments/assets/65f3711e-1f26-442c-85a8-0c91ed04f504">|
 
 
-Bearish Descending Triangle
-Bearish Rising Wedge
-Bearish Bear Flags Pennants
+
+
+
+
 Bearish Descending Price Channel
 Bearish Inverse Cup And Handle
 Bearish Rounding Top Pattern
