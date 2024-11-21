@@ -25,7 +25,7 @@ Solution is using:
 
 | Bearish Double Tops | Bearish Triple Tops | Bearish Head And Shoulders |
 | :-------------: | :-------------: | :-------------: |
-|<img width="300" height="250" alt="Bearish Double Tops" src="https://github.com/user-attachments/assets/4029b114-9e55-4e23-a3b1-2bf5556a8763">|<img width="300" height="250" alt="Bearish Triple Tops" src="https://github.com/user-attachments/assets/53d9fd75-3dcd-4e5d-8183-3844c13f0f8e">|<img width="300" height="250" alt="Bearish Head And Shoulders" src="https://github.com/user-attachments/assets/10deabeb-1591-4ac2-bb3c-af54ef46f635">|
+|<img width="300" height="200" alt="Bearish Double Tops" src="https://github.com/user-attachments/assets/4029b114-9e55-4e23-a3b1-2bf5556a8763">|<img width="300" height="200" alt="Bearish Triple Tops" src="https://github.com/user-attachments/assets/53d9fd75-3dcd-4e5d-8183-3844c13f0f8e">|<img width="300" height="200" alt="Bearish Head And Shoulders" src="https://github.com/user-attachments/assets/10deabeb-1591-4ac2-bb3c-af54ef46f635">|
 
 
 Bearish Descending Triangle
