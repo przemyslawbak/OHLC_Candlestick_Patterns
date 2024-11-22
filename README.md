@@ -19,11 +19,12 @@ NuGet package can be found here: https://www.nuget.org/packages/OHLC_Candlestick
 
 ## Technology
 
-Solution is using:
+Library is using:
   - C# language,
-  - .NET 7.0 Standars Class Library,
-  - .NET 7.0 Console project for the presentation of examples,
-  - Newtonsoft.Json in Console project.
+  - .NET 7.0 Standars Class Library.
+Additionally:
+  - Newtonsoft.Json in Console presentation project.
+  - ScottPlot in Console presentation project.
 
 ## Formation list
 
