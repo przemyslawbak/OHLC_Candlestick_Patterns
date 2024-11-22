@@ -31,23 +31,25 @@ Solution is using:
 | :-------------: | :-------------: | :-------------: |
 |<img width="300" height="200" alt="Bearish Descending Triangle" src="https://github.com/user-attachments/assets/642e6eca-e1ea-48a8-aa62-0a2775cb884f">|<img width="300" height="200" alt="Bearish Rising Wedge" src="https://github.com/user-attachments/assets/43130987-a617-4d37-892b-848b926c9593">|<img width="300" height="200" alt="Bearish Bear Flags Pennants" src="https://github.com/user-attachments/assets/65f3711e-1f26-442c-85a8-0c91ed04f504">|
 
+| Bearish Descending Price Channel | Bearish Inverse Cup And Handle | Bearish Rounding Top Pattern |
+| :-------------: | :-------------: | :-------------: |
+|![Bearish Descending Price Channel](https://github.com/user-attachments/assets/b8784228-c237-47c1-8e54-84701d346553)|![Bearish Inverse Cup And Handle](https://github.com/user-attachments/assets/91df0bce-8f73-41b2-acad-736a4d28b618)|![Bearish Rounding Top Pattern](https://github.com/user-attachments/assets/264209b0-fae8-45d4-94ab-e0cfa5a6fb0a)|
 
 
 
 
+| Bullish Double Bottoms | Bullish Triple Bottoms | Bullish Cup And Handle |
+| :-------------: | :-------------: | :-------------: |
+|
 
-Bearish Descending Price Channel
-Bearish Inverse Cup And Handle
-Bearish Rounding Top Pattern
-Bullish Double Bottoms
-Bullish Triple Bottoms
-Bullish Cup And Handle
-Bullish Inverse Head And Shoulders
-Bullish Ascending Triangle
-Bullish Falling Wedge
-Bullish Bull Flags Pennants
-Bullish Ascending Price Channel
-Bullish Rounding Bottom Pattern
+| Bullish Inverse Head And Shoulders | Bullish Ascending Triangle | Bullish Falling Wedge |
+| :-------------: | :-------------: | :-------------: |
+|
+
+| Bullish Bull Flags Pennants | Bullish Ascending Price Channel | Bullish Rounding Bottom Pattern |
+| :-------------: | :-------------: | :-------------: |
+|
+
 Continuation Diamond Formation
 Continuation Symmetric Triangle
 
