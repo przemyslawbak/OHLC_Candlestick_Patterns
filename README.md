@@ -41,7 +41,7 @@ Solution is using:
 
 | Bullish Inverse Head And Shoulders | Bullish Ascending Triangle | Bullish Falling Wedge |
 | :-------------: | :-------------: | :-------------: |
-|![Bullish Inverse Head And Shoulders](https://github.com/user-attachments/assets/1d6222af-ff9c-4823-90a3-86308ec6ec5f)|![Bullish Ascending Triangle](https://github.com/user-attachments/assets/718d39d3-fe28-4dcc-a17b-53c10f73d347)|![Bullish Falling Wedge](https://github.com/user-attachments/assets/48d540e0-ce0a-41e7-a219-b72e92edb43e)|
+|![Bullish Inverse Head And Shoulders](https://github.com/user-attachments/assets/1d6222af-ff9c-4823-90a3-86308ec6ec5f)|![Bullish Ascending Triangle](https://github.com/user-attachments/assets/a1ddf9c4-292d-437b-b8a1-7e5a2c39c831)|![Bullish Falling Wedge](https://github.com/user-attachments/assets/48d540e0-ce0a-41e7-a219-b72e92edb43e)|
 
 | Bullish Bull Flags Pennants | Bullish Ascending Price Channel | Bullish Rounding Bottom Pattern |
 | :-------------: | :-------------: | :-------------: |
