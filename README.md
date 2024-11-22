@@ -47,8 +47,9 @@ Solution is using:
 | :-------------: | :-------------: | :-------------: |
 |![Bullish Bull Flags Pennants](https://github.com/user-attachments/assets/63ff1592-78e2-4d1d-b27f-013caf52ca7f)|![Bullish Ascending Price Channel](https://github.com/user-attachments/assets/716e00b7-c18d-47d0-b9be-0f858f7c2eb8)|![Bullish Rounding Bottom Pattern](https://github.com/user-attachments/assets/d4fc4fc9-b928-4334-835c-2b7d0428993f)|
 
-Continuation Diamond Formation
-Continuation Symmetric Triangle
+| Continuation Diamond Formation | Continuation Symmetric Triangle |
+| :-------------: | :-------------: |
+|![Continuation Diamond Formation](https://github.com/user-attachments/assets/a5e10c6b-b9d2-4dd3-a978-a7d5b3d8eba8)|![Continuation Symmetric Triangle](https://github.com/user-attachments/assets/956a3587-3f86-47f0-ae5a-2de62cb0b3c7)|
 
 ## Pattern list
 | Bearish 2 Crows | Bearish 3 BlackCrows | Bearish 3 Inside Down | Bearish 3 Outside Down | Bearish 3 Line Strike | Bearish Advance Block | Bearish Belt Hold |
