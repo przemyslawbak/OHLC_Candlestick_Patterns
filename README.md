@@ -35,20 +35,17 @@ Solution is using:
 | :-------------: | :-------------: | :-------------: |
 |![Bearish Descending Price Channel](https://github.com/user-attachments/assets/b8784228-c237-47c1-8e54-84701d346553)|![Bearish Inverse Cup And Handle](https://github.com/user-attachments/assets/91df0bce-8f73-41b2-acad-736a4d28b618)|![Bearish Rounding Top Pattern](https://github.com/user-attachments/assets/264209b0-fae8-45d4-94ab-e0cfa5a6fb0a)|
 
-
-
-
 | Bullish Double Bottoms | Bullish Triple Bottoms | Bullish Cup And Handle |
 | :-------------: | :-------------: | :-------------: |
-|
+|![Bullish Double Bottoms](https://github.com/user-attachments/assets/0d59b7da-9e1d-482f-9cc2-491e8e1b5df3)|![Bullish Triple Bottoms](https://github.com/user-attachments/assets/f2fd64dc-76ea-4916-bf2b-c238ce0c2711)|![Bullish Cup And Handle](https://github.com/user-attachments/assets/25741ec4-2d0f-49f3-bebd-473b037355fc)|
 
 | Bullish Inverse Head And Shoulders | Bullish Ascending Triangle | Bullish Falling Wedge |
 | :-------------: | :-------------: | :-------------: |
-|
+|![Bullish Inverse Head And Shoulders](https://github.com/user-attachments/assets/1d6222af-ff9c-4823-90a3-86308ec6ec5f)|![Bullish Ascending Triangle](https://github.com/user-attachments/assets/718d39d3-fe28-4dcc-a17b-53c10f73d347)|![Bullish Falling Wedge](https://github.com/user-attachments/assets/48d540e0-ce0a-41e7-a219-b72e92edb43e)|
 
 | Bullish Bull Flags Pennants | Bullish Ascending Price Channel | Bullish Rounding Bottom Pattern |
 | :-------------: | :-------------: | :-------------: |
-|
+|![Bullish Bull Flags Pennants](https://github.com/user-attachments/assets/63ff1592-78e2-4d1d-b27f-013caf52ca7f)|![Bullish Ascending Price Channel](https://github.com/user-attachments/assets/716e00b7-c18d-47d0-b9be-0f858f7c2eb8)|![Bullish Rounding Bottom Pattern](https://github.com/user-attachments/assets/d4fc4fc9-b928-4334-835c-2b7d0428993f)|
 
 Continuation Diamond Formation
 Continuation Symmetric Triangle
