@@ -2,7 +2,7 @@
 {
     public class AccuracyObject
     {
-        public decimal ToAverageClose { get; set; }
-        public decimal ToEndClose { get; set; }
+        public decimal AccuracyToAverageClose { get; set; }
+        public decimal AccuracyToEndClose { get; set; }
     }
 }

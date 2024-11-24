@@ -14,25 +14,33 @@ namespace OHLC_Candlestick_Patterns
 
             var signalsList = _patterns.GetPatternsSignalsList(patternName);
 
-            return GetAccuracyResults(signalsList);
-
-            //todo:
-            //OK - for each signal get close value
-            //OK - create accuracy model containing AVER and END results props
-
-            //todo:
-            //OK - for each signal get close value
-            //OK - create accuracy model containing AVER and END results props
+            return GetAccuracyResults(signalsList, patternName);
         }
 
-        private AccuracyObject GetAccuracyResults(List<OhlcvObject> signalsList)
+        private AccuracyObject GetAccuracyResults(List<OhlcvObject> signalsList, string patternName)
         {
+            var multiplier = patternName.Contains("Bullish") ? 1M : patternName.Contains("Bearish") ? -1M : 0M;
+
+            if (signalsList.Where(x => x.Signal == true).Count() == 0 || multiplier == 0M)
+            {
+                return new AccuracyObject()
+                {
+                    AccuracyToAverageClose = 0,
+                    AccuracyToEndClose = 0,
+                };
+            }
+
+            var lastClose = signalsList.Last().Close;
+            List<decimal> accuracyEndResuts = new List<decimal>();
+            List<decimal> accuracyAverResuts = new List<decimal>();
+
             for (int i = 0; i < signalsList.Count; i++)
             {
                 if (signalsList[i].Signal)
                 {
+                    accuracyEndResuts.Add((lastClose - signalsList[i].Close) * multiplier);
+
                     //- for each signal get average price after the signal minus signal close value -> result
-                    //- for each signal get list end close minus signal close value -> result
                 }
             }
 
