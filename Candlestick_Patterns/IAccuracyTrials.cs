@@ -11,6 +11,6 @@ namespace OHLC_Candlestick_Patterns
         /// <param name="dataOhlcv">OHLC object list</param>
         /// <param name="patternName">Selected pattern</param>
         /// <returns>OHLC list with updated signal values</returns>
-        List<OhlcvObject> GetPatternAccuracy(List<OhlcvObject> dataOhlcv, string patternName);
+        decimal GetPatternAccuracy(List<OhlcvObject> dataOhlcv, string patternName);
     }
 }
