@@ -74,7 +74,7 @@ namespace Candlestick_Patterns
                     {
                         if (SecondCheck(points, i, pattern, dateList, fibbPattern))
                         {
-                            return _support.AddPointsToList(points, i, dateList, startNumber);
+                            _support.AddPointsToList(points, i, dateList, startNumber);
                         }
                     }
                 }
