@@ -6,7 +6,6 @@
         IFormations _formations;
         IFibonacci _fibonacci;
 
-
         public int GetPatternsBearishSignalsCount(List<OhlcvObject> dataOhlcv)
         {
             _patterns = new Patterns(dataOhlcv);

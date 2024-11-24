@@ -66,6 +66,14 @@
         /// <returns>List of OHLC lists with updated signal values</returns>
         List<List<OhlcvObject>> GetPatternsOhlcvWithSignals(List<OhlcvObject> dataOhlcv, string[] patternNames);
 
+        /// <summary>
+        /// Tests selected pattern accuracy in given data
+        /// </summary>
+        /// <param name="dataOhlcv">OHLC object list</param>
+        /// <param name="patternName">Selected pattern</param>
+        /// <returns>OHLC list with updated signal values</returns>
+        List<OhlcvObject> GetPatternAccuracy(List<OhlcvObject> dataOhlcv, string patternName);
+
 
         //formations
 
