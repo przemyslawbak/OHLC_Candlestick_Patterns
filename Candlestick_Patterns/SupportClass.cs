@@ -8,6 +8,7 @@ namespace OHLC_Candlestick_Patterns
         decimal GetRetracement(List<ZigZagObject> points, int i, int number1, int number2, int number3);
         List<decimal> PointsRange(decimal point, decimal _priceMovement);
         List<ZigZagObject> AddPointsToList(List<ZigZagObject> points, int i, List<decimal> dateList, int number);
+        bool CheckIfRetracemntIsInRange(List<decimal> range1, List<decimal> range2, decimal retracement);
     }
 
     internal class SupportClass : ISupportClass
@@ -33,6 +34,16 @@ namespace OHLC_Candlestick_Patterns
             var retracement = (Math.Abs(points[i - number1].Close - points[i - number2].Close) * 100) / (Math.Abs(points[i - number2].Close - points[i - number3].Close));
 
             return retracement;
+        }
+
+
+        public bool CheckIfRetracemntIsInRange(List<decimal> range1, List<decimal> range2, decimal retracement)
+        {
+            if (range1.Min() < retracement && range2.Max() > retracement)
+            {
+                return true;
+            }
+            return false;
         }
 
         public List<ZigZagObject> AddPointsToList(List<ZigZagObject> points, int i, List<decimal> dateList, int number)

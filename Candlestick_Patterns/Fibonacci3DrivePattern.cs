@@ -29,7 +29,7 @@ namespace OHLC_Candlestick_Patterns
                         checkB = CheckPoint(points[i - 2].Close, pointB, _priceMovement, checkB = false);
                         checkA = CheckPoint(points[i - 3].Close, pointA, _priceMovement, checkA = false);
 
-                        if (checkD = true && checkC && checkB && checkA)
+                        if (checkD && checkC && checkB && checkA)
                         {
                             for (int x = -5; x < 1; x++)
                             {
