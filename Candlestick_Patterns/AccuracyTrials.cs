@@ -17,6 +17,15 @@ namespace OHLC_Candlestick_Patterns
             return GetAccuracyResults(signalsList, patternName);
         }
 
+        public AccuracyObject GetPatternAccuracy(List<OhlcvObject> dataOhlcv, string patternName, int candlesAhead)
+        {
+            _patterns = new Patterns(dataOhlcv);
+
+            var signalsList = _patterns.GetPatternsSignalsList(patternName);
+
+            return GetAccuracyResults(signalsList, patternName);
+        }
+
         private AccuracyObject GetAccuracyResults(List<OhlcvObject> signalsList, string patternName)
         {
             var multiplier = patternName.Contains("Bullish") ? 1M : patternName.Contains("Bearish") ? -1M : 0M;
@@ -38,16 +47,18 @@ namespace OHLC_Candlestick_Patterns
             {
                 if (signalsList[i].Signal)
                 {
-                    accuracyEndResuts.Add((lastClose - signalsList[i].Close) * multiplier);
+                    accuracyEndResuts.Add((lastClose - signalsList[i].Close) * multiplier / signalsList[i].Close * 100);
 
                     var averCloseAfterSignal = signalsList.Skip(i);
-                    accuracyAverResuts.Add((averCloseAfterSignal.Average(x => x.Close) - signalsList[i].Close) * multiplier);
+                    accuracyAverResuts.Add((averCloseAfterSignal.Average(x => x.Close) - signalsList[i].Close) * multiplier / signalsList[i].Close * 100);
                 }
             }
 
-            //- sum all results
-
-            return new AccuracyObject();
+            return new AccuracyObject()
+            {
+                AccuracyToAverageClose = accuracyAverResuts.Average(),
+                AccuracyToEndClose = accuracyEndResuts.Average(),
+            };
         }
     }
 }
