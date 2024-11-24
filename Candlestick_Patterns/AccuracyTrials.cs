@@ -40,7 +40,8 @@ namespace OHLC_Candlestick_Patterns
                 {
                     accuracyEndResuts.Add((lastClose - signalsList[i].Close) * multiplier);
 
-                    //- for each signal get average price after the signal minus signal close value -> result
+                    var averCloseAfterSignal = signalsList.Skip(i);
+                    accuracyAverResuts.Add((averCloseAfterSignal.Average(x => x.Close) - signalsList[i].Close) * multiplier);
                 }
             }
 
