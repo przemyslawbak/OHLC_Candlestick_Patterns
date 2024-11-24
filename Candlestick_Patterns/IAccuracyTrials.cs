@@ -9,7 +9,7 @@ namespace OHLC_Candlestick_Patterns
         /// </summary>
         /// <param name="dataOhlcv">OHLC object list</param>
         /// <param name="patternName">Selected pattern</param>
-        /// <returns>OHLC list with updated signal values</returns>
-        decimal GetPatternAccuracy(List<OhlcvObject> dataOhlcv, string patternName);
+        /// <returns>AccuracyObject containing values comparing to AVER and END closing</returns>
+        AccuracyObject GetPatternAccuracy(List<OhlcvObject> dataOhlcv, string patternName);
     }
 }
