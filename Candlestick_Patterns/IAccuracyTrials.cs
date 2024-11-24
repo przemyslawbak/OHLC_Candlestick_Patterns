@@ -2,7 +2,7 @@
 
 namespace OHLC_Candlestick_Patterns
 {
-    internal interface IAccuracyTrials
+    public interface IAccuracyTrials
     {
 
         /// <summary>

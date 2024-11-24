@@ -1,8 +1,10 @@
 ﻿using Candlestick_Patterns;
 using Newtonsoft.Json;
+using OHLC_Candlestick_Patterns;
 
 string json = string.Empty;
 ISignals _signals = new Signals();
+IAccuracyTrials _accuracy = new AccuracyTrials();
 var client = new HttpClient();
 var url = "https://gist.githubusercontent.com/przemyslawbak/c90528453d512a8d85ad2deea5cf6ad2/raw/aapl_us_d.csv";
 
@@ -22,6 +24,8 @@ var dataOhlcv = JsonConvert.DeserializeObject<List<OhlcvObject>>(json).Select(x 
     Close = x.Close,
     Volume = x.Volume,
 }).Reverse().ToList();
+
+var acc = _accuracy.GetPatternAccuracy(dataOhlcv, "Bearish Belt Hold");
 
 var fibSingle = _signals.GetFibonacciSignalsCount(dataOhlcv, "Bearish3Drive");
 var otherFibSingle = _signals.GetFibonacciSignalsCount(dataOhlcv, "Bullish3Drive");
