@@ -25,7 +25,8 @@ var dataOhlcv = JsonConvert.DeserializeObject<List<OhlcvObject>>(json).Select(x 
     Volume = x.Volume,
 }).Reverse().ToList();
 
-var acc = _accuracy.GetPatternAccuracy(dataOhlcv, "Bullish3InsideUp");
+var acc1 = _accuracy.GetPatternAccuracy(dataOhlcv, "Bullish3InsideUp");
+var acc2 = _accuracy.GetPatternAccuracy(dataOhlcv, "Bullish3InsideUp", 30);
 
 var fibSingle = _signals.GetFibonacciSignalsCount(dataOhlcv, "Bearish3Drive");
 var otherFibSingle = _signals.GetFibonacciSignalsCount(dataOhlcv, "Bullish3Drive");
