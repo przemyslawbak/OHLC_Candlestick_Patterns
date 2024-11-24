@@ -3,7 +3,7 @@
    internal interface IFormations
     {
         List<string> GetFormationsAllMethodNames();
-        List<ZigZagObject> GetFormationsSignalsQuantities(string patternName);
+        List<ZigZagObject> GetFormationsSignalsList(string patternName);
         int GetFormationsSignalsCount(string patternName);
     }
 }

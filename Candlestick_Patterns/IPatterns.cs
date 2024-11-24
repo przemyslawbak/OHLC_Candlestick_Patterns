@@ -3,7 +3,7 @@
     internal interface IPatterns
     {
         List<string> GetAllMethodNames();
-        List<OhlcvObject> GetPatternsSignalsQuantities(string patternName);
+        List<OhlcvObject> GetPatternsSignalsList(string patternName);
         int GetSignalsCount(string patternName);
     }
 }

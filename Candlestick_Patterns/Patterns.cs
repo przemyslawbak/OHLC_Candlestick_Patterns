@@ -1533,7 +1533,7 @@ namespace Candlestick_Patterns
             return data;
         }
 
-        public List<OhlcvObject> GetPatternsSignalsQuantities(string patternName)
+        public List<OhlcvObject> GetPatternsSignalsList(string patternName)
         {
             var methodName = patternName.Trim().Replace(" ", "");
             Type thisType = this.GetType();
@@ -1552,7 +1552,7 @@ namespace Candlestick_Patterns
         public int GetSignalsCount(string patternName)
         {
             var methodName = patternName.Trim().Replace(" ", "");
-            return GetPatternsSignalsQuantities(methodName).Where(x => x.Signal == true).Count();
+            return GetPatternsSignalsList(methodName).Where(x => x.Signal == true).Count();
         }
 
         public List<string> GetAllMethodNames()

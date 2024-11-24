@@ -4,9 +4,8 @@ namespace OHLC_Candlestick_Patterns
 {
     public interface IAccuracyTrials
     {
-
         /// <summary>
-        /// Tests selected pattern accuracy in given data
+        /// Tests selected pattern accuracy in given data comparing to average close prices after signal appears
         /// </summary>
         /// <param name="dataOhlcv">OHLC object list</param>
         /// <param name="patternName">Selected pattern</param>

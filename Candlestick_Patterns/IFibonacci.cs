@@ -3,7 +3,7 @@
    internal interface IFibonacci
    {
        List<string> GetFibonacciAllMethodNames();
-       List<ZigZagObject> GetFibonacciSignalsQuantities(string patternName);
+       List<ZigZagObject> GetFibonacciSignalsList(string patternName);
        int GetFibonacciSignalsCount(string patternName);
    }
 }

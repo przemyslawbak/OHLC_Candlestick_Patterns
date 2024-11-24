@@ -42,7 +42,7 @@
         {
             _patterns = new Patterns(dataOhlcv);
 
-            return _patterns.GetPatternsSignalsQuantities(patternName);
+            return _patterns.GetPatternsSignalsList(patternName);
         }
 
         public List<List<OhlcvObject>> GetPatternsOhlcvWithSignals(List<OhlcvObject> dataOhlcv, string[] patternNames)
@@ -53,7 +53,7 @@
 
             foreach (var methodName in patternNames)
             {
-                list.Add(_patterns.GetPatternsSignalsQuantities(methodName));
+                list.Add(_patterns.GetPatternsSignalsList(methodName));
             }
 
             return list;

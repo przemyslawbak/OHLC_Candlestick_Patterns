@@ -355,7 +355,7 @@ namespace Candlestick_Patterns
             return methods;
         }
 
-        public List<ZigZagObject> GetFibonacciSignalsQuantities(string patternName)
+        public List<ZigZagObject> GetFibonacciSignalsList(string patternName)
         {
             var methodName = patternName.Trim().Replace(" ", "");
             Type thisType = this.GetType();
@@ -374,7 +374,7 @@ namespace Candlestick_Patterns
         public int GetFibonacciSignalsCount(string patternName)
         {
             var methodName = patternName.Trim().Replace(" ", "");
-            return GetFibonacciSignalsQuantities(methodName).Where(x => x.Signal == true).Count();
+            return GetFibonacciSignalsList(methodName).Where(x => x.Signal == true).Count();
         }
     }
 }
