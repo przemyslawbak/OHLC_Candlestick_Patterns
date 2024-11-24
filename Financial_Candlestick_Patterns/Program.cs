@@ -25,13 +25,20 @@ var dataOhlcv = JsonConvert.DeserializeObject<List<OhlcvObject>>(json).Select(x 
     Volume = x.Volume,
 }).Reverse().ToList();
 
-var acc1 = _accuracy.GetPatternAccuracy(dataOhlcv, "Bullish3InsideUp");
-var acc2 = _accuracy.GetPatternAccuracy(dataOhlcv, "Bullish3InsideUp", 30);
+//ACCURACY TRIALS
 
-var fibSingle = _signals.GetFibonacciSignalsCount(dataOhlcv, "Bearish3Drive");
-var otherFibSingle = _signals.GetFibonacciSignalsCount(dataOhlcv, "Bullish3Drive");
+var accuracyForSelectedPatternToTheEndOfDataSet = _accuracy.GetAverPercentPatternAccuracy(dataOhlcv, "Bullish 3 Inside Up");
+var accuracyForSelectedPattern30CandlesAhead = _accuracy.GetAverPercentPatternAccuracy(dataOhlcv, "Bullish 3 Inside Up", 30);
 
-var formationsSignalsCountSingle = _signals.GetFormationSignalsCount(dataOhlcv, "BearishDoubleTops");
+var accuracyForSelectedFormationToTheEndOfDataSet = _accuracy.GetAverPercentFormationAccuracy(dataOhlcv, "Bullish 3 Inside Up");
+var accuracyForSelectedFormation30CandlesAhead = _accuracy.GetAverPercentFormationAccuracy(dataOhlcv, "Bullish 3 Inside Up", 30);
+
+//SIGNALS
+
+var fibSingle = _signals.GetFibonacciSignalsCount(dataOhlcv, "Bearish 3 Drive");
+var otherFibSingle = _signals.GetFibonacciSignalsCount(dataOhlcv, "Bullish 3 Drive");
+
+var formationsSignalsCountSingle = _signals.GetFormationSignalsCount(dataOhlcv, "Bearish Double Tops");
 
 var bullishCount = _signals.GetPatternsBullishSignalsCount(dataOhlcv);
 Console.WriteLine("Bullish signals count: {0}", bullishCount); //Bullish signals count:

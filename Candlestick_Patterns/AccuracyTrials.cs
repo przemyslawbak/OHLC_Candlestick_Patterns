@@ -8,7 +8,7 @@ namespace OHLC_Candlestick_Patterns
         IFormations _formations;
         IFibonacci _fibonacci;
 
-        public AccuracyObject GetPatternAccuracy(List<OhlcvObject> dataOhlcv, string patternName)
+        public AccuracyObject GetAverPercentPatternAccuracy(List<OhlcvObject> dataOhlcv, string patternName)
         {
             _patterns = new Patterns(dataOhlcv);
 
@@ -17,18 +17,40 @@ namespace OHLC_Candlestick_Patterns
             return GetAccuracyResults(signalsList, patternName);
         }
 
-        public AccuracyObject GetPatternAccuracy(List<OhlcvObject> dataOhlcv, string patternName, int candlesAhead)
+        public AccuracyObject GetAverPercentPatternAccuracy(List<OhlcvObject> dataOhlcv, string patternName, int candlesAheadQty)
         {
             _patterns = new Patterns(dataOhlcv);
 
             var signalsList = _patterns.GetPatternsSignalsList(patternName);
 
-            return GetAccuracyResultsForCandlesAhead(signalsList, patternName, candlesAhead);
+            return GetAccuracyResultsForNCandlesAhead(signalsList, patternName, candlesAheadQty);
         }
 
-        private AccuracyObject GetAccuracyResultsForCandlesAhead(List<OhlcvObject> signalsList, string patternName, int candlesAhead)
+        public AccuracyObject GetAverPercentFormationAccuracy(List<OhlcvObject> dataOhlcv, string formationName)
         {
-            var multiplier = patternName.Contains("Bullish") ? 1M : patternName.Contains("Bearish") ? -1M : 0M;
+            _formations = new Formations(dataOhlcv);
+
+            var signalsList = _formations.GetFormationsSignalsList(formationName);
+
+            return new AccuracyObject();
+
+            //return GetAccuracyResults(signalsList, formationName);
+        }
+
+        public AccuracyObject GetAverPercentFormationAccuracy(List<OhlcvObject> dataOhlcv, string formationName, int candlesAheadQty)
+        {
+            _formations = new Formations(dataOhlcv);
+
+            var signalsList = _formations.GetFormationsSignalsList(formationName);
+
+            return new AccuracyObject();
+
+            //return GetAccuracyResultsForNCandlesAhead(signalsList, formationName, candlesAheadQty);
+        }
+
+        private AccuracyObject GetAccuracyResultsForNCandlesAhead(List<OhlcvObject> signalsList, string name, int candlesAheadQty)
+        {
+            var multiplier = name.Contains("Bullish") ? 1M : name.Contains("Bearish") ? -1M : 0M;
 
             if (signalsList.Where(x => x.Signal == true).Count() == 0 || multiplier == 0M)
             {
@@ -47,10 +69,10 @@ namespace OHLC_Candlestick_Patterns
                 var lastIndex = signalsList.Count() - 1;
                 var lastClose = signalsList.Last().Close;
 
-                if (i + candlesAhead < lastIndex)
+                if (i + candlesAheadQty < lastIndex)
                 {
-                    lastClose = signalsList[i + candlesAhead].Close;
-                    lastIndex = i + candlesAhead;
+                    lastClose = signalsList[i + candlesAheadQty].Close;
+                    lastIndex = i + candlesAheadQty;
                 }
 
                 if (signalsList[i].Signal)
@@ -69,9 +91,9 @@ namespace OHLC_Candlestick_Patterns
             };
         }
 
-        private AccuracyObject GetAccuracyResults(List<OhlcvObject> signalsList, string patternName)
+        private AccuracyObject GetAccuracyResults(List<OhlcvObject> signalsList, string name)
         {
-            var multiplier = patternName.Contains("Bullish") ? 1M : patternName.Contains("Bearish") ? -1M : 0M;
+            var multiplier = name.Contains("Bullish") ? 1M : name.Contains("Bearish") ? -1M : 0M;
 
             if (signalsList.Where(x => x.Signal == true).Count() == 0 || multiplier == 0M)
             {
