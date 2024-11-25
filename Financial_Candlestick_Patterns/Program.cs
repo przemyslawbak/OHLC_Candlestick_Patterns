@@ -33,6 +33,9 @@ var accuracyForSelectedPattern30CandlesAhead = _accuracy.GetAverPercentPatternAc
 var accuracyForSelectedFormationToTheEndOfDataSet = _accuracy.GetAverPercentFormationAccuracy(dataOhlcv, "Bearish Double Tops");
 var accuracyForSelectedFormation30CandlesAhead = _accuracy.GetAverPercentFormationAccuracy(dataOhlcv, "Bearish Double Tops", 30);
 
+var accuracyForSelectedFiboToTheEndOfDataSet = _accuracy.GetAverPercentFiboAccuracy(dataOhlcv, "Bearish 3 Drive");
+var accuracyForSelectedFibo30CandlesAhead = _accuracy.GetAverPercentFiboAccuracy(dataOhlcv, "Bearish 3 Drive", 30);
+
 //SIGNALS
 
 var fibSingle = _signals.GetFibonacciSignalsCount(dataOhlcv, "Bearish 3 Drive");

@@ -26,6 +26,44 @@ namespace OHLC_Candlestick_Patterns
             return GetAccuracyResultsForNCandlesAhead(signalsList, patternName, candlesAheadQty);
         }
 
+        public AccuracyObject GetAverPercentFiboAccuracy(List<OhlcvObject> dataOhlcv, string fiboName)
+        {
+            _fibonacci = new Fibonacci(dataOhlcv);
+
+            var signalsList = _fibonacci.GetFibonacciSignalsList(fiboName);
+
+            var ohlcvList = signalsList.Select(s => new OhlcvObject()
+            {
+                Close = s.Close,
+                High = s.Close,
+                Low = s.Close,
+                Open = s.Close,
+                Signal = s.Signal,
+                Volume = 0M,
+            }).ToList();
+
+            return GetAccuracyResults(ohlcvList, fiboName);
+        }
+
+        public AccuracyObject GetAverPercentFiboAccuracy(List<OhlcvObject> dataOhlcv, string fiboName, int candlesAheadQty)
+        {
+            _fibonacci = new Fibonacci(dataOhlcv);
+
+            var signalsList = _fibonacci.GetFibonacciSignalsList(fiboName);
+
+            var ohlcvList = signalsList.Select(s => new OhlcvObject()
+            {
+                Close = s.Close,
+                High = s.Close,
+                Low = s.Close,
+                Open = s.Close,
+                Signal = s.Signal,
+                Volume = 0M,
+            }).ToList();
+
+            return GetAccuracyResultsForNCandlesAhead(ohlcvList, fiboName, candlesAheadQty);
+        }
+
         public AccuracyObject GetAverPercentFormationAccuracy(List<OhlcvObject> dataOhlcv, string formationName)
         {
             _formations = new Formations(dataOhlcv);
