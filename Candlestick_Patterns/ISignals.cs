@@ -1,4 +1,6 @@
-﻿namespace Candlestick_Patterns
+﻿using Candlestick_Patterns;
+
+namespace Candlestick_Patterns
 {
     public interface ISignals
     {
@@ -8,7 +10,6 @@
         /// <param name="dataOhlcv">OHLC object list</param>
         /// <returns>Bullish signals count integer</returns>
         int GetPatternsBullishSignalsCount(List<OhlcvObject> dataOhlcv);
-
 
         /// <summary>
         /// Counting bearish signals that appear in the OHLC list
@@ -66,10 +67,20 @@
         /// <returns>List of OHLC lists with updated signal values</returns>
         List<List<OhlcvObject>> GetPatternsOhlcvWithSignals(List<OhlcvObject> dataOhlcv, string[] patternNames);
 
-
-        //formations
-
+        /// <summary>
+        /// Counts the number of formations appearing in the OHLC list for a selected single formation
+        /// </summary>
+        /// <param name="dataOhlcv">OHLC object list</param>
+        /// <param name="patternName">Selected formation</param>
+        /// <returns>Signals count integer number</returns>
         int GetFormationSignalsCount(List<OhlcvObject> dataOhlcv, string patternName);
+
+        /// <summary>
+        /// Counts the number of Fibonacci patterns appearing in the OHLC list for a selected single Fibonacci pattern
+        /// </summary>
+        /// <param name="dataOhlcv">OHLC object list</param>
+        /// <param name="patternName">Selected Fibonacci pattern</param>
+        /// <returns>Signals count integer number</returns>
         int GetFibonacciSignalsCount(List<OhlcvObject> dataOhlcv, string patternName);
     }
 }
