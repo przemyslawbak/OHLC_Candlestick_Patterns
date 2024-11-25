@@ -32,9 +32,17 @@ namespace OHLC_Candlestick_Patterns
 
             var signalsList = _formations.GetFormationsSignalsList(formationName);
 
-            return new AccuracyObject();
+            var ohlcvList = signalsList.Select(s => new OhlcvObject() 
+            {
+                Close = s.Close,
+                High = s.Close, 
+                Low = s.Close, 
+                Open = s.Close, 
+                Signal = s.Signal, 
+                Volume = 0M,
+            }).ToList();
 
-            //return GetAccuracyResults(signalsList, formationName);
+            return GetAccuracyResults(ohlcvList, formationName);
         }
 
         public AccuracyObject GetAverPercentFormationAccuracy(List<OhlcvObject> dataOhlcv, string formationName, int candlesAheadQty)
@@ -43,11 +51,20 @@ namespace OHLC_Candlestick_Patterns
 
             var signalsList = _formations.GetFormationsSignalsList(formationName);
 
-            return new AccuracyObject();
+            var ohlcvList = signalsList.Select(s => new OhlcvObject()
+            {
+                Close = s.Close,
+                High = s.Close,
+                Low = s.Close,
+                Open = s.Close,
+                Signal = s.Signal,
+                Volume = 0M,
+            }).ToList();
 
-            //return GetAccuracyResultsForNCandlesAhead(signalsList, formationName, candlesAheadQty);
+            return GetAccuracyResultsForNCandlesAhead(ohlcvList, formationName, candlesAheadQty);
         }
 
+        //todo: DRY
         private AccuracyObject GetAccuracyResultsForNCandlesAhead(List<OhlcvObject> signalsList, string name, int candlesAheadQty)
         {
             var multiplier = name.Contains("Bullish") ? 1M : name.Contains("Bearish") ? -1M : 0M;
@@ -91,6 +108,7 @@ namespace OHLC_Candlestick_Patterns
             };
         }
 
+        //todo: DRY
         private AccuracyObject GetAccuracyResults(List<OhlcvObject> signalsList, string name)
         {
             var multiplier = name.Contains("Bullish") ? 1M : name.Contains("Bearish") ? -1M : 0M;

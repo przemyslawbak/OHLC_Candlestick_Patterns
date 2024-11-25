@@ -30,8 +30,8 @@ var dataOhlcv = JsonConvert.DeserializeObject<List<OhlcvObject>>(json).Select(x 
 var accuracyForSelectedPatternToTheEndOfDataSet = _accuracy.GetAverPercentPatternAccuracy(dataOhlcv, "Bullish 3 Inside Up");
 var accuracyForSelectedPattern30CandlesAhead = _accuracy.GetAverPercentPatternAccuracy(dataOhlcv, "Bullish 3 Inside Up", 30);
 
-var accuracyForSelectedFormationToTheEndOfDataSet = _accuracy.GetAverPercentFormationAccuracy(dataOhlcv, "Bullish 3 Inside Up");
-var accuracyForSelectedFormation30CandlesAhead = _accuracy.GetAverPercentFormationAccuracy(dataOhlcv, "Bullish 3 Inside Up", 30);
+var accuracyForSelectedFormationToTheEndOfDataSet = _accuracy.GetAverPercentFormationAccuracy(dataOhlcv, "Bearish Double Tops");
+var accuracyForSelectedFormation30CandlesAhead = _accuracy.GetAverPercentFormationAccuracy(dataOhlcv, "Bearish Double Tops", 30);
 
 //SIGNALS
 
