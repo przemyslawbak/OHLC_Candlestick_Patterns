@@ -26,6 +26,24 @@ Additionally:
   - Newtonsoft.Json in Console presentation project.
   - ScottPlot in Console presentation project.
 
+## Fibonacci list
+
+| Bullish 3 Drive | Bullish 3 Extension | Bullish 3 Retracement |
+| :-------------: | :-------------: | :-------------: |
+|
+
+| Bullish Butterfly | Bullish ABCD | Bullish Gartley |
+| :-------------: | :-------------: | :-------------: |
+|
+
+| Bearish 3 Drive | Bearish 3 Extension | Bearish 3 Retracement |
+| :-------------: | :-------------: | :-------------: |
+|
+
+| Bearish Butterfly |Bearish ABCD | Bearish Gartley |
+| :-------------: | :-------------: | :-------------: |
+|
+
 ## Formation list
 
 | Bearish Double Tops | Bearish Triple Tops | Bearish Head And Shoulders |
