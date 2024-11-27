@@ -36,17 +36,18 @@ namespace Candlestick_Patterns
 
         internal Fibonacci(List<OhlcvObject> dataOhlcv)
         {
-            if (isDataLoaded == false)
-            {
-                isDataLoaded = true;
-                _dataOhlcv = dataOhlcv;
-                _data = SetPeaksVallyes.GetCloseAndSignalsData(dataOhlcv);
-                _peaksFromZigZag = SetPeaksVallyes.PeaksFromZigZag(_data);
-                _points = SetPeaksVallyes.GetPoints(_peaksFromZigZag);
-                _fibError = 0.1M; // in all Fibonacci ratios, errors of no more than 10% of the ideal value are allowed.  
-                _drivePattern = new Fibonacci3DrivePattern();
-                _support = new SupportClass();
-            }
+            _dataOhlcv = dataOhlcv;
+            _data = SetPeaksVallyes.GetCloseAndSignalsData(dataOhlcv);
+            _peaksFromZigZag = SetPeaksVallyes.PeaksFromZigZag(_data, 0.002M);
+            _points = SetPeaksVallyes.GetPoints(_peaksFromZigZag);
+            _fibError = 0.1M; // in all Fibonacci ratios, errors of no more than 10% of the ideal value are allowed.  
+            _drivePattern = new Fibonacci3DrivePattern();
+            _support = new SupportClass();
+        }
+
+        public Fibonacci(List<OhlcvObject> dataOhlcv, decimal zigZagParam)
+        {
+            _peaksFromZigZag = SetPeaksVallyes.PeaksFromZigZag(_data, zigZagParam);
         }
 
         private List<ZigZagObject> BearishGartley() => Pattern("bearish", _points, _fibError, "gartleyPattern", 4);

@@ -4,7 +4,7 @@ namespace OHLC_Candlestick_Patterns
 {
     internal  class SetPeaksVallyes
     {
-        static decimal _priceMovement { get { return 0.002M; }}
+        static decimal _priceMovementTenthOfPercent =  0.002M; //default value
         
         internal static List<ZigZagObject> GetCloseAndSignalsData(List<OhlcvObject> data)
         {
@@ -24,8 +24,9 @@ namespace OHLC_Candlestick_Patterns
         }
 
 
-        internal static List<decimal> PeaksFromZigZag(List<ZigZagObject> _data)
+        internal static List<decimal> PeaksFromZigZag(List<ZigZagObject> _data, decimal zigZagParam)
         {
+            _priceMovementTenthOfPercent = zigZagParam;
             var change = 0M;
             var zigZagList = new List<decimal>();
             var dataZigZag = _data.Select(x => new ZigZagObject() { Close = x.Close, Signal = false }).ToList();
@@ -34,12 +35,12 @@ namespace OHLC_Candlestick_Patterns
             {
                 if (zigZagList.Count == 0)
                 {
-                    change = _data[0].Close * _priceMovement;
+                    change = _data[0].Close * _priceMovementTenthOfPercent;
                     zigZagList.Add(_data[0].Close);
                 }
                 else
                 {
-                    change = zigZagList.Last() * _priceMovement;
+                    change = zigZagList.Last() * _priceMovementTenthOfPercent;
                 }
 
                 var lastPoint = zigZagList.Last();
@@ -47,7 +48,7 @@ namespace OHLC_Candlestick_Patterns
                 {
                     var point = _data[i].Close;
                     zigZagList.Add((point));
-                    change = point * _priceMovement;
+                    change = point * _priceMovementTenthOfPercent;
                 }
             }
 

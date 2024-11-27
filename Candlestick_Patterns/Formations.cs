@@ -1,4 +1,4 @@
-﻿using System;
+﻿using OHLC_Candlestick_Patterns;
 using System.Reflection;
 
 namespace Candlestick_Patterns
@@ -7,8 +7,6 @@ namespace Candlestick_Patterns
     {
         private readonly List<OhlcvObject> _dataOhlcv;
         private readonly List<ZigZagObject> _data;
-
-        private readonly decimal _priceMovement;
         private readonly decimal _percentageMargin;
         private readonly List<int> _formationsLenght;
         private readonly decimal _minShift;
@@ -18,14 +16,17 @@ namespace Candlestick_Patterns
         public Formations(List<OhlcvObject> dataOhlcv)
         {
             _dataOhlcv = dataOhlcv;
-            _data = GetCloseAndSignalsData(dataOhlcv);
-
-            _priceMovement = 0.002M; 
-            _peaksFromZigZag = PeaksFromZigZag();
+            _data = SetPeaksVallyes.GetCloseAndSignalsData(dataOhlcv);
+            _peaksFromZigZag = SetPeaksVallyes.PeaksFromZigZag(_data, 0.002M);
             _percentageMargin = (decimal) 0.035; 
             _formationsLenght = new List<int>() { 4, 7 };
             _minShift = 2;
             _advance = new List<double>() { 0.10, 0.20 };
+        }
+
+        public Formations(List<OhlcvObject> dataOhlcv, int zigZagParam)
+        {
+            _peaksFromZigZag = SetPeaksVallyes.PeaksFromZigZag(_data, zigZagParam);
         }
 
         private List<ZigZagObject> BearishDoubleTops()
@@ -760,59 +761,7 @@ namespace Candlestick_Patterns
 
             return points;
         }
-
-        private List<decimal> PeaksFromZigZag()
-        {
-            var change = 0M;
-            var zigZagList = new List<decimal>();
-            var dataZigZag = _data.Select(x => new ZigZagObject() {Close = x.Close, Signal = false }).ToList();
-
-            for (int i = 1; i < _data.Count; i++)
-            {
-                if (zigZagList.Count == 0)
-                { 
-                    change = _data[0].Close * _priceMovement;
-                    zigZagList.Add(_data[0].Close);
-                }
-                else
-                {
-                    change = zigZagList.Last() * _priceMovement;
-                }
-
-                var lastPoint = zigZagList.Last();
-                if (_data[i].Close < (lastPoint - change) || _data[i].Close > (lastPoint + change))
-                {
-                    var point = _data[i].Close;
-                    zigZagList.Add((point));
-                    change = point * _priceMovement; 
-                }
-            }
-
-            return GetValleysAndPeaksFromZigZAg(zigZagList);
-        }
-
-        private List<decimal>  GetValleysAndPeaksFromZigZAg(List<decimal> zigZagList)
-        {
-            var allPoints = new List<decimal>();
-
-            bool directionUp = zigZagList[0] <= zigZagList[1];
-            for (int i = 1; i < zigZagList.Count - 1; i++)
-            {
-                if (directionUp && zigZagList[i + 1] < zigZagList[i])
-                {
-                    allPoints.Add(zigZagList[i]);
-                    directionUp = false;
-                }
-                else if (!directionUp && zigZagList[i + 1] > zigZagList[i])
-                {
-                    allPoints.Add(zigZagList[i]);
-                    directionUp = true;
-                }
-            }
-
-            return allPoints;
-        }
-
+        
         public List<string> GetFormationsAllMethodNames()
         {
             List<string> methods = new List<string>();
