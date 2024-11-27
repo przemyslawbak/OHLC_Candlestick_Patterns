@@ -22,7 +22,8 @@ NuGet package can be found here: https://www.nuget.org/packages/OHLC_Candlestick
 Library is using:
   - C# language,
   - .NET 7.0 Standars Class Library.
-Additionally:
+
+Additionally in the solution:
   - Newtonsoft.Json in Console presentation project.
   - ScottPlot in Console presentation project.
 
@@ -30,17 +31,18 @@ Additionally:
 
 | Bullish 3 Drive | Bullish 3 Extension | Bullish 3 Retracement |
 | :-------------: | :-------------: | :-------------: |
-|
+|![Bearish 3 Drive](https://github.com/user-attachments/assets/05891bad-df3a-4122-8b3f-f5b2a1c96004)|||
+
 
 | Bullish Butterfly | Bullish ABCD | Bullish Gartley |
 | :-------------: | :-------------: | :-------------: |
-|
+|![Bearish Butterfly](https://github.com/user-attachments/assets/94d7d614-5291-4d78-987a-4805ecd20107)|<img width="300" height="200" alt="Bearish ABCD" src="https://github.com/user-attachments/assets/9cf875a3-627b-479d-94db-5456b901f69a">|![Bearish Gartley](https://github.com/user-attachments/assets/a9dd2c89-8cf6-408e-a0c3-70700eb80c59)|
 
 | Bearish 3 Drive | Bearish 3 Extension | Bearish 3 Retracement |
 | :-------------: | :-------------: | :-------------: |
 |
 
-| Bearish Butterfly |Bearish ABCD | Bearish Gartley |
+| Bearish Butterfly | Bearish ABCD | Bearish Gartley |
 | :-------------: | :-------------: | :-------------: |
 |
 
