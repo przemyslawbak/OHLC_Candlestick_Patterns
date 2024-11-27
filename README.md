@@ -31,20 +31,24 @@ Additionally in the solution:
 
 | Bullish 3 Drive | Bullish 3 Extension | Bullish 3 Retracement |
 | :-------------: | :-------------: | :-------------: |
-|<img width="300" height="200" alt="Bearish 3 Drive" src="https://github.com/user-attachments/assets/05891bad-df3a-4122-8b3f-f5b2a1c96004">|||
+|<img width="300" height="200" alt="Bullish 3 Drive" src="https://github.com/user-attachments/assets/16bdbd08-6c1b-4d81-898b-baad9a12909a">|||
+
 
 
 | Bullish Butterfly | Bullish ABCD | Bullish Gartley |
 | :-------------: | :-------------: | :-------------: |
-|<img width="300" height="200" alt="Bearish Butterfly" src="https://github.com/user-attachments/assets/94d7d614-5291-4d78-987a-4805ecd20107">|<img width="300" height="200" alt="Bearish ABCD" src="https://github.com/user-attachments/assets/9cf875a3-627b-479d-94db-5456b901f69a">|<img width="300" height="200" alt="Bearish Gartley" src="https://github.com/user-attachments/assets/a9dd2c89-8cf6-408e-a0c3-70700eb80c59">|
+|<img width="300" height="200" alt="Bullish Butterfly" src="https://github.com/user-attachments/assets/a0f451bf-be89-4bb8-abc0-39d04ff69f26">|<img width="300" height="200" alt="Bullish ABCD" src="https://github.com/user-attachments/assets/be1cb075-0fc9-42f1-b83e-14585ffc20d6">|<img width="300" height="200" alt="Bullish Gartley" src="https://github.com/user-attachments/assets/ff7821f8-0426-4dc4-92c9-fbcec2f4e49d">|
+
+
+
 
 | Bearish 3 Drive | Bearish 3 Extension | Bearish 3 Retracement |
 | :-------------: | :-------------: | :-------------: |
-|
+|<img width="300" height="200" alt="Bearish 3 Drive" src="https://github.com/user-attachments/assets/05891bad-df3a-4122-8b3f-f5b2a1c96004">|||
 
 | Bearish Butterfly | Bearish ABCD | Bearish Gartley |
 | :-------------: | :-------------: | :-------------: |
-|
+|<img width="300" height="200" alt="Bearish Butterfly" src="https://github.com/user-attachments/assets/94d7d614-5291-4d78-987a-4805ecd20107">|<img width="300" height="200" alt="Bearish ABCD" src="https://github.com/user-attachments/assets/9cf875a3-627b-479d-94db-5456b901f69a">|<img width="300" height="200" alt="Bearish Gartley" src="https://github.com/user-attachments/assets/a9dd2c89-8cf6-408e-a0c3-70700eb80c59">|
 
 ## Formation list
 
@@ -58,23 +62,23 @@ Additionally in the solution:
 
 | Bearish Descending Price Channel | Bearish Inverse Cup And Handle | Bearish Rounding Top Pattern |
 | :-------------: | :-------------: | :-------------: |
-|![Bearish Descending Price Channel](https://github.com/user-attachments/assets/b8784228-c237-47c1-8e54-84701d346553)|![Bearish Inverse Cup And Handle](https://github.com/user-attachments/assets/91df0bce-8f73-41b2-acad-736a4d28b618)|![Bearish Rounding Top Pattern](https://github.com/user-attachments/assets/264209b0-fae8-45d4-94ab-e0cfa5a6fb0a)|
+|<img width="300" height="200" alt="Bearish Descending Price Channel" src="https://github.com/user-attachments/assets/b8784228-c237-47c1-8e54-84701d346553">|<img width="300" height="200" alt="Bearish Inverse Cup And Handle" src="https://github.com/user-attachments/assets/91df0bce-8f73-41b2-acad-736a4d28b618">|<img width="300" height="200" alt="Bearish Rounding Top Pattern" src="https://github.com/user-attachments/assets/264209b0-fae8-45d4-94ab-e0cfa5a6fb0a">|
 
 | Bullish Double Bottoms | Bullish Triple Bottoms | Bullish Cup And Handle |
 | :-------------: | :-------------: | :-------------: |
-|![Bullish Double Bottoms](https://github.com/user-attachments/assets/0d59b7da-9e1d-482f-9cc2-491e8e1b5df3)|![Bullish Triple Bottoms](https://github.com/user-attachments/assets/f2fd64dc-76ea-4916-bf2b-c238ce0c2711)|![Bullish Cup And Handle](https://github.com/user-attachments/assets/25741ec4-2d0f-49f3-bebd-473b037355fc)|
+|<img width="300" height="200" alt="Bullish Double Bottoms" src="https://github.com/user-attachments/assets/0d59b7da-9e1d-482f-9cc2-491e8e1b5df3">|<img width="300" height="200" alt="Bullish Triple Bottoms" src="https://github.com/user-attachments/assets/f2fd64dc-76ea-4916-bf2b-c238ce0c2711">|<img width="300" height="200" alt="Bullish Cup And Handle" src="https://github.com/user-attachments/assets/25741ec4-2d0f-49f3-bebd-473b037355fc">|
 
 | Bullish Inverse Head And Shoulders | Bullish Ascending Triangle | Bullish Falling Wedge |
 | :-------------: | :-------------: | :-------------: |
-|![Bullish Inverse Head And Shoulders](https://github.com/user-attachments/assets/1d6222af-ff9c-4823-90a3-86308ec6ec5f)|![Bullish Ascending Triangle](https://github.com/user-attachments/assets/a1ddf9c4-292d-437b-b8a1-7e5a2c39c831)|![Bullish Falling Wedge](https://github.com/user-attachments/assets/48d540e0-ce0a-41e7-a219-b72e92edb43e)|
+|<img width="300" height="200" alt="Bullish Inverse Head And Shoulders" src="https://github.com/user-attachments/assets/1d6222af-ff9c-4823-90a3-86308ec6ec5f">|<img width="300" height="200" alt="Bullish Ascending Triangle" src="https://github.com/user-attachments/assets/a1ddf9c4-292d-437b-b8a1-7e5a2c39c831">|<img width="300" height="200" alt="Bullish Falling Wedge" src="https://github.com/user-attachments/assets/48d540e0-ce0a-41e7-a219-b72e92edb43e">|
 
 | Bullish Bull Flags Pennants | Bullish Ascending Price Channel | Bullish Rounding Bottom Pattern |
 | :-------------: | :-------------: | :-------------: |
-|![Bullish Bull Flags Pennants](https://github.com/user-attachments/assets/63ff1592-78e2-4d1d-b27f-013caf52ca7f)|![Bullish Ascending Price Channel](https://github.com/user-attachments/assets/716e00b7-c18d-47d0-b9be-0f858f7c2eb8)|![Bullish Rounding Bottom Pattern](https://github.com/user-attachments/assets/d4fc4fc9-b928-4334-835c-2b7d0428993f)|
+|<img width="300" height="200" alt="Bullish Bull Flags Pennants" src="https://github.com/user-attachments/assets/63ff1592-78e2-4d1d-b27f-013caf52ca7f">|<img width="300" height="200" alt="Bullish Ascending Price Channel" src="https://github.com/user-attachments/assets/716e00b7-c18d-47d0-b9be-0f858f7c2eb8">|<img width="300" height="200" alt="Bullish Rounding Bottom Pattern" src="https://github.com/user-attachments/assets/d4fc4fc9-b928-4334-835c-2b7d0428993f">|
 
 | Continuation Diamond Formation | Continuation Symmetric Triangle |
 | :-------------: | :-------------: |
-|![Continuation Diamond Formation](https://github.com/user-attachments/assets/a5e10c6b-b9d2-4dd3-a978-a7d5b3d8eba8)|![Continuation Symmetric Triangle](https://github.com/user-attachments/assets/956a3587-3f86-47f0-ae5a-2de62cb0b3c7)|
+|<img width="300" height="200" alt="Continuation Diamond Formation" src="https://github.com/user-attachments/assets/a5e10c6b-b9d2-4dd3-a978-a7d5b3d8eba8">|<img width="300" height="200" alt="Continuation Symmetric Triangle" src="https://github.com/user-attachments/assets/956a3587-3f86-47f0-ae5a-2de62cb0b3c7">|
 
 ## Pattern list
 | Bearish 2 Crows | Bearish 3 BlackCrows | Bearish 3 Inside Down | Bearish 3 Outside Down | Bearish 3 Line Strike | Bearish Advance Block | Bearish Belt Hold |
