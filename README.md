@@ -32,7 +32,7 @@ Additionally in the solution:
 
 | Bullish 3 Drive | Bullish 3 Extension | Bullish 3 Retracement |
 | :-------------: | :-------------: | :-------------: |
-|<img width="300" height="200" alt="Bullish 3 Drive" src="https://github.com/user-attachments/assets/16bdbd08-6c1b-4d81-898b-baad9a12909a">||<img width="300" height="200" alt="Bullish 3 Retracement" src="https://github.com/user-attachments/assets/2b3bb97f-b3a4-438c-838b-8efde5b4a6de">|
+|<img width="300" height="200" alt="Bullish 3 Drive" src="https://github.com/user-attachments/assets/16bdbd08-6c1b-4d81-898b-baad9a12909a">|<img width="300" height="200" alt="Bullish 3 Extension" src="https://github.com/user-attachments/assets/521171ed-ef92-4753-a6ea-22d429c0639c">|<img width="300" height="200" alt="Bullish 3 Retracement" src="https://github.com/user-attachments/assets/2b3bb97f-b3a4-438c-838b-8efde5b4a6de">|
 
 | Bullish Butterfly | Bullish ABCD | Bullish Gartley |
 | :-------------: | :-------------: | :-------------: |
@@ -40,7 +40,7 @@ Additionally in the solution:
 
 | Bearish 3 Drive | Bearish 3 Extension | Bearish 3 Retracement |
 | :-------------: | :-------------: | :-------------: |
-|<img width="300" height="200" alt="Bearish 3 Drive" src="https://github.com/user-attachments/assets/05891bad-df3a-4122-8b3f-f5b2a1c96004">||<img width="300" height="200" alt="Bearish 3 Retracement" src="https://github.com/user-attachments/assets/6f9583bc-8651-4e65-91cb-1384c0ddc88d">|
+|<img width="300" height="200" alt="Bearish 3 Drive" src="https://github.com/user-attachments/assets/05891bad-df3a-4122-8b3f-f5b2a1c96004">|<img width="300" height="200" alt="Bearish 3 Extension" src="https://github.com/user-attachments/assets/4ba1405c-82f6-46b0-a918-8802bb02288d">|<img width="300" height="200" alt="Bearish 3 Retracement" src="https://github.com/user-attachments/assets/6f9583bc-8651-4e65-91cb-1384c0ddc88d">|
 
 
 | Bearish Butterfly | Bearish ABCD | Bearish Gartley |
