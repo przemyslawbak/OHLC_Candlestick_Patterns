@@ -51,7 +51,7 @@ Additionally in the solution:
 
 //todo
 
-## Formation list
+## Formations list
 
 | Bearish Double Tops | Bearish Triple Tops | Bearish Head And Shoulders |
 | :-------------: | :-------------: | :-------------: |
@@ -81,11 +81,12 @@ Additionally in the solution:
 | :-------------: | :-------------: |
 |<img width="300" height="200" alt="Continuation Diamond Formation" src="https://github.com/user-attachments/assets/a5e10c6b-b9d2-4dd3-a978-a7d5b3d8eba8">|<img width="300" height="200" alt="Continuation Symmetric Triangle" src="https://github.com/user-attachments/assets/956a3587-3f86-47f0-ae5a-2de62cb0b3c7">|
 
-## Formation example usage
+## Formations example usage
 
 //todo
 
-## Pattern list
+## Patterns list
+
 | Bearish 2 Crows | Bearish 3 BlackCrows | Bearish 3 Inside Down | Bearish 3 Outside Down | Bearish 3 Line Strike | Bearish Advance Block | Bearish Belt Hold |
 | :-------------: | :-------------: | :-------------: | :-------------: | :-------------: | :-------------: | :-------------: |
 | <img width="100" height="100" alt="Bearish 2 Crows" src="https://github.com/user-attachments/assets/f2ffd966-328b-4401-bcc9-0a0f1723a681"> | <img width="100" height="100" alt="Bearish 3 BlackCrows" src="https://github.com/user-attachments/assets/5009a177-403a-4fa1-ad7b-44a3db56be5e"> | <img width="100" height="100" alt="Bearish 3 Inside Down" src="https://github.com/user-attachments/assets/1f6cd28d-f07d-4473-8efa-580fd2b2df7c"> | <img width="100" height="100" alt="Bearish 3 Outside Dow" src="https://github.com/user-attachments/assets/beaa8ff8-b9e7-4b9c-ada6-946bb338adc3"> | <img width="100" height="100" alt="Bearish 3 Line Strike" src="https://github.com/user-attachments/assets/4635e682-9d40-4ad2-803c-11ce13f51b2d"> | <img width="100" height="100" alt="Bearish Advance Block" src="https://github.com/user-attachments/assets/89399eec-a091-477d-a874-b2906e8c86f0"> | <img width="100" height="100" alt="Bearish Belt Hold" src="https://github.com/user-attachments/assets/a1794664-05c0-4d26-9ed0-fee74d383bce">
@@ -131,7 +132,7 @@ Additionally in the solution:
 | :-------------: | :-------------: | :-------------: | :-------------: |
 |<img width="100" height="100" alt="Bullish Unique 3 River Bottom" src="https://github.com/user-attachments/assets/f2f66429-db0f-4bdc-b4b8-f744d20b7922">|<img width="100" height="100" alt="Bullish Upside Gap 3 Methods" src="https://github.com/user-attachments/assets/b7f8a96e-da94-4b68-88f7-06e4cf76c03b">|<img width="100" height="100" alt="Bullish Upside Tasuki Gap" src="https://github.com/user-attachments/assets/2c2ebb02-d7df-471a-9805-2cf6d567d57e">|<img width="100" height="100" alt="Bullish White Opening Marubozu" src="https://github.com/user-attachments/assets/58e6fc5e-6a50-4f75-9cc7-adbfb5cbbd3d">|
 
-## Pattern example usage
+## Patterns example usage
 
 //todo
 
