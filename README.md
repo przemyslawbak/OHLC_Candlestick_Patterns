@@ -3,9 +3,9 @@
 ## Purpose
 
 The project was created due to the lack of a similar library for C#. It was preceded by the research for algorithmic formulas for individual OHLC patterns. As a result, you can test the OHLC candlestick list for:
-- 37 bullish and 37 bearish OHLC price action patterns,
-- 9 bullish, 9 bearish and additionally 2 continuation classic formations,
-- 6 bullish, 6 bearish fibonacci patterns.
+- 37 bullish and 37 bearish candlestick patterns,
+- 9 bullish, 9 bearish and additionally 2 continuation classic chart formations,
+- 6 bullish, 6 bearish fibonacci chart patterns.
 
 A list of patterns, formations and an example of use can be found below.
 
@@ -47,6 +47,10 @@ Additionally in the solution:
 | :-------------: | :-------------: | :-------------: |
 |<img width="300" height="200" alt="Bearish Butterfly" src="https://github.com/user-attachments/assets/94d7d614-5291-4d78-987a-4805ecd20107">|<img width="300" height="200" alt="Bearish ABCD" src="https://github.com/user-attachments/assets/9cf875a3-627b-479d-94db-5456b901f69a">|<img width="300" height="200" alt="Bearish Gartley" src="https://github.com/user-attachments/assets/a9dd2c89-8cf6-408e-a0c3-70700eb80c59">|
 
+## Fibonacci example usage
+
+//todo
+
 ## Formation list
 
 | Bearish Double Tops | Bearish Triple Tops | Bearish Head And Shoulders |
@@ -76,6 +80,10 @@ Additionally in the solution:
 | Continuation Diamond Formation | Continuation Symmetric Triangle |
 | :-------------: | :-------------: |
 |<img width="300" height="200" alt="Continuation Diamond Formation" src="https://github.com/user-attachments/assets/a5e10c6b-b9d2-4dd3-a978-a7d5b3d8eba8">|<img width="300" height="200" alt="Continuation Symmetric Triangle" src="https://github.com/user-attachments/assets/956a3587-3f86-47f0-ae5a-2de62cb0b3c7">|
+
+## Formation example usage
+
+//todo
 
 ## Pattern list
 | Bearish 2 Crows | Bearish 3 BlackCrows | Bearish 3 Inside Down | Bearish 3 Outside Down | Bearish 3 Line Strike | Bearish Advance Block | Bearish Belt Hold |
@@ -122,6 +130,10 @@ Additionally in the solution:
 | Bullish Unique 3 River Bottom | Bullish Upside Gap 3 Methods | Bullish Upside Tasuki Gap | Bullish White Closing Marubozu |
 | :-------------: | :-------------: | :-------------: | :-------------: |
 |<img width="100" height="100" alt="Bullish Unique 3 River Bottom" src="https://github.com/user-attachments/assets/f2f66429-db0f-4bdc-b4b8-f744d20b7922">|<img width="100" height="100" alt="Bullish Upside Gap 3 Methods" src="https://github.com/user-attachments/assets/b7f8a96e-da94-4b68-88f7-06e4cf76c03b">|<img width="100" height="100" alt="Bullish Upside Tasuki Gap" src="https://github.com/user-attachments/assets/2c2ebb02-d7df-471a-9805-2cf6d567d57e">|<img width="100" height="100" alt="Bullish White Opening Marubozu" src="https://github.com/user-attachments/assets/58e6fc5e-6a50-4f75-9cc7-adbfb5cbbd3d">|
+
+## Pattern example usage
+
+//todo
 
 ## Example usage
 
