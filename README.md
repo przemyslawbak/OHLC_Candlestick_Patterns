@@ -4,7 +4,8 @@
 
 The project was created due to the lack of a similar library for C#. It was preceded by the research for algorithmic formulas for individual OHLC patterns. As a result, you can test the OHLC candlestick list for:
 - 37 bullish and 37 bearish OHLC price action patterns,
-- 9 bullish, 9 bearish and additionally 2 continuation classic formations.
+- 9 bullish, 9 bearish and additionally 2 continuation classic formations,
+- 6 bullish, 6 bearish fibonacci patterns.
 
 A list of patterns, formations and an example of use can be found below.
 
@@ -31,20 +32,16 @@ Additionally in the solution:
 
 | Bullish 3 Drive | Bullish 3 Extension | Bullish 3 Retracement |
 | :-------------: | :-------------: | :-------------: |
-|<img width="300" height="200" alt="Bullish 3 Drive" src="https://github.com/user-attachments/assets/16bdbd08-6c1b-4d81-898b-baad9a12909a">|||
-
-
+|<img width="300" height="200" alt="Bullish 3 Drive" src="https://github.com/user-attachments/assets/16bdbd08-6c1b-4d81-898b-baad9a12909a">||<img width="300" height="200" alt="Bullish 3 Retracement" src="https://github.com/user-attachments/assets/2b3bb97f-b3a4-438c-838b-8efde5b4a6de">|
 
 | Bullish Butterfly | Bullish ABCD | Bullish Gartley |
 | :-------------: | :-------------: | :-------------: |
 |<img width="300" height="200" alt="Bullish Butterfly" src="https://github.com/user-attachments/assets/a0f451bf-be89-4bb8-abc0-39d04ff69f26">|<img width="300" height="200" alt="Bullish ABCD" src="https://github.com/user-attachments/assets/be1cb075-0fc9-42f1-b83e-14585ffc20d6">|<img width="300" height="200" alt="Bullish Gartley" src="https://github.com/user-attachments/assets/ff7821f8-0426-4dc4-92c9-fbcec2f4e49d">|
 
-
-
-
 | Bearish 3 Drive | Bearish 3 Extension | Bearish 3 Retracement |
 | :-------------: | :-------------: | :-------------: |
-|<img width="300" height="200" alt="Bearish 3 Drive" src="https://github.com/user-attachments/assets/05891bad-df3a-4122-8b3f-f5b2a1c96004">|||
+|<img width="300" height="200" alt="Bearish 3 Drive" src="https://github.com/user-attachments/assets/05891bad-df3a-4122-8b3f-f5b2a1c96004">||<img width="300" height="200" alt="Bearish 3 Retracement" src="https://github.com/user-attachments/assets/6f9583bc-8651-4e65-91cb-1384c0ddc88d">|
+
 
 | Bearish Butterfly | Bearish ABCD | Bearish Gartley |
 | :-------------: | :-------------: | :-------------: |
