@@ -11,4 +11,8 @@
     <PackageReference Include="ScottPlot" Version="5.0.46" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Candlestick_Patterns\Candlestick_Patterns.csproj" />
+  </ItemGroup>
+
 </Project>

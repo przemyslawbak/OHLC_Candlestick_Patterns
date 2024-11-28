@@ -51,8 +51,7 @@ namespace OHLC_Candlestick_Patterns
             for (int x = -number; x < 1; x++)
             {
                 dateList.Add(points[i + x].Close);
-                points[i].Signal = true;
-
+                points[i].Signal = true; // one or all ??
             }
             return points;
         }

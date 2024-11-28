@@ -3,14 +3,14 @@ using System.Reflection;
 
 namespace Candlestick_Patterns
 {
-    internal abstract class AbstractFibonnaci
+    public abstract class AbstractFibonnaci
     {
         internal abstract bool FirstCheck(List<ZigZagObject> points, int i, string pattern, string fibbPattern);
         internal abstract bool SecondCheck(List<ZigZagObject> points, int i, string pattern, List<decimal> dateList, string fibbPattern);
     }
 
-    internal class Fibonacci : AbstractFibonnaci, IFibonacci
-    {
+    public class Fibonacci : AbstractFibonnaci, IFibonacci
+    { 
         private static List<ZigZagObject> _data { get; set; }
 
         private static decimal _fibError { get; set; }
@@ -34,7 +34,7 @@ namespace Candlestick_Patterns
         internal static List<decimal> range161 { get { return _support.PointsRange(161.8M, _fibError); } }
         internal static List<decimal> range224 { get { return _support.PointsRange(224M, _fibError); } }
 
-        internal Fibonacci(List<OhlcvObject> dataOhlcv)
+        public Fibonacci(List<OhlcvObject> dataOhlcv)
         {
             _dataOhlcv = dataOhlcv;
             _data = SetPeaksVallyes.GetCloseAndSignalsData(dataOhlcv);
