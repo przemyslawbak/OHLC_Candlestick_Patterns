@@ -36,8 +36,24 @@ namespace Examples_Fibonacci
             var accuracyForSelectedFibo30CandlesAhead = _accuracy.GetAverPercentFiboAccuracy(dataOhlcv, "Bearish 3 Drive", 30);
 
             //SIGNALS
-            var fiboSingle = _signals.GetFibonacciSignalsCount(dataOhlcv, "Bearish 3 Drive");
-            var otherFiboSingle = _signals.GetFibonacciSignalsCount(dataOhlcv, "Bullish 3 Drive");
+            var bullishButterflyFibSingle = _signals.GetFibonacciSignalsCount(dataOhlcv, "BullishButterfly");
+            var bearishButterflyFibSingle = _signals.GetFibonacciSignalsCount(dataOhlcv, "BearishButterfly");
+
+            var bearishabcdFibSingle = _signals.GetFibonacciSignalsCount(dataOhlcv, "BearishABCD");
+            var bullishabcdFibSingle = _signals.GetFibonacciSignalsCount(dataOhlcv, "BullishABCD");
+
+            var bullishDriveFibSingle = _signals.GetFibonacciSignalsCount(dataOhlcv, "Bullish3Drive");
+            var bearishDriveFibSingle = _signals.GetFibonacciSignalsCount(dataOhlcv, "Bearish3Drive");
+
+            var bearishExtensionFibSingle = _signals.GetFibonacciSignalsCount(dataOhlcv, "Bearish3Extension");
+            var bulllishExtensionFibSingle = _signals.GetFibonacciSignalsCount(dataOhlcv, "Bullish3Extension");
+
+            var BullishRetracementFibSingle = _signals.GetFibonacciSignalsCount(dataOhlcv, "Bullish3Retracement");
+            var BearishRetracementFibSingle = _signals.GetFibonacciSignalsCount(dataOhlcv, "Bearish3Retracement");
+
+            var bearishGartleyFibSingle = _signals.GetFibonacciSignalsCount(dataOhlcv, "BearishGartley");
+            var bullishGartleyFibSingle = _signals.GetFibonacciSignalsCount(dataOhlcv, "BullishGartley");
+
 
             //END
             Console.ReadLine();
