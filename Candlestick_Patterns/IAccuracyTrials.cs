@@ -6,6 +6,7 @@ namespace OHLC_Candlestick_Patterns
     {
         /// <summary>
         /// Tests selected pattern accuracy in given data comparing to average close prices after signal appears
+        /// Positive results indicate that they are in line with expectations. Negative results indicate poor accuracy
         /// </summary>
         /// <param name="dataOhlcv">OHLC object list</param>
         /// <param name="patternName">Selected pattern</param>
@@ -13,7 +14,8 @@ namespace OHLC_Candlestick_Patterns
         AccuracyObject GetAverPercentPatternAccuracy(List<OhlcvObject> dataOhlcv, string patternName);
 
         /// <summary>
-        /// Tests selected pattern accuracy in given data comparing to average close prices after signal appears
+        /// Tests selected pattern accuracy in given data 30 candles ahead comparing to average close prices after signal appears
+        /// Positive results indicate that they are in line with expectations. Negative results indicate poor accuracy
         /// </summary>
         /// <param name="dataOhlcv">OHLC object list</param>
         /// <param name="patternName">Selected pattern</param>
@@ -23,6 +25,7 @@ namespace OHLC_Candlestick_Patterns
 
         /// <summary>
         /// Tests selected formation accuracy in given data comparing to average close prices after signal appears
+        /// Positive results indicate that they are in line with expectations. Negative results indicate poor accuracy
         /// </summary>
         /// <param name="dataOhlcv">OHLC object list</param>
         /// <param name="formationName">Selected formation</param>
@@ -30,7 +33,8 @@ namespace OHLC_Candlestick_Patterns
         AccuracyObject GetAverPercentFormationAccuracy(List<OhlcvObject> dataOhlcv, string formationName);
 
         /// <summary>
-        /// Tests selected formation accuracy in given data comparing to average close prices after signal appears
+        /// Tests selected formation accuracy in given data 30 candles ahead comparing to average close prices after signal appears
+        /// Positive results indicate that they are in line with expectations. Negative results indicate poor accuracy
         /// </summary>
         /// <param name="dataOhlcv">OHLC object list</param>
         /// <param name="formationName">Selected formation</param>
@@ -40,6 +44,7 @@ namespace OHLC_Candlestick_Patterns
 
         /// <summary>
         /// Tests selected fibo accuracy in given data comparing to average close prices after signal appears
+        /// Positive results indicate that they are in line with expectations. Negative results indicate poor accuracy
         /// </summary>
         /// <param name="dataOhlcv">OHLC object list</param>
         /// <param name="fiboName">Selected fibo</param>
@@ -47,7 +52,8 @@ namespace OHLC_Candlestick_Patterns
         AccuracyObject GetAverPercentFiboAccuracy(List<OhlcvObject> dataOhlcv, string fiboName);
 
         /// <summary>
-        /// Tests selected fibo accuracy in given data comparing to average close prices after signal appears
+        /// Tests selected fibo accuracy in given data 30 candles ahead comparing to average close prices after signal appears
+        /// Positive results indicate that they are in line with expectations. Negative results indicate poor accuracy
         /// </summary>
         /// <param name="dataOhlcv">OHLC object list</param>
         /// <param name="fiboName">Selected fibo</param>

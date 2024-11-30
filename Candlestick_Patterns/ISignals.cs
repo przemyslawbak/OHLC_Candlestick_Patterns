@@ -5,7 +5,7 @@ namespace Candlestick_Patterns
     public interface ISignals
     {
         /// <summary>
-        /// Counting bullish signals that appear in the OHLC list
+        /// Counting bullish signals that appear in the OHLC list across all patterns
         /// </summary>
         /// <param name="dataOhlcv">OHLC object list</param>
         /// <returns>Bullish signals count integer</returns>

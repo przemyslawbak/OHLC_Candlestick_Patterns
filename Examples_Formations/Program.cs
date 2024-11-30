@@ -32,11 +32,17 @@ namespace Examples_Formations
             }).Reverse().ToList();
 
             //ACCURACY TRIALS
-            var accuracyForSelectedFormationToTheEndOfDataSet = _accuracy.GetAverPercentFormationAccuracy(dataOhlcv, "Bearish Double Tops");
-            var accuracyForSelectedFormation30CandlesAhead = _accuracy.GetAverPercentFormationAccuracy(dataOhlcv, "Bearish Double Tops", 30);
+            var accuracyPercentageSummary = _accuracy.GetAverPercentFormationAccuracy(dataOhlcv, "Bearish Double Tops");
+            Console.WriteLine("Accuracy percentage summary comparing to end of data set result: {0}", accuracyPercentageSummary.AccuracyToEndClose);
+            Console.WriteLine("Accuracy percentage summary comparing to average close result: {0}", accuracyPercentageSummary.AccuracyToAverageClose);
+
+            var accuracyForSelectedPattern30CandlesAhead = _accuracy.GetAverPercentFormationAccuracy(dataOhlcv, "Bearish Double Tops", 30);
+            Console.WriteLine("Accuracy percentage summary 30 candles ahead comparing to end of data set result: {0}", accuracyForSelectedPattern30CandlesAhead.AccuracyToEndClose);
+            Console.WriteLine("Accuracy percentage summary 30 candles ahead comparing to average close result: {0}", accuracyForSelectedPattern30CandlesAhead.AccuracyToAverageClose);
 
             //SIGNALS
             var formationsSignalsCountSingle = _signals.GetFormationSignalsCount(dataOhlcv, "Bearish Double Tops");
+            Console.WriteLine("Signals count for Bearish Double Tops: {0}", formationsSignalsCountSingle);
 
             //END
             Console.ReadLine();

@@ -32,12 +32,19 @@ namespace Examples_Fibonacci
             }).Reverse().ToList();
 
             //ACCURACY TRIALS
-            var accuracyForSelectedFiboToTheEndOfDataSet = _accuracy.GetAverPercentFiboAccuracy(dataOhlcv, "Bearish 3 Drive");
-            var accuracyForSelectedFibo30CandlesAhead = _accuracy.GetAverPercentFiboAccuracy(dataOhlcv, "Bearish 3 Drive", 30);
+            var accuracyPercentageSummary = _accuracy.GetAverPercentFiboAccuracy(dataOhlcv, "Bearish 3 Drive");
+            Console.WriteLine("Accuracy percentage summary comparing to end of data set result: {0}", accuracyPercentageSummary.AccuracyToEndClose);
+            Console.WriteLine("Accuracy percentage summary comparing to average close result: {0}", accuracyPercentageSummary.AccuracyToAverageClose);
+
+            var accuracyForSelectedPattern30CandlesAhead = _accuracy.GetAverPercentFiboAccuracy(dataOhlcv, "Bearish 3 Drive", 30);
+            Console.WriteLine("Accuracy percentage summary 30 candles ahead comparing to end of data set result: {0}", accuracyForSelectedPattern30CandlesAhead.AccuracyToEndClose);
+            Console.WriteLine("Accuracy percentage summary 30 candles ahead comparing to average close result: {0}", accuracyForSelectedPattern30CandlesAhead.AccuracyToAverageClose);
 
             //SIGNALS
             var bullishButterflyFibSingle = _signals.GetFibonacciSignalsCount(dataOhlcv, "BullishButterfly");
             var bearishButterflyFibSingle = _signals.GetFibonacciSignalsCount(dataOhlcv, "BearishButterfly");
+            Console.WriteLine("Bullish signals count for BullishButterfly: {0}", bullishButterflyFibSingle);
+            Console.WriteLine("Bearish signals count for BearishButterfly: {0}", bearishButterflyFibSingle);
 
             var bearishabcdFibSingle = _signals.GetFibonacciSignalsCount(dataOhlcv, "BearishABCD");
             var bullishabcdFibSingle = _signals.GetFibonacciSignalsCount(dataOhlcv, "BullishABCD");
