@@ -25,34 +25,40 @@ var dataOhlcv = JsonConvert.DeserializeObject<List<OhlcvObject>>(json).Select(x 
 }).Reverse().ToList();
 
 //ACCURACY TRIALS
-var accuracyForSelectedPatternToTheEndOfDataSet = _accuracy.GetAverPercentPatternAccuracy(dataOhlcv, "Bullish 3 Inside Up");
+var accuracyPercentageSummary = _accuracy.GetAverPercentPatternAccuracy(dataOhlcv, "Bullish 3 Inside Up");
+Console.WriteLine("Accuracy percentage summary comparing to end of data set result: {0}", accuracyPercentageSummary.AccuracyToEndClose);
+Console.WriteLine("Accuracy percentage summary comparing to average close result: {0}", accuracyPercentageSummary.AccuracyToAverageClose);
+
 var accuracyForSelectedPattern30CandlesAhead = _accuracy.GetAverPercentPatternAccuracy(dataOhlcv, "Bullish 3 Inside Up", 30);
+Console.WriteLine("Accuracy percentage summary 30 candles ahead comparing to end of data set result: {0}", accuracyForSelectedPattern30CandlesAhead.AccuracyToEndClose);
+Console.WriteLine("Accuracy percentage summary 30 candles ahead comparing to average close result: {0}", accuracyForSelectedPattern30CandlesAhead.AccuracyToAverageClose);
 
 //SIGNALS
 var bullishCount = _signals.GetPatternsBullishSignalsCount(dataOhlcv);
-Console.WriteLine("Bullish signals count: {0}", bullishCount); //Bullish signals count:
+Console.WriteLine("Bullish signals count: {0}", bullishCount);
 
 var bearishCount = _signals.GetPatternsBearishSignalsCount(dataOhlcv);
-Console.WriteLine("Bearish signals count: {0}", bearishCount); //Bearish signals count:
+Console.WriteLine("Bearish signals count: {0}", bearishCount);
 
 var signalsCountMulti = _signals.GetPatternsSignalsCount(dataOhlcv, new string[] { "Bearish Belt Hold", "Bearish Black Closing Marubozu" });
-Console.WriteLine("Multiple patterns signals count: {0}", signalsCountMulti); //Multiple patterns signals count:
+Console.WriteLine("Multiple patterns signals count: {0}", signalsCountMulti);
 
 var signalsCountSingle = _signals.GetPatternsSignalsCount(dataOhlcv, "Bearish Black Closing Marubozu");
-Console.WriteLine("Single pattern signals count: {0}", signalsCountSingle); //Single pattern signals count:
+Console.WriteLine("Single pattern signals count: {0}", signalsCountSingle);
 
 var signalsCountMultiWeightened = _signals.GetPatternsSignalsIndex(dataOhlcv, new Dictionary<string, decimal>() { { "Bearish Belt Hold", 0.5M }, { "Bearish Black Closing Marubozu", 0.5M } });
-Console.WriteLine("Weightened index for selected multiple patterns: {0}", signalsCountMultiWeightened); //Weightened index for selected multiple patterns:
+Console.WriteLine("Weightened index for selected multiple patterns: {0}", signalsCountMultiWeightened);
 
 var signalsCountSingleWeightened = _signals.GetPatternsSignalsIndex(dataOhlcv, "Bearish Black Closing Marubozu", 0.5M);
-Console.WriteLine("Weightened index for selected single pattern: {0}", signalsCountSingleWeightened); //Weightened index for selected single pattern:
+Console.WriteLine("Weightened index for selected single pattern: {0}", signalsCountSingleWeightened);
 
 var ohlcSingleSignals = _signals.GetPatternsOhlcvWithSignals(dataOhlcv, "Bearish Black Closing Marubozu");
-Console.WriteLine("Signals for single pattern: {0}", ohlcSingleSignals.Where(x => x.Signal == true).Count()); //Signals for single pattern:
+Console.WriteLine("Signals for single pattern: {0}", ohlcSingleSignals.Where(x => x.Signal == true).Count());
 
 var ohlcMultiSignals = _signals.GetPatternsOhlcvWithSignals(dataOhlcv, new string[] { "Bearish Belt Hold", "Bearish Black Closing Marubozu" });
-Console.WriteLine("Number of lists returned: {0}", ohlcMultiSignals.Count()); //Number of lists returned:
+Console.WriteLine("Number of lists returned: {0}", ohlcMultiSignals.Count());
 
 //END
+Console.WriteLine("END");
 Console.ReadLine();
 ```
