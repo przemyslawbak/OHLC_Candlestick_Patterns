@@ -1,32 +1,60 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Candlestick_Patterns;
-using OHLC_Candlestick_Patterns;
+﻿using Candlestick_Patterns;
+using Newtonsoft.Json;
 using ScottPlot;
 
 namespace GraphMaker
 {
-    internal interface IFiboTester
+    public interface IFiboTester
     {
         void ShowOnGraph(List<OhlcvObject> dataOhlcv, string patternName);
+        List<ZigZagObject> GetGraphData(string patternName);
+        Task<List<ZigZagObject>> GetPoints(string patternName);
     }
-
-    internal class FiboTester : IFiboTester
+    
+    public class FiboTester : IFiboTester
     {
         IFibonacci _fibonacci;
+        public async Task<List<ZigZagObject>> GetPoints(string patternName)
+        {
+            string json = string.Empty;
+            ISignals _signals = new Signals();
+            IFiboTester _fiboTester = new FiboTester();
+            IFibonacci _fibonacci;
+
+            var client = new HttpClient();
+            var url = "https://gist.githubusercontent.com/przemyslawbak/c90528453d512a8d85ad2deea5cf6ad2/raw/aapl_us_d.csv";
+
+            using (HttpResponseMessage response = await client.GetAsync(url))
+            {
+                using (HttpContent content = response.Content)
+                {
+                    json = content.ReadAsStringAsync().Result;
+                }
+            }
+
+            var dataOhlcv = JsonConvert.DeserializeObject<List<OhlcvObject>>(json).Select(x => new OhlcvObject()
+            {
+                Open = x.Open,
+                High = x.High,
+                Low = x.Low,
+                Close = x.Close,
+                Volume = x.Volume,
+            }).Reverse().ToList();
+
+
+            _fibonacci = new Fibonacci(dataOhlcv);
+            var signalList = _fibonacci.GetFibonacciSignalsList(patternName);
+            return signalList;
+        }
 
         void IFiboTester.ShowOnGraph(List<OhlcvObject> dataOhlcv, string patternName)
         {
             _fibonacci = new Fibonacci(dataOhlcv);
             var signalList = _fibonacci.GetFibonacciSignalsList(patternName);
-            GetGraph(signalList);
+            GetGraph(signalList, patternName);
         }
 
-        static void GetGraph(List<ZigZagObject> points)
+        static void GetGraph(List<ZigZagObject> points, string patternName)
         {
             var plt = new Plot();
             var numbers = new List<int>();
@@ -47,6 +75,7 @@ namespace GraphMaker
 
             var numbersArray = numbers.ToArray();
             var myScatter = plt.Add.Scatter(numbersArray, pointsPlot);
+
             ScottPlot.Palettes.Category20 palette = new();
             for (int i = 0; i < points.Count; i++)
             {
@@ -59,8 +88,8 @@ namespace GraphMaker
                     mp.MarkerStyle.FillColor = palette.GetColor(8);
                     mp.MarkerStyle.Size = 1.5F;
                     mp.MarkerStyle.OutlineColor = palette.GetColor(8);
-                    //mp.MarkerStyle.OutlineWidth = 2;
-                    //mp.MarkerStyle.LineWidth = 2f;
+                    mp.MarkerStyle.OutlineWidth = 2;
+                    mp.MarkerStyle.LineWidth = 2f;
                     mp.MarkerStyle.LineColor = palette.GetColor(10);
                 }
             }
@@ -76,11 +105,16 @@ namespace GraphMaker
             //myScatter.MaxRenderIndex = points.Count;
 
             // save
-            var fn = $"Plot_points.png";
-           // plt.SavePng(fn, 10000, 1000);
-            fn = $"Plot_points.svg";
+            var fn = $"Data\\graph_{patternName}.svg";
             plt.SaveSvg(fn, 50000, 2000);
 
+        }
+
+        public List<ZigZagObject> GetGraphData(string patternName)
+        {
+            var signalList = GetPoints(patternName);
+            List<ZigZagObject> points = signalList.Result;
+            return points;
         }
     }
 }
