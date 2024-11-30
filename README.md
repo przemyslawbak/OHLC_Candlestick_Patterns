@@ -42,6 +42,6 @@ Additionally in the solution:
 
 ## Candlestick Patterns
 
-[Complete list of supported Candlestick patterns](docs/Patterns_list.md)
+[Complete list of supported Candlestick Patterns](docs/Patterns_list.md)
 
-[Examples using of methods with Candlestick patterns](docs/Patterns_examples.md)
+[Examples using of methods with Candlestick Patterns](docs/Patterns_examples.md)
