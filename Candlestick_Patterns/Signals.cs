@@ -105,7 +105,39 @@
         {
             _formations = new Formations(dataOhlcv);
             return _formations.GetFormationsSignalsCount(patternName);
-        } 
+        }
+
+        public int GetFormationsBearishSignalsCount(List<OhlcvObject> dataOhlcv)
+        {
+            _formations = new Formations(dataOhlcv);
+
+            var bullishMethodNames = _formations.GetAllMethodNames().Where(x => x.StartsWith("Bullish")).ToList();
+
+            List<int> count = new List<int>();
+
+            foreach (var methodName in bullishMethodNames)
+            {
+                count.Add(_formations.GetSignalsCount(methodName));
+            }
+
+            return count.Sum(x => x);
+        }
+
+        public int GetFormationsBullishSignalsCount(List<OhlcvObject> dataOhlcv)
+        {
+            _formations = new Formations(dataOhlcv);
+
+            var bullishMethodNames = _formations.GetAllMethodNames().Where(x => x.StartsWith("Bearish")).ToList();
+
+            List<int> count = new List<int>();
+
+            foreach (var methodName in bullishMethodNames)
+            {
+                count.Add(_formations.GetSignalsCount(methodName));
+            }
+
+            return count.Sum(x => x);
+        }
 
         public int GetFibonacciSignalsCount(List<OhlcvObject> dataOhlcv, string patternName)
         {

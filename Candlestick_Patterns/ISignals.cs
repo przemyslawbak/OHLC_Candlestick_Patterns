@@ -12,7 +12,7 @@ namespace Candlestick_Patterns
         int GetPatternsBullishSignalsCount(List<OhlcvObject> dataOhlcv);
 
         /// <summary>
-        /// Counting bearish signals that appear in the OHLC list
+        /// Counting bearish signals that appear in the OHLC list across all patterns
         /// </summary>
         /// <param name="dataOhlcv">OHLC object list</param>
         /// <returns>Bearish signals count integer</returns>
@@ -74,6 +74,20 @@ namespace Candlestick_Patterns
         /// <param name="patternName">Selected formation</param>
         /// <returns>Signals count integer number</returns>
         int GetFormationSignalsCount(List<OhlcvObject> dataOhlcv, string patternName);
+
+        /// <summary>
+        /// Counting bullish signals that appear in the OHLC list across all formations
+        /// </summary>
+        /// <param name="dataOhlcv">OHLC object list</param>
+        /// <returns>Bullish signals count integer</returns>
+        int GetFormationsBullishSignalsCount(List<OhlcvObject> dataOhlcv);
+
+        /// <summary>
+        /// Counting bearish signals that appear in the OHLC list across all formations
+        /// </summary>
+        /// <param name="dataOhlcv">OHLC object list</param>
+        /// <returns>Bearish signals count integer</returns>
+        int GetFormationsBearishSignalsCount(List<OhlcvObject> dataOhlcv);
 
         /// <summary>
         /// Counts the number of Fibonacci patterns appearing in the OHLC list for a selected single Fibonacci pattern
