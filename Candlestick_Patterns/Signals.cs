@@ -45,7 +45,7 @@
             return _patterns.GetPatternsSignalsList(patternName);
         }
 
-        public List<List<OhlcvObject>> GetPatternsOhlcvWithSignals(List<OhlcvObject> dataOhlcv, string[] patternNames)
+        public List<List<OhlcvObject>> GetMultiplePatternsOhlcvWithSignals(List<OhlcvObject> dataOhlcv, string[] patternNames)
         {
             _patterns = new Patterns(dataOhlcv);
 
@@ -87,7 +87,7 @@
             return _patterns.GetSignalsCount(patternName) * weight;
         }
 
-        public decimal GetPatternsSignalsIndex(List<OhlcvObject> dataOhlcv, Dictionary<string, decimal> patternNamesWithWeights)
+        public decimal GetMultiplePatternsSignalsIndex(List<OhlcvObject> dataOhlcv, Dictionary<string, decimal> patternNamesWithWeights)
         {
             _patterns = new Patterns(dataOhlcv);
 
@@ -101,10 +101,10 @@
             return count.Sum(x => x);
         }
 
-        public int GetFormationSignalsCount(List<OhlcvObject> dataOhlcv, string patternName)
+        public int GetFormationSignalsCount(List<OhlcvObject> dataOhlcv, string formationName)
         {
             _formations = new Formations(dataOhlcv);
-            return _formations.GetFormationsSignalsCount(patternName);
+            return _formations.GetFormationsSignalsCount(formationName);
         }
 
         public int GetFormationsBearishSignalsCount(List<OhlcvObject> dataOhlcv)
@@ -148,6 +148,27 @@
             foreach (var methodName in formationNames)
             {
                 count.Add(_formations.GetSignalsCount(methodName));
+            }
+
+            return count.Sum(x => x);
+        }
+
+        public decimal GetFormationSignalsIndex(List<OhlcvObject> dataOhlcv, string formationName, decimal weight)
+        {
+            _formations = new Formations(dataOhlcv);
+
+            return _patterns.GetSignalsCount(formationName) * weight;
+        }
+
+        public decimal GetMultipleFormationsSignalsIndex(List<OhlcvObject> dataOhlcv, Dictionary<string, decimal> formationsNamesWithWeights)
+        {
+            _formations = new Formations(dataOhlcv);
+
+            List<decimal> count = new List<decimal>();
+
+            foreach (var methodName in formationsNamesWithWeights.Keys)
+            {
+                count.Add(_formations.GetSignalsCount(methodName) * formationsNamesWithWeights[methodName]);
             }
 
             return count.Sum(x => x);

@@ -47,7 +47,7 @@
         /// <param name="dataOhlcv">OHLC object list</param>
         /// <param name="patternNamesWithWeights">Dictionary of pattern names with their weights</param>
         /// <returns>Signals count integer number</returns>
-        decimal GetPatternsSignalsIndex(List<OhlcvObject> dataOhlcv, Dictionary<string, decimal> patternNamesWithWeights);
+        decimal GetMultiplePatternsSignalsIndex(List<OhlcvObject> dataOhlcv, Dictionary<string, decimal> patternNamesWithWeights);
 
         /// <summary>
         /// Calculates signals for selected single pattern
@@ -63,7 +63,7 @@
         /// <param name="dataOhlcv">OHLC object list</param>
         /// <param name="patternNames">Selected patterns</param>
         /// <returns>List of OHLC lists with updated signal values</returns>
-        List<List<OhlcvObject>> GetPatternsOhlcvWithSignals(List<OhlcvObject> dataOhlcv, string[] patternNames);
+        List<List<OhlcvObject>> GetMultiplePatternsOhlcvWithSignals(List<OhlcvObject> dataOhlcv, string[] patternNames);
 
         /// <summary>
         /// Counting bullish signals that appear in the OHLC list across all formations
@@ -93,7 +93,24 @@
         /// <param name="dataOhlcv">OHLC object list</param>
         /// <param name="patternName">Selected formation</param>
         /// <returns>Signals count integer number</returns>
-        int GetFormationSignalsCount(List<OhlcvObject> dataOhlcv, string patternName);
+        int GetFormationSignalsCount(List<OhlcvObject> dataOhlcv, string formationName);
+
+        /// <summary>
+        /// Calculates the weighted index for the selected single formation
+        /// </summary>
+        /// <param name="dataOhlcv">OHLC object list</param>
+        /// <param name="formationName">Selected formation</param>
+        /// <param name="weight">Signal weight</param>
+        /// <returns>Weighted index decimal number</returns>
+        decimal GetFormationSignalsIndex(List<OhlcvObject> dataOhlcv, string formationName, decimal weight);
+
+        /// <summary>
+        /// Calculates the weighted index for the selected multiple formations
+        /// </summary>
+        /// <param name="dataOhlcv">OHLC object list</param>
+        /// <param name="patternNamesWithWeights">Dictionary of formations names with their weights</param>
+        /// <returns>Signals count integer number</returns>
+        decimal GetMultipleFormationsSignalsIndex(List<OhlcvObject> dataOhlcv, Dictionary<string, decimal> formationsNamesWithWeights);
 
         /// <summary>
         /// Counts the number of Fibonacci patterns appearing in the OHLC list for a selected single Fibonacci pattern
