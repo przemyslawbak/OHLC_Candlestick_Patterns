@@ -1,6 +1,4 @@
-﻿using Candlestick_Patterns;
-
-namespace Candlestick_Patterns
+﻿namespace Candlestick_Patterns
 {
     public interface ISignals
     {
@@ -22,9 +20,9 @@ namespace Candlestick_Patterns
         /// Counting the number of signals that appear in the OHLC list for selected multiple patterns 
         /// </summary>
         /// <param name="dataOhlcv">OHLC object list</param>
-        /// <param name="patternNames">Selected patterns</param>
+        /// <param name="patternNames">Selected patterns array</param>
         /// <returns>Signals count integer number</returns>
-        int GetPatternsSignalsCount(List<OhlcvObject> dataOhlcv, string[] patternNames);
+        int GetMultiplePatternsSignalsCount(List<OhlcvObject> dataOhlcv, string[] patternNames);
 
         /// <summary>
         /// Counting the number of signals that appear in the OHLC list for selected single pattern
@@ -68,14 +66,6 @@ namespace Candlestick_Patterns
         List<List<OhlcvObject>> GetPatternsOhlcvWithSignals(List<OhlcvObject> dataOhlcv, string[] patternNames);
 
         /// <summary>
-        /// Counts the number of formations appearing in the OHLC list for a selected single formation
-        /// </summary>
-        /// <param name="dataOhlcv">OHLC object list</param>
-        /// <param name="patternName">Selected formation</param>
-        /// <returns>Signals count integer number</returns>
-        int GetFormationSignalsCount(List<OhlcvObject> dataOhlcv, string patternName);
-
-        /// <summary>
         /// Counting bullish signals that appear in the OHLC list across all formations
         /// </summary>
         /// <param name="dataOhlcv">OHLC object list</param>
@@ -88,6 +78,22 @@ namespace Candlestick_Patterns
         /// <param name="dataOhlcv">OHLC object list</param>
         /// <returns>Bearish signals count integer</returns>
         int GetFormationsBearishSignalsCount(List<OhlcvObject> dataOhlcv);
+
+        /// <summary>
+        /// Counting the number of signals that appear in the OHLC list for selected multiple formations 
+        /// </summary>
+        /// <param name="dataOhlcv">OHLC object list</param>
+        /// <param name="formationNames">Selected formations array</param>
+        /// <returns>Signals count integer number</returns>
+        int GetMultipleFormationsSignalsCount(List<OhlcvObject> dataOhlcv, string[] formationNames);
+
+        /// <summary>
+        /// Counts the number of formations appearing in the OHLC list for a selected single formation
+        /// </summary>
+        /// <param name="dataOhlcv">OHLC object list</param>
+        /// <param name="patternName">Selected formation</param>
+        /// <returns>Signals count integer number</returns>
+        int GetFormationSignalsCount(List<OhlcvObject> dataOhlcv, string patternName);
 
         /// <summary>
         /// Counts the number of Fibonacci patterns appearing in the OHLC list for a selected single Fibonacci pattern

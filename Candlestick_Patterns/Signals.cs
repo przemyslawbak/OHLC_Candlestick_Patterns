@@ -59,7 +59,7 @@
             return list;
         }
 
-        public int GetPatternsSignalsCount(List<OhlcvObject> dataOhlcv, string[] patternNames)
+        public int GetMultiplePatternsSignalsCount(List<OhlcvObject> dataOhlcv, string[] patternNames)
         {
             _patterns = new Patterns(dataOhlcv);
 
@@ -132,6 +132,20 @@
             List<int> count = new List<int>();
 
             foreach (var methodName in bullishMethodNames)
+            {
+                count.Add(_formations.GetSignalsCount(methodName));
+            }
+
+            return count.Sum(x => x);
+        }
+
+        public int GetMultipleFormationsSignalsCount(List<OhlcvObject> dataOhlcv, string[] formationNames)
+        {
+            _formations = new Formations(dataOhlcv);
+
+            List<int> count = new List<int>();
+
+            foreach (var methodName in formationNames)
             {
                 count.Add(_formations.GetSignalsCount(methodName));
             }

@@ -47,7 +47,7 @@ namespace Examples_Patterns
             var bearishCount = _signals.GetPatternsBearishSignalsCount(dataOhlcv);
             Console.WriteLine("Bearish signals count: {0}", bearishCount);
 
-            var signalsCountMulti = _signals.GetPatternsSignalsCount(dataOhlcv, new string[] { "Bearish Belt Hold", "Bearish Black Closing Marubozu" });
+            var signalsCountMulti = _signals.GetMultiplePatternsSignalsCount(dataOhlcv, new string[] { "Bearish Belt Hold", "Bearish Black Closing Marubozu" });
             Console.WriteLine("Multiple patterns signals count: {0}", signalsCountMulti);
 
             var signalsCountSingle = _signals.GetPatternsSignalsCount(dataOhlcv, "Bearish Black Closing Marubozu");
