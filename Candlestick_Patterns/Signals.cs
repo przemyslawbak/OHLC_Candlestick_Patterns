@@ -157,7 +157,7 @@
         {
             _formations = new Formations(dataOhlcv);
 
-            return _patterns.GetSignalsCount(formationName) * weight;
+            return _formations.GetSignalsCount(formationName) * weight;
         }
 
         public decimal GetMultipleFormationsSignalsIndex(List<OhlcvObject> dataOhlcv, Dictionary<string, decimal> formationsNamesWithWeights)
@@ -174,31 +174,39 @@
             return count.Sum(x => x);
         }
 
-        public List<ZigZagObject> GetFormationsOhlcvWithSignals(List<OhlcvObject> dataOhlcv, string patternName)
+        public List<OhlcvObject> GetFormationsOhlcvWithSignals(List<OhlcvObject> dataOhlcv, string formationName)
         {
             _formations = new Formations(dataOhlcv);
 
-            return _formations.GetFormationsSignalsList(patternName);
+            return _formations.GetFormationsSignalsList(formationName).Select(x => new OhlcvObject()
+            {
+                Close = x.Close,
+                Signal = x.Signal,
+            }).ToList();
         }
 
-        public List<List<ZigZagObject>> GetMultipleFormationsOhlcvWithSignals(List<OhlcvObject> dataOhlcv, string[] patternNames)
+        public List<List<OhlcvObject>> GetMultipleFormationsOhlcvWithSignals(List<OhlcvObject> dataOhlcv, string[] formationsNames)
         {
             _formations = new Formations(dataOhlcv);
 
             List<List<ZigZagObject>> list = new List<List<ZigZagObject>>();
 
-            foreach (var methodName in patternNames)
+            foreach (var methodName in formationsNames)
             {
                 list.Add(_formations.GetFormationsSignalsList(methodName));
             }
 
-            return list;
+            return list.Select(x => x.Select(y => new OhlcvObject()
+            {
+                Close = y.Close,
+                Signal = y.Signal,
+            }).ToList()).ToList();
         }
 
-        public int GetFibonacciSignalsCount(List<OhlcvObject> dataOhlcv, string patternName)
+        public int GetFibonacciSignalsCount(List<OhlcvObject> dataOhlcv, string formationName)
         {
             _fibonacci = new Fibonacci(dataOhlcv);
-            return _fibonacci.GetFibonacciSignalsCount(patternName);
+            return _fibonacci.GetFibonacciSignalsCount(formationName);
         }
     }
 }

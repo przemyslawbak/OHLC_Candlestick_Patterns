@@ -772,9 +772,9 @@ namespace Candlestick_Patterns
             return methods;
         }
 
-        public List<ZigZagObject> GetFormationsSignalsList(string patternName)
+        public List<ZigZagObject> GetFormationsSignalsList(string formationName)
         {
-            var methodName = patternName.Trim().Replace(" ", "");
+            var methodName = formationName.Trim().Replace(" ", "");
             Type thisType = this.GetType();
             MethodInfo theMethod = thisType.GetMethod(methodName, BindingFlags.NonPublic | BindingFlags.Instance);
             if (theMethod != null)
@@ -788,9 +788,9 @@ namespace Candlestick_Patterns
             }
         }
 
-        public int GetFormationsSignalsCount(string patternName)
+        public int GetFormationsSignalsCount(string formationName)
         {
-            var methodName = patternName.Trim().Replace(" ", "");
+            var methodName = formationName.Trim().Replace(" ", "");
             return GetFormationsSignalsList(methodName).Where(x => x.Signal == true).Count();
         }
 
@@ -808,33 +808,17 @@ namespace Candlestick_Patterns
         public List<string> GetAllMethodNames()
         {
             List<string> methods = new List<string>();
-            foreach (MethodInfo item in typeof(Patterns).GetMethods(BindingFlags.NonPublic | BindingFlags.Instance))
+            foreach (MethodInfo item in typeof(Formations).GetMethods(BindingFlags.NonPublic | BindingFlags.Instance))
             {
                 methods.Add(item.Name);
             }
             return methods;
         }
 
-        public int GetSignalsCount(string patternName)
+        public int GetSignalsCount(string formationName)
         {
-            var methodName = patternName.Trim().Replace(" ", "");
-            return GetPatternsSignalsList(methodName).Where(x => x.Signal == true).Count();
-        }
-
-        private List<ZigZagObject> GetPatternsSignalsList(string patternName)
-        {
-            var methodName = patternName.Trim().Replace(" ", "");
-            Type thisType = this.GetType();
-            MethodInfo theMethod = thisType.GetMethod(methodName, BindingFlags.NonPublic | BindingFlags.Instance);
-            if (theMethod != null)
-            {
-                List<ZigZagObject> result = (List<ZigZagObject>)theMethod.Invoke(this, null);
-                return result;
-            }
-            else
-            {
-                return _data;
-            }
+            var methodName = formationName.Trim().Replace(" ", "");
+            return GetFormationsSignalsList(methodName).Where(x => x.Signal == true).Count();
         }
     }
 }

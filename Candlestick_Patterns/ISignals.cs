@@ -91,7 +91,7 @@
         /// Counts the number of formations appearing in the OHLC list for a selected single formation
         /// </summary>
         /// <param name="dataOhlcv">OHLC object list</param>
-        /// <param name="patternName">Selected formation</param>
+        /// <param name="formationName">Selected formation</param>
         /// <returns>Signals count integer number</returns>
         int GetFormationSignalsCount(List<OhlcvObject> dataOhlcv, string formationName);
 
@@ -108,32 +108,32 @@
         /// Calculates the weighted index for the selected multiple formations
         /// </summary>
         /// <param name="dataOhlcv">OHLC object list</param>
-        /// <param name="patternNamesWithWeights">Dictionary of formations names with their weights</param>
+        /// <param name="formationsNamesWithWeights">Dictionary of formations names with their weights</param>
         /// <returns>Signals count integer number</returns>
         decimal GetMultipleFormationsSignalsIndex(List<OhlcvObject> dataOhlcv, Dictionary<string, decimal> formationsNamesWithWeights);
 
         /// <summary>
-        /// Calculates signals for selected single pattern
+        /// Calculates signals for selected single formation
         /// </summary>
         /// <param name="dataOhlcv">OHLC object list</param>
-        /// <param name="patternName">Selected pattern</param>
+        /// <param name="formationName">Selected formation</param>
         /// <returns>OHLC list with updated signal values</returns>
-        List<ZigZagObject> GetFormationsOhlcvWithSignals(List<OhlcvObject> dataOhlcv, string patternName);
+        List<OhlcvObject> GetFormationsOhlcvWithSignals(List<OhlcvObject> dataOhlcv, string formationName);
 
         /// <summary>
-        /// Calculates signals for selected multiply patterns
+        /// Calculates signals for selected multiply formation
         /// </summary>
         /// <param name="dataOhlcv">OHLC object list</param>
-        /// <param name="patternNames">Selected patterns</param>
+        /// <param name="formationsNames">Selected formation</param>
         /// <returns>List of OHLC lists with updated signal values</returns>
-        List<List<ZigZagObject>> GetMultipleFormationsOhlcvWithSignals(List<OhlcvObject> dataOhlcv, string[] patternNames);
+        List<List<OhlcvObject>> GetMultipleFormationsOhlcvWithSignals(List<OhlcvObject> dataOhlcv, string[] formationsNames);
 
         /// <summary>
         /// Counts the number of Fibonacci patterns appearing in the OHLC list for a selected single Fibonacci pattern
         /// </summary>
         /// <param name="dataOhlcv">OHLC object list</param>
-        /// <param name="patternName">Selected Fibonacci pattern</param>
+        /// <param name="formationName">Selected Fibonacci formation</param>
         /// <returns>Signals count integer number</returns>
-        int GetFibonacciSignalsCount(List<OhlcvObject> dataOhlcv, string patternName);
+        int GetFibonacciSignalsCount(List<OhlcvObject> dataOhlcv, string formationName);
     }
 }
