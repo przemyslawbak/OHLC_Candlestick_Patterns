@@ -174,6 +174,27 @@
             return count.Sum(x => x);
         }
 
+        public List<ZigZagObject> GetFormationsOhlcvWithSignals(List<OhlcvObject> dataOhlcv, string patternName)
+        {
+            _formations = new Formations(dataOhlcv);
+
+            return _formations.GetFormationsSignalsList(patternName);
+        }
+
+        public List<List<ZigZagObject>> GetMultipleFormationsOhlcvWithSignals(List<OhlcvObject> dataOhlcv, string[] patternNames)
+        {
+            _formations = new Formations(dataOhlcv);
+
+            List<List<ZigZagObject>> list = new List<List<ZigZagObject>>();
+
+            foreach (var methodName in patternNames)
+            {
+                list.Add(_formations.GetFormationsSignalsList(methodName));
+            }
+
+            return list;
+        }
+
         public int GetFibonacciSignalsCount(List<OhlcvObject> dataOhlcv, string patternName)
         {
             _fibonacci = new Fibonacci(dataOhlcv);
