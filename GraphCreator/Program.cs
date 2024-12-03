@@ -64,7 +64,9 @@ namespace GraphCreator
 
         private List<ZigZagObject> GetGraphData(string patternName)
         {
-            return _fiboTester.GetGraphData(patternName);
+            var points = _fiboTester.GetData(patternName).Result;
+            return points;
+            
         }
 
         protected override void Dispose(bool disposing)

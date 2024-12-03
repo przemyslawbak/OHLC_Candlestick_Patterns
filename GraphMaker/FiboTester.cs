@@ -7,29 +7,25 @@ namespace GraphMaker
     public interface IFiboTester
     {
         void ShowOnGraph(List<OhlcvObject> dataOhlcv, string patternName);
-        List<ZigZagObject> GetGraphData(string patternName);
+        Task<List<ZigZagObject>> GetData(string patternName);
         Task<List<ZigZagObject>> GetPoints(string patternName);
+        //List<ZigZagObject> GetGraphData(List<ZigZagObject> list);
+        List<ZigZagObject> GetDataFromJson(string patternName, string json);
     }
     
     public class FiboTester : IFiboTester
     {
         IFibonacci _fibonacci;
+
         public async Task<List<ZigZagObject>> GetPoints(string patternName)
         {
             string json = string.Empty;
-            ISignals _signals = new Signals();
-            IFiboTester _fiboTester = new FiboTester();
-            IFibonacci _fibonacci;
-
             var client = new HttpClient();
             var url = "https://gist.githubusercontent.com/przemyslawbak/c90528453d512a8d85ad2deea5cf6ad2/raw/aapl_us_d.csv";
 
-            using (HttpResponseMessage response = await client.GetAsync(url))
+            using (var httpClient = new HttpClient())
             {
-                using (HttpContent content = response.Content)
-                {
-                    json = content.ReadAsStringAsync().Result;
-                }
+                json = await httpClient.GetStringAsync(url);
             }
 
             var dataOhlcv = JsonConvert.DeserializeObject<List<OhlcvObject>>(json).Select(x => new OhlcvObject()
@@ -110,12 +106,39 @@ namespace GraphMaker
 
         }
 
-        public List<ZigZagObject> GetGraphData(string patternName)
+        public async Task<List<ZigZagObject>> GetData(string patternName)
         {
-            var signalList = GetPoints(patternName);
-            List<ZigZagObject> points = signalList.Result;
-            return points;
+            var signalList = await GetPoints(patternName);
+            return signalList;
         }
+
+        //public List<ZigZagObject> GetGraphData(List<ZigZagObject> list)
+        //{
+        //    var signalList = taskList.Result;
+        //    return signalList;
+        //}
+
+        public List<ZigZagObject> GetDataFromJson(string patternName, string json)
+        {
+            var dataOhlcv = JsonConvert.DeserializeObject<List<OhlcvObject>>(json).Select(x => new OhlcvObject()
+            {
+                Open = x.Open,
+                High = x.High,
+                Low = x.Low,
+                Close = x.Close,
+                Volume = x.Volume,
+            }).Reverse().ToList();
+
+
+            _fibonacci = new Fibonacci(dataOhlcv);
+            var signalList = _fibonacci.GetFibonacciSignalsList(patternName);
+            return signalList;
+        }
+
+        //public List<ZigZagObject> GetGraphData(List<ZigZagObject> list)
+        //{
+        //    throw new NotImplementedException();
+        //}
     }
 }
 

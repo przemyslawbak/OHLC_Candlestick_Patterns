@@ -13,7 +13,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Examples_Formations", "Exam
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Examples_Patterns", "Examples_Patterns\Examples_Patterns.csproj", "{23135CD8-163D-4C86-8017-1036D76F5C0D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraphCreator", "GraphCreator\GraphCreator.csproj", "{D100D9CC-005D-4220-AEA2-63D008FA8A28}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GraphCreator", "GraphCreator\GraphCreator.csproj", "{D100D9CC-005D-4220-AEA2-63D008FA8A28}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WPFGraphMaker", "WPFGraphMaker\WPFGraphMaker.csproj", "{98BBF6A3-A2CF-4A72-8D59-7C3D12F2F5EE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{D100D9CC-005D-4220-AEA2-63D008FA8A28}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D100D9CC-005D-4220-AEA2-63D008FA8A28}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D100D9CC-005D-4220-AEA2-63D008FA8A28}.Release|Any CPU.Build.0 = Release|Any CPU
+		{98BBF6A3-A2CF-4A72-8D59-7C3D12F2F5EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{98BBF6A3-A2CF-4A72-8D59-7C3D12F2F5EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{98BBF6A3-A2CF-4A72-8D59-7C3D12F2F5EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{98BBF6A3-A2CF-4A72-8D59-7C3D12F2F5EE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
