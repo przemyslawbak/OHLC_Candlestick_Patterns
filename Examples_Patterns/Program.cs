@@ -53,7 +53,7 @@ namespace Examples_Patterns
             var signalsCountSingle = _signals.GetPatternsSignalsCount(dataOhlcv, "Bearish Black Closing Marubozu");
             Console.WriteLine("Single pattern signals count: {0}", signalsCountSingle);
 
-            var signalsCountMultiWeightened = _signals.GetPatternsSignalsIndex(dataOhlcv, new Dictionary<string, decimal>() { { "Bearish Belt Hold", 0.5M }, { "Bearish Black Closing Marubozu", 0.5M } });
+            var signalsCountMultiWeightened = _signals.GetMultiplePatternsSignalsIndex(dataOhlcv, new Dictionary<string, decimal>() { { "Bearish Belt Hold", 0.5M }, { "Bearish Black Closing Marubozu", 0.5M } });
             Console.WriteLine("Weightened index for selected multiple patterns: {0}", signalsCountMultiWeightened);
 
             var signalsCountSingleWeightened = _signals.GetPatternsSignalsIndex(dataOhlcv, "Bearish Black Closing Marubozu", 0.5M);
@@ -62,7 +62,7 @@ namespace Examples_Patterns
             var ohlcSingleSignals = _signals.GetPatternsOhlcvWithSignals(dataOhlcv, "Bearish Black Closing Marubozu");
             Console.WriteLine("Signals for single pattern: {0}", ohlcSingleSignals.Where(x => x.Signal == true).Count());
 
-            var ohlcMultiSignals = _signals.GetPatternsOhlcvWithSignals(dataOhlcv, new string[] { "Bearish Belt Hold", "Bearish Black Closing Marubozu" });
+            var ohlcMultiSignals = _signals.GetMultiplePatternsOhlcvWithSignals(dataOhlcv, new string[] { "Bearish Belt Hold", "Bearish Black Closing Marubozu" });
             Console.WriteLine("Number of lists returned: {0}", ohlcMultiSignals.Count());
 
             //END

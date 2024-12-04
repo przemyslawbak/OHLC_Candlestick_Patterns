@@ -3,38 +3,112 @@ using GraphMaker;
 using ScottPlot;
 using ScottPlot.Plottables;
 using ScottPlot.WPF;
+using System.ComponentModel;
 using System.Net.Http;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
 using System.Windows.Media;
+using Point = System.Windows.Point;
 
 namespace WPFGraphMaker
 {
-    public partial class MainWindow : Window
+    public partial class MainWindow : Window, INotifyPropertyChanged
     {
         private readonly IFiboTester _fiboTester = new FiboTester();
+        Crosshair Crosshair;
+
         public MainWindow()
         {
             InitializeComponent();
-            Loaded += MyLoadedRoutedEventHandler;
-            WpfPlot1.Refresh();
+            DataContext = this;
+            WpfPlot1 = new WpfPlot
+            {
+                //Width = SystemParameters.PrimaryScreenWidth,
+                //Height = SystemParameters.PrimaryScreenHeight,
+                Width = SystemParameters.WorkArea.Width,
+                Height = SystemParameters.WorkArea.Height,
+
+            };
             
+            var cross = WpfPlot1.Plot.Add.Crosshair(0, 0);
+
+            WpfPlot1.MouseWheel += (s, e) =>
+            {
+                var scrollViewer = new ScrollViewer();
+                var st = new ScaleTransform();
+                Pixel mousePixel = new();
+                Coordinates mouseCoordinates = WpfPlot1.Plot.GetCoordinates(mousePixel);
+                cross.Position = mouseCoordinates;
+                if (e.Delta > 0)
+                {
+                    st.ScaleX *= 1;
+                    st.ScaleY *= 1;
+                }
+                else
+                {
+                    st.ScaleX /= 1;
+                    st.ScaleY /= 1;
+                }
+                WpfPlot1.Refresh();
+            };
+
+            WpfPlot1.MouseMove += (s, e) =>
+            {
+                var scrollViewer = new ScrollViewer();
+                //var scrollViewer = new ScrollViewer
+                //{
+                //    HorizontalContentAlignment = System.Windows.HorizontalAlignment.Left,
+                //    VerticalContentAlignment = System.Windows.VerticalAlignment.Top,
+                //    HorizontalScrollBarVisibility = ScrollBarVisibility.Visible,
+                //    CanContentScroll = true
+                //};
+                var viewer = new ScrollViewer();
+                scrollViewer.Content = viewer;
+                ScrollViewer.SetCanContentScroll(viewer, true);
+                ScrollViewer.SetHorizontalScrollBarVisibility(viewer, ScrollBarVisibility.Visible);
+
+                Grid.SetRow(scrollViewer, 1);
+                Point p = e.GetPosition(WpfPlot1);
+                ScottPlot.Pixel mousePixel = new(p.X * WpfPlot1.DisplayScale, p.Y * WpfPlot1.DisplayScale);
+                ScottPlot.Coordinates coordinates = WpfPlot1.Plot.GetCoordinates(mousePixel);
+                cross.Position = coordinates;
+                WpfPlot1.Plot.GetAxis(mousePixel);
+                WpfPlot1.Refresh();
+            };
+
+            WpfPlot1.MouseEnter += (s, e) =>
+            {
+                var scrollViewer = new ScrollViewer
+                {
+                    HorizontalContentAlignment = System.Windows.HorizontalAlignment.Left,
+                    VerticalContentAlignment = System.Windows.VerticalAlignment.Top,
+                    HorizontalScrollBarVisibility = ScrollBarVisibility.Visible,
+                    CanContentScroll = true
+                };
+                var st = new ScaleTransform();
+                Pixel mousePixel = new();
+                Coordinates mouseCoordinates = WpfPlot1.Plot.GetCoordinates(mousePixel);
+                cross.Position = mouseCoordinates;
+                scrollViewer.ScrollToTop();
+                WpfPlot1.Plot.ScaleFactor = 3;
+                WpfPlot1.Refresh();
+            };
         }
 
-        private async void MyLoadedRoutedEventHandler(object sender, RoutedEventArgs e)
+        public WpfPlot WpfPlot1 { get; set; }
+
+        private string _patternName;
+        public string PatternName
         {
-            var url = "https://gist.githubusercontent.com/przemyslawbak/c90528453d512a8d85ad2deea5cf6ad2/raw/aapl_us_d.csv";
-
-            HttpClient client = new HttpClient();
-            HttpResponseMessage response = await client.GetAsync(url);
-            response.EnsureSuccessStatusCode();
-            string json = await response.Content.ReadAsStringAsync();
-
-            var patternName = "BullishButterfly";
-            List<ZigZagObject> points = GetGraphData(patternName, json);
-            ViewGraph(points);
-
+            get { return _patternName; }
+            set
+            {
+                if (value != _patternName)
+                {
+                    _patternName = value;
+                    OnPropertyChanged(PatternName);
+                }
+            }
         }
 
         private void ViewGraph(List<ZigZagObject> points)
@@ -83,21 +157,34 @@ namespace WPFGraphMaker
             myScatter.MarkerShape = MarkerShape.OpenSquare;
             myScatter.LinePattern = LinePattern.Solid;
             WpfPlot1.Plot.Axes.AutoScale();
-
             WpfPlot1.Refresh();
-
-            //double[] dataX = { 1, 2, 3, 4, 5 };
-            //double[] dataY = { 1, 4, 9, 16, 25 };
-            //WpfPlot1.Plot.Add.Scatter(dataX, dataY);
-            ////WpfPlot1.Plot.Axes.SetLimits(0, 5000, 0, 250);
-            //WpfPlot1.Plot.Axes.AutoScale();
-            //WpfPlot1.Refresh();
-
         }
 
         private List<ZigZagObject> GetGraphData(string patternName, string json)
         {
             return _fiboTester.GetDataFromJson(patternName, json);
+        }
+
+        private async void OnStartClick(object sender, RoutedEventArgs e)
+        {
+            var url = "https://gist.githubusercontent.com/przemyslawbak/c90528453d512a8d85ad2deea5cf6ad2/raw/aapl_us_d.csv";
+
+            HttpClient client = new HttpClient();
+            HttpResponseMessage response = await client.GetAsync(url);
+            response.EnsureSuccessStatusCode();
+            string json = await response.Content.ReadAsStringAsync();
+
+            var patternName = patternNameTextBox.Text == string.Empty ? "BullishButterfly" : patternNameTextBox.Text;
+            List<ZigZagObject> points = GetGraphData(patternName, json);
+            ViewGraph(points);
+            WpfPlot1.Refresh();
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

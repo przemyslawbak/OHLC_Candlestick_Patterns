@@ -8,7 +8,28 @@
         Title="GraphWindow" Height="450" Width="800">
 
     <Grid>
-        <ScottPlot:WpfPlot x:Name="WpfPlot1" />
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <StackPanel x:Name="stackPanel" Orientation="Horizontal" Grid.Row="0">
+            <TextBox
+                Name="patternNameTextBox"
+     Width="300"
+     HorizontalAlignment="Left"
+                Margin="5"
+                Text="{Binding Path=PatternName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+            <Button
+                Name="btnStart"
+     Width="100"
+     HorizontalAlignment="Left"
+                Margin="5"
+                Content="Start"
+                Click="OnStartClick"/>
+        </StackPanel>
+        <Border Grid.Row="1">
+            <ContentControl Content="{Binding WpfPlot1}" Visibility="Visible"/>
+        </Border>
 
     </Grid>
 
