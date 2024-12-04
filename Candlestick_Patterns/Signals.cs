@@ -80,7 +80,7 @@
             return _patterns.GetSignalsCount(patternName);
         }
 
-        public decimal GetPatternsSignalsIndex(List<OhlcvObject> dataOhlcv, string patternName, decimal weight)
+        public decimal GetPatternSignalsIndex(List<OhlcvObject> dataOhlcv, string patternName, decimal weight)
         {
             _patterns = new Patterns(dataOhlcv);
 

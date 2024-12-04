@@ -39,7 +39,7 @@
         /// <param name="patternName">Selected pattern</param>
         /// <param name="weight">Signal weight</param>
         /// <returns>Weighted index decimal number</returns>
-        decimal GetPatternsSignalsIndex(List<OhlcvObject> dataOhlcv, string patternName, decimal weight);
+        decimal GetPatternSignalsIndex(List<OhlcvObject> dataOhlcv, string patternName, decimal weight);
 
         /// <summary>
         /// Calculates the weighted index for the selected multiple patterns
