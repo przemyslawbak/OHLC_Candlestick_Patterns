@@ -52,11 +52,11 @@ Console.WriteLine("Weightened index for selected multiple formations: {0}", sign
 var signalsCountSingleWeightened = _signals.GetFormationSignalsIndex(dataOhlcv, "Bearish Double Tops", 0.5M);
 Console.WriteLine("Weightened index for selected single formation: {0}", signalsCountSingleWeightened);
 
-var ohlcSingleSignals = _signals.GetFormationsOhlcvWithSignals(dataOhlcv, "Bearish Double Tops");
-Console.WriteLine("Signals for single formation: {0}", ohlcSingleSignals.Where(x => x.Signal == true).Count());
+var zigZagSingleSignals = _signals.GetFormationsZigZagWithSignals(dataOhlcv, "Bearish Double Tops");
+Console.WriteLine("Signals for single formation: {0}", zigZagSingleSignals.Where(x => x.Signal == true).Count());
 
-var ohlcMultiSignals = _signals.GetMultipleFormationsOhlcvWithSignals(dataOhlcv, new string[] { "Bearish Double Tops", "Bearish Head And Shoulders" });
-Console.WriteLine("Number of lists returned: {0}", ohlcMultiSignals.Count());
+var zigZagMultiSignals = _signals.GetMultipleFormationsZigZagWithSignals(dataOhlcv, new string[] { "Bearish Double Tops", "Bearish Head And Shoulders" });
+Console.WriteLine("Number of lists returned: {0}", zigZagMultiSignals.Count());
 
 //END
 Console.WriteLine("END");
