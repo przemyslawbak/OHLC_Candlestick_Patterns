@@ -281,5 +281,34 @@
 
             return count.Sum(x => x);
         }
+
+        public List<OhlcvObject> GetFiboOhlcvWithSignals(List<OhlcvObject> dataOhlcv, string fiboName)
+        {
+            _fibonacci = new Fibonacci(dataOhlcv);
+
+            return _fibonacci.GetFibonacciSignalsList(fiboName).Select(x => new OhlcvObject()
+            {
+                Close = x.Close,
+                Signal = x.Signal,
+            }).ToList();
+        }
+
+        public List<List<OhlcvObject>> GetMultipleFiboOhlcvWithSignals(List<OhlcvObject> dataOhlcv, string[] fiboNames)
+        {
+            _fibonacci = new Fibonacci(dataOhlcv);
+
+            List<List<ZigZagObject>> list = new List<List<ZigZagObject>>();
+
+            foreach (var methodName in fiboNames)
+            {
+                list.Add(_fibonacci.GetFibonacciSignalsList(methodName));
+            }
+
+            return list.Select(x => x.Select(y => new OhlcvObject()
+            {
+                Close = y.Close,
+                Signal = y.Signal,
+            }).ToList()).ToList();
+        }
     }
 }

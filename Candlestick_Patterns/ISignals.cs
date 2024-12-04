@@ -116,9 +116,9 @@
         /// Calculates signals for selected single formation
         /// </summary>
         /// <param name="dataOhlcv">OHLC object list</param>
-        /// <param name="formationName">Selected formation</param>
+        /// <param name="fiboName">Selected formation</param>
         /// <returns>OHLC list with updated signal values</returns>
-        List<OhlcvObject> GetFormationsOhlcvWithSignals(List<OhlcvObject> dataOhlcv, string formationName);
+        List<OhlcvObject> GetFormationsOhlcvWithSignals(List<OhlcvObject> dataOhlcv, string fiboName);
 
         /// <summary>
         /// Calculates signals for selected multiply formation
@@ -129,37 +129,37 @@
         List<List<OhlcvObject>> GetMultipleFormationsOhlcvWithSignals(List<OhlcvObject> dataOhlcv, string[] formationsNames);
 
         /// <summary>
-        /// Counts the number of Fibonacci patterns appearing in the OHLC list for a selected single Fibonacci pattern
+        /// Counts the number of fibonacci patterns appearing in the OHLC list for a selected single fibonacci pattern
         /// </summary>
         /// <param name="dataOhlcv">OHLC object list</param>
-        /// <param name="formationName">Selected Fibonacci formation</param>
+        /// <param name="formationName">Selected fibonacci pattern</param>
         /// <returns>Signals count integer number</returns>
         int GetFibonacciSignalsCount(List<OhlcvObject> dataOhlcv, string formationName);
 
         /// <summary>
-        /// Counting bullish signals that appear in the OHLC list across all fibo
+        /// Counting bullish signals that appear in the OHLC list across all fibonacci patterns
         /// </summary>
         /// <param name="dataOhlcv">OHLC object list</param>
         /// <returns>Bullish signals count integer</returns>
         int GetFiboBullishSignalsCount(List<OhlcvObject> dataOhlcv);
 
         /// <summary>
-        /// Counting bearish signals that appear in the OHLC list across all fibo
+        /// Counting bearish signals that appear in the OHLC list across all fibonacci patterns
         /// </summary>
         /// <param name="dataOhlcv">OHLC object list</param>
         /// <returns>Bearish signals count integer</returns>
         int GetFiboBearishSignalsCount(List<OhlcvObject> dataOhlcv);
 
         /// <summary>
-        /// Counting the number of signals that appear in the OHLC list for selected multiple fibo 
+        /// Counting the number of signals that appear in the OHLC list for selected multiple fibonacci patterns 
         /// </summary>
         /// <param name="dataOhlcv">OHLC object list</param>
-        /// <param name="fiboNames">Selected fibo array</param>
+        /// <param name="fiboNames">Selected fibonacci pattern names array</param>
         /// <returns>Signals count integer number</returns>
         int GetMultipleFiboSignalsCount(List<OhlcvObject> dataOhlcv, string[] fiboNames);
 
         /// <summary>
-        /// Counts the number of formations appearing in the OHLC list for a selected single formation
+        /// Counts the number of formations appearing in the OHLC list for a selected single fibonacci pattern
         /// </summary>
         /// <param name="dataOhlcv">OHLC object list</param>
         /// <param name="formationName">Selected formation</param>
@@ -167,20 +167,36 @@
         int GetFiboSignalsCount(List<OhlcvObject> dataOhlcv, string formationName);
 
         /// <summary>
-        /// Calculates the weighted index for the selected single fibo
+        /// Calculates the weighted index for the selected single fibonacci pattern
         /// </summary>
         /// <param name="dataOhlcv">OHLC object list</param>
-        /// <param name="fiboName">Selected fibo</param>
+        /// <param name="fiboName">Selected fibonacci pattern</param>
         /// <param name="weight">Signal weight</param>
         /// <returns>Weighted index decimal number</returns>
         decimal GetFiboSignalsIndex(List<OhlcvObject> dataOhlcv, string fiboName, decimal weight);
 
         /// <summary>
-        /// Calculates the weighted index for the selected multiple fibos
+        /// Calculates the weighted index for the selected multiple fibonacci patterns
         /// </summary>
         /// <param name="dataOhlcv">OHLC object list</param>
-        /// <param name="formationsNamesWithWeights">Dictionary of fibo names with their weights</param>
+        /// <param name="formationsNamesWithWeights">Dictionary of fibonacci pattern names with their weights</param>
         /// <returns>Signals count integer number</returns>
         decimal GetMultipleFiboSignalsIndex(List<OhlcvObject> dataOhlcv, Dictionary<string, decimal> fibosNamesWithWeights);
+
+        /// <summary>
+        /// Calculates signals for selected single fibonacci pattern
+        /// </summary>
+        /// <param name="dataOhlcv">OHLC object list</param>
+        /// <param name="fiboName">Selected formation</param>
+        /// <returns>OHLC list with updated signal values</returns>
+        List<OhlcvObject> GetFiboOhlcvWithSignals(List<OhlcvObject> dataOhlcv, string fiboName);
+
+        /// <summary>
+        /// Calculates signals for selected multiply fibonacci patterns
+        /// </summary>
+        /// <param name="dataOhlcv">OHLC object list</param>
+        /// <param name="fiboNames">Selected fibonacci patterns</param>
+        /// <returns>List of OHLC lists with updated signal values</returns>
+        List<List<OhlcvObject>> GetMultipleFiboOhlcvWithSignals(List<OhlcvObject> dataOhlcv, string[] fiboNames);
     }
 }
