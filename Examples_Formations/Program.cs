@@ -66,6 +66,7 @@ namespace Examples_Formations
             Console.WriteLine("Number of lists returned: {0}", ohlcMultiSignals.Count());
 
             //END
+            Console.WriteLine("END");
             Console.ReadLine();
         }
     }

@@ -65,8 +65,8 @@ namespace Examples_Fibonacci
             var ohlcMultiSignals = _signals.GetMultipleFiboOhlcvWithSignals(dataOhlcv, new string[] { "BearishABCD", "Bearish 3 Drive" });
             Console.WriteLine("Number of lists returned: {0}", ohlcMultiSignals.Count());
 
-
             //END
+            Console.WriteLine("END");
             Console.ReadLine();
         }
     }
