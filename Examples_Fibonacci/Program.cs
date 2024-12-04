@@ -41,25 +41,29 @@ namespace Examples_Fibonacci
             Console.WriteLine("Accuracy percentage summary 30 candles ahead comparing to average close result: {0}", accuracyForSelectedPattern30CandlesAhead.AccuracyToAverageClose);
 
             //SIGNALS
-            var bullishButterflyFibSingle = _signals.GetFibonacciSignalsCount(dataOhlcv, "BullishButterfly");
-            var bearishButterflyFibSingle = _signals.GetFibonacciSignalsCount(dataOhlcv, "BearishButterfly");
-            Console.WriteLine("Bullish signals count for BullishButterfly: {0}", bullishButterflyFibSingle);
-            Console.WriteLine("Bearish signals count for BearishButterfly: {0}", bearishButterflyFibSingle);
+            var bullishCount = _signals.GetFiboBullishSignalsCount(dataOhlcv);
+            Console.WriteLine("Bullish signals count: {0}", bullishCount);
 
-            var bearishabcdFibSingle = _signals.GetFibonacciSignalsCount(dataOhlcv, "BearishABCD");
-            var bullishabcdFibSingle = _signals.GetFibonacciSignalsCount(dataOhlcv, "BullishABCD");
+            var bearishCount = _signals.GetFiboBearishSignalsCount(dataOhlcv);
+            Console.WriteLine("Bearish signals count: {0}", bearishCount);
 
-            var bullishDriveFibSingle = _signals.GetFibonacciSignalsCount(dataOhlcv, "Bullish3Drive");
-            var bearishDriveFibSingle = _signals.GetFibonacciSignalsCount(dataOhlcv, "Bearish3Drive");
+            var signalsCountMulti = _signals.GetMultipleFiboSignalsCount(dataOhlcv, new string[] { "BearishABCD", "Bearish 3 Drive" });
+            Console.WriteLine("Multiple fibo signals count: {0}", signalsCountMulti);
 
-            var bearishExtensionFibSingle = _signals.GetFibonacciSignalsCount(dataOhlcv, "Bearish3Extension");
-            var bulllishExtensionFibSingle = _signals.GetFibonacciSignalsCount(dataOhlcv, "Bullish3Extension");
+            var signalsCountSingle = _signals.GetFibonacciSignalsCount(dataOhlcv, "BearishABCD");
+            Console.WriteLine("Signals count for Bearish Double Tops: {0}", signalsCountSingle);
 
-            var BullishRetracementFibSingle = _signals.GetFibonacciSignalsCount(dataOhlcv, "Bullish3Retracement");
-            var BearishRetracementFibSingle = _signals.GetFibonacciSignalsCount(dataOhlcv, "Bearish3Retracement");
+            var signalsCountMultiWeightened = _signals.GetMultipleFiboSignalsIndex(dataOhlcv, new Dictionary<string, decimal>() { { "BearishABCD", 0.5M }, { "Bearish 3 Drive", 0.5M } });
+            Console.WriteLine("Weightened index for selected multiple fibo: {0}", signalsCountMultiWeightened);
 
-            var bearishGartleyFibSingle = _signals.GetFibonacciSignalsCount(dataOhlcv, "BearishGartley");
-            var bullishGartleyFibSingle = _signals.GetFibonacciSignalsCount(dataOhlcv, "BullishGartley");
+            var signalsCountSingleWeightened = _signals.GetFiboSignalsIndex(dataOhlcv, "BearishABCD", 0.5M);
+            Console.WriteLine("Weightened index for selected single fibo: {0}", signalsCountSingleWeightened);
+
+            var ohlcSingleSignals = _signals.GetFiboOhlcvWithSignals(dataOhlcv, "BearishABCD");
+            Console.WriteLine("Signals for single fibo: {0}", ohlcSingleSignals.Where(x => x.Signal == true).Count());
+
+            var ohlcMultiSignals = _signals.GetMultipleFiboOhlcvWithSignals(dataOhlcv, new string[] { "BearishABCD", "Bearish 3 Drive" });
+            Console.WriteLine("Number of lists returned: {0}", ohlcMultiSignals.Count());
 
 
             //END
