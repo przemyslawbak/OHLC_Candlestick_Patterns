@@ -149,5 +149,21 @@
         /// <param name="dataOhlcv">OHLC object list</param>
         /// <returns>Bearish signals count integer</returns>
         int GetFiboBearishSignalsCount(List<OhlcvObject> dataOhlcv);
+
+        /// <summary>
+        /// Counting the number of signals that appear in the OHLC list for selected multiple fibo 
+        /// </summary>
+        /// <param name="dataOhlcv">OHLC object list</param>
+        /// <param name="fiboNames">Selected fibo array</param>
+        /// <returns>Signals count integer number</returns>
+        int GetMultipleFiboSignalsCount(List<OhlcvObject> dataOhlcv, string[] fiboNames);
+
+        /// <summary>
+        /// Counts the number of formations appearing in the OHLC list for a selected single formation
+        /// </summary>
+        /// <param name="dataOhlcv">OHLC object list</param>
+        /// <param name="formationName">Selected formation</param>
+        /// <returns>Signals count integer number</returns>
+        int GetFiboSignalsCount(List<OhlcvObject> dataOhlcv, string fiboName);
     }
 }

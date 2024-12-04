@@ -240,5 +240,25 @@
 
             return count.Sum(x => x);
         }
+
+        public int GetMultipleFiboSignalsCount(List<OhlcvObject> dataOhlcv, string[] fiboNames)
+        {
+            _fibonacci = new Fibonacci(dataOhlcv);
+
+            List<int> count = new List<int>();
+
+            foreach (var methodName in fiboNames)
+            {
+                count.Add(_fibonacci.GetSignalsCount(methodName));
+            }
+
+            return count.Sum(x => x);
+        }
+
+        public int GetFiboSignalsCount(List<OhlcvObject> dataOhlcv, string fiboName)
+        {
+            _fibonacci = new Fibonacci(dataOhlcv);
+            return _fibonacci.GetFibonacciSignalsCount(fiboName);
+        }
     }
 }
