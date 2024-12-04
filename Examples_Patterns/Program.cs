@@ -56,7 +56,7 @@ namespace Examples_Patterns
             var signalsCountMultiWeightened = _signals.GetMultiplePatternsSignalsIndex(dataOhlcv, new Dictionary<string, decimal>() { { "Bearish Belt Hold", 0.5M }, { "Bearish Black Closing Marubozu", 0.5M } });
             Console.WriteLine("Weightened index for selected multiple patterns: {0}", signalsCountMultiWeightened);
 
-            var signalsCountSingleWeightened = _signals.GetPatternsSignalsIndex(dataOhlcv, "Bearish Black Closing Marubozu", 0.5M);
+            var signalsCountSingleWeightened = _signals.GetPatternSignalsIndex(dataOhlcv, "Bearish Black Closing Marubozu", 0.5M);
             Console.WriteLine("Weightened index for selected single pattern: {0}", signalsCountSingleWeightened);
 
             var ohlcSingleSignals = _signals.GetPatternsOhlcvWithSignals(dataOhlcv, "Bearish Black Closing Marubozu");

@@ -80,7 +80,7 @@
             return _patterns.GetSignalsCount(patternName);
         }
 
-        public decimal GetPatternsSignalsIndex(List<OhlcvObject> dataOhlcv, string patternName, decimal weight)
+        public decimal GetPatternSignalsIndex(List<OhlcvObject> dataOhlcv, string patternName, decimal weight)
         {
             _patterns = new Patterns(dataOhlcv);
 
@@ -174,18 +174,14 @@
             return count.Sum(x => x);
         }
 
-        public List<OhlcvObject> GetFormationsOhlcvWithSignals(List<OhlcvObject> dataOhlcv, string formationName)
+        public List<ZigZagObject> GetFormationsZigZagWithSignals(List<OhlcvObject> dataOhlcv, string formationName)
         {
             _formations = new Formations(dataOhlcv);
 
-            return _formations.GetFormationsSignalsList(formationName).Select(x => new OhlcvObject()
-            {
-                Close = x.Close,
-                Signal = x.Signal,
-            }).ToList();
+            return _formations.GetFormationsSignalsList(formationName);
         }
 
-        public List<List<OhlcvObject>> GetMultipleFormationsOhlcvWithSignals(List<OhlcvObject> dataOhlcv, string[] formationsNames)
+        public List<List<ZigZagObject>> GetMultipleFormationsZigZagWithSignals(List<OhlcvObject> dataOhlcv, string[] formationsNames)
         {
             _formations = new Formations(dataOhlcv);
 
@@ -196,11 +192,7 @@
                 list.Add(_formations.GetFormationsSignalsList(methodName));
             }
 
-            return list.Select(x => x.Select(y => new OhlcvObject()
-            {
-                Close = y.Close,
-                Signal = y.Signal,
-            }).ToList()).ToList();
+            return list;
         }
 
         public int GetFibonacciSignalsCount(List<OhlcvObject> dataOhlcv, string formationName)
@@ -259,6 +251,48 @@
         {
             _fibonacci = new Fibonacci(dataOhlcv);
             return _fibonacci.GetFibonacciSignalsCount(fiboName);
+        }
+
+        public decimal GetFiboSignalsIndex(List<OhlcvObject> dataOhlcv, string fiboName, decimal weight)
+        {
+            _fibonacci = new Fibonacci(dataOhlcv);
+
+            return _fibonacci.GetSignalsCount(fiboName) * weight;
+        }
+
+        public decimal GetMultipleFiboSignalsIndex(List<OhlcvObject> dataOhlcv, Dictionary<string, decimal> fibosNamesWithWeights)
+        {
+            _fibonacci = new Fibonacci(dataOhlcv);
+
+            List<decimal> count = new List<decimal>();
+
+            foreach (var methodName in fibosNamesWithWeights.Keys)
+            {
+                count.Add(_fibonacci.GetSignalsCount(methodName) * fibosNamesWithWeights[methodName]);
+            }
+
+            return count.Sum(x => x);
+        }
+
+        public List<ZigZagObject> GetFiboZigZagWithSignals(List<OhlcvObject> dataOhlcv, string fiboName)
+        {
+            _fibonacci = new Fibonacci(dataOhlcv);
+
+            return _fibonacci.GetFibonacciSignalsList(fiboName);
+        }
+
+        public List<List<ZigZagObject>> GetMultipleFiboZigZagWithSignals(List<OhlcvObject> dataOhlcv, string[] fiboNames)
+        {
+            _fibonacci = new Fibonacci(dataOhlcv);
+
+            List<List<ZigZagObject>> list = new List<List<ZigZagObject>>();
+
+            foreach (var methodName in fiboNames)
+            {
+                list.Add(_fibonacci.GetFibonacciSignalsList(methodName));
+            }
+
+            return list;
         }
     }
 }
