@@ -99,10 +99,10 @@
         /// Calculates the weighted index for the selected single formation
         /// </summary>
         /// <param name="dataOhlcv">OHLC object list</param>
-        /// <param name="formationName">Selected formation</param>
+        /// <param name="fiboName">Selected formation</param>
         /// <param name="weight">Signal weight</param>
         /// <returns>Weighted index decimal number</returns>
-        decimal GetFormationSignalsIndex(List<OhlcvObject> dataOhlcv, string formationName, decimal weight);
+        decimal GetFormationSignalsIndex(List<OhlcvObject> dataOhlcv, string fiboName, decimal weight);
 
         /// <summary>
         /// Calculates the weighted index for the selected multiple formations
@@ -164,6 +164,23 @@
         /// <param name="dataOhlcv">OHLC object list</param>
         /// <param name="formationName">Selected formation</param>
         /// <returns>Signals count integer number</returns>
-        int GetFiboSignalsCount(List<OhlcvObject> dataOhlcv, string fiboName);
+        int GetFiboSignalsCount(List<OhlcvObject> dataOhlcv, string formationName);
+
+        /// <summary>
+        /// Calculates the weighted index for the selected single fibo
+        /// </summary>
+        /// <param name="dataOhlcv">OHLC object list</param>
+        /// <param name="fiboName">Selected fibo</param>
+        /// <param name="weight">Signal weight</param>
+        /// <returns>Weighted index decimal number</returns>
+        decimal GetFiboSignalsIndex(List<OhlcvObject> dataOhlcv, string fiboName, decimal weight);
+
+        /// <summary>
+        /// Calculates the weighted index for the selected multiple fibos
+        /// </summary>
+        /// <param name="dataOhlcv">OHLC object list</param>
+        /// <param name="formationsNamesWithWeights">Dictionary of fibo names with their weights</param>
+        /// <returns>Signals count integer number</returns>
+        decimal GetMultipleFiboSignalsIndex(List<OhlcvObject> dataOhlcv, Dictionary<string, decimal> fibosNamesWithWeights);
     }
 }

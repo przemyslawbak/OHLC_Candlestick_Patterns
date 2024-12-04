@@ -260,5 +260,26 @@
             _fibonacci = new Fibonacci(dataOhlcv);
             return _fibonacci.GetFibonacciSignalsCount(fiboName);
         }
+
+        public decimal GetFiboSignalsIndex(List<OhlcvObject> dataOhlcv, string fiboName, decimal weight)
+        {
+            _fibonacci = new Fibonacci(dataOhlcv);
+
+            return _fibonacci.GetSignalsCount(fiboName) * weight;
+        }
+
+        public decimal GetMultipleFiboSignalsIndex(List<OhlcvObject> dataOhlcv, Dictionary<string, decimal> fibosNamesWithWeights)
+        {
+            _fibonacci = new Fibonacci(dataOhlcv);
+
+            List<decimal> count = new List<decimal>();
+
+            foreach (var methodName in fibosNamesWithWeights.Keys)
+            {
+                count.Add(_fibonacci.GetSignalsCount(methodName) * fibosNamesWithWeights[methodName]);
+            }
+
+            return count.Sum(x => x);
+        }
     }
 }
