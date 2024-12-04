@@ -52,11 +52,11 @@ Console.WriteLine("Weightened index for selected multiple fibo: {0}", signalsCou
 var signalsCountSingleWeightened = _signals.GetFiboSignalsIndex(dataOhlcv, "BearishABCD", 0.5M);
 Console.WriteLine("Weightened index for selected single fibo: {0}", signalsCountSingleWeightened);
 
-var ohlcSingleSignals = _signals.GetFiboOhlcvWithSignals(dataOhlcv, "BearishABCD");
-Console.WriteLine("Signals for single fibo: {0}", ohlcSingleSignals.Where(x => x.Signal == true).Count());
+var zigZagSingleSignals = _signals.GetFiboZigZagWithSignals(dataOhlcv, "BearishABCD");
+Console.WriteLine("Signals for single fibo: {0}", zigZagSingleSignals.Where(x => x.Signal == true).Count());
 
-var ohlcMultiSignals = _signals.GetMultipleFiboOhlcvWithSignals(dataOhlcv, new string[] { "BearishABCD", "Bearish 3 Drive" });
-Console.WriteLine("Number of lists returned: {0}", ohlcMultiSignals.Count());
+var zigZagMultiSignals = _signals.GetMultipleFiboZigZagWithSignals(dataOhlcv, new string[] { "BearishABCD", "Bearish 3 Drive" });
+Console.WriteLine("Number of lists returned: {0}", zigZagMultiSignals.Count());
 
 //END
 Console.WriteLine("END");
