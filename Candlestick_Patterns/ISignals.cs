@@ -135,5 +135,19 @@
         /// <param name="formationName">Selected Fibonacci formation</param>
         /// <returns>Signals count integer number</returns>
         int GetFibonacciSignalsCount(List<OhlcvObject> dataOhlcv, string formationName);
+
+        /// <summary>
+        /// Counting bullish signals that appear in the OHLC list across all fibo
+        /// </summary>
+        /// <param name="dataOhlcv">OHLC object list</param>
+        /// <returns>Bullish signals count integer</returns>
+        int GetFiboBullishSignalsCount(List<OhlcvObject> dataOhlcv);
+
+        /// <summary>
+        /// Counting bearish signals that appear in the OHLC list across all fibo
+        /// </summary>
+        /// <param name="dataOhlcv">OHLC object list</param>
+        /// <returns>Bearish signals count integer</returns>
+        int GetFiboBearishSignalsCount(List<OhlcvObject> dataOhlcv);
     }
 }

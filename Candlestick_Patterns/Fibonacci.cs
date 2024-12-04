@@ -377,5 +377,37 @@ namespace Candlestick_Patterns
             var methodName = patternName.Trim().Replace(" ", "");
             return GetFibonacciSignalsList(methodName).Where(x => x.Signal == true).Count();
         }
+
+        public List<string> GetAllMethodNames()
+        {
+            List<string> methods = new List<string>();
+            foreach (MethodInfo item in typeof(Formations).GetMethods(BindingFlags.NonPublic | BindingFlags.Instance))
+            {
+                methods.Add(item.Name);
+            }
+            return methods;
+        }
+
+        public int GetSignalsCount(string formationName)
+        {
+            var methodName = formationName.Trim().Replace(" ", "");
+            return GetFormationsSignalsList(methodName).Where(x => x.Signal == true).Count();
+        }
+
+        public List<ZigZagObject> GetFormationsSignalsList(string formationName)
+        {
+            var methodName = formationName.Trim().Replace(" ", "");
+            Type thisType = this.GetType();
+            MethodInfo theMethod = thisType.GetMethod(methodName, BindingFlags.NonPublic | BindingFlags.Instance);
+            if (theMethod != null)
+            {
+                List<ZigZagObject> result = (List<ZigZagObject>)theMethod.Invoke(this, null);
+                return result;
+            }
+            else
+            {
+                return _data;
+            }
+        }
     }
 }

@@ -208,5 +208,37 @@
             _fibonacci = new Fibonacci(dataOhlcv);
             return _fibonacci.GetFibonacciSignalsCount(formationName);
         }
+
+        public int GetFiboBullishSignalsCount(List<OhlcvObject> dataOhlcv)
+        {
+            _fibonacci = new Fibonacci(dataOhlcv);
+
+            var bullishMethodNames = _fibonacci.GetAllMethodNames().Where(x => x.StartsWith("Bullish")).ToList();
+
+            List<int> count = new List<int>();
+
+            foreach (var methodName in bullishMethodNames)
+            {
+                count.Add(_fibonacci.GetSignalsCount(methodName));
+            }
+
+            return count.Sum(x => x);
+        }
+
+        public int GetFiboBearishSignalsCount(List<OhlcvObject> dataOhlcv)
+        {
+            _fibonacci = new Fibonacci(dataOhlcv);
+
+            var bullishMethodNames = _fibonacci.GetAllMethodNames().Where(x => x.StartsWith("Bearish")).ToList();
+
+            List<int> count = new List<int>();
+
+            foreach (var methodName in bullishMethodNames)
+            {
+                count.Add(_fibonacci.GetSignalsCount(methodName));
+            }
+
+            return count.Sum(x => x);
+        }
     }
 }
