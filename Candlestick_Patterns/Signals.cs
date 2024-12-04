@@ -174,18 +174,14 @@
             return count.Sum(x => x);
         }
 
-        public List<OhlcvObject> GetFormationsOhlcvWithSignals(List<OhlcvObject> dataOhlcv, string formationName)
+        public List<ZigZagObject> GetFormationsZigZagWithSignals(List<OhlcvObject> dataOhlcv, string formationName)
         {
             _formations = new Formations(dataOhlcv);
 
-            return _formations.GetFormationsSignalsList(formationName).Select(x => new OhlcvObject()
-            {
-                Close = x.Close,
-                Signal = x.Signal,
-            }).ToList();
+            return _formations.GetFormationsSignalsList(formationName);
         }
 
-        public List<List<OhlcvObject>> GetMultipleFormationsOhlcvWithSignals(List<OhlcvObject> dataOhlcv, string[] formationsNames)
+        public List<List<ZigZagObject>> GetMultipleFormationsZigZagWithSignals(List<OhlcvObject> dataOhlcv, string[] formationsNames)
         {
             _formations = new Formations(dataOhlcv);
 
@@ -196,11 +192,7 @@
                 list.Add(_formations.GetFormationsSignalsList(methodName));
             }
 
-            return list.Select(x => x.Select(y => new OhlcvObject()
-            {
-                Close = y.Close,
-                Signal = y.Signal,
-            }).ToList()).ToList();
+            return list;
         }
 
         public int GetFibonacciSignalsCount(List<OhlcvObject> dataOhlcv, string formationName)
@@ -282,18 +274,14 @@
             return count.Sum(x => x);
         }
 
-        public List<OhlcvObject> GetFiboOhlcvWithSignals(List<OhlcvObject> dataOhlcv, string fiboName)
+        public List<ZigZagObject> GetFiboZigZagWithSignals(List<OhlcvObject> dataOhlcv, string fiboName)
         {
             _fibonacci = new Fibonacci(dataOhlcv);
 
-            return _fibonacci.GetFibonacciSignalsList(fiboName).Select(x => new OhlcvObject()
-            {
-                Close = x.Close,
-                Signal = x.Signal,
-            }).ToList();
+            return _fibonacci.GetFibonacciSignalsList(fiboName);
         }
 
-        public List<List<OhlcvObject>> GetMultipleFiboOhlcvWithSignals(List<OhlcvObject> dataOhlcv, string[] fiboNames)
+        public List<List<ZigZagObject>> GetMultipleFiboZigZagWithSignals(List<OhlcvObject> dataOhlcv, string[] fiboNames)
         {
             _fibonacci = new Fibonacci(dataOhlcv);
 
@@ -304,11 +292,7 @@
                 list.Add(_fibonacci.GetFibonacciSignalsList(methodName));
             }
 
-            return list.Select(x => x.Select(y => new OhlcvObject()
-            {
-                Close = y.Close,
-                Signal = y.Signal,
-            }).ToList()).ToList();
+            return list;
         }
     }
 }

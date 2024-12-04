@@ -117,16 +117,16 @@
         /// </summary>
         /// <param name="dataOhlcv">OHLC object list</param>
         /// <param name="fiboName">Selected formation</param>
-        /// <returns>OHLC list with updated signal values</returns>
-        List<OhlcvObject> GetFormationsOhlcvWithSignals(List<OhlcvObject> dataOhlcv, string fiboName);
+        /// <returns>ZigZag list with updated signal values</returns>
+        List<ZigZagObject> GetFormationsZigZagWithSignals(List<OhlcvObject> dataOhlcv, string fiboName);
 
         /// <summary>
         /// Calculates signals for selected multiply formation
         /// </summary>
         /// <param name="dataOhlcv">OHLC object list</param>
         /// <param name="formationsNames">Selected formation</param>
-        /// <returns>List of OHLC lists with updated signal values</returns>
-        List<List<OhlcvObject>> GetMultipleFormationsOhlcvWithSignals(List<OhlcvObject> dataOhlcv, string[] formationsNames);
+        /// <returns>List of ZigZag lists with updated signal values</returns>
+        List<List<ZigZagObject>> GetMultipleFormationsZigZagWithSignals(List<OhlcvObject> dataOhlcv, string[] formationsNames);
 
         /// <summary>
         /// Counts the number of fibonacci patterns appearing in the OHLC list for a selected single fibonacci pattern
@@ -188,15 +188,15 @@
         /// </summary>
         /// <param name="dataOhlcv">OHLC object list</param>
         /// <param name="fiboName">Selected formation</param>
-        /// <returns>OHLC list with updated signal values</returns>
-        List<OhlcvObject> GetFiboOhlcvWithSignals(List<OhlcvObject> dataOhlcv, string fiboName);
+        /// <returns>ZigZag list with updated signal values</returns>
+        List<ZigZagObject> GetFiboZigZagWithSignals(List<OhlcvObject> dataOhlcv, string fiboName);
 
         /// <summary>
         /// Calculates signals for selected multiply fibonacci patterns
         /// </summary>
         /// <param name="dataOhlcv">OHLC object list</param>
         /// <param name="fiboNames">Selected fibonacci patterns</param>
-        /// <returns>List of OHLC lists with updated signal values</returns>
-        List<List<OhlcvObject>> GetMultipleFiboOhlcvWithSignals(List<OhlcvObject> dataOhlcv, string[] fiboNames);
+        /// <returns>List of ZigZag lists with updated signal values</returns>
+        List<List<ZigZagObject>> GetMultipleFiboZigZagWithSignals(List<OhlcvObject> dataOhlcv, string[] fiboNames);
     }
 }
