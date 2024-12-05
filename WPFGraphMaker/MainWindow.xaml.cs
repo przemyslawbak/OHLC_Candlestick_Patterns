@@ -4,9 +4,12 @@ using ScottPlot;
 using ScottPlot.Plottables;
 using ScottPlot.WPF;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Net.Http;
+using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Interop;
 using System.Windows.Media;
 using Point = System.Windows.Point;
 
@@ -16,7 +19,6 @@ namespace WPFGraphMaker
     {
         private readonly IFiboTester _fiboTester = new FiboTester();
         Crosshair Crosshair;
-
         public MainWindow()
         {
             InitializeComponent();
@@ -29,43 +31,50 @@ namespace WPFGraphMaker
                 Height = SystemParameters.WorkArea.Height,
 
             };
-            
+
             var cross = WpfPlot1.Plot.Add.Crosshair(0, 0);
 
             WpfPlot1.MouseWheel += (s, e) =>
             {
-                var scrollViewer = new ScrollViewer();
+                ScrollViewer scrollviewer = s as ScrollViewer;
                 var st = new ScaleTransform();
-                Pixel mousePixel = new();
-                Coordinates mouseCoordinates = WpfPlot1.Plot.GetCoordinates(mousePixel);
-                cross.Position = mouseCoordinates;
                 if (e.Delta > 0)
                 {
-                    st.ScaleX *= 1;
+                    st.ScaleX *= 3;
                     st.ScaleY *= 1;
                 }
                 else
                 {
-                    st.ScaleX /= 1;
+                    st.ScaleX /= 3;
                     st.ScaleY /= 1;
                 }
+                e.Handled = true;
+               
                 WpfPlot1.Refresh();
             };
 
             WpfPlot1.MouseMove += (s, e) =>
             {
-                var scrollViewer = new ScrollViewer();
-                //var scrollViewer = new ScrollViewer
-                //{
-                //    HorizontalContentAlignment = System.Windows.HorizontalAlignment.Left,
-                //    VerticalContentAlignment = System.Windows.VerticalAlignment.Top,
-                //    HorizontalScrollBarVisibility = ScrollBarVisibility.Visible,
-                //    CanContentScroll = true
-                //};
+
+                var scrollViewer = new ScrollViewer
+                {
+                    HorizontalContentAlignment = System.Windows.HorizontalAlignment.Left,
+                    VerticalContentAlignment = System.Windows.VerticalAlignment.Top,
+                    HorizontalScrollBarVisibility = ScrollBarVisibility.Auto,
+                    CanContentScroll = true
+                };
+
                 var viewer = new ScrollViewer();
                 scrollViewer.Content = viewer;
                 ScrollViewer.SetCanContentScroll(viewer, true);
-                ScrollViewer.SetHorizontalScrollBarVisibility(viewer, ScrollBarVisibility.Visible);
+                ScrollViewer.SetHorizontalScrollBarVisibility(viewer, ScrollBarVisibility.Auto);
+
+                var myStackPanel = new StackPanel
+                {
+                    HorizontalAlignment = System.Windows.HorizontalAlignment.Left,
+                    VerticalAlignment = System.Windows.VerticalAlignment.Top
+                };
+                scrollViewer.Content = myStackPanel;
 
                 Grid.SetRow(scrollViewer, 1);
                 Point p = e.GetPosition(WpfPlot1);
@@ -73,6 +82,9 @@ namespace WPFGraphMaker
                 ScottPlot.Coordinates coordinates = WpfPlot1.Plot.GetCoordinates(mousePixel);
                 cross.Position = coordinates;
                 WpfPlot1.Plot.GetAxis(mousePixel);
+                WpfPlot1.Plot.Axes.RectifyX();
+                WpfPlot1.Plot.Axes.RectifyY();
+                //this.SizeToContent = SizeToContent.WidthAndHeight;
                 WpfPlot1.Refresh();
             };
 
@@ -82,16 +94,21 @@ namespace WPFGraphMaker
                 {
                     HorizontalContentAlignment = System.Windows.HorizontalAlignment.Left,
                     VerticalContentAlignment = System.Windows.VerticalAlignment.Top,
-                    HorizontalScrollBarVisibility = ScrollBarVisibility.Visible,
+                    HorizontalScrollBarVisibility = ScrollBarVisibility.Auto,
                     CanContentScroll = true
                 };
+                
                 var st = new ScaleTransform();
                 Pixel mousePixel = new();
                 Coordinates mouseCoordinates = WpfPlot1.Plot.GetCoordinates(mousePixel);
                 cross.Position = mouseCoordinates;
+                WpfPlot1.Plot.ScaleFactor = 5;
                 scrollViewer.ScrollToTop();
-                WpfPlot1.Plot.ScaleFactor = 3;
+                WpfPlot1.Plot.Axes.RectifyX();
+                WpfPlot1.Plot.Axes.AutoScaleExpandX();
+                //WpfPlot1.Plot.Axes.RectifyY();
                 WpfPlot1.Refresh();
+                this.SizeToContent = SizeToContent.WidthAndHeight;
             };
         }
 
@@ -113,7 +130,6 @@ namespace WPFGraphMaker
 
         private void ViewGraph(List<ZigZagObject> points)
         {
-
             var numbers = new List<int>();
             var newList = new List<double>();
 
