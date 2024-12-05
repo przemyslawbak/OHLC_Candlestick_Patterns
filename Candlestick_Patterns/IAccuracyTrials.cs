@@ -60,5 +60,28 @@ namespace OHLC_Candlestick_Patterns
         /// <param name="candlesAheadQty">Qty of candles ahead to be evaluated</param>
         /// <returns>AccuracyObject containing values comparing to AVER and END closing</returns>
         AccuracyObject GetAverPercentFiboAccuracy(List<OhlcvObject> dataOhlcv, string fiboName, int candlesAheadQty);
+
+        /// <summary>
+        /// Finds an array of candlestick pattern names resulting with positive accuracy in relation to average close prices in given data set
+        /// </summary>
+        /// <param name="dataOhlcv">OHLC data set</param>
+        /// <returns>Array of names</returns>
+        string[] GetPositiveAccuracyToAverPatterns(List<OhlcvObject> dataOhlcv);
+
+        /// <summary>
+        /// Finds an array of formations names resulting with positive accuracy in relation to average close prices in given data set
+        /// </summary>
+        /// <param name="dataOhlcv">OHLC data set</param>
+        /// <returns>Array of names</returns>
+        string[] GetPositiveAccuracyToAverFormations(List<OhlcvObject> dataOhlcv);
+
+        /// <summary>
+        /// Finds an array of fibonacci patterns names resulting with positive accuracy in relation to average close prices in given data set
+        /// </summary>
+        /// <param name="dataOhlcv">OHLC data set</param>
+        /// <returns>Array of names</returns>
+        string[] GetPositiveAccuracyToAverFibo(List<OhlcvObject> dataOhlcv);
+
+        //todo: same as above, but to end
     }
 }

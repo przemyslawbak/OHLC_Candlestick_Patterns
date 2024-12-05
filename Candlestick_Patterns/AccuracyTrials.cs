@@ -182,5 +182,65 @@ namespace OHLC_Candlestick_Patterns
                 AccuracyToEndClose = accuracyEndResuts.Average(),
             };
         }
+
+        public string[] GetPositiveAccuracyToAverPatterns(List<OhlcvObject> dataOhlcv)
+        {
+            _patterns = new Patterns(dataOhlcv);
+            var allPatterns = _patterns.GetAllMethodNames();
+
+            var res = new List<string>();
+
+            foreach (var pattern in allPatterns)
+            {
+                var acc = GetAverPercentPatternAccuracy(dataOhlcv, pattern);
+
+                if (acc.AccuracyToAverageClose > 0)
+                {
+                    res.Add(pattern);
+                }
+            }
+
+            return res.ToArray();
+        }
+
+        public string[] GetPositiveAccuracyToAverFormations(List<OhlcvObject> dataOhlcv)
+        {
+            _formations = new Formations(dataOhlcv);
+            var allFormations = _formations.GetAllMethodNames();
+
+            var res = new List<string>();
+
+            foreach (var formation in allFormations)
+            {
+                var acc = GetAverPercentFormationAccuracy(dataOhlcv, formation);
+
+                if (acc.AccuracyToAverageClose > 0)
+                {
+                    res.Add(formation);
+                }
+            }
+
+            return res.ToArray();
+        }
+
+        public string[] GetPositiveAccuracyToAverFibo(List<OhlcvObject> dataOhlcv)
+        {
+            _fibonacci = new Fibonacci(dataOhlcv);
+            var allFibo = _fibonacci.GetAllMethodNames();
+
+            var res = new List<string>();
+
+            foreach (var fibo in allFibo)
+            {
+                var acc = GetAverPercentFiboAccuracy(dataOhlcv, fibo);
+
+                if (acc.AccuracyToAverageClose > 0)
+                {
+                    res.Add(fibo);
+                }
+            }
+
+            return res.ToArray();
+        }
     }
 }
