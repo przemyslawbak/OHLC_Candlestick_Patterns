@@ -302,5 +302,20 @@ namespace OHLC_Candlestick_Patterns
 
             return res.ToArray();
         }
+
+        public string[] GetBestAccuracyPatterns(List<OhlcvObject> dataOhlcv)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string[] GetBestAccuracyFormations(List<OhlcvObject> dataOhlcv)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string[] GetBestAccuracyFibo(List<OhlcvObject> dataOhlcv)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

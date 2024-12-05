@@ -8,7 +8,7 @@ namespace OHLC_Candlestick_Patterns
         /// Tests selected pattern accuracy in given data comparing to average close prices after signal appears
         /// Positive results indicate that they are in line with expectations. Negative results indicate poor accuracy
         /// </summary>
-        /// <param name="dataOhlcv">OHLC object list</param>
+        /// <param name="dataOhlcv">OHLCV data set</param>
         /// <param name="patternName">Selected pattern</param>
         /// <returns>AccuracyObject containing values comparing to AVER and END closing</returns>
         AccuracyObject GetAverPercentPatternAccuracy(List<OhlcvObject> dataOhlcv, string patternName);
@@ -17,7 +17,7 @@ namespace OHLC_Candlestick_Patterns
         /// Tests selected pattern accuracy in given data 30 candles ahead comparing to average close prices after signal appears
         /// Positive results indicate that they are in line with expectations. Negative results indicate poor accuracy
         /// </summary>
-        /// <param name="dataOhlcv">OHLC object list</param>
+        /// <param name="dataOhlcv">OHLCV data set</param>
         /// <param name="patternName">Selected pattern</param>
         /// <param name="candlesAheadQty">Qty of candles ahead to be evaluated</param>
         /// <returns>AccuracyObject containing values comparing to AVER and END closing</returns>
@@ -27,7 +27,7 @@ namespace OHLC_Candlestick_Patterns
         /// Tests selected formation accuracy in given data comparing to average close prices after signal appears
         /// Positive results indicate that they are in line with expectations. Negative results indicate poor accuracy
         /// </summary>
-        /// <param name="dataOhlcv">OHLC object list</param>
+        /// <param name="dataOhlcv">OHLCV data set</param>
         /// <param name="formationName">Selected formation</param>
         /// <returns>AccuracyObject containing values comparing to AVER and END closing</returns>
         AccuracyObject GetAverPercentFormationAccuracy(List<OhlcvObject> dataOhlcv, string formationName);
@@ -36,7 +36,7 @@ namespace OHLC_Candlestick_Patterns
         /// Tests selected formation accuracy in given data 30 candles ahead comparing to average close prices after signal appears
         /// Positive results indicate that they are in line with expectations. Negative results indicate poor accuracy
         /// </summary>
-        /// <param name="dataOhlcv">OHLC object list</param>
+        /// <param name="dataOhlcv">OHLCV data set</param>
         /// <param name="formationName">Selected formation</param>
         /// <param name="candlesAheadQty">Qty of candles ahead to be evaluated</param>
         /// <returns>AccuracyObject containing values comparing to AVER and END closing</returns>
@@ -46,7 +46,7 @@ namespace OHLC_Candlestick_Patterns
         /// Tests selected fibo accuracy in given data comparing to average close prices after signal appears
         /// Positive results indicate that they are in line with expectations. Negative results indicate poor accuracy
         /// </summary>
-        /// <param name="dataOhlcv">OHLC object list</param>
+        /// <param name="dataOhlcv">OHLCV data set</param>
         /// <param name="fiboName">Selected fibo</param>
         /// <returns>AccuracyObject containing values comparing to AVER and END closing</returns>
         AccuracyObject GetAverPercentFiboAccuracy(List<OhlcvObject> dataOhlcv, string fiboName);
@@ -55,7 +55,7 @@ namespace OHLC_Candlestick_Patterns
         /// Tests selected fibo accuracy in given data 30 candles ahead comparing to average close prices after signal appears
         /// Positive results indicate that they are in line with expectations. Negative results indicate poor accuracy
         /// </summary>
-        /// <param name="dataOhlcv">OHLC object list</param>
+        /// <param name="dataOhlcv">OHLCV data set</param>
         /// <param name="fiboName">Selected fibo</param>
         /// <param name="candlesAheadQty">Qty of candles ahead to be evaluated</param>
         /// <returns>AccuracyObject containing values comparing to AVER and END closing</returns>
@@ -64,45 +64,64 @@ namespace OHLC_Candlestick_Patterns
         /// <summary>
         /// Finds an array of candlestick pattern names resulting with positive accuracy in relation to average close prices in given data set
         /// </summary>
-        /// <param name="dataOhlcv">OHLC data set</param>
+        /// <param name="dataOhlcv">OHLCV data set</param>
         /// <returns>Array of names</returns>
         string[] GetPositiveAccuracyToAverPatterns(List<OhlcvObject> dataOhlcv);
 
         /// <summary>
         /// Finds an array of formations names resulting with positive accuracy in relation to average close prices in given data set
         /// </summary>
-        /// <param name="dataOhlcv">OHLC data set</param>
+        /// <param name="dataOhlcv">OHLCV data set</param>
         /// <returns>Array of names</returns>
         string[] GetPositiveAccuracyToAverFormations(List<OhlcvObject> dataOhlcv);
 
         /// <summary>
         /// Finds an array of fibonacci patterns names resulting with positive accuracy in relation to average close prices in given data set
         /// </summary>
-        /// <param name="dataOhlcv">OHLC data set</param>
+        /// <param name="dataOhlcv">OHLCV data set</param>
         /// <returns>Array of names</returns>
         string[] GetPositiveAccuracyToAverFibo(List<OhlcvObject> dataOhlcv);
 
         /// <summary>
         /// Finds an array of candlestick pattern names resulting with positive accuracy in relation to last close prices in given data set
         /// </summary>
-        /// <param name="dataOhlcv">OHLC data set</param>
+        /// <param name="dataOhlcv">OHLCV data set</param>
         /// <returns>Array of names</returns>
         string[] GetPositiveAccuracyToEndPatterns(List<OhlcvObject> dataOhlcv);
 
         /// <summary>
         /// Finds an array of formations names resulting with positive accuracy in relation to last close prices in given data set
         /// </summary>
-        /// <param name="dataOhlcv">OHLC data set</param>
+        /// <param name="dataOhlcv">OHLCV data set</param>
         /// <returns>Array of names</returns>
         string[] GetPositiveAccuracyToEndFormations(List<OhlcvObject> dataOhlcv);
 
         /// <summary>
         /// Finds an array of fibonacci patterns names resulting with positive accuracy in relation to last close prices in given data set
         /// </summary>
-        /// <param name="dataOhlcv">OHLC data set</param>
+        /// <param name="dataOhlcv">OHLCV data set</param>
         /// <returns>Array of names</returns>
         string[] GetPositiveAccuracyToEndFibo(List<OhlcvObject> dataOhlcv);
 
-        //todo: same as above, but to end
+        /// <summary>
+        /// Finds an array of candlestick pattern names resulting with best accuracy in given data set
+        /// </summary>
+        /// <param name="dataOhlcv">OHLCV data set</param>
+        /// <returns>Array of names</returns>
+        string[] GetBestAccuracyPatterns(List<OhlcvObject> dataOhlcv);
+
+        /// <summary>
+        /// Finds an array of formations names resulting with positive accuracy in given data set
+        /// </summary>
+        /// <param name="dataOhlcv">OHLCV data set</param>
+        /// <returns>Array of names</returns>
+        string[] GetBestAccuracyFormations(List<OhlcvObject> dataOhlcv);
+
+        /// <summary>
+        /// Finds an array of fibonacci patterns names resulting with positive accuracy in given data set
+        /// </summary>
+        /// <param name="dataOhlcv">OHLCV data set</param>
+        /// <returns>Array of names</returns>
+        string[] GetBestAccuracyFibo(List<OhlcvObject> dataOhlcv);
     }
 }
