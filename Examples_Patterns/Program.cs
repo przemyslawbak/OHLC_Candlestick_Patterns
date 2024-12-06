@@ -32,6 +32,9 @@ namespace Examples_Patterns
             }).Reverse().ToList();
 
             //ACCURACY TRIALS
+            var best = _accuracy.GetBestAccuracyPatterns(dataOhlcv);
+
+
             var accuracyPercentageSummary = _accuracy.GetAverPercentPatternAccuracy(dataOhlcv, "Bullish 3 Inside Up");
             Console.WriteLine("Accuracy percentage summary comparing to end of data set result: {0}", accuracyPercentageSummary.AccuracyToEndClose);
             Console.WriteLine("Accuracy percentage summary comparing to average close result: {0}", accuracyPercentageSummary.AccuracyToAverageClose);

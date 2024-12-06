@@ -1,4 +1,5 @@
 ﻿using Candlestick_Patterns;
+using Microsoft.VisualBasic;
 
 namespace OHLC_Candlestick_Patterns
 {
@@ -305,17 +306,83 @@ namespace OHLC_Candlestick_Patterns
 
         public string[] GetBestAccuracyPatterns(List<OhlcvObject> dataOhlcv)
         {
-            throw new NotImplementedException();
+            _patterns = new Patterns(dataOhlcv);
+            var allPatterns = _patterns.GetAllMethodNames();
+
+            var values = new Dictionary<string, decimal>();
+
+            foreach (var pattern in allPatterns)
+            {
+                var acc = GetAverPercentPatternAccuracy(dataOhlcv, pattern);
+
+                if (acc.AccuracyToEndClose > 0 && acc.AccuracyToAverageClose > 0)
+                {
+                    values.Add(pattern, (acc.AccuracyToEndClose + acc.AccuracyToAverageClose) / 2);
+                }
+            }
+
+            if (values.Count == 0)
+            {
+                return new string[0];
+            }
+
+            int qty = (int)(values.Count * 0.25);
+
+            return values.OrderByDescending(x => x.Value).Take(qty).Select(x => x.Key).ToArray();
         }
 
         public string[] GetBestAccuracyFormations(List<OhlcvObject> dataOhlcv)
         {
-            throw new NotImplementedException();
+            _formations = new Formations(dataOhlcv);
+            var allFormations = _formations.GetAllMethodNames();
+
+            var values = new Dictionary<string, decimal>();
+
+            foreach (var formation in allFormations)
+            {
+                var acc = GetAverPercentFormationAccuracy(dataOhlcv, formation);
+
+                if (acc.AccuracyToEndClose > 0 && acc.AccuracyToAverageClose > 0)
+                {
+                    values.Add(formation, (acc.AccuracyToEndClose + acc.AccuracyToAverageClose) / 2);
+                }
+            }
+
+            if (values.Count == 0)
+            {
+                return new string[0];
+            }
+
+            int qty = (int)(values.Count * 0.25);
+
+            return values.OrderByDescending(x => x.Value).Take(qty).Select(x => x.Key).ToArray();
         }
 
         public string[] GetBestAccuracyFibo(List<OhlcvObject> dataOhlcv)
         {
-            throw new NotImplementedException();
+            _fibonacci = new Fibonacci(dataOhlcv);
+            var allFibo = _fibonacci.GetAllMethodNames();
+
+            var values = new Dictionary<string, decimal>();
+
+            foreach (var fibo in allFibo)
+            {
+                var acc = GetAverPercentFiboAccuracy(dataOhlcv, fibo);
+
+                if (acc.AccuracyToEndClose > 0 && acc.AccuracyToAverageClose > 0)
+                {
+                    values.Add(fibo, (acc.AccuracyToEndClose + acc.AccuracyToAverageClose) / 2);
+                }
+            }
+
+            if (values.Count == 0)
+            {
+                return new string[0];
+            }
+
+            int qty = (int)(values.Count * 0.25);
+
+            return values.OrderByDescending(x => x.Value).Take(qty).Select(x => x.Key).ToArray();
         }
     }
 }
