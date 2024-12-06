@@ -812,7 +812,8 @@ namespace Candlestick_Patterns
             {
                 methods.Add(item.Name);
             }
-            return methods;
+
+            return methods.Where(x => x.Contains("Bullish") || x.Contains("Bearish") || x.Contains("Continuation")).ToList();
         }
 
         public int GetSignalsCount(string formationName)

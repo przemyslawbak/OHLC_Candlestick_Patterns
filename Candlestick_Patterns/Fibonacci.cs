@@ -381,11 +381,12 @@ namespace Candlestick_Patterns
         public List<string> GetAllMethodNames()
         {
             List<string> methods = new List<string>();
-            foreach (MethodInfo item in typeof(Formations).GetMethods(BindingFlags.NonPublic | BindingFlags.Instance))
+            foreach (MethodInfo item in typeof(Fibonacci).GetMethods(BindingFlags.NonPublic | BindingFlags.Instance))
             {
                 methods.Add(item.Name);
             }
-            return methods;
+
+            return methods.Where(x => x.Contains("Bullish") || x.Contains("Bearish") || x.Contains("Continuation")).ToList();
         }
 
         public int GetSignalsCount(string formationName)
