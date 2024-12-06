@@ -304,10 +304,11 @@ namespace OHLC_Candlestick_Patterns
             return res.ToArray();
         }
 
-        public string[] GetBestAccuracyPatterns(List<OhlcvObject> dataOhlcv)
+        public string[] GetBestAccuracyPatterns(List<OhlcvObject> dataOhlcv, int topPercentage)
         {
             _patterns = new Patterns(dataOhlcv);
             var allPatterns = _patterns.GetAllMethodNames();
+            int qty = allPatterns.Count * topPercentage / 100;
 
             var values = new Dictionary<string, decimal>();
 
@@ -326,15 +327,19 @@ namespace OHLC_Candlestick_Patterns
                 return new string[0];
             }
 
-            int qty = (int)(values.Count * 0.25);
+            if (values.Count < qty)
+            {
+                qty = values.Count;
+            }
 
             return values.OrderByDescending(x => x.Value).Take(qty).Select(x => x.Key).ToArray();
         }
 
-        public string[] GetBestAccuracyFormations(List<OhlcvObject> dataOhlcv)
+        public string[] GetBestAccuracyFormations(List<OhlcvObject> dataOhlcv, int topPercentage)
         {
             _formations = new Formations(dataOhlcv);
             var allFormations = _formations.GetAllMethodNames();
+            int qty = allFormations.Count * topPercentage / 100;
 
             var values = new Dictionary<string, decimal>();
 
@@ -353,15 +358,19 @@ namespace OHLC_Candlestick_Patterns
                 return new string[0];
             }
 
-            int qty = (int)(values.Count * 0.25);
+            if (values.Count < qty)
+            {
+                qty = values.Count;
+            }
 
             return values.OrderByDescending(x => x.Value).Take(qty).Select(x => x.Key).ToArray();
         }
 
-        public string[] GetBestAccuracyFibo(List<OhlcvObject> dataOhlcv)
+        public string[] GetBestAccuracyFibo(List<OhlcvObject> dataOhlcv, int topPercentage)
         {
             _fibonacci = new Fibonacci(dataOhlcv);
             var allFibo = _fibonacci.GetAllMethodNames();
+            int qty = allFibo.Count * topPercentage / 100;
 
             var values = new Dictionary<string, decimal>();
 
@@ -380,7 +389,10 @@ namespace OHLC_Candlestick_Patterns
                 return new string[0];
             }
 
-            int qty = (int)(values.Count * 0.25);
+            if (values.Count < qty)
+            {
+                qty = values.Count;
+            }
 
             return values.OrderByDescending(x => x.Value).Take(qty).Select(x => x.Key).ToArray();
         }
