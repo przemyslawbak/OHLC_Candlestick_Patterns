@@ -126,5 +126,32 @@ namespace OHLC_Candlestick_Patterns
         /// <param name="topPercentage">Top percentage of all fibo</param>
         /// <returns>Array of names</returns>
         string[] GetBestAccuracyFibo(List<OhlcvObject> dataOhlcv, int topPercentage);
+
+        /// <summary>
+        /// Finds an array of candlestick pattern names resulting with best accuracy in given data set
+        /// </summary>
+        /// <param name="dataOhlcv">OHLCV data set</param>
+        /// <param name="topPercentage">Top percentage of all patterns</param>
+        /// <param name="candlesAheadQty">Qty of candles ahead to be evaluated</param>
+        /// <returns>Array of names</returns>
+        string[] GetBestAccuracyPatterns(List<OhlcvObject> dataOhlcv, int topPercentage, int candlesAhead);
+
+        /// <summary>
+        /// Finds an array of formations names resulting with positive accuracy in given data set
+        /// </summary>
+        /// <param name="dataOhlcv">OHLCV data set</param>
+        /// <param name="topPercentage">Top percentage of all formations</param>
+        /// <param name="candlesAheadQty">Qty of candles ahead to be evaluated</param>
+        /// <returns>Array of names</returns>
+        string[] GetBestAccuracyFormations(List<OhlcvObject> dataOhlcv, int topPercentage, int candlesAhead);
+
+        /// <summary>
+        /// Finds an array of fibonacci patterns names resulting with positive accuracy in given data set
+        /// </summary>
+        /// <param name="dataOhlcv">OHLCV data set</param>
+        /// <param name="topPercentage">Top percentage of all fibo</param>
+        /// <param name="candlesAheadQty">Qty of candles ahead to be evaluated</param>
+        /// <returns>Array of names</returns>
+        string[] GetBestAccuracyFibo(List<OhlcvObject> dataOhlcv, int topPercentage, int candlesAhead);
     }
 }
