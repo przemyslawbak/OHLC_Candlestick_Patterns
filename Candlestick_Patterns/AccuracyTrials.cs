@@ -1,5 +1,4 @@
 ﻿using Candlestick_Patterns;
-using Microsoft.VisualBasic;
 
 namespace OHLC_Candlestick_Patterns
 {
@@ -135,11 +134,11 @@ namespace OHLC_Candlestick_Patterns
                 {
                     accuracyEndResuts.Add((lastClose - signalsList[i].Close) * multiplier / signalsList[i].Close * 100);
 
-                    var averCloseAfterSignal = signalsList.Skip(i);
+                    var averCloseAfterSignal = signalsList.Skip(i).Take(candlesAheadQty).Average(x => x.Close);
 
                     if (signalsList[lastIndex].Close != 0)
                     {
-                        accuracyAverResuts.Add((averCloseAfterSignal.Average(x => x.Close) - signalsList[lastIndex].Close) * multiplier / signalsList[lastIndex].Close * 100);
+                        accuracyAverResuts.Add((averCloseAfterSignal - signalsList[i].Close) * multiplier / signalsList[i].Close * 100);
                     }
                 }
             }
@@ -176,11 +175,11 @@ namespace OHLC_Candlestick_Patterns
                 {
                     accuracyEndResuts.Add((lastClose - signalsList[i].Close) * multiplier / signalsList[i].Close * 100);
 
-                    var averCloseAfterSignal = signalsList.Skip(i);
+                    var averCloseAfterSignal = signalsList.Skip(i).Average(x => x.Close);
 
                     if (signalsList[i].Close != 0)
                     {
-                        accuracyAverResuts.Add((averCloseAfterSignal.Average(x => x.Close) - signalsList[i].Close) * multiplier / signalsList[i].Close * 100);
+                        accuracyAverResuts.Add((averCloseAfterSignal - signalsList[i].Close) * multiplier / signalsList[i].Close * 100);
                     }
                 }
             }
