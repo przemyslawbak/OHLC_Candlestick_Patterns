@@ -194,7 +194,7 @@ namespace WPFGraphMaker
 
         private async void OnStartClick(object sender, RoutedEventArgs e)
         {
-            var url = "https://gist.githubusercontent.com/przemyslawbak/c90528453d512a8d85ad2deea5cf6ad2/raw/aapl_us_d.csv";
+            var url = "https://gist.github.com/przemyslawbak/92c3d4bba27cfd2b88d0dd916bbdad14/raw/AAL_1min.json";
 
             HttpClient client = new HttpClient();
             HttpResponseMessage response = await client.GetAsync(url);

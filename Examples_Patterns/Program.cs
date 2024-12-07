@@ -40,7 +40,7 @@ namespace Examples_Patterns
             dataOhlcv = dataOhlcv.Where(x => x.Open != 0 && x.High != 0 && x.Low != 0 && x.Close != 0).ToList();
 
             //ACCURACY TRIALS
-            var best = _accuracy.GetBestAccuracyPatterns(dataOhlcv, 100, 200);
+            var best = _accuracy.GetBestAccuracyFibo(dataOhlcv, 100, 300);
 
             var accuracyPercentageSummary = _accuracy.GetAverPercentPatternAccuracy(dataOhlcv, "Bullish 3 Inside Up");
             Console.WriteLine("Accuracy percentage summary comparing to end of data set result: {0}", accuracyPercentageSummary.AccuracyToEndClose);

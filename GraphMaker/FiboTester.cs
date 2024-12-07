@@ -120,15 +120,22 @@ namespace GraphMaker
 
         public List<ZigZagObject> GetDataFromJson(string patternName, string json)
         {
-            var dataOhlcv = JsonConvert.DeserializeObject<List<OhlcvObject>>(json).Select(x => new OhlcvObject()
+            var settings = new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore,
+                MissingMemberHandling = MissingMemberHandling.Ignore,
+            };
+
+            var dataOhlcv = JsonConvert.DeserializeObject<List<OhlcvObject>>(json, settings).Select(x => new OhlcvObject()
             {
                 Open = x.Open,
                 High = x.High,
                 Low = x.Low,
                 Close = x.Close,
                 Volume = x.Volume,
-            }).Reverse().ToList();
+            }).ToList();
 
+            dataOhlcv = dataOhlcv.Where(x => x.Open != 0 && x.High != 0 && x.Low != 0 && x.Close != 0).ToList();
 
             _fibonacci = new Fibonacci(dataOhlcv);
             var signalList = _fibonacci.GetFibonacciSignalsList(patternName);
