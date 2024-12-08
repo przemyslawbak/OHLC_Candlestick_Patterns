@@ -10,13 +10,14 @@ using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
-using Point = System.Windows.Point;
 
 namespace WPFGraphMaker
 {
     public partial class MainWindow : Window, INotifyPropertyChanged
     {
         private readonly IFiboTester _fiboTester = new FiboTester();
+        private List<ZigZagObject> _points = new List<ZigZagObject>();
+
         private Crosshair Crosshair;
         public MainWindow()
         {
@@ -201,15 +202,15 @@ namespace WPFGraphMaker
             string json = await response.Content.ReadAsStringAsync();
 
             var patternName = patternNameTextBox.Text == string.Empty ? "BullishButterfly" : patternNameTextBox.Text;
-            List<ZigZagObject> points = GetGraphData(patternName, json);
-            ViewGraph(points);
+            _points = GetGraphData(patternName, json);
+            ViewGraph(_points);
 
             var startPoints = 100;
 
-            if (points.Count > startPoints)
+            if (_points.Count > startPoints)
             {
-                var yMinStart = points.Select(x => x.Close).Take(startPoints).Min();
-                var yMaxStart = points.Select(x => x.Close).Take(startPoints).Max();
+                var yMinStart = _points.Select(x => x.Close).Take(startPoints).Min();
+                var yMaxStart = _points.Select(x => x.Close).Take(startPoints).Max();
 
                 OnDataLoadedScale(startPoints, yMinStart, yMaxStart);
 
