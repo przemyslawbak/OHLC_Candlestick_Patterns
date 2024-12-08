@@ -8,6 +8,7 @@ using System.Net.Http;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
+using System.Windows.Input;
 using System.Windows.Media;
 using Point = System.Windows.Point;
 
@@ -21,53 +22,20 @@ namespace WPFGraphMaker
         {
             InitializeComponent();
             DataContext = this;
+
             WpfPlot1 = new WpfPlot
             {
-                Width = SystemParameters.WorkArea.Width,
-                Height = SystemParameters.WorkArea.Height,
-                //or
-                /*Width = SystemParameters.PrimaryScreenWidth,
-                Height = SystemParameters.PrimaryScreenHeight,*/
-
-            };
-            
-            var cross = WpfPlot1.Plot.Add.Crosshair(0, 0);
-
-            WpfPlot1.MouseWheel += (s, e) =>
-            {
-                var scrollViewer = new ScrollViewer
-                {
-                    HorizontalContentAlignment = System.Windows.HorizontalAlignment.Right,
-                    VerticalContentAlignment = System.Windows.VerticalAlignment.Top,
-                    HorizontalScrollBarVisibility = ScrollBarVisibility.Visible,
-                    CanContentScroll = true
-                };
-                var myStackPanel = new StackPanel
-                {
-                    HorizontalAlignment = System.Windows.HorizontalAlignment.Right,
-                    VerticalAlignment = System.Windows.VerticalAlignment.Top
-                };
-                scrollViewer.Content = myStackPanel;
-                ((IScrollInfo)myStackPanel).CanVerticallyScroll = true;
-                ((IScrollInfo)myStackPanel).CanHorizontallyScroll = true;
-                ((IScrollInfo)myStackPanel).ScrollOwner = scrollViewer;
-                ((IScrollInfo)myStackPanel).MouseWheelRight();
-                //WpfPlot1.Plot.Axes.ZoomIn(1, 1);
-                var st = new ScaleTransform();
-                if (e.Delta > 0)
-                {
-                    st.ScaleX *= 2;
-                    st.ScaleY *= 2;
-                }
-                else
-                {
-                    st.ScaleX /= 2;
-                    st.ScaleY /= 2;
-                }
-                e.Handled = true;
+                Width = mainWin.Width - 30,
+                Height = mainWin.Height - 80,
             };
 
-            WpfPlot1.MouseMove += (s, e) =>
+            mainWin.SizeChanged += OnSizeChangedEvent;
+
+            //var cross = WpfPlot1.Plot.Add.Crosshair(0, 0);
+
+            WpfPlot1.MouseWheel += OnMouseWheelEvent;
+
+            /*WpfPlot1.MouseMove += (s, e) =>
             {
                 var scrollViewer = new ScrollViewer
                 {
@@ -93,33 +61,64 @@ namespace WPFGraphMaker
                 Point p = e.GetPosition(WpfPlot1);
                 ScottPlot.Pixel mousePixel = new(p.X * WpfPlot1.DisplayScale, p.Y * WpfPlot1.DisplayScale);
                 ScottPlot.Coordinates coordinates = WpfPlot1.Plot.GetCoordinates(mousePixel);
-                cross.Position = coordinates;
+                //cross.Position = coordinates;
                 this.SizeToContent = SizeToContent.WidthAndHeight;
 
                 WpfPlot1.Refresh();
-            };
+            };*/
+        }
 
-            WpfPlot1.MouseEnter += (s, e) =>
+        private void OnMouseWheelEvent(object sender, MouseWheelEventArgs e)
+        {
+            //todo: jedziesz do góry -> do start points dodajesz N
+            //todo: jedziesz do dół -> do start points odejmujesz N
+
+
+
+
+            var scrollViewer = new ScrollViewer
             {
-                var scrollViewer = new ScrollViewer
-                {
-                    HorizontalContentAlignment = System.Windows.HorizontalAlignment.Left,
-                    VerticalContentAlignment = System.Windows.VerticalAlignment.Top,
-                    HorizontalScrollBarVisibility = ScrollBarVisibility.Auto,
-                    CanContentScroll = true
-                };
-                var st = new ScaleTransform();
-                Point p = e.GetPosition(WpfPlot1);
-                int index = (int)p.X;
-                Pixel mousePixel = new();
-                Coordinates mouseCoordinates = WpfPlot1.Plot.GetCoordinates(mousePixel);
-                cross.Position = mouseCoordinates;
-                WpfPlot1.Plot.ScaleFactor = 3;
-                scrollViewer.ScrollToTop();
-                WpfPlot1.Plot.Axes.AutoScaleY();
-                WpfPlot1.Plot.Axes.SetLimitsX(-1, 40);
-                WpfPlot1.Refresh();
+                HorizontalContentAlignment = System.Windows.HorizontalAlignment.Right,
+                VerticalContentAlignment = System.Windows.VerticalAlignment.Top,
+                HorizontalScrollBarVisibility = ScrollBarVisibility.Visible,
+                CanContentScroll = true
             };
+            var myStackPanel = new StackPanel
+            {
+                HorizontalAlignment = System.Windows.HorizontalAlignment.Right,
+                VerticalAlignment = System.Windows.VerticalAlignment.Top
+            };
+            scrollViewer.Content = myStackPanel;
+            ((IScrollInfo)myStackPanel).CanVerticallyScroll = true;
+            ((IScrollInfo)myStackPanel).CanHorizontallyScroll = true;
+            ((IScrollInfo)myStackPanel).ScrollOwner = scrollViewer;
+            ((IScrollInfo)myStackPanel).MouseWheelRight();
+            //WpfPlot1.Plot.Axes.ZoomIn(1, 1);
+            var st = new ScaleTransform();
+            if (e.Delta > 0)
+            {
+                st.ScaleX *= 2;
+                st.ScaleY *= 2;
+            }
+            else
+            {
+                st.ScaleX /= 2;
+                st.ScaleY /= 2;
+            }
+            e.Handled = true;
+        }
+
+        private void OnDataLoadedScale(int startPoints, decimal yMinStart, decimal yMaxStart)
+        {
+            WpfPlot1.Plot.Axes.SetLimitsY((double)yMinStart - 0.1, (double)yMaxStart + 0.1);
+            WpfPlot1.Plot.Axes.SetLimitsX(-1, startPoints);
+        }
+
+        private void OnSizeChangedEvent(object sender, SizeChangedEventArgs e)
+        {
+            WpfPlot1.Width = e.NewSize.Width - 30;
+            WpfPlot1.Height = e.NewSize.Height - 80;
+            WpfPlot1.Refresh();
         }
 
         public WpfPlot WpfPlot1 { get; set; }
@@ -204,7 +203,22 @@ namespace WPFGraphMaker
             var patternName = patternNameTextBox.Text == string.Empty ? "BullishButterfly" : patternNameTextBox.Text;
             List<ZigZagObject> points = GetGraphData(patternName, json);
             ViewGraph(points);
-            WpfPlot1.Refresh();
+
+            var startPoints = 100;
+
+            if (points.Count > startPoints)
+            {
+                var yMinStart = points.Select(x => x.Close).Take(startPoints).Min();
+                var yMaxStart = points.Select(x => x.Close).Take(startPoints).Max();
+
+                OnDataLoadedScale(startPoints, yMinStart, yMaxStart);
+
+                WpfPlot1.Refresh();
+            }
+            else
+            {
+                MessageBox.Show("Not enough data loaded");
+            }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

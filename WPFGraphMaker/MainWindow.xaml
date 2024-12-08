@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:ScottPlot="clr-namespace:ScottPlot.WPF;assembly=ScottPlot.WPF"
         mc:Ignorable="d"
-        Title="GraphWindow" Height="450" Width="800">
+        Title="GraphWindow" Height="450" Width="800"
+        Name="mainWin">
 
     <Grid>
         <Grid.RowDefinitions>
