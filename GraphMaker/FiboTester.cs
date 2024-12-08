@@ -35,7 +35,7 @@ namespace GraphMaker
                 Low = x.Low,
                 Close = x.Close,
                 Volume = x.Volume,
-            }).Reverse().ToList();
+            }).ToList();
 
 
             _fibonacci = new Fibonacci(dataOhlcv);

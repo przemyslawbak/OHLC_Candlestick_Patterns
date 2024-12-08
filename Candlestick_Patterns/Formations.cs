@@ -794,17 +794,6 @@ namespace Candlestick_Patterns
             return GetFormationsSignalsList(methodName).Where(x => x.Signal == true).Count();
         }
 
-        private List<ZigZagObject> GetCloseAndSignalsData(List<OhlcvObject> data)
-        {
-            var dataToShapeZigZag = data.Select(x => new ZigZagObject()
-            {
-                Signal = x.Signal,
-                Close = x.Close,
-            }).Reverse().ToList();
-
-            return dataToShapeZigZag;
-        }
-
         public List<string> GetAllMethodNames()
         {
             List<string> methods = new List<string>();

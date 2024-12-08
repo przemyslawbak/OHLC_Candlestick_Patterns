@@ -23,7 +23,7 @@ var dataOhlcv = JsonConvert.DeserializeObject<List<OhlcvObject>>(json).Select(x 
     Low = x.Low,
     Close = x.Close,
     Volume = x.Volume,
-}).Reverse().ToList();
+}).ToList();
 
 _fiboTester.ShowOnGraph(dataOhlcv, "BullishButterfly");
 

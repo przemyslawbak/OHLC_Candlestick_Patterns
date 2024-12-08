@@ -55,7 +55,7 @@ var dataOhlcv = JsonConvert.DeserializeObject<List<OhlcvObject>>(json).Select(x 
     Low = x.Low,
     Close = x.Close,
     Volume = x.Volume,
-}).Reverse().ToList();
+}).ToList();
 
 var bullishCount = _signals.GetBullishSignalsCount(dataOhlcv);
 Console.WriteLine("Bullish signals count: {0}", bullishCount);

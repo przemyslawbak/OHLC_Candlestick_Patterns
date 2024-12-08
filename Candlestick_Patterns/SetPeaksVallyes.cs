@@ -12,7 +12,7 @@ namespace OHLC_Candlestick_Patterns
             {
                 Signal = x.Signal,
                 Close = x.Close,
-            }).Reverse().ToList();
+            }).ToList();
 
             return dataToShapeZigZag;
         }
