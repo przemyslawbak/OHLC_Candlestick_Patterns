@@ -30,10 +30,6 @@
         <Border Grid.Row="1">
             <ContentControl Content="{Binding WpfPlot1}" Visibility="Visible"/>
         </Border>
-        <Slider
-                Width="500" Value="0" Orientation="Horizontal" HorizontalAlignment="Stretch" 
-                IsSnapToTickEnabled="True" Maximum="5000" TickPlacement="BottomRight" 
-                AutoToolTipPlacement="BottomRight" TickFrequency="20" ValueChanged="Slider_ValueChanged"/>
     </Grid>
 
 </Window>

@@ -213,50 +213,7 @@ namespace WPFGraphMaker
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-        private void Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-        {
-            var points = GetPoints().Result;
-            var pointsPlot = points.Select(x => x.Close).ToArray();
-            var signals = points.Select(x => x.Signal).ToArray();
-            var numbers = new List<double>();
-            for (int i = 0; i < points.Count; i++)
-            {
-                numbers.Add((double)i);
-            }
 
-            ScottPlot.Palettes.Category20 palette = new();
-            if (e.NewValue >= 0 && e.NewValue < pointsPlot.Length)
-            {
-                int index = (int)e.NewValue;
-                var item = points[index];
-                if (item.Signal == true)
-                {
-                    var mp = WpfPlot1.Plot.Add.Marker(index, (double)item.Close);
-                    mp.MarkerShape = MarkerShape.OpenDiamond;
-
-                    mp.MarkerStyle.FillColor = palette.GetColor(8);
-                    mp.MarkerStyle.Size = 1.5F;
-                    mp.MarkerStyle.OutlineColor = palette.GetColor(8);
-                    mp.MarkerStyle.OutlineWidth = 2;
-                    mp.MarkerStyle.LineWidth = 2f;
-                    mp.MarkerStyle.LineColor = palette.GetColor(10);
-                }
-                double xVal = (double)numbers[index];
-                double yVal = (double)pointsPlot[index];
-
-                WpfPlot1.Plot.Clear();
-                WpfPlot1.Plot.Axes.Margins(.15, .15);
-                WpfPlot1.Plot.Axes.AutoScale();
-
-                var myScatter = WpfPlot1.Plot.Add.Scatter(numbers.ToArray(), pointsPlot);
-                myScatter.Color = ScottPlot.Colors.Green;
-                myScatter.LineWidth = 1;
-                myScatter.MarkerSize = 1.2F;
-                myScatter.MarkerShape = MarkerShape.OpenSquare;
-                myScatter.LinePattern = LinePattern.Solid;
-                WpfPlot1.Refresh();
-            }
-        }
         private async Task<List<ZigZagObject>> GetPoints()
         {
             var url = "https://gist.github.com/przemyslawbak/92c3d4bba27cfd2b88d0dd916bbdad14/raw/AAL_1min.json";
