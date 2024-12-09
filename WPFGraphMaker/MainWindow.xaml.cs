@@ -1,15 +1,11 @@
 ﻿using Candlestick_Patterns;
 using GraphMaker;
 using ScottPlot;
-using ScottPlot.Plottables;
 using ScottPlot.WPF;
 using System.ComponentModel;
 using System.Net.Http;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
 using System.Windows.Input;
-using System.Windows.Media;
 
 namespace WPFGraphMaker
 {
@@ -18,7 +14,7 @@ namespace WPFGraphMaker
         private readonly IFiboTester _fiboTester = new FiboTester();
         private List<ZigZagObject> _points = new List<ZigZagObject>();
 
-        private Crosshair Crosshair;
+        //private Crosshair Crosshair;
         public MainWindow()
         {
             InitializeComponent();
@@ -32,87 +28,84 @@ namespace WPFGraphMaker
 
             mainWin.SizeChanged += OnSizeChangedEvent;
 
-            //var cross = WpfPlot1.Plot.Add.Crosshair(0, 0);
-
-            WpfPlot1.MouseWheel += OnMouseWheelEvent;
-
-            /*WpfPlot1.MouseMove += (s, e) =>
-            {
-                var scrollViewer = new ScrollViewer
-                {
-                    HorizontalContentAlignment = System.Windows.HorizontalAlignment.Stretch,
-                    VerticalContentAlignment = System.Windows.VerticalAlignment.Top,
-                    HorizontalScrollBarVisibility = ScrollBarVisibility.Auto,
-                    CanContentScroll = true
-                };
-
-                var viewer = new ScrollViewer();
-                scrollViewer.Content = viewer;
-                ScrollViewer.SetCanContentScroll(viewer, true);
-                ScrollViewer.SetHorizontalScrollBarVisibility(viewer, ScrollBarVisibility.Auto);
-
-                var myStackPanel = new StackPanel
-                {
-                    HorizontalAlignment = System.Windows.HorizontalAlignment.Left,
-                    VerticalAlignment = System.Windows.VerticalAlignment.Top
-                };
-                scrollViewer.Content = myStackPanel;
-
-                Grid.SetRow(scrollViewer, 1);
-                Point p = e.GetPosition(WpfPlot1);
-                ScottPlot.Pixel mousePixel = new(p.X * WpfPlot1.DisplayScale, p.Y * WpfPlot1.DisplayScale);
-                ScottPlot.Coordinates coordinates = WpfPlot1.Plot.GetCoordinates(mousePixel);
-                //cross.Position = coordinates;
-                this.SizeToContent = SizeToContent.WidthAndHeight;
-
-                WpfPlot1.Refresh();
-            };*/
+            WpfPlot1.PreviewMouseWheel += OnMouseWheelEvent;
         }
+        private void DoActionUp(int i, int startPoints, int count)
+        {
+            var yMinStart = _points.Select(x => x.Close).Skip(i - startPoints + count).Take(startPoints).Min();
+            var yMaxStart = _points.Select(x => x.Close).Skip(i - startPoints + count).Take(startPoints).Max();   
+
+            OnMouseWheelUpScale(yMinStart, yMaxStart, i, count, startPoints);
+
+        }
+
+         private void DoActionDown(int i, int startPoints, int count)
+         {
+            var yMinStart = _points.Select(x => x.Close).Skip(i - startPoints - count).Take(startPoints).Min();
+            var yMaxStart = _points.Select(x => x.Close).Skip(i - startPoints - count).Take(startPoints).Max();
+
+            OnMouseWheelDownScale(startPoints, yMinStart, yMaxStart, i, count, startPoints);
+
+         }
 
         private void OnMouseWheelEvent(object sender, MouseWheelEventArgs e)
         {
             //todo: jedziesz do góry -> do start points dodajesz N
             //todo: jedziesz do dół -> do start points odejmujesz N
 
-
-
-
-            var scrollViewer = new ScrollViewer
+            var startPoints = 100;
+            var count = 25;
+            for (int i = 99; i < _points.Count; i++)
             {
-                HorizontalContentAlignment = System.Windows.HorizontalAlignment.Right,
-                VerticalContentAlignment = System.Windows.VerticalAlignment.Top,
-                HorizontalScrollBarVisibility = ScrollBarVisibility.Visible,
-                CanContentScroll = true
-            };
-            var myStackPanel = new StackPanel
-            {
-                HorizontalAlignment = System.Windows.HorizontalAlignment.Right,
-                VerticalAlignment = System.Windows.VerticalAlignment.Top
-            };
-            scrollViewer.Content = myStackPanel;
-            ((IScrollInfo)myStackPanel).CanVerticallyScroll = true;
-            ((IScrollInfo)myStackPanel).CanHorizontallyScroll = true;
-            ((IScrollInfo)myStackPanel).ScrollOwner = scrollViewer;
-            ((IScrollInfo)myStackPanel).MouseWheelRight();
-            //WpfPlot1.Plot.Axes.ZoomIn(1, 1);
-            var st = new ScaleTransform();
-            if (e.Delta > 0)
-            {
-                st.ScaleX *= 2;
-                st.ScaleY *= 2;
+                if (e.Delta > 0)
+                {
+                    DoActionUp(i, startPoints, count);
+                    i += count;
+                }
+
+                else if (e.Delta < 0)
+                {
+                    DoActionDown(i, startPoints, count);
+                    i -= count;
+                }
+
+                e.Handled = true;
+                if (i > _points.Count - 25)
+                {
+                    var yMinStart = _points.Select(x => x.Close).TakeLast(100).Min();
+                    var yMaxStart = _points.Select(x => x.Close).TakeLast(100).Max();
+
+                    OnMouseWheelScale(_points.Count, yMinStart, yMaxStart, _points.Count - startPoints);
+                }
+                WpfPlot1.Refresh();
             }
-            else
-            {
-                st.ScaleX /= 2;
-                st.ScaleY /= 2;
-            }
-            e.Handled = true;
+        }
+
+        private void OnMouseWheelScale(int end, decimal yMinStart, decimal yMaxStart, int start)
+        {
+            WpfPlot1.Plot.Axes.SetLimitsY((double)yMinStart - 0.1, (double)yMaxStart + 0.1);
+            WpfPlot1.Plot.Axes.SetLimitsX(start, end);
+            WpfPlot1.Refresh();
+        }
+
+        private void OnMouseWheelUpScale(decimal yMinStart, decimal yMaxStart, int i, int count, int startPoints)
+        {
+            WpfPlot1.Plot.Axes.SetLimitsY((double)yMinStart - 0.1, (double)yMaxStart + 0.1);
+            WpfPlot1.Plot.Axes.SetLimitsX(i - startPoints + count, i + count);
+            WpfPlot1.Refresh();
+        }    
+        private void OnMouseWheelDownScale(int startPoints, decimal yMinStart, decimal yMaxStart, int i, int count, int startPoints1)
+        {
+            WpfPlot1.Plot.Axes.SetLimitsY((double)yMinStart - 0.1, (double)yMaxStart + 0.1);
+            WpfPlot1.Plot.Axes.SetLimitsX(i - count - startPoints, i - count);
+            WpfPlot1.Refresh();
         }
 
         private void OnDataLoadedScale(int startPoints, decimal yMinStart, decimal yMaxStart)
         {
             WpfPlot1.Plot.Axes.SetLimitsY((double)yMinStart - 0.1, (double)yMaxStart + 0.1);
             WpfPlot1.Plot.Axes.SetLimitsX(-1, startPoints);
+            WpfPlot1.Refresh();
         }
 
         private void OnSizeChangedEvent(object sender, SizeChangedEventArgs e)
