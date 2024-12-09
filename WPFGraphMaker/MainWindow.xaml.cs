@@ -13,6 +13,8 @@ namespace WPFGraphMaker
     {
         private readonly IFiboTester _fiboTester = new FiboTester();
         private List<ZigZagObject> _points = new List<ZigZagObject>();
+        private readonly int _startPoints = 100;
+        private readonly int _scrollStep = 50;
 
         //private Crosshair Crosshair;
         public MainWindow()
@@ -30,21 +32,21 @@ namespace WPFGraphMaker
 
             WpfPlot1.PreviewMouseWheel += OnMouseWheelEvent;
         }
-        private void DoActionUp(int i, int startPoints, int count)
+        private void DoActionUp(int i, int count)
         {
-            var yMinStart = _points.Select(x => x.Close).Skip(i - startPoints + count).Take(startPoints).Min();
-            var yMaxStart = _points.Select(x => x.Close).Skip(i - startPoints + count).Take(startPoints).Max();   
+            var yMinStart = _points.Select(x => x.Close).Skip(i - _startPoints + count).Take(_startPoints).Min();
+            var yMaxStart = _points.Select(x => x.Close).Skip(i - _startPoints + count).Take(_startPoints).Max();   
 
-            OnMouseWheelUpScale(yMinStart, yMaxStart, i, count, startPoints);
+            OnMouseWheelUpScale(yMinStart, yMaxStart, i, count);
 
         }
 
-         private void DoActionDown(int i, int startPoints, int count)
+         private void DoActionDown(int i, int count)
          {
-            var yMinStart = _points.Select(x => x.Close).Skip(i - startPoints - count).Take(startPoints).Min();
-            var yMaxStart = _points.Select(x => x.Close).Skip(i - startPoints - count).Take(startPoints).Max();
+            var yMinStart = _points.Select(x => x.Close).Skip(i - _startPoints - count).Take(_startPoints).Min();
+            var yMaxStart = _points.Select(x => x.Close).Skip(i - _startPoints - count).Take(_startPoints).Max();
 
-            OnMouseWheelDownScale(startPoints, yMinStart, yMaxStart, i, count, startPoints);
+            OnMouseWheelDownScale(yMinStart, yMaxStart, i, count);
 
          }
 
@@ -53,19 +55,18 @@ namespace WPFGraphMaker
             //todo: jedziesz do góry -> do start points dodajesz N
             //todo: jedziesz do dół -> do start points odejmujesz N
 
-            var startPoints = 100;
             var count = 25;
             for (int i = 99; i < _points.Count; i++)
             {
                 if (e.Delta > 0)
                 {
-                    DoActionUp(i, startPoints, count);
+                    DoActionUp(i, count);
                     i += count;
                 }
 
                 else if (e.Delta < 0)
                 {
-                    DoActionDown(i, startPoints, count);
+                    DoActionDown(i, count);
                     i -= count;
                 }
 
@@ -75,7 +76,7 @@ namespace WPFGraphMaker
                     var yMinStart = _points.Select(x => x.Close).TakeLast(100).Min();
                     var yMaxStart = _points.Select(x => x.Close).TakeLast(100).Max();
 
-                    OnMouseWheelScale(_points.Count, yMinStart, yMaxStart, _points.Count - startPoints);
+                    OnMouseWheelScale(_points.Count, yMinStart, yMaxStart, _points.Count - _startPoints);
                 }
                 WpfPlot1.Refresh();
             }
@@ -88,23 +89,23 @@ namespace WPFGraphMaker
             WpfPlot1.Refresh();
         }
 
-        private void OnMouseWheelUpScale(decimal yMinStart, decimal yMaxStart, int i, int count, int startPoints)
+        private void OnMouseWheelUpScale(decimal yMinStart, decimal yMaxStart, int i, int count)
         {
             WpfPlot1.Plot.Axes.SetLimitsY((double)yMinStart - 0.1, (double)yMaxStart + 0.1);
-            WpfPlot1.Plot.Axes.SetLimitsX(i - startPoints + count, i + count);
+            WpfPlot1.Plot.Axes.SetLimitsX(i - _startPoints + count, i + count);
             WpfPlot1.Refresh();
         }    
-        private void OnMouseWheelDownScale(int startPoints, decimal yMinStart, decimal yMaxStart, int i, int count, int startPoints1)
+        private void OnMouseWheelDownScale(decimal yMinStart, decimal yMaxStart, int i, int count)
         {
             WpfPlot1.Plot.Axes.SetLimitsY((double)yMinStart - 0.1, (double)yMaxStart + 0.1);
-            WpfPlot1.Plot.Axes.SetLimitsX(i - count - startPoints, i - count);
+            WpfPlot1.Plot.Axes.SetLimitsX(i - count - _startPoints, i - count);
             WpfPlot1.Refresh();
         }
 
-        private void OnDataLoadedScale(int startPoints, decimal yMinStart, decimal yMaxStart)
+        private void OnDataLoadedScale(decimal yMinStart, decimal yMaxStart)
         {
             WpfPlot1.Plot.Axes.SetLimitsY((double)yMinStart - 0.1, (double)yMaxStart + 0.1);
-            WpfPlot1.Plot.Axes.SetLimitsX(-1, startPoints);
+            WpfPlot1.Plot.Axes.SetLimitsX(-1, _startPoints);
             WpfPlot1.Refresh();
         }
 
@@ -205,7 +206,7 @@ namespace WPFGraphMaker
                 var yMinStart = _points.Select(x => x.Close).Take(startPoints).Min();
                 var yMaxStart = _points.Select(x => x.Close).Take(startPoints).Max();
 
-                OnDataLoadedScale(startPoints, yMinStart, yMaxStart);
+                OnDataLoadedScale(yMinStart, yMaxStart);
 
                 WpfPlot1.Refresh();
             }
