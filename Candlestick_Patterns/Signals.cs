@@ -111,11 +111,11 @@
         {
             _formations = new Formations(dataOhlcv);
 
-            var bullishMethodNames = _formations.GetAllMethodNames().Where(x => x.StartsWith("Bullish")).ToList();
+            var bearishMethodNames = _formations.GetAllMethodNames().Where(x => x.StartsWith("Bearish")).ToList(); 
 
             List<int> count = new List<int>();
 
-            foreach (var methodName in bullishMethodNames)
+            foreach (var methodName in bearishMethodNames)
             {
                 count.Add(_formations.GetSignalsCount(methodName));
             }
@@ -127,7 +127,7 @@
         {
             _formations = new Formations(dataOhlcv);
 
-            var bullishMethodNames = _formations.GetAllMethodNames().Where(x => x.StartsWith("Bearish")).ToList();
+            var bullishMethodNames = _formations.GetAllMethodNames().Where(x => x.StartsWith("Bullish")).ToList();
 
             List<int> count = new List<int>();
 
