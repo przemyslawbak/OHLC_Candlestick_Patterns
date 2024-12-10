@@ -39,7 +39,6 @@ namespace Candlestick_Patterns
             _dataOhlcv = dataOhlcv;
             _data = SetPeaksVallyes.GetCloseAndSignalsData(dataOhlcv);
             _peaksFromZigZag = SetPeaksVallyes.PeaksFromZigZag(_data, 0.002M);
-            _points = SetPeaksVallyes.GetPoints(_peaksFromZigZag);
             _fibError = 0.1M; // in all Fibonacci ratios, errors of no more than 10% of the ideal value are allowed.  
             _drivePattern = new Fibonacci3DrivePattern();
             _support = new SupportClass();
@@ -50,18 +49,18 @@ namespace Candlestick_Patterns
             _peaksFromZigZag = SetPeaksVallyes.PeaksFromZigZag(_data, zigZagParam);
         }
 
-        private List<ZigZagObject> BearishGartley() => Pattern("bearish", _points, _fibError, "gartleyPattern", 4);
-        private List<ZigZagObject> BullishGartley() => Pattern("bullish", _points, _fibError, "gartleyPattern", 4);
-        private List<ZigZagObject> BearishButterfly() => Pattern("bearish", _points, _fibError, "butterflyPattern", 4);
-        private List<ZigZagObject> BullishButterfly() => Pattern("bullish", _points, _fibError, "butterflyPattern", 4);
-        private List<ZigZagObject> BearishABCD() => Pattern("bearish", _points, _fibError, "abcdPattern", 3);
-        private List<ZigZagObject> BullishABCD() => Pattern("bullish", _points, _fibError, "abcdPattern", 3);
-        private List<ZigZagObject> Bearish3Extension() => Pattern("bearish", _points, _fibError, "threeExtensionPattern", 2);
-        private List<ZigZagObject> Bullish3Extension() => Pattern("bullish", _points, _fibError, "threeExtensionPattern", 2);
-        private List<ZigZagObject> Bearish3Retracement() => Pattern("bearish", _points, _fibError, "threeRetracementPattern", 2);
-        private List<ZigZagObject> Bullish3Retracement() => Pattern("bullish", _points, _fibError, "threeRetracementPattern", 2);
-        private List<ZigZagObject> Bearish3Drive() => _drivePattern.ThreeDrivePattern("bearish", _points, _fibError);
-        private List<ZigZagObject> Bullish3Drive() => _drivePattern.ThreeDrivePattern("bullish", _points, _fibError);
+        private List<ZigZagObject> BearishGartley() => Pattern("bearish", SetPeaksVallyes.GetPoints(_peaksFromZigZag), _fibError, "gartleyPattern", 4);
+        private List<ZigZagObject> BullishGartley() => Pattern("bullish", SetPeaksVallyes.GetPoints(_peaksFromZigZag), _fibError, "gartleyPattern", 4);
+        private List<ZigZagObject> BearishButterfly() => Pattern("bearish", SetPeaksVallyes.GetPoints(_peaksFromZigZag), _fibError, "butterflyPattern", 4);
+        private List<ZigZagObject> BullishButterfly() => Pattern("bullish", SetPeaksVallyes.GetPoints(_peaksFromZigZag), _fibError, "butterflyPattern", 4);
+        private List<ZigZagObject> BearishABCD() => Pattern("bearish", SetPeaksVallyes.GetPoints(_peaksFromZigZag), _fibError, "abcdPattern", 3);
+        private List<ZigZagObject> BullishABCD() => Pattern("bullish", SetPeaksVallyes.GetPoints(_peaksFromZigZag), _fibError, "abcdPattern", 3);
+        private List<ZigZagObject> Bearish3Extension() => Pattern("bearish", SetPeaksVallyes.GetPoints(_peaksFromZigZag), _fibError, "threeExtensionPattern", 2);
+        private List<ZigZagObject> Bullish3Extension() => Pattern("bullish", SetPeaksVallyes.GetPoints(_peaksFromZigZag), _fibError, "threeExtensionPattern", 2);
+        private List<ZigZagObject> Bearish3Retracement() => Pattern("bearish", SetPeaksVallyes.GetPoints(_peaksFromZigZag), _fibError, "threeRetracementPattern", 2);
+        private List<ZigZagObject> Bullish3Retracement() => Pattern("bullish", SetPeaksVallyes.GetPoints(_peaksFromZigZag), _fibError, "threeRetracementPattern", 2);
+        private List<ZigZagObject> Bearish3Drive() => _drivePattern.ThreeDrivePattern("bearish", SetPeaksVallyes.GetPoints(_peaksFromZigZag), _fibError);
+        private List<ZigZagObject> Bullish3Drive() => _drivePattern.ThreeDrivePattern("bullish", SetPeaksVallyes.GetPoints(_peaksFromZigZag), _fibError);
 
         internal virtual List<ZigZagObject> Pattern(string pattern, List<ZigZagObject> points, decimal priceMovement1, string fibbPattern, int startNumber)
         {
@@ -80,6 +79,7 @@ namespace Candlestick_Patterns
                     }
                 }
             }
+
             return points;
         }
 

@@ -32,7 +32,7 @@ namespace Candlestick_Patterns
         private List<ZigZagObject> BearishDoubleTops()
         {
             var dateList = new List<decimal>();
-            var points = _peaksFromZigZag.Select(x => new ZigZagObject() { Close = x, Signal = false }).ToList();
+            var points = SetPeaksVallyes.GetPoints(_peaksFromZigZag);
             for (int i = 4; i < points.Count; i++)
             {
                 if (!dateList.Contains(points[i].Close))
@@ -63,7 +63,7 @@ namespace Candlestick_Patterns
         private List<ZigZagObject> BearishTripleTops() 
         {
             var dateList = new List<decimal>();
-            var points = _peaksFromZigZag.Select(x => new ZigZagObject() {Close = x, Signal = false }).ToList();
+            var points = SetPeaksVallyes.GetPoints(_peaksFromZigZag);
             for (int i = 6; i < points.Count; i++)
             {
                 if (!dateList.Contains(points[i].Close))
@@ -106,7 +106,7 @@ namespace Candlestick_Patterns
         private List<ZigZagObject> BullishDoubleBottoms()
         {
             var dateList = new List<decimal>();
-            var points = _peaksFromZigZag.Select(x => new ZigZagObject() {Close = x, Signal = false }).ToList();
+            var points = SetPeaksVallyes.GetPoints(_peaksFromZigZag);
             for (int i = 4; i < points.Count; i++)
             {
                 if (!dateList.Contains(points[i].Close))
@@ -138,7 +138,7 @@ namespace Candlestick_Patterns
         private List<ZigZagObject> BullishTripleBottoms()
         {
             var dateList = new List<decimal>();
-            var points = _peaksFromZigZag.Select(x => new ZigZagObject() { Close = x, Signal = false }).ToList();
+            var points = SetPeaksVallyes.GetPoints(_peaksFromZigZag);
             for (int i = 6; i < points.Count; i++)
             {
                 if (!dateList.Contains(points[i].Close))
@@ -174,7 +174,7 @@ namespace Candlestick_Patterns
         private List<ZigZagObject> BearishHeadAndShoulders()
         {
             var dateList = new List<decimal>();
-            var points = _peaksFromZigZag.Select(x => new ZigZagObject() { Close = x, Signal = false }).ToList();
+            var points = SetPeaksVallyes.GetPoints(_peaksFromZigZag);
             for (int i = 6; i < points.Count; i++)
             {
                 if (!dateList.Contains(points[i].Close))
@@ -205,7 +205,7 @@ namespace Candlestick_Patterns
         private List<ZigZagObject> BullishCupAndHandle()
         {
             var dateList = new List<decimal>();
-            var points = _peaksFromZigZag.Select(x => new ZigZagObject() { Close = x, Signal = false }).ToList();
+            var points = SetPeaksVallyes.GetPoints(_peaksFromZigZag);
             for (int i = 13; i < points.Count; i++)
             {
                 if (!dateList.Contains(points[i].Close))
@@ -245,7 +245,7 @@ namespace Candlestick_Patterns
         private List<ZigZagObject> BearishInverseCupAndHandle()
         {
             var dateList = new List<decimal>();
-            var points = _peaksFromZigZag.Select(x => new ZigZagObject() { Close = x, Signal = false }).ToList();
+            var points = SetPeaksVallyes.GetPoints(_peaksFromZigZag);
             for (int i = 11; i < points.Count; i++)
             {
                 if (!dateList.Contains(points[i].Close))
@@ -284,7 +284,7 @@ namespace Candlestick_Patterns
         private List<ZigZagObject> BullishInverseHeadAndShoulders()
         {
             var dateList = new List<decimal>();
-            var points = _peaksFromZigZag.Select(x => new ZigZagObject() { Close = x, Signal = false }).ToList();
+            var points = SetPeaksVallyes.GetPoints(_peaksFromZigZag);
             for (int i = 6; i < points.Count; i++)
             {
                 if (!dateList.Contains(points[i].Close))
@@ -320,7 +320,7 @@ namespace Candlestick_Patterns
         private List<ZigZagObject> BullishAscendingTriangle()
         {
             var dateList = new List<decimal>();
-            var points = _peaksFromZigZag.Select(x => new ZigZagObject() { Close = x, Signal = false }).ToList();
+            var points = SetPeaksVallyes.GetPoints(_peaksFromZigZag);
             for (int i = 5; i < points.Count; i++)
             {
                 if (!dateList.Contains(points[i].Close))
@@ -356,7 +356,7 @@ namespace Candlestick_Patterns
         private List<ZigZagObject> ContinuationSymmetricTriangle()
         {
             var dateList = new List<decimal>();
-            var points = _peaksFromZigZag.Select(x => new ZigZagObject() { Close = x, Signal = false }).ToList();
+            var points = SetPeaksVallyes.GetPoints(_peaksFromZigZag);
             for (int i = 5; i < points.Count; i++)
             {
                 if (!dateList.Contains(points[i].Close))
@@ -388,7 +388,7 @@ namespace Candlestick_Patterns
         private List<ZigZagObject> BearishDescendingTriangle()
         {
             var dateList = new List<decimal>();
-            var points = _peaksFromZigZag.Select(x => new ZigZagObject() { Close = x, Signal = false }).ToList();
+            var points = SetPeaksVallyes.GetPoints(_peaksFromZigZag);
             for (int i = 3; i < points.Count - 3; i++)
             {
                 if (!dateList.Contains(points[i].Close))
@@ -423,7 +423,7 @@ namespace Candlestick_Patterns
         private List<ZigZagObject> BullishFallingWedge()
         {
             var dateList = new List<decimal>();
-            var points = _peaksFromZigZag.Select(x => new ZigZagObject() { Close = x, Signal = false }).ToList();
+            var points = SetPeaksVallyes.GetPoints(_peaksFromZigZag);
             for (int i = 7; i < points.Count; i++)
             {
                 if (!dateList.Contains(points[i].Close))
@@ -460,7 +460,7 @@ namespace Candlestick_Patterns
         private List<ZigZagObject> BearishRisingWedge()
         {
             var dateList = new List<decimal>();
-            var points = _peaksFromZigZag.Select(x => new ZigZagObject() { Close = x, Signal = false }).ToList();
+            var points = SetPeaksVallyes.GetPoints(_peaksFromZigZag);
             for (int i = 6; i < points.Count; i++)
             {
                 if (!dateList.Contains(points[i].Close))
@@ -498,7 +498,7 @@ namespace Candlestick_Patterns
         private List<ZigZagObject> BearishBearFlagsPennants()
         {
             var dateList = new List<decimal>();
-            var points = _peaksFromZigZag.Select(x => new ZigZagObject() { Close = x, Signal = false }).ToList();
+            var points = SetPeaksVallyes.GetPoints(_peaksFromZigZag);
             for (int i = 6; i < points.Count; i++)
             {
                 if (!dateList.Contains(points[i].Close))
@@ -537,7 +537,7 @@ namespace Candlestick_Patterns
         private List<ZigZagObject> BullishBullFlagsPennants()
         {
             var dateList = new List<decimal>();
-            var points = _peaksFromZigZag.Select(x => new ZigZagObject() { Close = x, Signal = false }).ToList();
+            var points = SetPeaksVallyes.GetPoints(_peaksFromZigZag);
             for (int i = 6; i < points.Count; i++)
             {
                 if (!dateList.Contains(points[i].Close))
@@ -576,7 +576,7 @@ namespace Candlestick_Patterns
         private List<ZigZagObject> BullishAscendingPriceChannel()
         {
             var dateList = new List<decimal>();
-            var points = _peaksFromZigZag.Select(x => new ZigZagObject() { Close = x, Signal = false }).ToList();
+            var points = SetPeaksVallyes.GetPoints(_peaksFromZigZag);
             for (int i = 6; i < points.Count; i++)
             {
                 if (!dateList.Contains(points[i].Close))
@@ -613,7 +613,7 @@ namespace Candlestick_Patterns
         private List<ZigZagObject> BearishDescendingPriceChannel()
         {
             var dateList = new List<decimal>();
-            var points = _peaksFromZigZag.Select(x => new ZigZagObject() { Close = x, Signal = false }).ToList();
+            var points = SetPeaksVallyes.GetPoints(_peaksFromZigZag);
             for (int i = 6; i < points.Count; i++)
             {
                 if (!dateList.Contains(points[i].Close))
@@ -650,7 +650,7 @@ namespace Candlestick_Patterns
         private List<ZigZagObject> BullishRoundingBottomPattern()
         {
             var dateList = new List<decimal>();
-            var points = _peaksFromZigZag.Select(x => new ZigZagObject() { Close = x, Signal = false }).ToList();
+            var points = SetPeaksVallyes.GetPoints(_peaksFromZigZag);
             for (int i = 12; i < points.Count; i++)
             {
                 if (!dateList.Contains(points[i].Close))
@@ -689,7 +689,7 @@ namespace Candlestick_Patterns
         private List<ZigZagObject> BearishRoundingTopPattern()
         {
             var dateList = new List<decimal>();
-            var points = _peaksFromZigZag.Select(x => new ZigZagObject() { Close = x, Signal = false }).ToList();
+            var points = SetPeaksVallyes.GetPoints(_peaksFromZigZag);
             for (int i = 12; i < points.Count; i++)
             {
                 if (!dateList.Contains(points[i].Close))
@@ -729,7 +729,7 @@ namespace Candlestick_Patterns
         private List<ZigZagObject> ContinuationDiamondFormation()
         {
             var dateList = new List<decimal>();
-            var points = _peaksFromZigZag.Select(x => new ZigZagObject() { Close = x, Signal = false }).ToList();
+            var points = SetPeaksVallyes.GetPoints(_peaksFromZigZag);
             for (int i = 10; i < points.Count; i++)
             {
                 if (!dateList.Contains(points[i].Close))
