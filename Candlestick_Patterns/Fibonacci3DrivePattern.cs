@@ -37,6 +37,7 @@ namespace OHLC_Candlestick_Patterns
                             }
 
                             points[i].Signal = true;
+                            points[i-5].Initiation = true;
                         }
                     }
 

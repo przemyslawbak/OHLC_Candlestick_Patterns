@@ -172,7 +172,7 @@ namespace Candlestick_Patterns
 
             if (check618_786retracement1 && check381_886retracement && check786_886retracement && check127_161retracement1 && check618_786retracement2 && check127_161retracement2)
             {
-                return true; // i = 1788(bearish) and i = 1223(bullish)
+                return true; 
             }
 
             return false;
@@ -211,7 +211,7 @@ namespace Candlestick_Patterns
 
             if (check786retracement && check382_886retracement && check161_224retracement)
             {
-                return true; // i=444(bearish) and  i= 627(bullish)
+                return true; 
             }
             return false;
         }
@@ -254,7 +254,7 @@ namespace Candlestick_Patterns
 
                 if ((check618retracement || check786retracement) && (check127retracement || check161retracement))
                 {
-                    return true; //550(bearish) and i=55(bullish)
+                    return true; 
                 } 
 
             }
@@ -300,7 +300,7 @@ namespace Candlestick_Patterns
             var retracement = _support.GetRetracement(points, i, 0, 1, 2);
             if (range618.Min() < retracement && range618.Max() > retracement)
             {
-                return true;//i=27(bullish) i =14(bearish)
+                return true;
             }
             return false;
         }
@@ -312,7 +312,7 @@ namespace Candlestick_Patterns
             {
                 if (range618.Min() < retracement && range618.Max() > retracement)
                 {
-                    return true; //i=27(bullish)
+                    return true; 
                 }
             }
 
@@ -320,7 +320,7 @@ namespace Candlestick_Patterns
             {
                 if (range161.Min() < retracement && range161.Max() > retracement)
                 {
-                    return true;   //i=38(bearish)
+                    return true;  
                     
                 }
             }

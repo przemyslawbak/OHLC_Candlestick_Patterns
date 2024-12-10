@@ -13,7 +13,7 @@ namespace OHLC_Candlestick_Patterns
 
     internal class SupportClass : ISupportClass
     {
-        
+
         public bool CheckPoint(decimal point, decimal pointAD, decimal _priceMovement, bool checkPoint)
         {
             if (PointsRange(pointAD, _priceMovement).First() >= point && PointsRange(pointAD, _priceMovement).Last() <= point)
@@ -51,7 +51,8 @@ namespace OHLC_Candlestick_Patterns
             for (int x = -number; x < 1; x++)
             {
                 dateList.Add(points[i + x].Close);
-                points[i].Signal = true; // one or all ??
+                points[i].Signal = true; 
+                points[i-number].Initiation = true; 
             }
             return points;
         }
