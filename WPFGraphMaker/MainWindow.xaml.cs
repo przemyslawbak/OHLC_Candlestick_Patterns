@@ -17,7 +17,6 @@ namespace WPFGraphMaker
         private readonly int _scrollStep = 10;
         private int _lastPosition = 100;
 
-        //private Crosshair Crosshair;
         public MainWindow()
         {
             InitializeComponent();
@@ -28,8 +27,6 @@ namespace WPFGraphMaker
                 Width = mainWin.Width - 30,
                 Height = mainWin.Height - 80,
             };
-
-            //WpfPlot1.
 
             mainWin.SizeChanged += OnSizeChangedEvent;
 
@@ -130,11 +127,11 @@ namespace WPFGraphMaker
                     var mp = WpfPlot1.Plot.Add.Marker(i, (double)item.Close);
                     mp.MarkerShape = MarkerShape.OpenDiamond;
 
-                    mp.MarkerStyle.FillColor = palette.GetColor(8);
-                    mp.MarkerStyle.Size = 1.5F;
+                    mp.MarkerStyle.FillColor = palette.GetColor(2);
+                    mp.MarkerStyle.Size = 15F;
                     mp.MarkerStyle.OutlineColor = palette.GetColor(8);
-                    mp.MarkerStyle.OutlineWidth = 2;
-                    mp.MarkerStyle.LineWidth = 2f;
+                    mp.MarkerStyle.OutlineWidth = 4;
+                    mp.MarkerStyle.LineWidth = 3f;
                     mp.MarkerStyle.LineColor = palette.GetColor(10);
                 }
             }
@@ -144,8 +141,6 @@ namespace WPFGraphMaker
             myScatter.MarkerSize = 1.2F;
             myScatter.MarkerShape = MarkerShape.OpenSquare;
             myScatter.LinePattern = LinePattern.Solid;
-            //WpfPlot1.Plot.Axes.Margins(.15, .15);
-            //WpfPlot1.Plot.Axes.AutoScale();
             WpfPlot1.Refresh();
         }
 
@@ -163,7 +158,7 @@ namespace WPFGraphMaker
             response.EnsureSuccessStatusCode();
             string json = await response.Content.ReadAsStringAsync();
 
-            var patternName = patternNameTextBox.Text == string.Empty ? "BullishButterfly" : patternNameTextBox.Text;
+            var patternName = patternNameTextBox.Text == string.Empty ? "Bullish3Extension" : patternNameTextBox.Text;
             _points = GetGraphData(patternName, json);
             ViewGraph(_points);
 
