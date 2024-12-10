@@ -33,7 +33,7 @@ namespace WPFGraphMaker
 
             mainWin.SizeChanged += OnSizeChangedEvent;
 
-            WpfPlot1.PreviewMouseWheel += OnMouseWheelEvent;
+            WpfPlot1.MouseWheel += OnMouseWheelEvent;
         }
 
         private void DoMouseWheelAction()
@@ -144,8 +144,8 @@ namespace WPFGraphMaker
             myScatter.MarkerSize = 1.2F;
             myScatter.MarkerShape = MarkerShape.OpenSquare;
             myScatter.LinePattern = LinePattern.Solid;
-            WpfPlot1.Plot.Axes.Margins(.15, .15);
-            WpfPlot1.Plot.Axes.AutoScale();
+            //WpfPlot1.Plot.Axes.Margins(.15, .15);
+            //WpfPlot1.Plot.Axes.AutoScale();
             WpfPlot1.Refresh();
         }
 
