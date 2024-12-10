@@ -1,6 +1,8 @@
 ﻿using Candlestick_Patterns;
 using GraphMaker;
 using ScottPlot;
+using ScottPlot.Palettes;
+using ScottPlot.Plottables;
 using ScottPlot.WPF;
 using System.ComponentModel;
 using System.Net.Http;
@@ -99,49 +101,49 @@ namespace WPFGraphMaker
 
         private void ViewGraph(List<ZigZagObject> points)
         {
-            var numbers = new List<int>();
-            var newList = new List<double>();
-
+            var xAxesNumbers = new List<double>();
             for (int i = 0; i < points.Count; i++)
             {
-                numbers.Add(i);
+                xAxesNumbers.Add((double)i);
             }
-
-            var pointsPlot = points.Select(x => x.Close).ToArray();
-            var signals = points.Select(x => x.Signal).ToArray();
-
-            foreach (var a in numbers)
-            {
-                newList.Add(a);
-            }
-
-            var numbersArray = numbers.ToArray();
-            var myScatter = WpfPlot1.Plot.Add.Scatter(numbersArray, pointsPlot);
 
             ScottPlot.Palettes.Category20 palette = new();
+            var numbersArray = xAxesNumbers.ToArray();
+            var pointsPlot = points.Select(x => x.Close).ToArray();
+            var myScatter = WpfPlot1.Plot.Add.Scatter(numbersArray, pointsPlot);
+
             for (int i = 0; i < points.Count; i++)
             {
                 var item = points[i];
                 if (item.Signal == true)
                 {
                     var mp = WpfPlot1.Plot.Add.Marker(i, (double)item.Close);
-                    mp.MarkerShape = MarkerShape.OpenDiamond;
-
-                    mp.MarkerStyle.FillColor = palette.GetColor(2);
-                    mp.MarkerStyle.Size = 15F;
-                    mp.MarkerStyle.OutlineColor = palette.GetColor(8);
-                    mp.MarkerStyle.OutlineWidth = 4;
-                    mp.MarkerStyle.LineWidth = 3f;
-                    mp.MarkerStyle.LineColor = palette.GetColor(10);
+                    MarkSingalOnChart(i, item, palette, myScatter, 2);
+                }
+                if (item.Initiation == true)
+                {
+                    MarkSingalOnChart(i, item, palette, myScatter, 8);
                 }
             }
 
-            myScatter.Color = ScottPlot.Colors.Green;
+            myScatter.Color = Colors.Green;
             myScatter.LineWidth = 1;
             myScatter.MarkerSize = 1.2F;
             myScatter.MarkerShape = MarkerShape.OpenSquare;
             myScatter.LinePattern = LinePattern.Solid;
             WpfPlot1.Refresh();
+        }
+
+        private void MarkSingalOnChart(int i, ZigZagObject item, Category20 palette, Scatter myScatter, int color)
+        {
+            var mp = WpfPlot1.Plot.Add.Marker(i, (double)item.Close);
+            mp.MarkerShape = MarkerShape.OpenDiamond;
+            mp.MarkerStyle.FillColor = palette.GetColor(color);
+            mp.MarkerStyle.Size = 15F;
+            mp.MarkerStyle.OutlineColor = palette.GetColor(8);
+            mp.MarkerStyle.OutlineWidth = 6;
+            mp.MarkerStyle.LineWidth = 6f;
+            mp.MarkerStyle.LineColor = palette.GetColor(color);
         }
 
         private List<ZigZagObject> GetGraphData(string patternName, string json)
