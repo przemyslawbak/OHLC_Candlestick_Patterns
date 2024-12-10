@@ -28,25 +28,26 @@ namespace Examples_Fibonacci
                 MissingMemberHandling = MissingMemberHandling.Ignore
             };
 
-            var dataOhlcv = JsonConvert.DeserializeObject<List<OhlcvObject>>(json, settings).Select(x => new OhlcvObject()
-            {
-                Open = x.Open,
-                High = x.High,
-                Low = x.Low,
-                Close = x.Close,
-                Volume = x.Volume,
-            }).ToList();
-
-            dataOhlcv = dataOhlcv.Where(x => x.Open != 0 && x.High != 0 && x.Low != 0 && x.Close != 0).ToList();
+            var dataOhlcv = JsonConvert.DeserializeObject<List<OhlcvObject>>(json, settings)
+                .Select(x => new OhlcvObject()
+                {
+                    Open = x.Open,
+                    High = x.High,
+                    Low = x.Low,
+                    Close = x.Close,
+                    Volume = x.Volume,
+                })
+                .Where(x => x.Open != 0 && x.High != 0 && x.Low != 0 && x.Close != 0)
+                .ToList();
 
             //ACCURACY TRIALS
             var accuracyPercentageSummary = _accuracy.GetAverPercentFiboAccuracy(dataOhlcv, "Bearish 3 Drive");
             Console.WriteLine("Accuracy percentage summary comparing to end of data set result: {0}", accuracyPercentageSummary.AccuracyToEndClose);
             Console.WriteLine("Accuracy percentage summary comparing to average close result: {0}", accuracyPercentageSummary.AccuracyToAverageClose);
 
-            var accuracyForSelectedPattern30CandlesAhead = _accuracy.GetAverPercentFiboAccuracy(dataOhlcv, "Bearish 3 Drive", 30);
-            Console.WriteLine("Accuracy percentage summary 30 candles ahead comparing to end of data set result: {0}", accuracyForSelectedPattern30CandlesAhead.AccuracyToEndClose);
-            Console.WriteLine("Accuracy percentage summary 30 candles ahead comparing to average close result: {0}", accuracyForSelectedPattern30CandlesAhead.AccuracyToAverageClose);
+            var accuracyForSelectedFibo30CandlesAhead = _accuracy.GetAverPercentFiboAccuracy(dataOhlcv, "Bearish 3 Drive", 30);
+            Console.WriteLine("Accuracy percentage summary 30 candles ahead comparing to end of data set result: {0}", accuracyForSelectedFibo30CandlesAhead.AccuracyToEndClose);
+            Console.WriteLine("Accuracy percentage summary 30 candles ahead comparing to average close result: {0}", accuracyForSelectedFibo30CandlesAhead.AccuracyToAverageClose);
 
             //SIGNALS
             var bullishCount = _signals.GetFiboBullishSignalsCount(dataOhlcv);

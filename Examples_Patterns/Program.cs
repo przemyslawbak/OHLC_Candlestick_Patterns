@@ -28,16 +28,17 @@ namespace Examples_Patterns
                 MissingMemberHandling = MissingMemberHandling.Ignore,
             };
 
-            var dataOhlcv = JsonConvert.DeserializeObject<List<OhlcvObject>>(json, settings).Select(x => new OhlcvObject()
-            {
-                Open = x.Open,
-                High = x.High,
-                Low = x.Low,
-                Close = x.Close,
-                Volume = x.Volume,
-            }).ToList();
-
-            dataOhlcv = dataOhlcv.Where(x => x.Open != 0 && x.High != 0 && x.Low != 0 && x.Close != 0).ToList();
+            var dataOhlcv = JsonConvert.DeserializeObject<List<OhlcvObject>>(json, settings)
+                .Select(x => new OhlcvObject()
+                {
+                    Open = x.Open,
+                    High = x.High,
+                    Low = x.Low,
+                    Close = x.Close,
+                    Volume = x.Volume,
+                })
+                .Where(x => x.Open != 0 && x.High != 0 && x.Low != 0 && x.Close != 0)
+                .ToList();
 
             //ACCURACY TRIALS
             var best = _accuracy.GetBestAccuracyPatterns(dataOhlcv, 100, 450);

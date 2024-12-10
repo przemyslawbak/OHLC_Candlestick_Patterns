@@ -5,7 +5,7 @@ string json = string.Empty;
 ISignals _signals = new Signals();
 IAccuracyTrials _accuracy = new AccuracyTrials();
 var client = new HttpClient();
-var url = "https://gist.githubusercontent.com/przemyslawbak/c90528453d512a8d85ad2deea5cf6ad2/raw/aapl_us_d.csv";
+var url = "https://gist.github.com/przemyslawbak/92c3d4bba27cfd2b88d0dd916bbdad14/raw/AAL_1min.json";
 
 using (HttpResponseMessage response = await client.GetAsync(url))
 {
@@ -15,14 +15,23 @@ using (HttpResponseMessage response = await client.GetAsync(url))
     }
 }
 
-var dataOhlcv = JsonConvert.DeserializeObject<List<OhlcvObject>>(json).Select(x => new OhlcvObject()
+var settings = new JsonSerializerSettings
 {
-    Open = x.Open,
-    High = x.High,
-    Low = x.Low,
-    Close = x.Close,
-    Volume = x.Volume,
-}).Reverse().ToList();
+    NullValueHandling = NullValueHandling.Ignore,
+    MissingMemberHandling = MissingMemberHandling.Ignore
+};
+
+var dataOhlcv = JsonConvert.DeserializeObject<List<OhlcvObject>>(json, settings)
+    .Select(x => new OhlcvObject()
+    {
+        Open = x.Open,
+        High = x.High,
+        Low = x.Low,
+        Close = x.Close,
+        Volume = x.Volume,
+    })
+    .Where(x => x.Open != 0 && x.High != 0 && x.Low != 0 && x.Close != 0)
+    .ToList();
 
 //ACCURACY TRIALS
 var accuracyPercentageSummary = _accuracy.GetAverPercentFormationAccuracy(dataOhlcv, "Bearish Double Tops");
