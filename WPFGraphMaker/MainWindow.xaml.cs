@@ -137,12 +137,11 @@ namespace WPFGraphMaker
                 var item = points[i];
                 if (item.Signal == true)
                 {
-                    var mp = WpfPlot1.Plot.Add.Marker(i, (double)item.Close);
-                    MarkSingalOnChart(i, item, palette, myScatter, 2);
+                    MarkSingalOnChart(i, item, palette, 2);
                 }
                 if (item.Initiation == true)
                 {
-                    MarkSingalOnChart(i, item, palette, myScatter, 8);
+                    MarkSingalOnChart(i, item, palette, 8);
                 }
             }
 
@@ -154,15 +153,15 @@ namespace WPFGraphMaker
             WpfPlot1.Refresh();
         }
 
-        private void MarkSingalOnChart(int i, ZigZagObject item, Category20 palette, Scatter myScatter, int color)
+        private void MarkSingalOnChart(int i, ZigZagObject item, Category20 palette, int color)
         {
             var mp = WpfPlot1.Plot.Add.Marker(i, (double)item.Close);
             mp.MarkerShape = MarkerShape.OpenDiamond;
-            mp.MarkerStyle.FillColor = palette.GetColor(color);
+            //mp.MarkerStyle.FillColor = palette.GetColor(color);
             mp.MarkerStyle.Size = 15F;
-            mp.MarkerStyle.OutlineColor = palette.GetColor(8);
-            mp.MarkerStyle.OutlineWidth = 6;
-            mp.MarkerStyle.LineWidth = 6f;
+            //mp.MarkerStyle.OutlineColor = palette.GetColor(8);
+            mp.MarkerStyle.OutlineWidth = 2;
+            mp.MarkerStyle.LineWidth = 3f;
             mp.MarkerStyle.LineColor = palette.GetColor(color);
         }
 
