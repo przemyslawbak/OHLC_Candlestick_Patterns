@@ -49,14 +49,34 @@ namespace WPFGraphMaker
             if (e.Delta > 0)
             {
                 _lastPosition = _lastPosition + _scrollStep;
+                if(_lastPosition + _startPoints > _points.Count)
+                {
+                    var yMinStart = _points.Select(x => x.Close).TakeLast(_startPoints).Min();
+                    var yMaxStart = _points.Select(x => x.Close).TakeLast(_startPoints).Max();
+                    WpfPlot1.Plot.Axes.SetLimitsY((double)yMinStart - 0.1, (double)yMaxStart + 0.1);
+                    WpfPlot1.Plot.Axes.SetLimitsX(_points.Count - _startPoints, _points.Count);
+                    _lastPosition = _points.Count;
+                }
+                else 
+                {
 
-                DoMouseWheelAction();
+                    DoMouseWheelAction();
+                }
             }
             else if (e.Delta < 0)
             {
                 _lastPosition = _lastPosition - _scrollStep;
-
-                DoMouseWheelAction();
+                if (_lastPosition - _startPoints <= 0)
+                {
+                    var yMinStart = _points.Select(x => x.Close).Take(_startPoints).Min();
+                    var yMaxStart = _points.Select(x => x.Close).Take(_startPoints).Max();
+                    _lastPosition = 0;
+                    OnDataLoadedScale(yMinStart, yMaxStart);
+                }
+                else
+                {
+                    DoMouseWheelAction();
+                }
             }
         }
 
@@ -164,12 +184,11 @@ namespace WPFGraphMaker
             _points = GetGraphData(patternName, json);
             ViewGraph(_points);
 
-            var startPoints = 100;
 
-            if (_points.Count > startPoints)
+            if (_points.Count > _startPoints)
             {
-                var yMinStart = _points.Select(x => x.Close).Take(startPoints).Min();
-                var yMaxStart = _points.Select(x => x.Close).Take(startPoints).Max();
+                var yMinStart = _points.Select(x => x.Close).Take(_startPoints).Min();
+                var yMaxStart = _points.Select(x => x.Close).Take(_startPoints).Max();
 
                 OnDataLoadedScale(yMinStart, yMaxStart);
 
