@@ -18,7 +18,7 @@ namespace Candlestick_Patterns
         private static Fibonacci3DrivePattern _drivePattern { get; set; }
         private static SupportClass _support { get; set; }
 
-        private static List<decimal> _peaksFromZigZag { get; set; }
+        private static List<ZigZagObject> _peaksFromZigZag { get; set; }
 
         private static List<ZigZagObject> _points { get; set; }
 

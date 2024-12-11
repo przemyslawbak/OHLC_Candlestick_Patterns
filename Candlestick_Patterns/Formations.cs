@@ -11,7 +11,7 @@ namespace Candlestick_Patterns
         private readonly List<int> _formationsLenght;
         private readonly decimal _minShift;
         private readonly List<double> _advance;
-        private List<decimal> _peaksFromZigZag;
+        private List<ZigZagObject> _peaksFromZigZag;
 
         public Formations(List<OhlcvObject> dataOhlcv)
         {

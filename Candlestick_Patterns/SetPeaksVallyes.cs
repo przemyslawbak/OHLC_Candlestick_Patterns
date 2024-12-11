@@ -18,37 +18,35 @@ namespace OHLC_Candlestick_Patterns
             return dataToShapeZigZag;
         }
 
-        internal static List<ZigZagObject> GetPoints(List<decimal> _peaksFromZigZag)
+        internal static List<ZigZagObject> GetPoints(List<ZigZagObject> _peaksFromZigZag)
         {
-            //return _peaksFromZigZag.Select(x => new ZigZagObject() { Close = x, Signal = false, IndexOHLCV = x.Key }).ToList();
-            return _peaksFromZigZag.Select(x => new ZigZagObject() { Close = x, Signal = false }).ToList();
+            return _peaksFromZigZag.Select(x => new ZigZagObject() { Close = x.Close, Signal = false, IndexOHLCV = x.IndexOHLCV }).ToList();
         }
 
 
-        internal static List<decimal> PeaksFromZigZag(List<ZigZagObject> _data, decimal zigZagParam)
+        internal static List<ZigZagObject> PeaksFromZigZag(List<ZigZagObject> _data, decimal zigZagParam)
         {
             _priceMovementTenthOfPercent = zigZagParam;
             var change = 0M;
-            var zigZagList = new List<decimal>();
+            var zigZagList = new List<ZigZagObject>();
             var dataZigZag = _data.Select(x => new ZigZagObject() { Close = x.Close, Signal = false }).ToList();
 
-            for (int i = 1; i < _data.Count; i++)
+            for (int i = 0; i < _data.Count; i++)
             {
                 if (zigZagList.Count == 0)
                 {
-                    change = _data[0].Close * _priceMovementTenthOfPercent;
-                    zigZagList.Add(_data[0].Close);
+                    zigZagList.Add(new ZigZagObject() { Close = _data[0].Close, Signal = false, IndexOHLCV = _data[0].IndexOHLCV });
                 }
                 else
                 {
-                    change = zigZagList.Last() * _priceMovementTenthOfPercent;
+                    change = zigZagList.Last().Close * _priceMovementTenthOfPercent;
                 }
 
                 var lastPoint = zigZagList.Last();
-                if (_data[i].Close < (lastPoint - change) || _data[i].Close > (lastPoint + change))
+                if ((_data[i].Close < (lastPoint.Close - change) || _data[i].Close > (lastPoint.Close + change)) && i != 0)
                 {
                     var point = _data[i].Close;
-                    zigZagList.Add((point));
+                    zigZagList.Add((new ZigZagObject() { Close = point, Signal = false, IndexOHLCV = _data[i].IndexOHLCV }));
                     change = point * _priceMovementTenthOfPercent;
                 }
             }
@@ -56,19 +54,19 @@ namespace OHLC_Candlestick_Patterns
             return GetValleysAndPeaksFromZigZAg(zigZagList);
         }
 
-        static List<decimal> GetValleysAndPeaksFromZigZAg(List<decimal> zigZagList)
+        static List<ZigZagObject> GetValleysAndPeaksFromZigZAg(List<ZigZagObject> zigZagList)
         {
-            var allPoints = new List<decimal>();
+            var allPoints = new List<ZigZagObject>();
 
-            bool directionUp = zigZagList[0] <= zigZagList[1];
-            for (int i = 1; i < zigZagList.Count - 1; i++)
+            bool directionUp = zigZagList[0].Close <= zigZagList[1].Close;
+            for (int i = 0; i < zigZagList.Count - 1; i++)
             {
-                if (directionUp && zigZagList[i + 1] < zigZagList[i])
+                if (directionUp && zigZagList[i + 1].Close < zigZagList[i].Close)
                 {
                     allPoints.Add(zigZagList[i]);
                     directionUp = false;
                 }
-                else if (!directionUp && zigZagList[i + 1] > zigZagList[i])
+                else if (!directionUp && zigZagList[i + 1].Close > zigZagList[i].Close)
                 {
                     allPoints.Add(zigZagList[i]);
                     directionUp = true;
