@@ -28,38 +28,19 @@ namespace OHLC_Candlestick_Patterns
         /// Positive results indicate that they are in line with expectations. Negative results indicate poor accuracy
         /// </summary>
         /// <param name="dataOhlcv">OHLCV data set</param>
-        /// <param name="formationName">Selected formation</param>
+        /// <param name="formation">Selected formation</param>
         /// <returns>AccuracyObject containing values comparing to AVER and END closing</returns>
-        AccuracyObject GetAverPercentFormationAccuracy(List<OhlcvObject> dataOhlcv, string formationName);
+        AccuracyObject GetAverPercentAccuracy(List<OhlcvObject> dataOhlcv, string formation);
 
         /// <summary>
         /// Tests selected formation accuracy in given data 30 candles ahead comparing to average close prices after signal appears
         /// Positive results indicate that they are in line with expectations. Negative results indicate poor accuracy
         /// </summary>
         /// <param name="dataOhlcv">OHLCV data set</param>
-        /// <param name="formationName">Selected formation</param>
+        /// <param name="formation">Selected formation</param>
         /// <param name="candlesAheadQty">Qty of candles ahead to be evaluated</param>
         /// <returns>AccuracyObject containing values comparing to AVER and END closing</returns>
-        AccuracyObject GetAverPercentFormationAccuracy(List<OhlcvObject> dataOhlcv, string formationName, int candlesAheadQty);
-
-        /// <summary>
-        /// Tests selected fibo accuracy in given data comparing to average close prices after signal appears
-        /// Positive results indicate that they are in line with expectations. Negative results indicate poor accuracy
-        /// </summary>
-        /// <param name="dataOhlcv">OHLCV data set</param>
-        /// <param name="fiboName">Selected fibo</param>
-        /// <returns>AccuracyObject containing values comparing to AVER and END closing</returns>
-        AccuracyObject GetAverPercentFiboAccuracy(List<OhlcvObject> dataOhlcv, string fiboName);
-
-        /// <summary>
-        /// Tests selected fibo accuracy in given data 30 candles ahead comparing to average close prices after signal appears
-        /// Positive results indicate that they are in line with expectations. Negative results indicate poor accuracy
-        /// </summary>
-        /// <param name="dataOhlcv">OHLCV data set</param>
-        /// <param name="fiboName">Selected fibo</param>
-        /// <param name="candlesAheadQty">Qty of candles ahead to be evaluated</param>
-        /// <returns>AccuracyObject containing values comparing to AVER and END closing</returns>
-        AccuracyObject GetAverPercentFiboAccuracy(List<OhlcvObject> dataOhlcv, string fiboName, int candlesAheadQty);
+        AccuracyObject GetAverPercentAccuracy(List<OhlcvObject> dataOhlcv, string formation, int candlesAheadQty);
 
         /// <summary>
         /// Finds an array of candlestick pattern names resulting with positive accuracy in relation to average close prices in given data set

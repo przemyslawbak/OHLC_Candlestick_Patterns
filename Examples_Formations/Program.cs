@@ -41,11 +41,11 @@ namespace Examples_Formations
                 .ToList();
 
             //ACCURACY TRIALS
-            var accuracyPercentageSummary = _accuracy.GetAverPercentFormationAccuracy(dataOhlcv, "Bearish Double Tops");
+            var accuracyPercentageSummary = _accuracy.GetAverPercentAccuracy(dataOhlcv, "Bearish Double Tops");
             Console.WriteLine("Accuracy percentage summary comparing to end of data set result: {0}", accuracyPercentageSummary.AccuracyToEndClose);
             Console.WriteLine("Accuracy percentage summary comparing to average close result: {0}", accuracyPercentageSummary.AccuracyToAverageClose);
 
-            var accuracyForSelectedFormation30CandlesAhead = _accuracy.GetAverPercentFormationAccuracy(dataOhlcv, "Bearish Double Tops", 30);
+            var accuracyForSelectedFormation30CandlesAhead = _accuracy.GetAverPercentAccuracy(dataOhlcv, "Bearish Double Tops", 30);
             Console.WriteLine("Accuracy percentage summary 30 candles ahead comparing to end of data set result: {0}", accuracyForSelectedFormation30CandlesAhead.AccuracyToEndClose);
             Console.WriteLine("Accuracy percentage summary 30 candles ahead comparing to average close result: {0}", accuracyForSelectedFormation30CandlesAhead.AccuracyToAverageClose);
 

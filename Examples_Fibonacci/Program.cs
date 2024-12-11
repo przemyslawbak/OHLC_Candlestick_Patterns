@@ -41,11 +41,11 @@ namespace Examples_Fibonacci
                 .ToList();
 
             //ACCURACY TRIALS
-            var accuracyPercentageSummary = _accuracy.GetAverPercentFiboAccuracy(dataOhlcv, "Bearish 3 Drive");
+            var accuracyPercentageSummary = _accuracy.GetAverPercentAccuracy(dataOhlcv, "Bearish 3 Drive");
             Console.WriteLine("Accuracy percentage summary comparing to end of data set result: {0}", accuracyPercentageSummary.AccuracyToEndClose);
             Console.WriteLine("Accuracy percentage summary comparing to average close result: {0}", accuracyPercentageSummary.AccuracyToAverageClose);
 
-            var accuracyForSelectedFibo30CandlesAhead = _accuracy.GetAverPercentFiboAccuracy(dataOhlcv, "Bearish 3 Drive", 30);
+            var accuracyForSelectedFibo30CandlesAhead = _accuracy.GetAverPercentAccuracy(dataOhlcv, "Bearish 3 Drive", 30);
             Console.WriteLine("Accuracy percentage summary 30 candles ahead comparing to end of data set result: {0}", accuracyForSelectedFibo30CandlesAhead.AccuracyToEndClose);
             Console.WriteLine("Accuracy percentage summary 30 candles ahead comparing to average close result: {0}", accuracyForSelectedFibo30CandlesAhead.AccuracyToAverageClose);
 

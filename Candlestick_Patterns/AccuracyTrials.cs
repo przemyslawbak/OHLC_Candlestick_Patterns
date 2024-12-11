@@ -26,80 +26,47 @@ namespace OHLC_Candlestick_Patterns
             return GetAccuracyResultsForNCandlesAhead(signalsList, patternName, candlesAheadQty);
         }
 
-        public AccuracyObject GetAverPercentFiboAccuracy(List<OhlcvObject> dataOhlcv, string fiboName)
+        public AccuracyObject GetAverPercentAccuracy(List<OhlcvObject> dataOhlcv, string fiboName)
         {
             _fibonacci = new Fibonacci(dataOhlcv);
 
-            var signalsList = _fibonacci.GetFibonacciSignalsList(fiboName);
+            var signalsListZigZag = _fibonacci.GetFibonacciSignalsList(fiboName);
 
-            var ohlcvList = signalsList.Select(s => new OhlcvObject()
-            {
-                Close = s.Close,
-                High = s.Close,
-                Low = s.Close,
-                Open = s.Close,
-                Signal = s.Signal,
-                Volume = 0M,
-            }).ToList();
+            var signalsListOhlcv = ConvertZigZagToOhlcv(signalsListZigZag, dataOhlcv);
 
-            return GetAccuracyResults(ohlcvList, fiboName);
+            return GetAccuracyResults(signalsListOhlcv, fiboName);
         }
 
-        public AccuracyObject GetAverPercentFiboAccuracy(List<OhlcvObject> dataOhlcv, string fiboName, int candlesAheadQty)
+        public AccuracyObject GetAverPercentAccuracy(List<OhlcvObject> dataOhlcv, string formation, int candlesAheadQty)
         {
             _fibonacci = new Fibonacci(dataOhlcv);
 
-            var signalsList = _fibonacci.GetFibonacciSignalsList(fiboName);
+            var signalsListZigZag = _fibonacci.GetFibonacciSignalsList(formation);
 
-            var ohlcvList = signalsList.Select(s => new OhlcvObject()
-            {
-                Close = s.Close,
-                High = s.Close,
-                Low = s.Close,
-                Open = s.Close,
-                Signal = s.Signal,
-                Volume = 0M,
-            }).ToList();
+            var signalsListOhlcv = ConvertZigZagToOhlcv(signalsListZigZag, dataOhlcv);
 
-            return GetAccuracyResultsForNCandlesAhead(ohlcvList, fiboName, candlesAheadQty);
+            return GetAccuracyResultsForNCandlesAhead(signalsListOhlcv, formation, candlesAheadQty);
         }
 
         public AccuracyObject GetAverPercentFormationAccuracy(List<OhlcvObject> dataOhlcv, string formationName)
         {
             _formations = new Formations(dataOhlcv);
 
-            var signalsList = _formations.GetFormationsSignalsList(formationName);
+            var signalsListZigZag = _formations.GetFormationsSignalsList(formationName);
 
-            var ohlcvList = signalsList.Select(s => new OhlcvObject() 
-            {
-                Close = s.Close,
-                High = s.Close, 
-                Low = s.Close, 
-                Open = s.Close, 
-                Signal = s.Signal, 
-                Volume = 0M,
-            }).ToList();
+            var signalsListOhlcv = ConvertZigZagToOhlcv(signalsListZigZag, dataOhlcv);
 
-            return GetAccuracyResults(ohlcvList, formationName);
+            return GetAccuracyResults(signalsListOhlcv, formationName);
         }
 
-        public AccuracyObject GetAverPercentFormationAccuracy(List<OhlcvObject> dataOhlcv, string formationName, int candlesAheadQty)
+        private List<OhlcvObject> ConvertZigZagToOhlcv(List<ZigZagObject> signalsListZigZag, List<OhlcvObject> dataOhlcv)
         {
-            _formations = new Formations(dataOhlcv);
-
-            var signalsList = _formations.GetFormationsSignalsList(formationName);
-
-            var ohlcvList = signalsList.Select(s => new OhlcvObject()
+            foreach (var zigZagItem in signalsListZigZag)
             {
-                Close = s.Close,
-                High = s.Close,
-                Low = s.Close,
-                Open = s.Close,
-                Signal = s.Signal,
-                Volume = 0M,
-            }).ToList();
+                dataOhlcv[zigZagItem.IndexOHLCV].Signal = zigZagItem.Signal;
+            }
 
-            return GetAccuracyResultsForNCandlesAhead(ohlcvList, formationName, candlesAheadQty);
+            return dataOhlcv;
         }
 
         //todo: DRY
@@ -220,7 +187,7 @@ namespace OHLC_Candlestick_Patterns
 
             foreach (var formation in allFormations)
             {
-                var acc = GetAverPercentFormationAccuracy(dataOhlcv, formation);
+                var acc = GetAverPercentAccuracy(dataOhlcv, formation);
 
                 if (acc.AccuracyToAverageClose > 0)
                 {
@@ -240,7 +207,7 @@ namespace OHLC_Candlestick_Patterns
 
             foreach (var fibo in allFibo)
             {
-                var acc = GetAverPercentFiboAccuracy(dataOhlcv, fibo);
+                var acc = GetAverPercentAccuracy(dataOhlcv, fibo);
 
                 if (acc.AccuracyToAverageClose > 0)
                 {
@@ -280,7 +247,7 @@ namespace OHLC_Candlestick_Patterns
 
             foreach (var formation in allFormations)
             {
-                var acc = GetAverPercentFormationAccuracy(dataOhlcv, formation);
+                var acc = GetAverPercentAccuracy(dataOhlcv, formation);
 
                 if (acc.AccuracyToEndClose > 0)
                 {
@@ -300,7 +267,7 @@ namespace OHLC_Candlestick_Patterns
 
             foreach (var fibo in allFibo)
             {
-                var acc = GetAverPercentFiboAccuracy(dataOhlcv, fibo);
+                var acc = GetAverPercentAccuracy(dataOhlcv, fibo);
 
                 if (acc.AccuracyToEndClose > 0)
                 {
@@ -352,7 +319,7 @@ namespace OHLC_Candlestick_Patterns
 
             foreach (var formation in allFormations)
             {
-                var acc = GetAverPercentFormationAccuracy(dataOhlcv, formation);
+                var acc = GetAverPercentAccuracy(dataOhlcv, formation);
 
                 if (acc.AccuracyToEndClose > 0 && acc.AccuracyToAverageClose > 0)
                 {
@@ -383,7 +350,7 @@ namespace OHLC_Candlestick_Patterns
 
             foreach (var fibo in allFibo)
             {
-                var acc = GetAverPercentFiboAccuracy(dataOhlcv, fibo);
+                var acc = GetAverPercentAccuracy(dataOhlcv, fibo);
 
                 if (acc.AccuracyToEndClose > 0 && acc.AccuracyToAverageClose > 0)
                 {
@@ -445,7 +412,7 @@ namespace OHLC_Candlestick_Patterns
 
             foreach (var formation in allFormations)
             {
-                var acc = GetAverPercentFormationAccuracy(dataOhlcv, formation, candlesAhead);
+                var acc = GetAverPercentAccuracy(dataOhlcv, formation, candlesAhead);
 
                 if (acc.AccuracyToEndClose > 0 && acc.AccuracyToAverageClose > 0)
                 {
@@ -476,7 +443,7 @@ namespace OHLC_Candlestick_Patterns
 
             foreach (var fibo in allFibo)
             {
-                var acc = GetAverPercentFiboAccuracy(dataOhlcv, fibo, candlesAhead);
+                var acc = GetAverPercentAccuracy(dataOhlcv, fibo, candlesAhead);
 
                 if (acc.AccuracyToEndClose > 0 && acc.AccuracyToAverageClose > 0)
                 {
