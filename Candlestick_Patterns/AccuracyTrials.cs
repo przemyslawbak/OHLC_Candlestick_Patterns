@@ -178,7 +178,7 @@ namespace OHLC_Candlestick_Patterns
             return res.ToArray();
         }
 
-        public string[] GetPositiveAccuracyToAverFormations(List<OhlcvObject> dataOhlcv)
+        public string[] GetPositiveAccuracyToAverFibos(List<OhlcvObject> dataOhlcv)
         {
             _formations = new Formations(dataOhlcv);
             var allFormations = _formations.GetAllMethodNames();
@@ -258,7 +258,7 @@ namespace OHLC_Candlestick_Patterns
             return res.ToArray();
         }
 
-        public string[] GetPositiveAccuracyToEndFibo(List<OhlcvObject> dataOhlcv)
+        public string[] GetPositiveAccuracyToEndFibos(List<OhlcvObject> dataOhlcv)
         {
             _fibonacci = new Fibonacci(dataOhlcv);
             var allFibo = _fibonacci.GetAllMethodNames();
@@ -340,7 +340,7 @@ namespace OHLC_Candlestick_Patterns
             return values.OrderByDescending(x => x.Value).Take(qty).Select(x => x.Key).ToArray();
         }
 
-        public string[] GetBestAccuracyFibo(List<OhlcvObject> dataOhlcv, int topPercentage)
+        public string[] GetBestAccuracyFibos(List<OhlcvObject> dataOhlcv, int topPercentage)
         {
             _fibonacci = new Fibonacci(dataOhlcv);
             var allFibo = _fibonacci.GetAllMethodNames();
@@ -433,7 +433,7 @@ namespace OHLC_Candlestick_Patterns
             return values.OrderByDescending(x => x.Value).Take(qty).Select(x => x.Key).ToArray();
         }
 
-        public string[] GetBestAccuracyFibo(List<OhlcvObject> dataOhlcv, int topPercentage, int candlesAhead)
+        public string[] GetBestAccuracyFibos(List<OhlcvObject> dataOhlcv, int topPercentage, int candlesAhead)
         {
             _fibonacci = new Fibonacci(dataOhlcv);
             var allFibo = _fibonacci.GetAllMethodNames();

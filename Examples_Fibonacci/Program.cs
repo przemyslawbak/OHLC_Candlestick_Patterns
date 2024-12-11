@@ -41,13 +41,25 @@ namespace Examples_Fibonacci
                 .ToList();
 
             //ACCURACY TRIALS
-            var accuracyPercentageSummary = _accuracy.GetAverPercentAccuracy(dataOhlcv, "Bearish 3 Drive");
+            var accuracyPercentageSummary = _accuracy.GetAverPercentAccuracy(dataOhlcv, "Bullish 3 Inside Up");
             Console.WriteLine("Accuracy percentage summary comparing to end of data set result: {0}", accuracyPercentageSummary.AccuracyToEndClose);
             Console.WriteLine("Accuracy percentage summary comparing to average close result: {0}", accuracyPercentageSummary.AccuracyToAverageClose);
 
-            var accuracyForSelectedFibo30CandlesAhead = _accuracy.GetAverPercentAccuracy(dataOhlcv, "Bearish 3 Drive", 30);
+            var accuracyForSelectedFibo30CandlesAhead = _accuracy.GetAverPercentAccuracy(dataOhlcv, "Bullish 3 Inside Up", 30);
             Console.WriteLine("Accuracy percentage summary 30 candles ahead comparing to end of data set result: {0}", accuracyForSelectedFibo30CandlesAhead.AccuracyToEndClose);
             Console.WriteLine("Accuracy percentage summary 30 candles ahead comparing to average close result: {0}", accuracyForSelectedFibo30CandlesAhead.AccuracyToAverageClose);
+
+            var accuracyAverPositive = _accuracy.GetPositiveAccuracyToAverFibos(dataOhlcv);
+            Console.WriteLine("Fibos with positive accuracy rate comaring to aver. close price: {0}", string.Join(",", accuracyAverPositive));
+
+            var accuracyEndPositive = _accuracy.GetPositiveAccuracyToEndFibos(dataOhlcv);
+            Console.WriteLine("Fibos with positive accuracy rate comaring to end close price: {0}", string.Join(",", accuracyEndPositive));
+
+            var accuracyBest = _accuracy.GetBestAccuracyFibos(dataOhlcv, 25);
+            Console.WriteLine("25% of best fibos comparing to end and aver. close price: {0}", string.Join(",", accuracyBest));
+
+            var accuracyBest30CandlesAhead = _accuracy.GetBestAccuracyFibos(dataOhlcv, 25, 30);
+            Console.WriteLine("25% of best fibos 30 candles ahead comparing to end and aver. close price: {0}", string.Join(",", accuracyBest30CandlesAhead));
 
             //SIGNALS
             var bullishCount = _signals.GetFiboBullishSignalsCount(dataOhlcv);

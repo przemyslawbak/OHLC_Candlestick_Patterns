@@ -54,7 +54,7 @@ namespace OHLC_Candlestick_Patterns
         /// </summary>
         /// <param name="dataOhlcv">OHLCV data set</param>
         /// <returns>Array of names</returns>
-        string[] GetPositiveAccuracyToAverFormations(List<OhlcvObject> dataOhlcv);
+        string[] GetPositiveAccuracyToAverFibos(List<OhlcvObject> dataOhlcv);
 
         /// <summary>
         /// Finds an array of fibonacci patterns names resulting with positive accuracy in relation to average close prices in given data set
@@ -82,7 +82,7 @@ namespace OHLC_Candlestick_Patterns
         /// </summary>
         /// <param name="dataOhlcv">OHLCV data set</param>
         /// <returns>Array of names</returns>
-        string[] GetPositiveAccuracyToEndFibo(List<OhlcvObject> dataOhlcv);
+        string[] GetPositiveAccuracyToEndFibos(List<OhlcvObject> dataOhlcv);
 
         /// <summary>
         /// Finds an array of candlestick pattern names resulting with best accuracy in given data set
@@ -106,7 +106,7 @@ namespace OHLC_Candlestick_Patterns
         /// <param name="dataOhlcv">OHLCV data set</param>
         /// <param name="topPercentage">Top percentage of all fibo</param>
         /// <returns>Array of names</returns>
-        string[] GetBestAccuracyFibo(List<OhlcvObject> dataOhlcv, int topPercentage);
+        string[] GetBestAccuracyFibos(List<OhlcvObject> dataOhlcv, int topPercentage);
 
         /// <summary>
         /// Finds an array of candlestick pattern names resulting with best accuracy in given data set
@@ -133,6 +133,6 @@ namespace OHLC_Candlestick_Patterns
         /// <param name="topPercentage">Top percentage of all fibo</param>
         /// <param name="candlesAheadQty">Qty of candles ahead to be evaluated</param>
         /// <returns>Array of names</returns>
-        string[] GetBestAccuracyFibo(List<OhlcvObject> dataOhlcv, int topPercentage, int candlesAhead);
+        string[] GetBestAccuracyFibos(List<OhlcvObject> dataOhlcv, int topPercentage, int candlesAhead);
     }
 }

@@ -41,8 +41,6 @@ namespace Examples_Patterns
                 .ToList();
 
             //ACCURACY TRIALS
-            var best = _accuracy.GetBestAccuracyPatterns(dataOhlcv, 100, 450);
-
             var accuracyPercentageSummary = _accuracy.GetAverPercentPatternAccuracy(dataOhlcv, "Bullish 3 Inside Up");
             Console.WriteLine("Accuracy percentage summary comparing to end of data set result: {0}", accuracyPercentageSummary.AccuracyToEndClose);
             Console.WriteLine("Accuracy percentage summary comparing to average close result: {0}", accuracyPercentageSummary.AccuracyToAverageClose);
@@ -50,6 +48,18 @@ namespace Examples_Patterns
             var accuracyForSelectedPattern30CandlesAhead = _accuracy.GetAverPercentPatternAccuracy(dataOhlcv, "Bullish 3 Inside Up", 30);
             Console.WriteLine("Accuracy percentage summary 30 candles ahead comparing to end of data set result: {0}", accuracyForSelectedPattern30CandlesAhead.AccuracyToEndClose);
             Console.WriteLine("Accuracy percentage summary 30 candles ahead comparing to average close result: {0}", accuracyForSelectedPattern30CandlesAhead.AccuracyToAverageClose);
+
+            var accuracyAverPositive = _accuracy.GetPositiveAccuracyToAverPatterns(dataOhlcv);
+            Console.WriteLine("Patterns with positive accuracy rate comaring to aver. close price: {0}", string.Join(",", accuracyAverPositive));
+
+            var accuracyEndPositive = _accuracy.GetPositiveAccuracyToEndPatterns(dataOhlcv);
+            Console.WriteLine("Patterns with positive accuracy rate comaring to end close price: {0}", string.Join(",", accuracyEndPositive));
+
+            var accuracyBest = _accuracy.GetBestAccuracyPatterns(dataOhlcv, 25);
+            Console.WriteLine("25% of best patterns comparing to end and aver. close price: {0}", string.Join(",", accuracyBest));
+
+            var accuracyBest30CandlesAhead = _accuracy.GetBestAccuracyPatterns(dataOhlcv, 25, 30);
+            Console.WriteLine("25% of best patterns 30 candles ahead comparing to end and aver. close price: {0}", string.Join(",", accuracyBest30CandlesAhead));
 
             //SIGNALS
             var bullishCount = _signals.GetPatternsBullishSignalsCount(dataOhlcv);
