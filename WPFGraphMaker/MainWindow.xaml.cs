@@ -48,8 +48,13 @@ namespace WPFGraphMaker
         {
             if (e.Delta > 0)
             {
+                if (_lastPosition - _startPoints < 0)
+                {
+                    _lastPosition = _startPoints;
+                }
                 _lastPosition = _lastPosition + _scrollStep;
-                if(_lastPosition + _startPoints > _points.Count)
+
+                if (_lastPosition + _startPoints > _points.Count)
                 {
                     var yMinStart = _points.Select(x => x.Close).TakeLast(_startPoints).Min();
                     var yMaxStart = _points.Select(x => x.Close).TakeLast(_startPoints).Max();
@@ -179,7 +184,7 @@ namespace WPFGraphMaker
             response.EnsureSuccessStatusCode();
             string json = await response.Content.ReadAsStringAsync();
 
-            var patternName = patternNameTextBox.Text == string.Empty ? "Bullish3Extension" : patternNameTextBox.Text;
+            var patternName = patternNameTextBox.Text == string.Empty ? "Bearish3Extension" : patternNameTextBox.Text;
             _points = GetGraphData(patternName, json);
             ViewGraph(_points);
 
