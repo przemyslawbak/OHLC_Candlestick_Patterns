@@ -1,8 +1,6 @@
 ﻿using Candlestick_Patterns;
-using GraphMaker;
 using ScottPlot;
 using ScottPlot.Palettes;
-using ScottPlot.Plottables;
 using ScottPlot.WPF;
 using System.ComponentModel;
 using System.Net.Http;
@@ -13,7 +11,8 @@ namespace WPFGraphMaker
 {
     public partial class MainWindow : Window, INotifyPropertyChanged
     {
-        private readonly IFiboTester _fiboTester = new FiboTester();
+        private readonly IDataFromJson _data = new DataFromJson();
+        private readonly IPatternsDictionary _dict = new PatternsDictionary();
         private List<ZigZagObject> _points = new List<ZigZagObject>();
         private readonly int _startPoints = 100;
         private readonly int _scrollStep = 10;
@@ -162,17 +161,21 @@ namespace WPFGraphMaker
         {
             var mp = WpfPlot1.Plot.Add.Marker(i, (double)item.Close);
             mp.MarkerShape = MarkerShape.OpenDiamond;
-            //mp.MarkerStyle.FillColor = palette.GetColor(color);
             mp.MarkerStyle.Size = 15F;
-            //mp.MarkerStyle.OutlineColor = palette.GetColor(8);
             mp.MarkerStyle.OutlineWidth = 2;
             mp.MarkerStyle.LineWidth = 3f;
             mp.MarkerStyle.LineColor = palette.GetColor(color);
         }
-
-        private List<ZigZagObject> GetGraphData(string patternName, string json)
+        private string GetSuitableGroupByPatternName(string patternName)
         {
-            return _fiboTester.GetDataFromJson(patternName, json);
+            var methodName = patternName.Trim().Replace(" ", "");
+            var groupName = _dict.GetCategory().Where(x => x.Key == methodName).ToDictionary().Values.First();
+            return groupName;
+        }
+
+        private List<ZigZagObject> GetGraphData(string patternName, string json, string group)
+        {
+            return _data.GetDataFromJson(patternName, json, group);
         }
 
         private async void OnStartClick(object sender, RoutedEventArgs e)
@@ -185,7 +188,8 @@ namespace WPFGraphMaker
             string json = await response.Content.ReadAsStringAsync();
 
             var patternName = patternNameTextBox.Text == string.Empty ? "Bearish3Extension" : patternNameTextBox.Text;
-            _points = GetGraphData(patternName, json);
+            var getSuitableMethodByGivenName = GetSuitableGroupByPatternName(patternName);
+            _points = GetGraphData(patternName, json, getSuitableMethodByGivenName);
             ViewGraph(_points);
 
 
@@ -209,20 +213,6 @@ namespace WPFGraphMaker
         protected void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-        private async Task<List<ZigZagObject>> GetPoints()
-        {
-            var url = "https://gist.github.com/przemyslawbak/92c3d4bba27cfd2b88d0dd916bbdad14/raw/AAL_1min.json";
-
-            HttpClient client = new HttpClient();
-            HttpResponseMessage response = await client.GetAsync(url);
-            response.EnsureSuccessStatusCode();
-            string json = await response.Content.ReadAsStringAsync();
-
-            var patternName = patternNameTextBox.Text == string.Empty ? "BullishButterfly" : patternNameTextBox.Text;
-            List<ZigZagObject> points = GetGraphData(patternName, json);
-            return points;
         }
     }
 }

@@ -1,7 +1,7 @@
 ﻿
 namespace Candlestick_Patterns
 {
-   internal interface IFormations
+   public interface IFormations
     {
         List<string> GetFormationsAllMethodNames();
         List<ZigZagObject> GetFormationsSignalsList(string patternName);
