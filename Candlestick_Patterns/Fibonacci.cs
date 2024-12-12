@@ -55,8 +55,8 @@ namespace Candlestick_Patterns
         private List<ZigZagObject> BullishButterfly() => Pattern("bullish", SetPeaksVallyes.GetPoints(_peaksFromZigZag), _fibError, "butterflyPattern", 4);
         private List<ZigZagObject> BearishABCD() => Pattern("bearish", SetPeaksVallyes.GetPoints(_peaksFromZigZag), _fibError, "abcdPattern", 3);
         private List<ZigZagObject> BullishABCD() => Pattern("bullish", SetPeaksVallyes.GetPoints(_peaksFromZigZag), _fibError, "abcdPattern", 3);
-        private List<ZigZagObject> Bearish3Extension() => Pattern("bearish", SetPeaksVallyes.GetPoints(_peaksFromZigZag), _fibError, "threeExtensionPattern", 2);
-        private List<ZigZagObject> Bullish3Extension() => Pattern("bullish", SetPeaksVallyes.GetPoints(_peaksFromZigZag), _fibError, "threeExtensionPattern", 2);
+        private List<ZigZagObject> Bearish3Extension() => Pattern("bearish", SetPeaksVallyes.GetPoints(_peaksFromZigZag), _fibError, "threeExtensionPattern", 3);
+        private List<ZigZagObject> Bullish3Extension() => Pattern("bullish", SetPeaksVallyes.GetPoints(_peaksFromZigZag), _fibError, "threeExtensionPattern", 3);
         private List<ZigZagObject> Bearish3Retracement() => Pattern("bearish", SetPeaksVallyes.GetPoints(_peaksFromZigZag), _fibError, "threeRetracementPattern", 2);
         private List<ZigZagObject> Bullish3Retracement() => Pattern("bullish", SetPeaksVallyes.GetPoints(_peaksFromZigZag), _fibError, "threeRetracementPattern", 2);
         private List<ZigZagObject> Bearish3Drive() => _drivePattern.ThreeDrivePattern("bearish", SetPeaksVallyes.GetPoints(_peaksFromZigZag), _fibError);
@@ -126,7 +126,8 @@ namespace Candlestick_Patterns
             if (fibbPattern == "threeExtensionPattern")
             {
                 return SecondCheckFor3ExtensionPattern(points, i, pattern, dateList);
-            } if (fibbPattern == "threeRetracementPattern")
+            } 
+            if (fibbPattern == "threeRetracementPattern")
             {
                 return SecondCheckFor3RetracementPattern(points, i, pattern, dateList);
             }
@@ -297,7 +298,7 @@ namespace Candlestick_Patterns
 
         private static bool SecondCheckFor3RetracementPattern(List<ZigZagObject> points, int i, string pattern, List<decimal> dateList)
         {
-            var retracement = _support.GetRetracement(points, i, 0, 1, 2);
+            var retracement = _support.GetRetracement(points, i, 0, 1, 2);//
             if (range618.Min() < retracement && range618.Max() > retracement)
             {
                 return true;
@@ -307,10 +308,12 @@ namespace Candlestick_Patterns
 
         private static bool SecondCheckFor3ExtensionPattern(List<ZigZagObject> points, int i, string pattern, List<decimal> dateList)
         {
-            var retracement = _support.GetRetracement(points, i, 0, 1, 2);
+
+            var extension = _support.GetRetracement(points, i, 0, 2, 3); //signal for level 161,8% 
+            var retracement = _support.GetRetracement(points, i, 1, 2, 3);
             if (pattern == "bullish")
             {
-                if (range618.Min() < retracement && range618.Max() > retracement)
+                if ((range618.Min() < retracement && range618.Max() > retracement) && (range161.Min() < extension /*&& range618.Max() > extension*/))
                 {
                     return true; 
                 }
@@ -318,7 +321,7 @@ namespace Candlestick_Patterns
 
             if (pattern == "bearish")
             {
-                if (range161.Min() < retracement && range161.Max() > retracement)
+                if ((range161.Min() < retracement && range161.Max() > retracement) && (range161.Min() < extension /*&& range618.Max() > extension*/)) 
                 {
                     return true;  
                     
@@ -329,16 +332,16 @@ namespace Candlestick_Patterns
 
         private static bool FirstCheckFor3ExtensionPattern(List<ZigZagObject> points, int i, string pattern)
         {
-            if (pattern == "bullish")
+            if (pattern == "bullish") 
             {
-                if (points[i].Close < points[i - 1].Close && points[i - 1].Close > points[i - 2].Close)
+                if (points[i].Close > points[i - 1].Close && points[i - 1].Close < points[i - 2].Close && points[i - 2].Close > points[i - 3].Close)
                 {
                     return true;
                 }
             }
             if (pattern == "bearish")
             {
-                if (points[i].Close > points[i - 1].Close && points[i - 1].Close < points[i - 2].Close)
+                if (points[i].Close < points[i - 1].Close && points[i - 1].Close > points[i - 2].Close && points[i - 2].Close < points[i - 3].Close)
                 {
                     return true;
                 }
