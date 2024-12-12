@@ -6,7 +6,7 @@ namespace Candlestick_Patterns
     public abstract class AbstractFibonnaci
     {
         internal abstract bool FirstCheck(List<ZigZagObject> points, int i, string pattern, string fibbPattern);
-        internal abstract bool SecondCheck(List<ZigZagObject> points, int i, string pattern, List<decimal> dateList, string fibbPattern);
+        internal abstract bool SecondCheck(List<ZigZagObject> points, int i, string pattern, string fibbPattern);
     }
 
     public class Fibonacci : AbstractFibonnaci, IFibonacci
@@ -72,7 +72,7 @@ namespace Candlestick_Patterns
                 {
                     if (FirstCheck(points, i, pattern, fibbPattern))
                     {
-                        if (SecondCheck(points, i, pattern, dateList, fibbPattern))
+                        if (SecondCheck(points, i, pattern, fibbPattern))
                         {
                             _support.AddPointsToList(points, i, dateList, startNumber);
                         }
@@ -109,27 +109,27 @@ namespace Candlestick_Patterns
             return false;
         }
 
-        internal override bool SecondCheck(List<ZigZagObject> points, int i, string pattern, List<decimal> dateList, string fibbPattern)
+        internal override bool SecondCheck(List<ZigZagObject> points, int i, string pattern, string fibbPattern)
         {
             if (fibbPattern == "abcdPattern")
             {
-                return SecondCheckForABCDPattern(points, i, pattern, dateList);
+                return SecondCheckForABCDPattern(points, i, pattern);
             }
             if (fibbPattern == "gartleyPattern")
             {
-                return SecondCheckForGartleyPattern(points, i, pattern, dateList);
+                return SecondCheckForGartleyPattern(points, i, pattern);
             }
             if (fibbPattern == "butterflyPattern")
             {
-                return SecondCheckForButterflyPattern(points, i, pattern, dateList);
+                return SecondCheckForButterflyPattern(points, i, pattern);
             }
             if (fibbPattern == "threeExtensionPattern")
             {
-                return SecondCheckFor3ExtensionPattern(points, i, pattern, dateList);
+                return SecondCheckFor3ExtensionPattern(points, i, pattern);
             } 
             if (fibbPattern == "threeRetracementPattern")
             {
-                return SecondCheckFor3RetracementPattern(points, i, pattern, dateList);
+                return SecondCheckFor3RetracementPattern(points, i, pattern);
             }
 
             return false;
@@ -155,7 +155,7 @@ namespace Candlestick_Patterns
 
         }
 
-        private static bool SecondCheckForGartleyPattern(List<ZigZagObject> points, int i, string pattern, List<decimal> dateList)
+        private static bool SecondCheckForGartleyPattern(List<ZigZagObject> points, int i, string pattern)
         {
             var retracementAbAx = _support.GetRetracement(points, i, 2, 3, 4); // 61,8% - 78,6%
             var retracementBcBa = _support.GetRetracement(points, i, 1, 2, 3); // 38.2% – 88.6% 
@@ -198,7 +198,7 @@ namespace Candlestick_Patterns
             return false;
         }
 
-        private static bool SecondCheckForButterflyPattern(List<ZigZagObject> points, int i, string pattern, List<decimal> dateList)
+        private static bool SecondCheckForButterflyPattern(List<ZigZagObject> points, int i, string pattern)
         {
             var retracementBaXa = _support.GetRetracement(points, i, 2, 3, 4); // 78,6%
             //var retracementDaXa = _support.GetRetracement(points, i, 0, 3, 4); // 127,2% lub 161,8%
@@ -236,7 +236,7 @@ namespace Candlestick_Patterns
             return false;
         }
         
-        private static bool SecondCheckForABCDPattern(List<ZigZagObject> points, int i, string pattern, List<decimal> dateList)
+        private static bool SecondCheckForABCDPattern(List<ZigZagObject> points, int i, string pattern)
         {
             var lenghtba = GetLenght(points, i, 2, 3);
             var lenghtdc = GetLenght(points, i, 0, 1);
@@ -296,7 +296,7 @@ namespace Candlestick_Patterns
             return false;
         }
 
-        private static bool SecondCheckFor3RetracementPattern(List<ZigZagObject> points, int i, string pattern, List<decimal> dateList)
+        private static bool SecondCheckFor3RetracementPattern(List<ZigZagObject> points, int i, string pattern)
         {
             var retracement = _support.GetRetracement(points, i, 0, 1, 2);//
             if (range618.Min() < retracement && range618.Max() > retracement)
@@ -306,7 +306,7 @@ namespace Candlestick_Patterns
             return false;
         }
 
-        private static bool SecondCheckFor3ExtensionPattern(List<ZigZagObject> points, int i, string pattern, List<decimal> dateList)
+        private static bool SecondCheckFor3ExtensionPattern(List<ZigZagObject> points, int i, string pattern)
         {
 
             var extension = _support.GetRetracement(points, i, 0, 2, 3); //signal for level 161,8% 
