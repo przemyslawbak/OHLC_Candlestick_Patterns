@@ -325,22 +325,22 @@ namespace Candlestick_Patterns
             {
                 if (!dateList.Contains(points[i].Close))
                 {
-                    if (Math.Abs((points[i].Close - points[i - 2].Close) / points[i - 2].Close) < _percentageMargin && points[i + 2].Close > points[i + 1].Close)
+                    if (Math.Abs((points[i - 4].Close - points[i - 2].Close) / points[i - 2].Close) < _percentageMargin)
                     {
-                        if (points[i - 3].Close < points[i - 1].Close && points[i + 1].Close > points[i - 1].Close)
+                        if (points[i - 3].Close < points[i - 1].Close && points[i - 5].Close < points[i - 1].Close)
                         {
                             var diff1 = Math.Abs(points[i].Close - points[i - 1].Close);
                             var diff2 = Math.Abs(points[i - 3].Close - points[i - 2].Close);
-                            var diff3 = Math.Abs(points[i].Close - points[i + 1].Close);
+                            var diff3 = Math.Abs(points[i - 3].Close - points[i - 4].Close);
                             var diff4 = Math.Abs(points[i - 1].Close - points[i - 2].Close);
-                            if (diff2 > diff1 && diff4 > diff3)
+                            if (diff2 < diff1 && diff4 < diff3)
                             {
                                 for (int x = -5; x < 1; x++)
                                 {
                                     dateList.Add(points[i + x].Close);
                                 }
 
-                                if (dateList.Count > _formationsLenght.Min())
+                                if (dateList.Count >= _formationsLenght.Average())
                                 {
                                     points[i].Signal = true;
                                 }
@@ -372,7 +372,7 @@ namespace Candlestick_Patterns
                                     dateList.Add(points[i + x].Close);
                                 }
 
-                                if (dateList.Count > _formationsLenght.Min())
+                                if (dateList.Count >= _formationsLenght.Average())
                                 {
                                     points[i].Signal = true;
                                 }
@@ -389,26 +389,26 @@ namespace Candlestick_Patterns
         {
             var dateList = new List<decimal>();
             var points = SetPeaksVallyes.GetPoints(_peaksFromZigZag);
-            for (int i = 3; i < points.Count - 3; i++)
+            for (int i = 5; i < points.Count - 3; i++)
             {
                 if (!dateList.Contains(points[i].Close))
                 {
-                    if (Math.Abs((points[i].Close - points[i - 2].Close) / points[i - 2].Close) < _percentageMargin)
+                    if ((Math.Abs((points[i - 1].Close - points[i - 3].Close) / points[i - 3].Close) < _percentageMargin) && (Math.Abs((points[i - 3].Close - points[i - 5].Close) / points[i - 3].Close) < _percentageMargin))
                     {
-                        if (points[i - 3].Close > points[i - 1].Close && points[i + 1].Close < points[i - 1].Close)
+                        if (points[i - 4].Close > points[i - 2].Close)
                         {
-                            var change1 = Math.Abs((points[i].Close - points[i + 1].Close) / points[i].Close);
-                            var change2 = Math.Abs((points[i - 2].Close - points[i - 1].Close) / points[i - 2].Close);
-                            var diff1 = Math.Abs(points[i].Close - points[i - 1].Close);
-                            var diff2 = Math.Abs(points[i - 2].Close - points[i - 3].Close);
-                            if (change2 > change1 && diff2 > diff1)
+                            var change1 = Math.Abs((points[i - 2].Close - points[i - 1].Close));
+                            var change2 = Math.Abs((points[i - 3].Close - points[i - 4].Close));
+                            var diff1 = Math.Abs(points[i - 3].Close - points[i - 1].Close / points[i - 3].Close);
+                            var diff2 = Math.Abs(points[i - 5].Close - points[i - 3].Close / points[i - 5].Close);
+                            if (change2 > change1 && diff2 <= _percentageMargin && diff1 <= _percentageMargin)
                             {
-                                for (int x = -3; x < 4; x++)
+                                for (int x = -5; x < 1; x++)
                                 {
                                     dateList.Add(points[i + x].Close);
                                 }
 
-                                if (dateList.Count >= _formationsLenght.Max())
+                                if (dateList.Count >= _formationsLenght.Average())
                                 {
                                     points[i].Signal = true;
                                 }
