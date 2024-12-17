@@ -1,11 +1,4 @@
-﻿using Candlestick_Patterns;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace WPFGraphMaker
+﻿namespace WPFGraphMaker
 {
     public interface IMethodsDictionary
     {

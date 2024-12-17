@@ -6,6 +6,7 @@ namespace WPFGraphMaker
 {
     public interface IDataFromJson
     {
+        List<OhlcvObject> GetCandlestickDataFromJson(string patternName, string json);
         List<ZigZagObject> GetDataFromJson(string patternName, string json, string groupName);
     }
     
@@ -13,6 +14,7 @@ namespace WPFGraphMaker
     {
         IFibonacci _fibonacci;
         IFormations _formations;
+        IPatterns _patterns;
 
         public async Task<List<ZigZagObject>> GetPoints(string patternName)
         {
@@ -70,6 +72,31 @@ namespace WPFGraphMaker
                 signalList = _formations.GetFormationsSignalsList(patternName);
             }
             return signalList;
+        }
+
+        public List<OhlcvObject> GetCandlestickDataFromJson(string patternName, string json)
+        {
+            var settings = new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore,
+                MissingMemberHandling = MissingMemberHandling.Ignore,
+            };
+
+            var dataOhlcv = JsonConvert.DeserializeObject<List<OhlcvObject>>(json, settings).Select(x => new OhlcvObject()
+            {
+                Open = x.Open,
+                High = x.High,
+                Low = x.Low,
+                Close = x.Close,
+                Volume = x.Volume,
+            }).ToList();
+
+            dataOhlcv = dataOhlcv.Where(x => x.Open != 0 && x.High != 0 && x.Low != 0 && x.Close != 0).ToList();
+
+            _patterns = new Patterns(dataOhlcv);
+
+            var signalsList = _patterns.GetPatternsSignalsList(patternName);
+            return signalsList;
         }
     }
 }
