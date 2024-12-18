@@ -66,7 +66,6 @@ namespace WPFGraphMaker
                     }
                     else
                     {
-
                         DoMouseWheelAction();
                     }
                 }
@@ -83,9 +82,7 @@ namespace WPFGraphMaker
                     }
                     else
                     {
-                        var yMinStart = _pointsOhlcv.Select(x => x.Low).Skip(_lastPosition - _startPoints).Take(_startPoints).Min();
-                        var yMaxStart = _pointsOhlcv.Select(x => x.High).Skip(_lastPosition - _startPoints).Take(_startPoints).Max();
-                        OnMouseWheelScale(yMinStart, yMaxStart);
+                        DoMouseWheelActionForCandlestick();
                     }
                 }
                 
@@ -104,14 +101,32 @@ namespace WPFGraphMaker
                     }
                     else
                     {
-                        DoMouseWheelAction();
+                        DoMouseWheelActionForCandlestick();
                     }
                 }
                 else
                 {
-                    //candle   TODO
+                    //candle
+                    if (_lastPosition - _startPoints <= 0)
+                    {
+                        var yMinStart = _pointsOhlcv.Select(x => x.Low).Take(_startPoints).Min();
+                        var yMaxStart = _pointsOhlcv.Select(x => x.High).Take(_startPoints).Max();
+                        _lastPosition = 0;
+                        OnDataLoadedScale(yMinStart, yMaxStart);
+                    }
+                    else
+                    {
+                        DoMouseWheelActionForCandlestick();
+                    }
                 } 
             }
+        }
+
+        private void DoMouseWheelActionForCandlestick()
+        {
+            var yMinStart = _pointsOhlcv.Select(x => x.Low).Skip(_lastPosition - _startPoints).Take(_startPoints).Min();
+            var yMaxStart = _pointsOhlcv.Select(x => x.High).Skip(_lastPosition - _startPoints).Take(_startPoints).Max();
+            OnMouseWheelScale(yMinStart, yMaxStart);
         }
 
         private void OnMouseWheelScale(decimal yMinStart, decimal yMaxStart)
