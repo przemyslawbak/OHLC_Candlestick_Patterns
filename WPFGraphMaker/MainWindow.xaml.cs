@@ -1,7 +1,6 @@
 ﻿using Candlestick_Patterns;
 using ScottPlot;
 using ScottPlot.Palettes;
-using ScottPlot.Plottables;
 using ScottPlot.WPF;
 using System.ComponentModel;
 using System.Net.Http;
@@ -14,6 +13,7 @@ namespace WPFGraphMaker
     {
         private readonly IDataFromJson _data = new DataFromJson();
         private readonly IMethodsDictionary _dict = new MethodsDictionary();
+        private readonly ICandlesticAmountDictionary _candle = new CandlesticAmountDictionary();
         private List<ZigZagObject> _points = new List<ZigZagObject>();
         private List<OhlcvObject> _pointsOhlcv = new List<OhlcvObject>();
         private readonly int _startPoints = 100;
@@ -36,90 +36,117 @@ namespace WPFGraphMaker
             WpfPlot1.MouseWheel += OnMouseWheelEvent;
         }
 
+        private void OnMouseWheelEvent(object sender, MouseWheelEventArgs e)
+        {
+            if (e.Delta > 0)
+            {
+                DeltaPlus();
+            }
+            else if (e.Delta < 0)
+            {
+                DeltaMinus();
+            }
+        }
+
+        private void DeltaPlus()
+        {
+            if (_lastPosition - _startPoints < 0)
+            {
+                _lastPosition = _startPoints;
+            }
+
+            _lastPosition = _lastPosition + _scrollStep;
+            if (_points.Count != 0)
+            {
+                DeltaPlusForZigZagPoints();
+            }
+            else
+            {
+                DeltaPlusForCandlestickOhlcvPoints();
+            }
+        }
+
+        private void DeltaMinus()
+        {
+            _lastPosition = _lastPosition - _scrollStep;
+            if (_points.Count != 0)
+            {
+                DeltaMinusForZigZagPoints();
+            }
+            else
+            {
+                DeltaMinusForCandlestickOhlcvPoints();
+            }
+        }
+
+        private void DeltaMinusForZigZagPoints()
+        {
+            if (_lastPosition - _startPoints <= 0)
+            {
+                var yMinStart = GetYMinStartForZigZagPoints();
+                var yMaxStart = GetYMaxStartForZigZagPoints();
+                _lastPosition = 0;
+                OnDataLoadedScale(yMinStart, yMaxStart);
+            }
+            else
+            {
+                DoMouseWheelActionForCandlestick();
+            }
+        }
+
+        private void DeltaMinusForCandlestickOhlcvPoints()
+        {
+            if (_lastPosition - _startPoints <= 0)
+            {
+                var yMinStart = GetYMinStartForCandlesticGraph();
+                var yMaxStart = GetYMaxStartForCandlesticGraph();
+                _lastPosition = 0;
+                OnDataLoadedScale(yMinStart, yMaxStart);
+            }
+            else
+            {
+                DoMouseWheelActionForCandlestick();
+            }
+        }
+
+        private void DeltaPlusForCandlestickOhlcvPoints()
+        {
+            if (_lastPosition + _startPoints > _pointsOhlcv.Count)
+            {
+                var yMinStart = _pointsOhlcv.Select(x => x.Low).TakeLast(_startPoints).Min();
+                var yMaxStart = _pointsOhlcv.Select(x => x.High).TakeLast(_startPoints).Max();
+                WpfPlot1.Plot.Axes.SetLimitsY((double)yMinStart - 0.1, (double)yMaxStart + 0.1);
+                WpfPlot1.Plot.Axes.SetLimitsX(_pointsOhlcv.Count - _startPoints, _pointsOhlcv.Count);
+                _lastPosition = _pointsOhlcv.Count;
+            }
+            else
+            {
+                DoMouseWheelActionForCandlestick();
+            }
+        }
+
+        private void DeltaPlusForZigZagPoints()
+        {
+            if (_lastPosition + _startPoints > _points.Count)
+            {
+                var yMinStart = _points.Select(x => x.Close).TakeLast(_startPoints).Min();
+                var yMaxStart = _points.Select(x => x.Close).TakeLast(_startPoints).Max();
+                WpfPlot1.Plot.Axes.SetLimitsY((double)yMinStart - 0.1, (double)yMaxStart + 0.1);
+                WpfPlot1.Plot.Axes.SetLimitsX(_points.Count - _startPoints, _points.Count);
+                _lastPosition = _points.Count;
+            }
+            else
+            {
+                DoMouseWheelAction();
+            }
+        }
+
         private void DoMouseWheelAction()
         {
             var yMinStart = _points.Select(x => x.Close).Skip(_lastPosition - _startPoints).Take(_startPoints).Min();
             var yMaxStart = _points.Select(x => x.Close).Skip(_lastPosition - _startPoints).Take(_startPoints).Max();
 
             OnMouseWheelScale(yMinStart, yMaxStart);
-
-        }
-
-        private void OnMouseWheelEvent(object sender, MouseWheelEventArgs e)
-        {
-            if (e.Delta > 0)
-            {
-                if (_lastPosition - _startPoints < 0)
-                {
-                    _lastPosition = _startPoints;
-                }
-                _lastPosition = _lastPosition + _scrollStep;
-                if(_points.Count != 0)
-                {
-                    if (_lastPosition + _startPoints > _points.Count)
-                    {
-                        var yMinStart = _points.Select(x => x.Close).TakeLast(_startPoints).Min();
-                        var yMaxStart = _points.Select(x => x.Close).TakeLast(_startPoints).Max();
-                        WpfPlot1.Plot.Axes.SetLimitsY((double)yMinStart - 0.1, (double)yMaxStart + 0.1);
-                        WpfPlot1.Plot.Axes.SetLimitsX(_points.Count - _startPoints, _points.Count);
-                        _lastPosition = _points.Count;
-                    }
-                    else
-                    {
-                        DoMouseWheelAction();
-                    }
-                }
-                else
-                {
-                    // candle
-                    if (_lastPosition + _startPoints > _pointsOhlcv.Count)
-                    {
-                        var yMinStart = _pointsOhlcv.Select(x => x.Low).TakeLast(_startPoints).Min();
-                        var yMaxStart = _pointsOhlcv.Select(x => x.High).TakeLast(_startPoints).Max();
-                        WpfPlot1.Plot.Axes.SetLimitsY((double)yMinStart - 0.1, (double)yMaxStart + 0.1);
-                        WpfPlot1.Plot.Axes.SetLimitsX(_pointsOhlcv.Count - _startPoints, _pointsOhlcv.Count);
-                        _lastPosition = _pointsOhlcv.Count;
-                    }
-                    else
-                    {
-                        DoMouseWheelActionForCandlestick();
-                    }
-                }
-                
-            }
-            else if (e.Delta < 0)
-            {
-                _lastPosition = _lastPosition - _scrollStep;
-                if (_points.Count != 0)
-                {
-                    if (_lastPosition - _startPoints <= 0)
-                    {
-                        var yMinStart = _points.Select(x => x.Close).Take(_startPoints).Min();
-                        var yMaxStart = _points.Select(x => x.Close).Take(_startPoints).Max();
-                        _lastPosition = 0;
-                        OnDataLoadedScale(yMinStart, yMaxStart);
-                    }
-                    else
-                    {
-                        DoMouseWheelActionForCandlestick();
-                    }
-                }
-                else
-                {
-                    //candle
-                    if (_lastPosition - _startPoints <= 0)
-                    {
-                        var yMinStart = _pointsOhlcv.Select(x => x.Low).Take(_startPoints).Min();
-                        var yMaxStart = _pointsOhlcv.Select(x => x.High).Take(_startPoints).Max();
-                        _lastPosition = 0;
-                        OnDataLoadedScale(yMinStart, yMaxStart);
-                    }
-                    else
-                    {
-                        DoMouseWheelActionForCandlestick();
-                    }
-                } 
-            }
         }
 
         private void DoMouseWheelActionForCandlestick()
@@ -149,6 +176,7 @@ namespace WPFGraphMaker
         {
             WpfPlot1.Width = e.NewSize.Width - 30;
             WpfPlot1.Height = e.NewSize.Height - 80;
+
             WpfPlot1.Refresh();
         }
 
@@ -166,6 +194,95 @@ namespace WPFGraphMaker
                     OnPropertyChanged(PatternName);
                 }
             }
+        }
+
+        private string GetSuitableGroupByPatternName(string patternName)
+        {
+            var methodName = patternName.Trim().Replace(" ", "");
+            var groupName = _dict.GetCategory().Where(x => x.Key == methodName).ToDictionary().Values.First();
+            return groupName;
+        }
+
+        private async void OnStartClick(object sender, RoutedEventArgs e)
+        {
+            var url = "https://gist.github.com/przemyslawbak/92c3d4bba27cfd2b88d0dd916bbdad14/raw/AAL_1min.json";
+
+            HttpClient client = new HttpClient();
+            HttpResponseMessage response = await client.GetAsync(url);
+            response.EnsureSuccessStatusCode();
+            string json = await response.Content.ReadAsStringAsync();
+
+            var patternName = patternNameTextBox.Text == string.Empty ? "BearishBlackClosingMarubozu" : patternNameTextBox.Text; // Bullish3InsideUp
+            var getSuitableMethodByGivenName = GetSuitableGroupByPatternName(patternName);
+            
+            if (getSuitableMethodByGivenName == "patterns")
+            {
+                _points = new ();
+                _pointsOhlcv = GetCandlestickData(patternName, json);
+                ViewCandlestickGraph(_pointsOhlcv);
+                MarkCandlestickOnGraph(_pointsOhlcv, patternName);
+            }
+            else
+            {
+                _pointsOhlcv = new();
+                _points = GetGraphData(patternName, json, getSuitableMethodByGivenName);
+                ViewGraph(_points);
+            }
+
+            if (getSuitableMethodByGivenName == "patterns" && _pointsOhlcv.Count > _startPoints)
+            {
+                var yMinStart = GetYMinStartForCandlesticGraph();
+                var yMaxStart = GetYMaxStartForCandlesticGraph();
+
+                WpfPlot1.Plot.Axes.SetLimitsY((double)yMinStart - 0.1, (double)yMaxStart + 0.1);
+                WpfPlot1.Plot.Axes.SetLimitsX(-1, _startPoints);
+
+                WpfPlot1.Refresh();
+            }
+
+            else if (_points.Count > _startPoints)
+            {
+                var yMinStart = GetYMinStartForZigZagPoints();
+                var yMaxStart = GetYMaxStartForZigZagPoints(); 
+
+                OnDataLoadedScale(yMinStart, yMaxStart);
+
+                WpfPlot1.Refresh();
+            }
+            else
+            {
+                MessageBox.Show("Not enough data loaded");
+            }
+        }
+
+        private decimal GetYMaxStartForZigZagPoints()
+        {
+           return _points.Select(x => x.Close).Take(_startPoints).Max();
+        }
+
+        private decimal GetYMinStartForZigZagPoints()
+        {
+            return _points.Select(x => x.Close).Take(_startPoints).Min();
+        }
+
+        private decimal GetYMaxStartForCandlesticGraph()
+        {
+            return _pointsOhlcv.Select(x => x.High).Take(_startPoints).Max();
+        }
+
+        private decimal GetYMinStartForCandlesticGraph()
+        {
+            return _pointsOhlcv.Select(x => x.Low).Take(_startPoints).Min();
+        }
+
+        private List<ZigZagObject> GetGraphData(string patternName, string json, string group)
+        {
+            return _data.GetDataFromJson(patternName, json, group);
+        }
+
+        private List<OhlcvObject> GetCandlestickData(string patternName, string json)
+        {
+            return _data.GetCandlestickDataFromJson(patternName, json);
         }
 
         private void ViewGraph(List<ZigZagObject> points)
@@ -211,84 +328,53 @@ namespace WPFGraphMaker
             mp.MarkerStyle.LineWidth = 3f;
             mp.MarkerStyle.LineColor = palette.GetColor(color);
         }
-        private string GetSuitableGroupByPatternName(string patternName)
-        {
-            var methodName = patternName.Trim().Replace(" ", "");
-            var groupName = _dict.GetCategory().Where(x => x.Key == methodName).ToDictionary().Values.First();
-            return groupName;
-        }
-
-        private List<ZigZagObject> GetGraphData(string patternName, string json, string group)
-        {
-            return _data.GetDataFromJson(patternName, json, group);
-        }
-
-        private async void OnStartClick(object sender, RoutedEventArgs e)
-        {
-            var url = "https://gist.github.com/przemyslawbak/92c3d4bba27cfd2b88d0dd916bbdad14/raw/AAL_1min.json";
-
-            HttpClient client = new HttpClient();
-            HttpResponseMessage response = await client.GetAsync(url);
-            response.EnsureSuccessStatusCode();
-            string json = await response.Content.ReadAsStringAsync();
-
-            var patternName = patternNameTextBox.Text == string.Empty ? "BullishInvertedHammer" : patternNameTextBox.Text;
-            var getSuitableMethodByGivenName = GetSuitableGroupByPatternName(patternName);
-            
-            if (getSuitableMethodByGivenName == "patterns")
-            {
-                _points = new ();
-                _pointsOhlcv = GetCandlestickData(patternName, json);
-                ViewCandlestickGraph(_pointsOhlcv);
-            }
-            else
-            {
-                _pointsOhlcv = new();
-                _points = GetGraphData(patternName, json, getSuitableMethodByGivenName);
-                ViewGraph(_points);
-            }
-
-            if (getSuitableMethodByGivenName == "patterns" && _pointsOhlcv.Count > _startPoints)
-            {
-                var yMinStart = _pointsOhlcv.Select(x => x.Low).Take(_startPoints).Min();
-                var yMaxStart = _pointsOhlcv.Select(x => x.High).Take(_startPoints).Max();
-
-                WpfPlot1.Plot.Axes.SetLimitsY((double)yMinStart - 0.1, (double)yMaxStart + 0.1);
-                WpfPlot1.Plot.Axes.SetLimitsX(-1, _startPoints);
-
-                WpfPlot1.Refresh();
-            }
-
-            else if (_points.Count > _startPoints)
-            {
-                var yMinStart = _points.Select(x => x.Close).Take(_startPoints).Min();
-                var yMaxStart = _points.Select(x => x.Close).Take(_startPoints).Max();
-
-                OnDataLoadedScale(yMinStart, yMaxStart);
-
-                WpfPlot1.Refresh();
-            }
-            else
-            {
-                MessageBox.Show("Not enough data loaded");
-            }
-        }
-
-        private List<OhlcvObject> GetCandlestickData(string patternName, string json)
-        {
-            return _data.GetCandlestickDataFromJson(patternName, json);
-        }
 
         private void ViewCandlestickGraph(List<OhlcvObject> points)
         {
             var ohlcvList = new List<ScottPlot.OHLC>();
-            ohlcvList = points.Select(x => new OHLC() { Open = (double)x.Open, High = (double)x.High, Low = (double)x.Low, Close = (double)x.Close, /*Signal = false*//*, Volume = x.Volume */}).ToList();
+            ohlcvList = points.Select(x => new OHLC() { Open = (double)x.Open, High = (double)x.High, Low = (double)x.Low, Close = (double)x.Close,}).ToList();
             var myScatter = WpfPlot1.Plot.Add.Candlestick(ohlcvList);
-            myScatter.RisingColor = Colors.Black;
-            myScatter.FallingColor = Colors.Black;
+            myScatter.RisingColor = Colors.Green; 
+            myScatter.FallingColor = Colors.Red;
             myScatter.Sequential = true;
 
             WpfPlot1.Refresh();
+        }
+
+        private void MarkCandlestickOnGraph(List<OhlcvObject> _pointsOhlcv, string patternName)
+        {
+            var candlesNumnbers = _candle.GetCandlestickAmount();
+            var singleCandleAmount = candlesNumnbers.Where(x => x.Key == patternName).ToDictionary().Values.First();
+          
+            var palette = new ScottPlot.Palettes.Normal();
+            var ohlcvList = new List<OhlcvObject>();
+            ohlcvList = _pointsOhlcv.Select(x => new OhlcvObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = x.Signal, Volume = x.Volume}).ToList();
+            var x = ohlcvList.Where(x => x.Signal == true).ToList();
+            var myScatter = WpfPlot1.Plot.Add.Signal(ohlcvList.Select(x => x.Close).ToList());
+            for (int i = 0; i < ohlcvList.Count; i++)
+            {
+                var item = ohlcvList[i];
+                if (item.Signal == true)
+                {
+                    for (int j = 0; j < singleCandleAmount; j++)
+                    {
+                        MarkCandleOnChart(i-j, item, palette, 0);
+                    }
+                }
+            }
+            myScatter.Color = Colors.Orange;
+
+            WpfPlot1.Refresh();
+        }
+
+        private void MarkCandleOnChart(int i, OhlcvObject item, Normal palette, int color)
+        {
+            var mp = WpfPlot1.Plot.Add.Marker(i, (double)item.Close);
+            mp.MarkerShape = MarkerShape.OpenTriangleDown;
+            mp.MarkerStyle.Size = 20F;
+            mp.MarkerStyle.OutlineWidth = 2;
+            mp.MarkerStyle.LineWidth = 3f;
+            mp.MarkerStyle.MarkerColor = palette.GetColor(color);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
