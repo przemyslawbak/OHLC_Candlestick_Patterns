@@ -90,7 +90,7 @@ namespace WPFGraphMaker
             }
             else
             {
-                DoMouseWheelActionForCandlestick();
+                DoMouseWheelAction();
             }
         }
 
