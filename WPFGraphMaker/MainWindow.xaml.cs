@@ -196,15 +196,15 @@ namespace WPFGraphMaker
             }
         }
 
-        private string GetSuitableGroupByPatternName(string patternName)
+        private string GetSuitableGroupByPatternName(string methodName)
         {
-            var methodName = patternName.Trim().Replace(" ", "");
-            var groupName = _dict.GetCategory().Where(x => x.Key == methodName).ToDictionary().Values.First();
+            var groupName = _dict.GetCategory().Where(x => x.Key.ToLower() == methodName).ToDictionary().Values.First();
             return groupName;
         }
 
         private async void OnStartClick(object sender, RoutedEventArgs e)
         {
+            WpfPlot1.Plot.Clear();
             var url = "https://gist.github.com/przemyslawbak/92c3d4bba27cfd2b88d0dd916bbdad14/raw/AAL_1min.json";
 
             HttpClient client = new HttpClient();
@@ -213,6 +213,7 @@ namespace WPFGraphMaker
             string json = await response.Content.ReadAsStringAsync();
 
             var patternName = patternNameTextBox.Text == string.Empty ? "BearishBlackClosingMarubozu" : patternNameTextBox.Text; // Bullish3InsideUp
+            patternName = patternName.Trim().Replace(" ", "").ToLower();
             var getSuitableMethodByGivenName = GetSuitableGroupByPatternName(patternName);
             
             if (getSuitableMethodByGivenName == "patterns")
@@ -344,12 +345,12 @@ namespace WPFGraphMaker
         private void MarkCandlestickOnGraph(List<OhlcvObject> _pointsOhlcv, string patternName)
         {
             var candlesNumnbers = _candle.GetCandlestickAmount();
-            var singleCandleAmount = candlesNumnbers.Where(x => x.Key == patternName).ToDictionary().Values.First();
-          
+            var singleCandleAmount = candlesNumnbers.Where(x => x.Key.ToLower() == patternName).ToDictionary().Values.First();
+
+
             var palette = new ScottPlot.Palettes.Normal();
             var ohlcvList = new List<OhlcvObject>();
             ohlcvList = _pointsOhlcv.Select(x => new OhlcvObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = x.Signal, Volume = x.Volume}).ToList();
-            var x = ohlcvList.Where(x => x.Signal == true).ToList();
             var myScatter = WpfPlot1.Plot.Add.Signal(ohlcvList.Select(x => x.Close).ToList());
             for (int i = 0; i < ohlcvList.Count; i++)
             {
