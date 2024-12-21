@@ -346,8 +346,6 @@ namespace WPFGraphMaker
         {
             var candlesNumnbers = _candle.GetCandlestickAmount();
             var singleCandleAmount = candlesNumnbers.Where(x => x.Key.ToLower() == patternName).ToDictionary().Values.First();
-
-
             var palette = new ScottPlot.Palettes.Normal();
             var ohlcvList = new List<OhlcvObject>();
             ohlcvList = _pointsOhlcv.Select(x => new OhlcvObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = x.Signal, Volume = x.Volume}).ToList();

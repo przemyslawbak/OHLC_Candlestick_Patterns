@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System.Globalization;
+using System.Reflection;
 namespace Candlestick_Patterns
 {
     public class Patterns : IPatterns
@@ -1537,7 +1538,7 @@ namespace Candlestick_Patterns
         {
             var methodName = patternName.Trim().Replace(" ", "");
             Type thisType = this.GetType();
-            MethodInfo theMethod = thisType.GetMethod(methodName, BindingFlags.NonPublic | BindingFlags.Instance);
+            MethodInfo theMethod = thisType.GetMethod(methodName, BindingFlags.IgnoreCase| BindingFlags.NonPublic | BindingFlags.Instance);
             if (theMethod != null)
             {
                 List<OhlcvObject> result = (List<OhlcvObject>)theMethod.Invoke(this, null);
@@ -1558,7 +1559,7 @@ namespace Candlestick_Patterns
         public List<string> GetAllMethodNames()
         {
             List<string> methods = new List<string>();
-            foreach (MethodInfo item in typeof(Patterns).GetMethods(BindingFlags.NonPublic | BindingFlags.Instance))
+            foreach (MethodInfo item in typeof(Patterns).GetMethods(BindingFlags.IgnoreCase | BindingFlags.NonPublic | BindingFlags.Instance))
             {
                 methods.Add(item.Name);
             }

@@ -765,7 +765,7 @@ namespace Candlestick_Patterns
         public List<string> GetFormationsAllMethodNames()
         {
             List<string> methods = new List<string>();
-            foreach (MethodInfo item in typeof(Formations).GetMethods(BindingFlags.NonPublic | BindingFlags.Instance))
+            foreach (MethodInfo item in typeof(Formations).GetMethods(BindingFlags.IgnoreCase | BindingFlags.NonPublic | BindingFlags.Instance))
             {
                 methods.Add(item.Name);
             }
@@ -776,7 +776,7 @@ namespace Candlestick_Patterns
         {
             var methodName = formationName.Trim().Replace(" ", "");
             Type thisType = this.GetType();
-            MethodInfo theMethod = thisType.GetMethod(methodName, BindingFlags.NonPublic | BindingFlags.Instance);
+            MethodInfo theMethod = thisType.GetMethod(methodName, BindingFlags.IgnoreCase | BindingFlags.NonPublic | BindingFlags.Instance);
             if (theMethod != null)
             {
                 List<ZigZagObject> result = (List<ZigZagObject>)theMethod.Invoke(this, null);
@@ -797,7 +797,7 @@ namespace Candlestick_Patterns
         public List<string> GetAllMethodNames()
         {
             List<string> methods = new List<string>();
-            foreach (MethodInfo item in typeof(Formations).GetMethods(BindingFlags.NonPublic | BindingFlags.Instance))
+            foreach (MethodInfo item in typeof(Formations).GetMethods(BindingFlags.IgnoreCase | BindingFlags.NonPublic | BindingFlags.Instance))
             {
                 methods.Add(item.Name);
             }
