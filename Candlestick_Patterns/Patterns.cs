@@ -1,5 +1,4 @@
-﻿using System.Globalization;
-using System.Reflection;
+﻿using System.Reflection;
 namespace Candlestick_Patterns
 {
     public class Patterns : IPatterns
