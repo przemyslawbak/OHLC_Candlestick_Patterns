@@ -1,5 +1,6 @@
 ﻿using OHLC_Candlestick_Patterns;
 using System.Reflection;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Candlestick_Patterns
 {
@@ -51,6 +52,7 @@ namespace Candlestick_Patterns
                             if (dateList.Count > _formationsLenght.Min())
                             {
                                 points[i].Signal = true;
+                                points[i - 4].Initiation = true;
                             }
                         }
                     }
@@ -91,6 +93,7 @@ namespace Candlestick_Patterns
                                         if (dateList.Count >= _formationsLenght.Max())
                                         {
                                             points[i].Signal = true;
+                                            points[i - 6].Initiation = true;
                                         }
                                     }
                                 }
@@ -126,6 +129,7 @@ namespace Candlestick_Patterns
                             if (dateList.Count > _formationsLenght.Min())
                             {
                                 points[i].Signal = true;
+                                points[i - 4].Initiation = true;
                             }
                         }
                     }
@@ -162,6 +166,7 @@ namespace Candlestick_Patterns
                                 if (dateList.Count >= _formationsLenght.Max())
                                 {
                                     points[i].Signal = true;
+                                    points[i - 6].Initiation = true;
                                 }
                             }
                         }
@@ -193,6 +198,7 @@ namespace Candlestick_Patterns
                             if (dateList.Count >= _formationsLenght.Max())
                             {
                                 points[i].Signal = true;
+                                points[i - 6].Initiation = true;
                             }
                         }
                     }
@@ -231,6 +237,7 @@ namespace Candlestick_Patterns
                                 if (dateList.Count >= _minShift * _formationsLenght.Max())
                                 {
                                     points[i].Signal = true;
+                                    points[i - 13].Initiation = true;
                                 }
                             }
                         }
@@ -270,6 +277,7 @@ namespace Candlestick_Patterns
                                 if (dateList.Count >= _minShift * (decimal) _formationsLenght.Average())
                                 {
                                     points[i].Signal = true;
+                                    points[i - 11].Initiation = true;
                                 }
                             }
                         }
@@ -306,6 +314,7 @@ namespace Candlestick_Patterns
                                 if (dateList.Count >= _formationsLenght.Max())
                                 {
                                     points[i].Signal = true;
+                                    points[i - 6].Initiation = true;
                                 }
                             }
 
@@ -343,6 +352,7 @@ namespace Candlestick_Patterns
                                 if (dateList.Count >= _formationsLenght.Average())
                                 {
                                     points[i].Signal = true;
+                                    points[i - 5].Initiation = true;
                                 }
                             }
                         }
@@ -375,6 +385,7 @@ namespace Candlestick_Patterns
                                 if (dateList.Count >= _formationsLenght.Average())
                                 {
                                     points[i].Signal = true;
+                                    points[i - 5].Initiation = true;
                                 }
                             }
                         }
@@ -411,6 +422,7 @@ namespace Candlestick_Patterns
                                 if (dateList.Count >= _formationsLenght.Average())
                                 {
                                     points[i].Signal = true;
+                                    points[i - 5].Initiation = true;
                                 }
                             }
                         }
@@ -447,6 +459,7 @@ namespace Candlestick_Patterns
                                 if (dateList.Count > _formationsLenght.Max())
                                 {
                                     points[i].Signal = true;
+                                    points[i - 7].Initiation = true;
                                 }
                             }
                         }
@@ -485,6 +498,7 @@ namespace Candlestick_Patterns
                                     if (dateList.Count >= _formationsLenght.Max())
                                     {
                                         points[i].Signal = true;
+                                        points[i - 6].Initiation = true;
                                     }
                                 }
                             }
@@ -523,6 +537,7 @@ namespace Candlestick_Patterns
                                     if (dateList.Count >= _formationsLenght.Max())
                                     {
                                         points[i].Signal = true;
+                                        points[i - 6].Initiation = true;
                                     }
                                 }
                             }
@@ -562,6 +577,7 @@ namespace Candlestick_Patterns
                                     if (dateList.Count >= _formationsLenght.Max())
                                     {
                                         points[i].Signal = true;
+                                        points[i - 6].Initiation = true;
                                     }
                                 }
                             }
@@ -600,6 +616,7 @@ namespace Candlestick_Patterns
                                 if (dateList.Count >= _formationsLenght.Max())
                                 {
                                     points[i].Signal = true;
+                                    points[i - 6].Initiation = true;
                                 }
                             }
                         }
@@ -637,6 +654,7 @@ namespace Candlestick_Patterns
                                 if (dateList.Count >= _formationsLenght.Max())
                                 {
                                     points[i].Signal = true;
+                                    points[i - 6].Initiation = true;
                                 }
                             }
                         }
@@ -675,6 +693,7 @@ namespace Candlestick_Patterns
                                 if (dateList.Count >= _minShift * _formationsLenght.Max() - 1)
                                 {
                                     points[i].Signal = true;
+                                    points[i - 12].Initiation = true;
                                 }
                             }
 
@@ -715,6 +734,7 @@ namespace Candlestick_Patterns
                                 if (dateList.Count >= _minShift * _formationsLenght.Max() - 1)
                                 {
                                     points[i].Signal = true;
+                                    points[i - 12].Initiation = true;
                                 }
                             }
 
@@ -752,6 +772,7 @@ namespace Candlestick_Patterns
                                 if (dateList.Count >= _formationsLenght.Count())
                                 {
                                     points[i].Signal = true;
+                                    points[i - 10].Initiation = true;
                                 }
                             }
                         }
