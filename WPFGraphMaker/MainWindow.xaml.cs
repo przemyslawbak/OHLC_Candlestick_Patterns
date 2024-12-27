@@ -4,6 +4,7 @@ using ScottPlot.Palettes;
 using ScottPlot.WPF;
 using System.ComponentModel;
 using System.Net.Http;
+using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
 
@@ -183,7 +184,6 @@ namespace WPFGraphMaker
         public WpfPlot WpfPlot1 { get; set; }
 
         private string _patternName;
-        private string _foundXTimes = "?";
 
         public string PatternName
         {
@@ -193,18 +193,22 @@ namespace WPFGraphMaker
                 if (value != _patternName)
                 {
                     _patternName = value;
-                    OnPropertyChanged(PatternName);
+                    OnPropertyChanged();
                 }
             }
         }
 
-        public string FoundXTimes
+        private int _foundXTimes;
+        public int FoundXTimes
         {
-           get { return _foundXTimes; }
+            get { return _foundXTimes; }
             set
             {
-                FoundXTimes = _foundXTimes;
-                //OnPropertyChanged(FoundXTimes);
+                if (value != _foundXTimes)
+                {
+                    _foundXTimes = value;
+                    OnPropertyChanged();
+                }
             }
         }
 
@@ -235,14 +239,14 @@ namespace WPFGraphMaker
                 _pointsOhlcv = GetCandlestickData(patternName, json);
                 ViewCandlestickGraph(_pointsOhlcv);
                 MarkCandlestickOnGraph(_pointsOhlcv, patternName);
-                _foundXTimes = _pointsOhlcv.Where(x => x.Signal == true).Count().ToString();
+                FoundXTimes = _pointsOhlcv.Where(x => x.Signal == true).Count();
             }
             else
             {
                 _pointsOhlcv = new();
                 _points = GetGraphData(patternName, json, getSuitableMethodByGivenName);
                 ViewGraph(_points);
-                _foundXTimes = _points.Where(x => x.Signal == true).Count().ToString();
+                FoundXTimes = _points.Where(x => x.Signal == true).Count();
             }
 
             if (getSuitableMethodByGivenName == "patterns" && _pointsOhlcv.Count > _startPoints)
@@ -392,9 +396,7 @@ namespace WPFGraphMaker
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
-        public event PropertyChangedCallback ChangedCallback;
-
-        protected void OnPropertyChanged(string propertyName)
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }

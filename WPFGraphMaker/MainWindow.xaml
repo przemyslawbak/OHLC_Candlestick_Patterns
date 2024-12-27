@@ -30,7 +30,7 @@
                 Click="OnStartClick"/>
 
             <Label>Found:</Label>
-            <TextBlock Text="{Binding Path=FoundXTimes, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+            <TextBlock Text="{Binding Path=FoundXTimes, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
             <Label>  times.</Label>
             
         </StackPanel>
