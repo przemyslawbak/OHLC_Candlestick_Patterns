@@ -50,10 +50,10 @@ namespace OHLC_Candlestick_Patterns
         {
             for (int x = -number; x < 1; x++)
             {
-                dateList.Add(points[i + x].Close);
-                points[i].Signal = true; 
-                points[i-number].Initiation = true; 
+                dateList.Add(points[i + x].IndexOHLCV);
             }
+            points[i].Signal = true;
+            points[i - number].Initiation = true;
             return points;
         }
     }

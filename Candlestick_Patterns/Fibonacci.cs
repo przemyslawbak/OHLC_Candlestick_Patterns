@@ -59,8 +59,12 @@ namespace Candlestick_Patterns
         private List<ZigZagObject> Bullish3Extension() => Pattern("bullish", SetPeaksVallyes.GetPoints(_peaksFromZigZag), _fibError, "threeExtensionPattern", 3);
         private List<ZigZagObject> Bearish3Retracement() => Pattern("bearish", SetPeaksVallyes.GetPoints(_peaksFromZigZag), _fibError, "threeRetracementPattern", 2);
         private List<ZigZagObject> Bullish3Retracement() => Pattern("bullish", SetPeaksVallyes.GetPoints(_peaksFromZigZag), _fibError, "threeRetracementPattern", 2);
-        private List<ZigZagObject> Bearish3Drive() => _drivePattern.ThreeDrivePattern("bearish", SetPeaksVallyes.GetPoints(_peaksFromZigZag), _fibError);
-        private List<ZigZagObject> Bullish3Drive() => _drivePattern.ThreeDrivePattern("bullish", SetPeaksVallyes.GetPoints(_peaksFromZigZag), _fibError);
+        private List<ZigZagObject> Bearish3Drive() => Pattern("bearish", SetPeaksVallyes.GetPoints(_peaksFromZigZag), _fibError, "threeDrivePattern", 5);
+        private List<ZigZagObject> Bullish3Drive() => Pattern("bullish", SetPeaksVallyes.GetPoints(_peaksFromZigZag), _fibError, "threeDrivePattern", 5);
+
+        //not in use at the time
+        //private List<ZigZagObject> Bearish3Drive() => _drivePattern.ThreeDrivePattern("bearish", SetPeaksVallyes.GetPoints(_peaksFromZigZag), _fibError);
+        //private List<ZigZagObject> Bullish3Drive() => _drivePattern.ThreeDrivePattern("bullish", SetPeaksVallyes.GetPoints(_peaksFromZigZag), _fibError);
 
         internal virtual List<ZigZagObject> Pattern(string pattern, List<ZigZagObject> points, decimal priceMovement1, string fibbPattern, int startNumber)
         {
@@ -68,7 +72,7 @@ namespace Candlestick_Patterns
 
             for (int i = startNumber; i < points.Count; i++)
             {
-                if (!dateList.Contains(points[i].Close))
+                if (!dateList.Contains(points[i - startNumber].IndexOHLCV))
                 {
                     if (FirstCheck(points, i, pattern, fibbPattern))
                     {
@@ -105,6 +109,10 @@ namespace Candlestick_Patterns
             {
                 return FirstCheckFor3RetracementPattern(points, i, pattern);
             }
+             if (fibbPattern == "threeDrivePattern")
+            {
+                return FirstCheckFor3DrivePattern(points, i, pattern);
+            }
 
             return false;
         }
@@ -130,6 +138,58 @@ namespace Candlestick_Patterns
             if (fibbPattern == "threeRetracementPattern")
             {
                 return SecondCheckFor3RetracementPattern(points, i, pattern);
+            }
+            if (fibbPattern == "threeDrivePattern")
+            {
+                return SecondCheckFor3DrivePattern(points, i, pattern);
+            }
+            return false;
+        }
+
+        private bool FirstCheckFor3DrivePattern(List<ZigZagObject> points, int i, string pattern)
+        {
+            if (pattern == "bullish")
+            {
+                if (points[i].Close < points[i - 1].Close && points[i - 1].Close > points[i - 2].Close && points[i - 2].Close < points[i - 3].Close && points[i - 3].Close > points[i - 4].Close && points[i - 4].Close < points[i - 5].Close)
+                {
+                    if (points[i - 1].Close < points[i - 3].Close && points[i - 3].Close < points[i - 5].Close && points[i - 2].Close > points[i].Close && points[i - 2].Close < points[i - 4].Close)
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            if (pattern == "bearish")
+            {
+                if (points[i].Close > points[i - 1].Close && points[i - 1].Close < points[i - 2].Close && points[i - 2].Close > points[i - 3].Close && points[i - 3].Close < points[i - 4].Close && points[i - 4].Close > points[i - 5].Close)
+                {
+                    if (points[i - 1].Close > points[i - 3].Close && points[i - 3].Close > points[i - 5].Close && points[i - 2].Close < points[i].Close && points[i - 2].Close > points[i - 4].Close)
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        private bool SecondCheckFor3DrivePattern(List<ZigZagObject> points, int i, string pattern) // todo
+        {
+            var retracementBcBa = _support.GetRetracement(points, i, 1, 2, 3); // 61,8% lub 78,6%
+            //var retracementX0XA = _support.GetRetracement(points, i, 3, 4, 5); // 61,8% lub 78,6%
+            var extensionCdCb = _support.GetRetracement(points, i, 0, 1, 2);  // 127% 
+            var extensionAxAc = _support.GetRetracement(points, i, 2, 3, 4);  // 127% 
+
+            var check618retracementBcBa = _support.CheckIfRetracemntIsInRange(range618, range618, retracementBcBa);
+            var check786retracementBcBa = _support.CheckIfRetracemntIsInRange(range786, range786, retracementBcBa);
+            //var check618retracementX0XA = _support.CheckIfRetracemntIsInRange(range618, range618, retracementX0XA);
+            //var check786retracementX0XA = _support.CheckIfRetracemntIsInRange(range786, range786, retracementX0XA);
+            var check127extensionCdCb = _support.CheckIfRetracemntIsInRange(range127, range127, extensionCdCb);
+            var check127extensionAxAc = _support.CheckIfRetracemntIsInRange(range127, range127, extensionAxAc);
+
+
+            if ((check618retracementBcBa || check786retracementBcBa) &&/* (check786retracementX0XA || check618retracementX0XA) && */check127extensionCdCb && check127extensionAxAc)
+            {
+                return true;
             }
 
             return false;
