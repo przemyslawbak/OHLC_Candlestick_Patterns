@@ -20,6 +20,7 @@
      HorizontalAlignment="Left"
                 Margin="5"
                 Text="{Binding Path=PatternName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+            
             <Button
                 Name="btnStart"
      Width="100"
@@ -27,6 +28,11 @@
                 Margin="5"
                 Content="Start"
                 Click="OnStartClick"/>
+
+            <Label>Found:</Label>
+            <TextBlock Text="{Binding Path=FoundXTimes, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+            <Label>  times.</Label>
+            
         </StackPanel>
         <Border Grid.Row="1">
             <ContentControl Content="{Binding WpfPlot1}" Visibility="Visible"/>

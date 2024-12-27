@@ -183,6 +183,8 @@ namespace WPFGraphMaker
         public WpfPlot WpfPlot1 { get; set; }
 
         private string _patternName;
+        private string _foundXTimes = "?";
+
         public string PatternName
         {
             get { return _patternName; }
@@ -195,6 +197,17 @@ namespace WPFGraphMaker
                 }
             }
         }
+
+        public string FoundXTimes
+        {
+           get { return _foundXTimes; }
+            set
+            {
+                FoundXTimes = _foundXTimes;
+                //OnPropertyChanged(FoundXTimes);
+            }
+        }
+
 
         private string GetSuitableGroupByPatternName(string methodName)
         {
@@ -222,12 +235,14 @@ namespace WPFGraphMaker
                 _pointsOhlcv = GetCandlestickData(patternName, json);
                 ViewCandlestickGraph(_pointsOhlcv);
                 MarkCandlestickOnGraph(_pointsOhlcv, patternName);
+                _foundXTimes = _pointsOhlcv.Where(x => x.Signal == true).Count().ToString();
             }
             else
             {
                 _pointsOhlcv = new();
                 _points = GetGraphData(patternName, json, getSuitableMethodByGivenName);
                 ViewGraph(_points);
+                _foundXTimes = _points.Where(x => x.Signal == true).Count().ToString();
             }
 
             if (getSuitableMethodByGivenName == "patterns" && _pointsOhlcv.Count > _startPoints)
@@ -377,6 +392,7 @@ namespace WPFGraphMaker
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedCallback ChangedCallback;
 
         protected void OnPropertyChanged(string propertyName)
         {
