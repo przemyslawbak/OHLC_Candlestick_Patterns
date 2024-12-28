@@ -172,22 +172,22 @@ namespace Candlestick_Patterns
             return false;
         }
 
-        private bool SecondCheckFor3DrivePattern(List<ZigZagObject> points, int i, string pattern) // todo
+        private bool SecondCheckFor3DrivePattern(List<ZigZagObject> points, int i, string pattern) 
         {
             var retracementBcBa = _support.GetRetracement(points, i, 1, 2, 3); // 61,8% lub 78,6%
-            //var retracementX0XA = _support.GetRetracement(points, i, 3, 4, 5); // 61,8% lub 78,6%
+            var retracementX0XA = _support.GetRetracement(points, i, 3, 4, 5); // 61,8% lub 78,6%
             var extensionCdCb = _support.GetRetracement(points, i, 0, 1, 2);  // 127% 
             var extensionAxAc = _support.GetRetracement(points, i, 2, 3, 4);  // 127% 
 
             var check618retracementBcBa = _support.CheckIfRetracemntIsInRange(range618, range618, retracementBcBa);
             var check786retracementBcBa = _support.CheckIfRetracemntIsInRange(range786, range786, retracementBcBa);
-            //var check618retracementX0XA = _support.CheckIfRetracemntIsInRange(range618, range618, retracementX0XA);
-            //var check786retracementX0XA = _support.CheckIfRetracemntIsInRange(range786, range786, retracementX0XA);
+            var check618retracementX0XA = _support.CheckIfRetracemntIsInRange(range618, range618, retracementX0XA);
+            var check786retracementX0XA = _support.CheckIfRetracemntIsInRange(range786, range786, retracementX0XA);
             var check127extensionCdCb = _support.CheckIfRetracemntIsInRange(range127, range127, extensionCdCb);
             var check127extensionAxAc = _support.CheckIfRetracemntIsInRange(range127, range127, extensionAxAc);
 
 
-            if ((check618retracementBcBa || check786retracementBcBa) &&/* (check786retracementX0XA || check618retracementX0XA) && */check127extensionCdCb && check127extensionAxAc)
+            if ((check618retracementBcBa || check786retracementBcBa) && (check786retracementX0XA || check618retracementX0XA) && check127extensionCdCb && check127extensionAxAc)
             {
                 return true;
             }
@@ -219,19 +219,19 @@ namespace Candlestick_Patterns
         {
             var retracementAbAx = _support.GetRetracement(points, i, 2, 3, 4); // 61,8% - 78,6%
             var retracementBcBa = _support.GetRetracement(points, i, 1, 2, 3); // 38.2% – 88.6% 
-            var retracementAdAX = _support.GetRetracement(points, i, 0, 3, 4); // between 78.6% and 88.6% 
-            var retracementCdCb = _support.GetRetracement(points, i, 0, 1, 2); // between 127,2% and 161,8%
             var retracementCbBa = _support.GetRetracement(points, i, 1, 2, 3); // 61,8% - 78,6%
-            var retracementCdAb = (Math.Abs(points[i - 1].Close - points[i].Close) * 100) / (Math.Abs(points[i - 2].Close - points[i - 3].Close)); // 127,2% and 161,8%
+            var retracementCdCb = _support.GetRetracement(points, i, 0, 1, 2); // between 127,2% and 161,8%
+            var retracementAdAX = _support.GetRetracement(points, i, 0, 3, 4); // between 78.6% and 88.6% 
+            //var retracementCdAb = (Math.Abs(points[i - 1].Close - points[i].Close) * 100) / (Math.Abs(points[i - 2].Close - points[i - 3].Close)); // 127,2% and 161,8%
 
             var check618_786retracement1 = _support.CheckIfRetracemntIsInRange(range618, range786, retracementAbAx);
             var check381_886retracement = _support.CheckIfRetracemntIsInRange(range382, range886, retracementBcBa);
             var check786_886retracement = _support.CheckIfRetracemntIsInRange(range786, range886, retracementAdAX);
             var check127_161retracement1 = _support.CheckIfRetracemntIsInRange(range127, range161, retracementCdCb);
             var check618_786retracement2 = _support.CheckIfRetracemntIsInRange(range618, range786, retracementCbBa);
-            var check127_161retracement2 = _support.CheckIfRetracemntIsInRange(range127, range161, retracementCdAb);
+            //var check127_161retracement2 = _support.CheckIfRetracemntIsInRange(range127, range161, retracementCdAb);
 
-            if (check618_786retracement1 && check381_886retracement && check786_886retracement && check127_161retracement1 && check618_786retracement2 && check127_161retracement2)
+            if (check618_786retracement1 && (check381_886retracement || check618_786retracement2) && check786_886retracement && check127_161retracement1 /*&& check127_161retracement2*/)
             {
                 return true; 
             }
