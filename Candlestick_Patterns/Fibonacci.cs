@@ -62,10 +62,6 @@ namespace Candlestick_Patterns
         private List<ZigZagObject> Bearish3Drive() => Pattern("bearish", SetPeaksVallyes.GetPoints(_peaksFromZigZag), _fibError, "threeDrivePattern", 5);
         private List<ZigZagObject> Bullish3Drive() => Pattern("bullish", SetPeaksVallyes.GetPoints(_peaksFromZigZag), _fibError, "threeDrivePattern", 5);
 
-        //not in use at the time
-        //private List<ZigZagObject> Bearish3Drive() => _drivePattern.ThreeDrivePattern("bearish", SetPeaksVallyes.GetPoints(_peaksFromZigZag), _fibError);
-        //private List<ZigZagObject> Bullish3Drive() => _drivePattern.ThreeDrivePattern("bullish", SetPeaksVallyes.GetPoints(_peaksFromZigZag), _fibError);
-
         internal virtual List<ZigZagObject> Pattern(string pattern, List<ZigZagObject> points, decimal priceMovement1, string fibbPattern, int startNumber)
         {
             var dateList = new List<decimal>();
@@ -231,7 +227,7 @@ namespace Candlestick_Patterns
             var check618_786retracement2 = _support.CheckIfRetracemntIsInRange(range618, range786, retracementCbBa);
             //var check127_161retracement2 = _support.CheckIfRetracemntIsInRange(range127, range161, retracementCdAb);
 
-            if (check618_786retracement1 && (check381_886retracement || check618_786retracement2) && check786_886retracement && check127_161retracement1 /*&& check127_161retracement2*/)
+            if (check618_786retracement1 && (check381_886retracement || check618_786retracement2) && check786_886retracement && check127_161retracement1)
             {
                 return true; 
             }
