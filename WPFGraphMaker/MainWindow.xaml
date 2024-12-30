@@ -32,6 +32,14 @@
             <Label>Found:</Label>
             <TextBlock Text="{Binding Path=FoundXTimes, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
             <Label>  times.</Label>
+            <Button
+                Name="foundNextPattern"
+    Width="80"
+    HorizontalAlignment="Left"
+           Margin="5"
+           Content="NextPattern"
+           Click="OnFoundNextPattern"/>
+            
             
         </StackPanel>
         <Border Grid.Row="1">

@@ -2,7 +2,9 @@
 using ScottPlot;
 using ScottPlot.Palettes;
 using ScottPlot.WPF;
+using System;
 using System.ComponentModel;
+using System.Linq;
 using System.Net.Http;
 using System.Runtime.CompilerServices;
 using System.Windows;
@@ -20,6 +22,8 @@ namespace WPFGraphMaker
         private readonly int _startPoints = 100;
         private readonly int _scrollStep = 10;
         private int _lastPosition = 100;
+        private List<int> _foundPatternIndexList = new();
+        int counter = 0; // counter next found pattern of the chart
 
         public MainWindow()
         {
@@ -199,6 +203,7 @@ namespace WPFGraphMaker
         }
 
         private int _foundXTimes;
+
         public int FoundXTimes
         {
             get { return _foundXTimes; }
@@ -212,15 +217,49 @@ namespace WPFGraphMaker
             }
         }
 
-
         private string GetSuitableGroupByPatternName(string methodName)
         {
             var groupName = _dict.GetCategory().Where(x => x.Key.ToLower() == methodName).ToDictionary().Values.First();
             return groupName;
         }
 
+        private async void OnFoundNextPattern(object sender, RoutedEventArgs e)
+        {
+            var number = 49;
+            if (counter < _foundPatternIndexList.Count)
+            {
+                var currentIndex = _foundPatternIndexList[counter];
+                if (_foundPatternIndexList[counter] - number <= 0)
+                {
+                    var yMinStart = GetYMinStartForZigZagPoints();
+                    var yMaxStart = GetYMaxStartForZigZagPoints();
+                    _lastPosition = 0;
+                    OnDataLoadedScale(yMinStart, yMaxStart);
+                }
+                else if (_foundPatternIndexList[counter] + number >=_points.Count)
+                {
+                    var yMinStart = _points.Select(x => x.Close).TakeLast(_startPoints).Min();
+                    var yMaxStart = _points.Select(x => x.Close).TakeLast(_startPoints).Max();
+                    WpfPlot1.Plot.Axes.SetLimitsY((double)yMinStart - 0.1, (double)yMaxStart + 0.1);
+                    WpfPlot1.Plot.Axes.SetLimitsX(_points.Count - _startPoints, _points.Count);
+                    _lastPosition = _points.Count;
+                }
+                else
+                {
+                    var yMinStart = _points.Select(x => x.Close).Skip(currentIndex - number).Take(_startPoints).Min();
+                    var yMaxStart = _points.Select(x => x.Close).Skip(currentIndex - number).Take(_startPoints).Max();
+                    WpfPlot1.Plot.Axes.SetLimitsY((double)yMinStart - 0.1, (double)yMaxStart + 0.1);
+                    WpfPlot1.Plot.Axes.SetLimitsX(currentIndex - number, currentIndex + number);
+                    _lastPosition = currentIndex;
+                }
+                WpfPlot1.Refresh();
+            }
+            counter += 1;
+        }
+
         private async void OnStartClick(object sender, RoutedEventArgs e)
         {
+            _foundPatternIndexList = new();
             WpfPlot1.Plot.Clear();
             var url = "https://gist.github.com/przemyslawbak/92c3d4bba27cfd2b88d0dd916bbdad14/raw/AAL_1min.json";
 
@@ -240,6 +279,18 @@ namespace WPFGraphMaker
                 ViewCandlestickGraph(_pointsOhlcv);
                 MarkCandlestickOnGraph(_pointsOhlcv, patternName);
                 FoundXTimes = _pointsOhlcv.Where(x => x.Signal == true).Count();
+
+                var newModel = _pointsOhlcv.Select((x, index) => new ZigZagObject()
+                {
+                    Signal = x.Signal,
+                    IndexOHLCV = index,
+                }).ToList();
+
+                var indexesForSignalTrue = newModel.Where(x => x.Signal == true).ToList();
+                for (int i = 0; i < indexesForSignalTrue.Count; i++)
+                {
+                    _foundPatternIndexList.Add(indexesForSignalTrue[i].IndexOHLCV);
+                }
             }
             else
             {
@@ -247,6 +298,18 @@ namespace WPFGraphMaker
                 _points = GetGraphData(patternName, json, getSuitableMethodByGivenName);
                 ViewGraph(_points);
                 FoundXTimes = _points.Where(x => x.Signal == true).Count();
+                
+                var newModel = _points.Select((x, index) => new ZigZagObject()
+                {
+                    Signal = x.Signal,
+                    IndexOHLCV = index,
+                }).ToList();
+
+                var indexesForSignalTrue = newModel.Where(x => x.Signal == true).ToList();
+                for (int i = 0; i < indexesForSignalTrue.Count; i++)
+                {
+                    _foundPatternIndexList.Add(indexesForSignalTrue[i].IndexOHLCV);
+                }
             }
 
             if (getSuitableMethodByGivenName == "patterns" && _pointsOhlcv.Count > _startPoints)
@@ -372,6 +435,7 @@ namespace WPFGraphMaker
             for (int i = 0; i < ohlcvList.Count; i++)
             {
                 var item = ohlcvList[i];
+                var x = i;
                 if (item.Signal == true)
                 {
                     for (int j = 0; j < singleCandleAmount; j++)
