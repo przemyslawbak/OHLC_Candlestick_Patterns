@@ -23,7 +23,7 @@ namespace WPFGraphMaker
         private readonly int _scrollStep = 10;
         private int _lastPosition = 100;
         private List<int> _foundPatternIndexList = new();
-        int counter = 0; // counter next found pattern of the chart
+        int counter = 0; 
 
         public MainWindow()
         {
@@ -226,7 +226,7 @@ namespace WPFGraphMaker
         private async void OnFoundNextPattern(object sender, RoutedEventArgs e)
         {
             var number = 49;
-            if (counter < _foundPatternIndexList.Count)
+            if (counter < _foundPatternIndexList.Count && _foundXTimes > 0 && _points.Count > 0)
             {
                 var currentIndex = _foundPatternIndexList[counter];
                 if (_foundPatternIndexList[counter] - number <= 0)
@@ -257,9 +257,45 @@ namespace WPFGraphMaker
             counter += 1;
         }
 
+        private async void OnFoundNextCandle(object sender, RoutedEventArgs e)
+        {
+            var number = 49;
+            if (counter < _foundPatternIndexList.Count && _foundXTimes > 0 && _pointsOhlcv.Count > 0)
+            {
+                var currentIndex = _foundPatternIndexList[counter];
+                if (_foundPatternIndexList[counter] - number <= 0)
+                {
+                    var yMinStart = GetYMinStartForCandlesticGraph();
+                    var yMaxStart = GetYMaxStartForCandlesticGraph();
+                    _lastPosition = 0;
+                    OnDataLoadedScale(yMinStart, yMaxStart);
+                }
+                else if (_foundPatternIndexList[counter] + number >= _pointsOhlcv.Count)
+                {
+                    var yMinStart = _pointsOhlcv.Select(x => x.Close).TakeLast(_startPoints).Min();
+                    var yMaxStart = _pointsOhlcv.Select(x => x.Close).TakeLast(_startPoints).Max();
+                    WpfPlot1.Plot.Axes.SetLimitsY((double)yMinStart - 0.1, (double)yMaxStart + 0.1);
+                    WpfPlot1.Plot.Axes.SetLimitsX(_pointsOhlcv.Count - _startPoints, _pointsOhlcv.Count);
+                    _lastPosition = _pointsOhlcv.Count;
+                }
+                else
+                {
+                    var yMinStart = _pointsOhlcv.Select(x => x.Close).Skip(currentIndex - number).Take(_startPoints).Min();
+                    var yMaxStart = _pointsOhlcv.Select(x => x.Close).Skip(currentIndex - number).Take(_startPoints).Max();
+                    WpfPlot1.Plot.Axes.SetLimitsY((double)yMinStart - 0.1, (double)yMaxStart + 0.1);
+                    WpfPlot1.Plot.Axes.SetLimitsX(currentIndex - number, currentIndex + number);
+                    _lastPosition = currentIndex;
+                }
+                WpfPlot1.Refresh();
+            }
+            counter += 1;
+        }
+
+      
         private async void OnStartClick(object sender, RoutedEventArgs e)
         {
             _foundPatternIndexList = new();
+            counter = 0;
             WpfPlot1.Plot.Clear();
             var url = "https://gist.github.com/przemyslawbak/92c3d4bba27cfd2b88d0dd916bbdad14/raw/AAL_1min.json";
 

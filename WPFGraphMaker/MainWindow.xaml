@@ -40,6 +40,13 @@
            Content="NextPattern"
            Click="OnFoundNextPattern"/>
             
+            <Button
+            Name="foundNextCandle"
+    Width="80"
+    HorizontalAlignment="Left"
+       Margin="5"
+       Content="NextCandle"
+       Click="OnFoundNextCandle"/>
             
         </StackPanel>
         <Border Grid.Row="1">
