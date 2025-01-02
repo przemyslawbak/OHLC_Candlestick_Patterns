@@ -19,7 +19,7 @@ namespace Candlestick_Patterns
             _dataOhlcv = dataOhlcv;
             _data = SetPeaksVallyes.GetCloseAndSignalsData(dataOhlcv);
             _peaksFromZigZag = SetPeaksVallyes.PeaksFromZigZag(_data, 0.002M);
-            _percentageMargin = (decimal) 0.035; 
+            _percentageMargin = 0.0025M; 
             _formationsLenght = new List<int>() { 4, 7 };
             _minShift = 2;
             _advance = new List<double>() { 0.10, 0.20 };
@@ -36,29 +36,25 @@ namespace Candlestick_Patterns
             var points = SetPeaksVallyes.GetPoints(_peaksFromZigZag);
             for (int i = 4; i < points.Count; i++)
             {
-                if (!dateList.Contains(points[i].Close))
+                if (!dateList.Contains(points[i - 4].IndexOHLCV))
                 {
                     if (points[i - 4].Close < points[i - 2].Close && points[i - 2].Close > points[i].Close)
                     {
                         var neck = points[i - 2].Close;
-                        var change = (Math.Abs((points[i - 1].Close - points[i - 3].Close)) / points[i - 3].Close);
-                        if (points[i - 3].Close > neck && points[i - 1].Close > neck && change < _percentageMargin)
+                        var change = (Math.Abs((points[i - 1].Close - points[i - 3].Close))) / points[i - 3].Close;
+                        if (points[i - 3].Close > neck && points[i - 1].Close > neck && change < _percentageMargin && neck - points[i].Close > (decimal) _advance.Min() &&  neck - points[i - 4].Close > (decimal)_advance.Min())
                         {
                             for (int x = -4; x < 1; x++)
                             {
-                                dateList.Add(points[i + x].Close);
+                                dateList.Add(points[i + x].IndexOHLCV);
                             }
 
-                            if (dateList.Count > _formationsLenght.Min())
-                            {
-                                points[i].Signal = true;
-                                points[i - 4].Initiation = true;
-                            }
+                            points[i].Signal = true;
+                            points[i - 4].Initiation = true;
                         }
                     }
                 }
             }
-
             return points;
         }
 
@@ -68,33 +64,31 @@ namespace Candlestick_Patterns
             var points = SetPeaksVallyes.GetPoints(_peaksFromZigZag);
             for (int i = 6; i < points.Count; i++)
             {
-                if (!dateList.Contains(points[i].Close))
+                if (!dateList.Contains(points[i - 6].IndexOHLCV))
                 {
                     if (points[i - 6].Close < points[i - 5].Close && points[i - 4].Close < points[i - 3].Close && points[i - 2].Close < points[i - 3].Close && points[i].Close < points[i - 1].Close)
                     {
                         var neck = new List<decimal>() { points[i - 2].Close, points[i - 4].Close };
                         var change = (Math.Abs((points[i - 1].Close - points[i - 2].Close)) / points[i - 2].Close);
-                        var change1 = (Math.Abs((points[i - 3].Close - points[i - 4].Close)) / points[i - 4].Close);
+                        var change1 = (Math.Abs((points[i - 3].Close - points[i - 4].Close)) /points[i - 4].Close);
                         var diff1 = Math.Abs((points[i - 1].Close - points[i - 3].Close) / points[i - 3].Close);
                         var diff2 = Math.Abs((points[i - 5].Close - points[i - 3].Close) / points[i - 5].Close);
-                        if (Math.Abs((neck.Min() - neck.Average()) / neck.Min()) < _percentageMargin)
+                        var diff3 = Math.Abs((points[i - 5].Close - points[i - 1].Close) / points[i - 5].Close);
+                        if (Math.Abs((neck.Min() - neck.Max()) / neck.Min()) < _percentageMargin)
                         {
                             if (points[i - 5].Close > neck.Average() && points[i - 3].Close > neck.Average() && change < (decimal)_advance.Max())
                             {
-                                if (points[i - 1].Close > neck.Average() && change1 < _percentageMargin && Math.Abs(diff1 - diff2) < _percentageMargin)
+                                if (points[i - 1].Close > neck.Average() && change1 < _percentageMargin && Math.Abs(diff1 - diff2) < _percentageMargin && Math.Abs(diff1 - diff3) < _percentageMargin)
                                 {
-                                    if (points[i - 6].Close < neck.Min() && points[i].Close < neck.Min())
+                                    if (points[i - 6].Close < neck.Min() && points[i].Close < neck.Min() && neck.Min() - points[i].Close > (decimal)_advance.Min() && neck.Min() - points[i - 6].Close > (decimal)_advance.Min())
                                     {
                                         for (int x = -6; x < 1; x++)
                                         {
-                                            dateList.Add(points[i + x].Close);
+                                            dateList.Add(points[i + x].IndexOHLCV);
                                         }
 
-                                        if (dateList.Count >= _formationsLenght.Max())
-                                        {
-                                            points[i].Signal = true;
-                                            points[i - 6].Initiation = true;
-                                        }
+                                        points[i].Signal = true;
+                                        points[i - 6].Initiation = true;
                                     }
                                 }
                             }
@@ -112,25 +106,22 @@ namespace Candlestick_Patterns
             var points = SetPeaksVallyes.GetPoints(_peaksFromZigZag);
             for (int i = 4; i < points.Count; i++)
             {
-                if (!dateList.Contains(points[i].Close))
+                if (!dateList.Contains(points[i - 4].IndexOHLCV))
                 {
                     if (points[i - 4].Close > points[i - 2].Close && points[i - 2].Close < points[i].Close)
                     {
                         var neck = points[i - 2].Close;
                         var change = (Math.Abs((points[i - 3].Close - points[i - 1].Close)) / points[i - 3].Close);
-
-                        if (Math.Abs((points[i - 3].Close - neck) / points[i - 3].Close) < (decimal)_advance.Max() && Math.Abs((points[i - 1].Close - neck) / neck) < (decimal)_advance.Max() && points[i - 1].Close < neck && change < _percentageMargin)
+                       
+                        if (points[i - 1].Close < neck && points[i - 3].Close < neck && change < _percentageMargin &&  points[i].Close - neck > (decimal)_advance.Min() && points[i - 4].Close - neck > (decimal)_advance.Min())
                         {
                             for (int x = -4; x < 1; x++)
                             {
-                                dateList.Add(points[i + x].Close);
+                                dateList.Add(points[i + x].IndexOHLCV);
                             }
 
-                            if (dateList.Count > _formationsLenght.Min())
-                            {
-                                points[i].Signal = true;
-                                points[i - 4].Initiation = true;
-                            }
+                            points[i].Signal = true;
+                            points[i - 4].Initiation = true;
                         }
                     }
                 }
@@ -139,28 +130,28 @@ namespace Candlestick_Patterns
             return points;
         }
 
-        private List<ZigZagObject> BullishTripleBottoms()
+        private List<ZigZagObject> BullishTripleBottoms() 
         {
             var dateList = new List<decimal>();
             var points = SetPeaksVallyes.GetPoints(_peaksFromZigZag);
             for (int i = 6; i < points.Count; i++)
             {
-                if (!dateList.Contains(points[i].Close))
+                if (!dateList.Contains(points[i - 6].IndexOHLCV))
                 {
-                    if (points[i].Close > points[i - 5].Close && points[i - 4].Close > points[i - 3].Close && points[i - 2].Close > points[i - 1].Close)
+                    if (points[i - 6].Close > points[i - 4].Close && points[i - 4].Close > points[i - 3].Close && points[i - 2].Close > points[i - 1].Close && points[i].Close > points[i - 2].Close)
                     {
-                        if (points[i - 6].Close > points[i - 4].Close && points[i - 4].Close < points[i - 2].Close)
+                        if (points[i - 6].Close > points[i - 2].Close && points[i - 4].Close < points[i].Close)
                         {
                             var neck = new List<decimal>() { points[i - 4].Close, points[i - 2].Close };
                             var change = (Math.Abs((points[i - 5].Close - points[i - 3].Close)) / points[i - 5].Close);
                             var change2 = (Math.Abs((points[i - 1].Close - points[i - 3].Close)) / points[i - 3].Close);
-                            var diff1 = Math.Abs((points[i - 5].Close - neck.Average()) / points[i - 5].Close);
-                            var diff2 = Math.Abs((points[i - 1].Close - neck.Average()) / points[i - 1].Close);
-                            if (Math.Abs(diff1 - diff2) < _percentageMargin && change < _percentageMargin && change2 < _percentageMargin)
+                            var change3 = (Math.Abs((points[i - 1].Close - points[i - 5].Close)) / points[i - 5].Close);
+                            var diff1 = (neck.Max() - neck.Min()) / neck.Min();
+                            if (diff1 < _percentageMargin && change < _percentageMargin && change2 < _percentageMargin && change3 < _percentageMargin && points[i].Close - neck.Min() > (decimal)_advance.Min() && points[i - 6].Close - neck.Min() > (decimal)_advance.Min())
                             {
                                 for (int x = -6; x < 1; x++)
                                 {
-                                    dateList.Add(points[i + x].Close);
+                                    dateList.Add(points[i + x].IndexOHLCV);
                                 }
 
                                 if (dateList.Count >= _formationsLenght.Max())
@@ -176,30 +167,31 @@ namespace Candlestick_Patterns
 
             return points;
         }
+
         private List<ZigZagObject> BearishHeadAndShoulders()
         {
             var dateList = new List<decimal>();
             var points = SetPeaksVallyes.GetPoints(_peaksFromZigZag);
             for (int i = 6; i < points.Count; i++)
             {
-                if (!dateList.Contains(points[i].Close))
+                if (!dateList.Contains(points[i - 6].IndexOHLCV))
                 {
-                    if (points[i - 3].Close > points[i - 4].Close && points[i - 4].Close < points[i - 5].Close && points[i - 6].Close < points[i - 5].Close && points[i - 3].Close > points[i - 2].Close && points[i - 2].Close < points[i - 1].Close && points[i - 1].Close > points[i].Close)
+                    if (points[i - 3].Close > points[i - 5].Close && points[i - 3].Close > points[i - 1].Close && points[i - 4].Close < points[i - 5].Close && points[i - 6].Close < points[i - 5].Close && points[i - 3].Close > points[i - 2].Close && points[i - 2].Close < points[i - 1].Close && points[i - 1].Close > points[i].Close)
                     {
                         var neckline = new List<decimal>() { points[i - 4].Close, points[i - 2].Close };
-                        var change = Math.Abs((neckline.Max() - neckline.Min()) / neckline.Min());
-                        if (change < _percentageMargin && points[i - 6].Close < neckline.Min() && points[i].Close < neckline.Min())
+                        var changeNeckline = Math.Abs((neckline.Max() - neckline.Min()) / neckline.Min());
+                        var shoulders = new List<decimal>() { points[i - 1].Close, points[i - 5].Close };
+                        var changeShoulders = Math.Abs((shoulders.Max() - shoulders.Min()) / shoulders.Min());
+                        var head = points[i - 3].Close;
+                        if (changeNeckline < _percentageMargin && changeShoulders < _percentageMargin && neckline.Max() < shoulders.Max() && shoulders.Max() < head && (head - shoulders.Max()) > (decimal)_advance.Min() && points[i].Close < neckline.Min() && points[i - 6].Close < neckline.Min())
                         {
                             for (int x = -6; x < 1; x++)
                             {
-                                dateList.Add(points[i + x].Close);
+                                dateList.Add(points[i + x].IndexOHLCV);
                             }
 
-                            if (dateList.Count >= _formationsLenght.Max())
-                            {
-                                points[i].Signal = true;
-                                points[i - 6].Initiation = true;
-                            }
+                            points[i].Signal = true;
+                            points[i - 6].Initiation = true;
                         }
                     }
                 }
@@ -214,7 +206,7 @@ namespace Candlestick_Patterns
             var points = SetPeaksVallyes.GetPoints(_peaksFromZigZag);
             for (int i = 13; i < points.Count; i++)
             {
-                if (!dateList.Contains(points[i].Close))
+                if (!dateList.Contains(points[i - 13].IndexOHLCV))
                 {
                     if(points[i].Close> points[i - 1].Close && points[i - 1].Close< points[i - 3].Close && points[i - 5].Close < points[i - 3].Close && points[i - 4].Close > points[i -2].Close && points[i - 4].Close < points[i].Close && points[i - 5].Close< points[i - 3].Close)
                     {
@@ -231,7 +223,7 @@ namespace Candlestick_Patterns
                             {
                                 for (int x = -13; x < 1; x++)
                                 {
-                                    dateList.Add(points[i + x].Close);
+                                    dateList.Add(points[i + x].IndexOHLCV);
                                 }
 
                                 if (dateList.Count >= _minShift * _formationsLenght.Max())
@@ -255,7 +247,7 @@ namespace Candlestick_Patterns
             var points = SetPeaksVallyes.GetPoints(_peaksFromZigZag);
             for (int i = 11; i < points.Count; i++)
             {
-                if (!dateList.Contains(points[i].Close))
+                if (!dateList.Contains(points[i - 11].IndexOHLCV))
                 {
                     if(points[i].Close < points[i - 1].Close && points[i - 1].Close > points[i - 3].Close && points[i - 5].Close < points[i - 3].Close && points[i - 4].Close < points[i -2].Close && points[i - 4].Close > points[i].Close && points[i - 8].Close > points[i - 5].Close && points[i - 10].Close > points[i - 5].Close && points[i - 9].Close > points[i - 10].Close && points[i - 9].Close > points[i - 8].Close)
                     {
@@ -271,7 +263,7 @@ namespace Candlestick_Patterns
                             {
                                 for (int x = -11; x < 1; x++)
                                 {
-                                    dateList.Add(points[i + x].Close);
+                                    dateList.Add(points[i + x].IndexOHLCV);
                                 }
 
                                 if (dateList.Count >= _minShift * (decimal) _formationsLenght.Average())
@@ -295,7 +287,7 @@ namespace Candlestick_Patterns
             var points = SetPeaksVallyes.GetPoints(_peaksFromZigZag);
             for (int i = 6; i < points.Count; i++)
             {
-                if (!dateList.Contains(points[i].Close))
+                if (!dateList.Contains(points[i - 6].IndexOHLCV))
                 {
                     if (points[i - 3].Close < points[i - 4].Close && points[i - 3].Close < points[i - 2].Close && points[i - 1].Close > points[i - 3].Close && points[i - 5].Close > points[i - 3].Close && points[i].Close > points[i - 2].Close && points[i - 6].Close > points[i - 4].Close)
                     {
@@ -308,7 +300,7 @@ namespace Candlestick_Patterns
                             {
                                 for (int x = -6; x < 1; x++)
                                 {
-                                    dateList.Add(points[i + x].Close);
+                                    dateList.Add(points[i + x].IndexOHLCV);
                                 }
 
                                 if (dateList.Count >= _formationsLenght.Max())
@@ -332,7 +324,7 @@ namespace Candlestick_Patterns
             var points = SetPeaksVallyes.GetPoints(_peaksFromZigZag);
             for (int i = 5; i < points.Count; i++)
             {
-                if (!dateList.Contains(points[i].Close))
+                if (!dateList.Contains(points[i - 5].IndexOHLCV))
                 {
                     if (Math.Abs((points[i - 4].Close - points[i - 2].Close) / points[i - 2].Close) < _percentageMargin)
                     {
@@ -346,7 +338,7 @@ namespace Candlestick_Patterns
                             {
                                 for (int x = -5; x < 1; x++)
                                 {
-                                    dateList.Add(points[i + x].Close);
+                                    dateList.Add(points[i + x].IndexOHLCV);
                                 }
 
                                 if (dateList.Count >= _formationsLenght.Average())
@@ -369,7 +361,7 @@ namespace Candlestick_Patterns
             var points = SetPeaksVallyes.GetPoints(_peaksFromZigZag);
             for (int i = 5; i < points.Count; i++)
             {
-                if (!dateList.Contains(points[i].Close))
+                if (!dateList.Contains(points[i - 5].IndexOHLCV))
                 {
                     if (points[i - 4].Close > points[i - 2].Close && points[i].Close < points[i - 2].Close)
                     {
@@ -379,7 +371,7 @@ namespace Candlestick_Patterns
                             {
                                 for (int x = -5; x < 1; x++)
                                 {
-                                    dateList.Add(points[i + x].Close);
+                                    dateList.Add(points[i + x].IndexOHLCV);
                                 }
 
                                 if (dateList.Count >= _formationsLenght.Average())
@@ -402,7 +394,7 @@ namespace Candlestick_Patterns
             var points = SetPeaksVallyes.GetPoints(_peaksFromZigZag);
             for (int i = 5; i < points.Count - 3; i++)
             {
-                if (!dateList.Contains(points[i].Close))
+                if (!dateList.Contains(points[i - 5].IndexOHLCV))
                 {
                     if ((Math.Abs((points[i - 1].Close - points[i - 3].Close) / points[i - 3].Close) < _percentageMargin) && (Math.Abs((points[i - 3].Close - points[i - 5].Close) / points[i - 3].Close) < _percentageMargin))
                     {
@@ -416,7 +408,7 @@ namespace Candlestick_Patterns
                             {
                                 for (int x = -5; x < 1; x++)
                                 {
-                                    dateList.Add(points[i + x].Close);
+                                    dateList.Add(points[i + x].IndexOHLCV);
                                 }
 
                                 if (dateList.Count >= _formationsLenght.Average())
@@ -438,7 +430,7 @@ namespace Candlestick_Patterns
             var points = SetPeaksVallyes.GetPoints(_peaksFromZigZag);
             for (int i = 7; i < points.Count; i++)
             {
-                if (!dateList.Contains(points[i].Close))
+                if (!dateList.Contains(points[i - 7].IndexOHLCV))
                 {
                     if (points[i - 4].Close < points[i - 6].Close && points[i - 2].Close < points[i - 4].Close)
                     {
@@ -453,7 +445,7 @@ namespace Candlestick_Patterns
                             {
                                 for (int x = -7; x < 1; x++)
                                 {
-                                    dateList.Add(points[i + x].Close);
+                                    dateList.Add(points[i + x].IndexOHLCV);
                                 }
 
                                 if (dateList.Count > _formationsLenght.Max())
@@ -476,7 +468,7 @@ namespace Candlestick_Patterns
             var points = SetPeaksVallyes.GetPoints(_peaksFromZigZag);
             for (int i = 6; i < points.Count; i++)
             {
-                if (!dateList.Contains(points[i].Close))
+                if (!dateList.Contains(points[i - 6].IndexOHLCV))
                 {
                     if (points[i - 2].Close > points[i - 4].Close && points[i].Close > points[i - 2].Close)
                     {
@@ -492,7 +484,7 @@ namespace Candlestick_Patterns
                                 {
                                     for (int x = -6; x < 1; x++)
                                     {
-                                        dateList.Add(points[i + x].Close);
+                                        dateList.Add(points[i + x].IndexOHLCV);
                                     }
 
                                     if (dateList.Count >= _formationsLenght.Max())
@@ -515,7 +507,7 @@ namespace Candlestick_Patterns
             var points = SetPeaksVallyes.GetPoints(_peaksFromZigZag);
             for (int i = 6; i < points.Count; i++)
             {
-                if (!dateList.Contains(points[i].Close))
+                if (!dateList.Contains(points[i - 6].IndexOHLCV))
                 {
                     if (points[i - 5].Close > points[i - 4].Close && (points[i - 5].Close > points[i - 6].Close && points[i - 4].Close < points[i - 6].Close))
                     {
@@ -531,7 +523,7 @@ namespace Candlestick_Patterns
                                 {
                                     for (int x = -6; x < 1; x++)
                                     {
-                                        dateList.Add(points[i + x].Close);
+                                        dateList.Add(points[i + x].IndexOHLCV);
                                     }
 
                                     if (dateList.Count >= _formationsLenght.Max())
@@ -555,7 +547,7 @@ namespace Candlestick_Patterns
             var points = SetPeaksVallyes.GetPoints(_peaksFromZigZag);
             for (int i = 6; i < points.Count; i++)
             {
-                if (!dateList.Contains(points[i].Close))
+                if (!dateList.Contains(points[i - 6].IndexOHLCV))
                 {
                     if (points[i - 4].Close > points[i - 3].Close && (points[i - 4].Close > points[i - 5].Close && points[i - 3].Close > points[i - 5].Close))
                     {
@@ -571,7 +563,7 @@ namespace Candlestick_Patterns
                                 {
                                     for (int x = -6; x < 1; x++)
                                     {
-                                        dateList.Add(points[i + x].Close);
+                                        dateList.Add(points[i + x].IndexOHLCV);
                                     }
 
                                     if (dateList.Count >= _formationsLenght.Max())
@@ -595,7 +587,7 @@ namespace Candlestick_Patterns
             var points = SetPeaksVallyes.GetPoints(_peaksFromZigZag);
             for (int i = 6; i < points.Count; i++)
             {
-                if (!dateList.Contains(points[i].Close))
+                if (!dateList.Contains(points[i - 6].IndexOHLCV))
                 {
                     if (points[i - 3].Close > points[i - 5].Close && points[i - 1].Close > points[i - 3].Close)
                     {
@@ -610,7 +602,7 @@ namespace Candlestick_Patterns
                             {
                                 for (int x = -6; x < 1; x++)
                                 {
-                                    dateList.Add(points[i + x].Close);
+                                    dateList.Add(points[i + x].IndexOHLCV);
                                 }
 
                                 if (dateList.Count >= _formationsLenght.Max())
@@ -633,7 +625,7 @@ namespace Candlestick_Patterns
             var points = SetPeaksVallyes.GetPoints(_peaksFromZigZag);
             for (int i = 6; i < points.Count; i++)
             {
-                if (!dateList.Contains(points[i].Close))
+                if (!dateList.Contains(points[i - 6].IndexOHLCV))
                 {
                     if (points[i].Close < points[i - 1].Close && points[i].Close < points[i - 2].Close && points[i - 4].Close > points[i - 2].Close && points[i - 6].Close > points[i - 4].Close)
                     {
@@ -648,7 +640,7 @@ namespace Candlestick_Patterns
                             {
                                 for (int x = -6; x < 1; x++)
                                 {
-                                    dateList.Add(points[i + x].Close);
+                                    dateList.Add(points[i + x].IndexOHLCV);
                                 }
 
                                 if (dateList.Count >= _formationsLenght.Max())
@@ -671,7 +663,7 @@ namespace Candlestick_Patterns
             var points = SetPeaksVallyes.GetPoints(_peaksFromZigZag);
             for (int i = 12; i < points.Count; i++)
             {
-                if (!dateList.Contains(points[i].Close))
+                if (!dateList.Contains(points[i - 12].IndexOHLCV))
                 {
                     if (points[i].Close > points[i - 1].Close && points[i - 2].Close < points[i].Close && points[i - 2].Close > points[i - 3].Close && points[i - 3].Close < points[i - 4].Close)
                     {
@@ -687,7 +679,7 @@ namespace Candlestick_Patterns
                             {
                                 for (int x = -12; x < 1; x++)
                                 {
-                                    dateList.Add(points[i + x].Close);
+                                    dateList.Add(points[i + x].IndexOHLCV);
                                 }
 
                                 if (dateList.Count >= _minShift * _formationsLenght.Max() - 1)
@@ -711,7 +703,7 @@ namespace Candlestick_Patterns
             var points = SetPeaksVallyes.GetPoints(_peaksFromZigZag);
             for (int i = 12; i < points.Count; i++)
             {
-                if (!dateList.Contains(points[i].Close))
+                if (!dateList.Contains(points[i - 12].IndexOHLCV))
                 {
                     if (points[i].Close < points[i - 1].Close && points[i - 2].Close > points[i].Close && points[i - 2].Close < points[i - 3].Close && points[i - 3].Close > points[i - 4].Close)
                     {
@@ -728,7 +720,7 @@ namespace Candlestick_Patterns
                             {
                                 for (int x = -12; x < 1; x++)
                                 {
-                                    dateList.Add(points[i + x].Close);
+                                    dateList.Add(points[i + x].IndexOHLCV);
                                 }
 
                                 if (dateList.Count >= _minShift * _formationsLenght.Max() - 1)
@@ -752,7 +744,7 @@ namespace Candlestick_Patterns
             var points = SetPeaksVallyes.GetPoints(_peaksFromZigZag);
             for (int i = 10; i < points.Count; i++)
             {
-                if (!dateList.Contains(points[i].Close))
+                if (!dateList.Contains(points[i - 10].IndexOHLCV))
                 {
                     if (points[i - 4].Close > points[i - 6].Close && points[i - 6].Close > points[i - 8].Close && points[i - 4].Close > points[i - 2].Close && points[i - 2].Close > points[i - 1].Close)
                     {
@@ -766,7 +758,7 @@ namespace Candlestick_Patterns
                             {
                                 for (int x = -10; x < 1; x++)
                                 {
-                                    dateList.Add(points[i + x].Close);
+                                    dateList.Add(points[i + x].IndexOHLCV);
                                 }
 
                                 if (dateList.Count >= _formationsLenght.Count())
