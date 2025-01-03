@@ -12,6 +12,7 @@ namespace Candlestick_Patterns
         private readonly List<int> _formationsLenght;
         private readonly decimal _minShift;
         private readonly List<double> _advance;
+        private readonly List<double> _graphSlope;
         private List<ZigZagObject> _peaksFromZigZag;
 
         public Formations(List<OhlcvObject> dataOhlcv)
@@ -23,6 +24,7 @@ namespace Candlestick_Patterns
             _formationsLenght = new List<int>() { 4, 7 };
             _minShift = 2;
             _advance = new List<double>() { 0.10, 0.20 };
+            _graphSlope = new List<double>() { 5, 20, 30, 45, 60};
         }
 
         public Formations(List<OhlcvObject> dataOhlcv, int zigZagParam)
@@ -226,11 +228,8 @@ namespace Candlestick_Patterns
                                     dateList.Add(points[i + x].IndexOHLCV);
                                 }
 
-                                if (dateList.Count >= _minShift * _formationsLenght.Max())
-                                {
-                                    points[i].Signal = true;
-                                    points[i - 13].Initiation = true;
-                                }
+                                points[i].Signal = true;
+                                points[i - 13].Initiation = true;
                             }
                         }
                     
@@ -241,7 +240,7 @@ namespace Candlestick_Patterns
             return points;
         }
         
-        private List<ZigZagObject> BearishInverseCupAndHandle()
+        private List<ZigZagObject> BearishInverseCupAndHandle() //
         {
             var dateList = new List<decimal>();
             var points = SetPeaksVallyes.GetPoints(_peaksFromZigZag);
@@ -266,11 +265,8 @@ namespace Candlestick_Patterns
                                     dateList.Add(points[i + x].IndexOHLCV);
                                 }
 
-                                if (dateList.Count >= _minShift * (decimal) _formationsLenght.Average())
-                                {
-                                    points[i].Signal = true;
-                                    points[i - 11].Initiation = true;
-                                }
+                                points[i].Signal = true;
+                                points[i - 11].Initiation = true;
                             }
                         }
                     
@@ -289,27 +285,22 @@ namespace Candlestick_Patterns
             {
                 if (!dateList.Contains(points[i - 6].IndexOHLCV))
                 {
-                    if (points[i - 3].Close < points[i - 4].Close && points[i - 3].Close < points[i - 2].Close && points[i - 1].Close > points[i - 3].Close && points[i - 5].Close > points[i - 3].Close && points[i].Close > points[i - 2].Close && points[i - 6].Close > points[i - 4].Close)
+                    if (points[i - 3].Close < points[i - 5].Close && points[i - 3].Close < points[i - 1].Close && points[i - 4].Close > points[i - 5].Close && points[i - 6].Close > points[i - 5].Close && points[i - 3].Close < points[i - 2].Close && points[i - 2].Close > points[i - 1].Close && points[i - 1].Close < points[i].Close)
                     {
-                        if (points[i - 4].Close > points[i - 5].Close && points[i - 2].Close > points[i - 1].Close)
+                        var neckline = new List<decimal>() { points[i - 4].Close, points[i - 2].Close };
+                        var changeNeckline = Math.Abs((neckline.Max() - neckline.Min()) / neckline.Min());
+                        var shoulders = new List<decimal>() { points[i - 1].Close, points[i - 5].Close };
+                        var changeShoulders = Math.Abs((shoulders.Max() - shoulders.Min()) / shoulders.Min());
+                        var head = points[i - 3].Close;
+                        if (changeNeckline < _percentageMargin && changeShoulders < _percentageMargin && neckline.Max() > shoulders.Max() && shoulders.Max() > head && (shoulders.Min() - head) > (decimal)_advance.Min() && points[i].Close > neckline.Max() && points[i - 6].Close > neckline.Max())
                         {
-                            var neck = new List<decimal>() { points[i - 4].Close, points[i - 2].Close };
-                            var diff1 = Math.Abs((points[i - 2].Close - points[i - 4].Close) / points[i - 4].Close);
-                            var diff2 = Math.Abs((points[i - 5].Close - points[i - 1].Close) / points[i - 5].Close);
-                            if (diff2 < _percentageMargin && diff1 < _percentageMargin && Math.Abs((points[i - 5].Close - points[i - 3].Close) / points[i - 3].Close) > _percentageMargin)
+                            for (int x = -6; x < 1; x++)
                             {
-                                for (int x = -6; x < 1; x++)
-                                {
-                                    dateList.Add(points[i + x].IndexOHLCV);
-                                }
-
-                                if (dateList.Count >= _formationsLenght.Max())
-                                {
-                                    points[i].Signal = true;
-                                    points[i - 6].Initiation = true;
-                                }
+                                dateList.Add(points[i + x].IndexOHLCV);
                             }
 
+                            points[i].Signal = true;
+                            points[i - 6].Initiation = true;
                         }
                     }
                 }
@@ -326,9 +317,11 @@ namespace Candlestick_Patterns
             {
                 if (!dateList.Contains(points[i - 5].IndexOHLCV))
                 {
-                    if (Math.Abs((points[i - 4].Close - points[i - 2].Close) / points[i - 2].Close) < _percentageMargin)
+                    var top = new List<decimal>() { points[i - 4].Close, points[i - 2].Close };
+                    var changeTop = (top.Max() - top.Min()) / top.Min();
+                    if (changeTop < _percentageMargin && points[i].Close - top.Max() > (decimal) _advance.Min() && points[i].Close > points[i - 1].Close)
                     {
-                        if (points[i - 3].Close < points[i - 1].Close && points[i - 5].Close < points[i - 1].Close)
+                        if (points[i - 3].Close < points[i - 1].Close && points[i - 5].Close < points[i - 1].Close && points[i - 5].Close <  points[i - 3].Close && points[i - 3].Close - points[i - 5].Close > (decimal) _advance.Min())
                         {
                             var diff1 = Math.Abs(points[i].Close - points[i - 1].Close);
                             var diff2 = Math.Abs(points[i - 3].Close - points[i - 2].Close);
@@ -341,11 +334,8 @@ namespace Candlestick_Patterns
                                     dateList.Add(points[i + x].IndexOHLCV);
                                 }
 
-                                if (dateList.Count >= _formationsLenght.Average())
-                                {
-                                    points[i].Signal = true;
-                                    points[i - 5].Initiation = true;
-                                }
+                                points[i].Signal = true;
+                                points[i - 5].Initiation = true;
                             }
                         }
                     }
@@ -363,22 +353,35 @@ namespace Candlestick_Patterns
             {
                 if (!dateList.Contains(points[i - 5].IndexOHLCV))
                 {
-                    if (points[i - 4].Close > points[i - 2].Close && points[i].Close < points[i - 2].Close)
+                    if (points[i - 4].Close > points[i - 2].Close && points[i].Close > points[i - 2].Close)
                     {
                         if (points[i - 5].Close < points[i - 3].Close && points[i - 1].Close > points[i - 3].Close && points[i].Close > points[i - 1].Close)
                         {
-                            if (Math.Abs(points[i - 2].Close - points[i - 3].Close) < Math.Abs(points[i - 4].Close - points[i - 5].Close) && Math.Abs(points[i - 2].Close - points[i - 1].Close) < Math.Abs(points[i - 4].Close - points[i - 3].Close)) ;
+                            if (Math.Abs(points[i - 2].Close - points[i - 3].Close) < Math.Abs(points[i - 4].Close - points[i - 5].Close) && Math.Abs(points[i - 2].Close - points[i - 1].Close) < Math.Abs(points[i - 4].Close - points[i - 3].Close)) 
                             {
                                 for (int x = -5; x < 1; x++)
                                 {
                                     dateList.Add(points[i + x].IndexOHLCV);
                                 }
 
-                                if (dateList.Count >= _formationsLenght.Average())
+                                points[i].Signal = true;
+                                points[i - 5].Initiation = true;
+                            }
+                        }
+                    }
+                    else if (points[i - 4].Close < points[i - 2].Close && points[i].Close < points[i - 2].Close)
+                    {
+                        if (points[i - 5].Close > points[i - 3].Close && points[i - 1].Close < points[i - 3].Close && points[i].Close < points[i - 1].Close)
+                        {
+                            if (Math.Abs(points[i - 2].Close - points[i - 3].Close) < Math.Abs(points[i - 4].Close - points[i - 5].Close) && Math.Abs(points[i - 2].Close - points[i - 1].Close) < Math.Abs(points[i - 4].Close - points[i - 3].Close)) 
+                            {
+                                for (int x = -5; x < 1; x++)
                                 {
-                                    points[i].Signal = true;
-                                    points[i - 5].Initiation = true;
+                                    dateList.Add(points[i + x].IndexOHLCV);
                                 }
+
+                                points[i].Signal = true;
+                                points[i - 5].Initiation = true;
                             }
                         }
                     }
@@ -396,26 +399,25 @@ namespace Candlestick_Patterns
             {
                 if (!dateList.Contains(points[i - 5].IndexOHLCV))
                 {
-                    if ((Math.Abs((points[i - 1].Close - points[i - 3].Close) / points[i - 3].Close) < _percentageMargin) && (Math.Abs((points[i - 3].Close - points[i - 5].Close) / points[i - 3].Close) < _percentageMargin))
+                    var top = new List<decimal>() { points[i - 2].Close, points[i - 4].Close };
+                    var changeTop = (top.Max() - top.Min()) / top.Min();
+                    if (changeTop < _percentageMargin && top.Min() - points[i].Close > (decimal)_advance.Min() && points[i].Close < points[i - 1].Close)
                     {
-                        if (points[i - 4].Close > points[i - 2].Close)
+                        if (points[i - 3].Close > points[i - 1].Close && points[i - 5].Close > points[i - 1].Close && points[i - 5].Close > points[i - 3].Close)
                         {
-                            var change1 = Math.Abs((points[i - 2].Close - points[i - 1].Close));
-                            var change2 = Math.Abs((points[i - 3].Close - points[i - 4].Close));
-                            var diff1 = Math.Abs(points[i - 3].Close - points[i - 1].Close / points[i - 3].Close);
-                            var diff2 = Math.Abs(points[i - 5].Close - points[i - 3].Close / points[i - 5].Close);
-                            if (change2 > change1 && diff2 <= _percentageMargin && diff1 <= _percentageMargin)
+                            var diff1 = Math.Abs(points[i - 5].Close - points[i - 4].Close);
+                            var diff2 = Math.Abs(points[i - 3].Close - points[i - 2].Close);
+                            var diff3 = Math.Abs(points[i - 3].Close - points[i - 4].Close);
+                            var diff4 = Math.Abs(points[i - 1].Close - points[i - 2].Close);
+                            if (diff2 < diff1 && diff4 < diff3)
                             {
                                 for (int x = -5; x < 1; x++)
                                 {
                                     dateList.Add(points[i + x].IndexOHLCV);
                                 }
 
-                                if (dateList.Count >= _formationsLenght.Average())
-                                {
-                                    points[i].Signal = true;
-                                    points[i - 5].Initiation = true;
-                                }
+                                points[i].Signal = true;
+                                points[i - 5].Initiation = true;
                             }
                         }
                     }
@@ -428,30 +430,42 @@ namespace Candlestick_Patterns
         {
             var dateList = new List<decimal>();
             var points = SetPeaksVallyes.GetPoints(_peaksFromZigZag);
-            for (int i = 7; i < points.Count; i++)
+            for (int i = 6; i < points.Count; i++)
             {
-                if (!dateList.Contains(points[i - 7].IndexOHLCV))
+                if (!dateList.Contains(points[i - 6].IndexOHLCV))
                 {
-                    if (points[i - 4].Close < points[i - 6].Close && points[i - 2].Close < points[i - 4].Close)
+                    if (points[i - 4].Close < points[i - 6].Close && points[i - 2].Close < points[i - 4].Close /*&& points[i].Close > points[i - 2].Close*/)
                     {
                         if (points[i - 3].Close < points[i - 5].Close && points[i - 1].Close < points[i - 3].Close)
                         {
                             var diff1 = Math.Abs(points[i - 4].Close - points[i - 5].Close);
                             var diff2 = Math.Abs(points[i - 3].Close - points[i - 2].Close);
-                            var diff3 = Math.Abs(points[i - 6].Close - points[i - 7].Close);
+                            var diff3 = Math.Abs(points[i - 6].Close - points[i - 5].Close);
+                            var diff4 = Math.Abs(points[i - 4].Close - points[i - 3].Close);
+                            var diff5 = Math.Abs(points[i - 1].Close - points[i - 2].Close);
+                            var change1 = points[i - 5].Close - points[i - 3].Close;
+                            var change2 = points[i - 4].Close - points[i - 2].Close;
+                            var change3 = points[i - 3].Close - points[i - 1].Close;
 
-
-                            if (diff2 < diff1 && diff3 > (decimal)_advance.Max() * diff2)
+                            if (diff2 < diff1 && diff3 > diff4 && diff4 > diff5 && change2 > change1 && change2 > change3)
                             {
-                                for (int x = -7; x < 1; x++)
+                                var slope53 =  (points[i - 5].Close - points[i - 3].Close) / 1 * 100;
+                                var slope31 = (points[i - 3].Close - points[i - 1].Close) / 1 * 100;
+                                var slope531 = (points[i - 5].Close - points[i - 1].Close) / 2 * 100;
+                                var slope42 = (points[i - 4].Close - points[i - 2].Close) / 1 * 100;
+                                if(slope53 >= (decimal)  _graphSlope.Min() && slope53 < (decimal)_graphSlope[3] && slope31 >= (decimal)_graphSlope.Min() && slope31 < (decimal)_graphSlope[3] && slope42 > (decimal) _graphSlope[2])
                                 {
-                                    dateList.Add(points[i + x].IndexOHLCV);
-                                }
+                                    for (int x = -6; x < 1; x++)
+                                    {
+                                        dateList.Add(points[i + x].IndexOHLCV);
+                                    }
 
-                                if (dateList.Count > _formationsLenght.Max())
-                                {
-                                    points[i].Signal = true;
-                                    points[i - 7].Initiation = true;
+                                    if (dateList.Count > _formationsLenght.Max())
+                                    {
+                                        points[i].Signal = true;
+                                        points[i - 6].Initiation = true;
+                                    }
+
                                 }
                             }
                         }
@@ -470,32 +484,33 @@ namespace Candlestick_Patterns
             {
                 if (!dateList.Contains(points[i - 6].IndexOHLCV))
                 {
-                    if (points[i - 2].Close > points[i - 4].Close && points[i].Close > points[i - 2].Close)
+                    if (points[i - 4].Close > points[i - 6].Close && points[i - 2].Close > points[i - 4].Close /*&& points[i].Close < points[i - 2].Close*/)
                     {
-                        if (points[i - 5].Close < points[i - 3].Close && points[i - 1].Close > points[i - 3].Close)
+                        if (points[i - 3].Close > points[i - 5].Close && points[i - 1].Close > points[i - 3].Close)
                         {
-                            if (Math.Abs(points[i - 3].Close - points[i - 5].Close) > Math.Abs(points[i - 4].Close - points[i - 2].Close))
+                            var diff1 = Math.Abs(points[i - 4].Close - points[i - 5].Close);
+                            var diff2 = Math.Abs(points[i - 3].Close - points[i - 2].Close);
+                            var diff3 = Math.Abs(points[i - 6].Close - points[i - 5].Close);
+                            var diff4 = Math.Abs(points[i - 4].Close - points[i - 3].Close);
+                            var diff5 = Math.Abs(points[i - 1].Close - points[i - 2].Close);
+                            var change1 = Math.Abs(points[i - 5].Close - points[i - 3].Close);
+                            var change2 = Math.Abs(points[i - 4].Close - points[i - 2].Close);
+                            var change3 = Math.Abs(points[i - 3].Close - points[i - 1].Close);
+
+                            if (diff2 < diff1 && diff3 > diff4 && diff4 > diff5 && change2 > change1 && change2 > change3)
                             {
-                                var diff1 = Math.Abs(points[i - 2].Close - points[i - 3].Close);
-                                var diff2 = Math.Abs(points[i - 1].Close - points[i].Close);
-                                var diff3 = Math.Abs(points[i - 4].Close - points[i - 5].Close);
-
-                                if (diff2 < diff1 && diff3 > diff1)
+                                for (int x = -6; x < 1; x++)
                                 {
-                                    for (int x = -6; x < 1; x++)
-                                    {
-                                        dateList.Add(points[i + x].IndexOHLCV);
-                                    }
-
-                                    if (dateList.Count >= _formationsLenght.Max())
-                                    {
-                                        points[i].Signal = true;
-                                        points[i - 6].Initiation = true;
-                                    }
+                                    dateList.Add(points[i + x].IndexOHLCV);
                                 }
+
+                                points[i].Signal = true;
+                                points[i - 6].Initiation = true;
+
                             }
                         }
                     }
+
                 }
             }
 
