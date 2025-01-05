@@ -1,4 +1,5 @@
 ﻿using OHLC_Candlestick_Patterns;
+using System.ComponentModel;
 using System.ComponentModel.Design;
 using System.Reflection;
 using System.Threading.Channels;
@@ -244,36 +245,31 @@ namespace Candlestick_Patterns
             return points;
         }
         
-        private List<ZigZagObject> BearishInverseCupAndHandle() //
+        private List<ZigZagObject> BearishInverseCupAndHandle()
         {
             var dateList = new List<decimal>();
             var points = SetPeaksVallyes.GetPoints(_peaksFromZigZag);
-            for (int i = 11; i < points.Count; i++)
+            for (int i = 16; i < points.Count; i++)
             {
-                if (!dateList.Contains(points[i - 11].IndexOHLCV))
+                if (!dateList.Contains(points[i - 14].IndexOHLCV))
                 {
-                    if(points[i].Close < points[i - 1].Close && points[i - 1].Close > points[i - 3].Close && points[i - 5].Close < points[i - 3].Close && points[i - 4].Close < points[i -2].Close && points[i - 4].Close > points[i].Close && points[i - 8].Close > points[i - 5].Close && points[i - 10].Close > points[i - 5].Close && points[i - 9].Close > points[i - 10].Close && points[i - 9].Close > points[i - 8].Close)
+                    var highestPoint = new List<decimal>() { points[i - 11].Close, points[i - 10].Close, points[i - 9].Close };
+                    var cupPoints = new List<decimal>() {points[i - 15].Close, points[i - 13].Close, points[i - 13].Close, points[i - 12].Close, points[i - 8].Close, points[i - 7].Close, points[i - 6].Close};
+                    var handlePoints = new List<decimal>() {points[i - 2].Close, points[i - 3].Close, points[i - 4].Close};
+
+                    if (highestPoint.Max() > cupPoints.Max() && highestPoint.Max() > handlePoints.Max() && handlePoints.Min() > cupPoints.Min() && points[i].Close < handlePoints.Min())
                     {
-                        if(points[i - 7].Close > points[i - 4].Close && points[i - 7].Close < points[i - 9].Close && points[i - 8].Close < points[i - 11].Close && points[i - 11].Close > points[i - 9].Close && points[i].Close < points[i - 11].Close)
+                        if (points[i - 10].Close > points[i - 12].Close && points[i - 8].Close > points[i - 6].Close && (handlePoints.Max() - handlePoints.Min()) / handlePoints.Min() < _percentageMargin)
+
                         {
-                            var diffHandle1 = Math.Abs(points[i - 2].Close - points[i - 3].Close);
-                            var diffHandle2 = Math.Abs(points[i - 4].Close - points[i - 3].Close);
-
-                            var change1 = Math.Abs(points[i - 8].Close - points[i - 7].Close);
-                            var change2 = Math.Abs(points[i - 10].Close - points[i - 11].Close);
-
-                            if (change1 >= diffHandle1 && change2 > diffHandle2 && Math.Abs(change1 - change2)/change2 < _percentageMargin && Math.Abs(diffHandle1 - diffHandle2)/diffHandle2 < _percentageMargin)
+                            for (int x = -16; x < 1; x++)
                             {
-                                for (int x = -11; x < 1; x++)
-                                {
-                                    dateList.Add(points[i + x].IndexOHLCV);
-                                }
-
-                                points[i].Signal = true;
-                                points[i - 11].Initiation = true;
+                                dateList.Add(points[i + x].IndexOHLCV);
                             }
+
+                            points[i].Signal = true;
+                            points[i - 16].Initiation = true;
                         }
-                    
                     }
                 }
             }
@@ -438,7 +434,7 @@ namespace Candlestick_Patterns
             {
                 if (!dateList.Contains(points[i - 6].IndexOHLCV))
                 {
-                    if (points[i - 4].Close < points[i - 6].Close && points[i - 2].Close < points[i - 4].Close /*&& points[i].Close > points[i - 2].Close*/)
+                    if (points[i - 4].Close < points[i - 6].Close && points[i - 2].Close < points[i - 4].Close)
                     {
                         if (points[i - 3].Close < points[i - 5].Close && points[i - 1].Close < points[i - 3].Close)
                         {
@@ -488,7 +484,7 @@ namespace Candlestick_Patterns
             {
                 if (!dateList.Contains(points[i - 6].IndexOHLCV))
                 {
-                    if (points[i - 4].Close > points[i - 6].Close && points[i - 2].Close > points[i - 4].Close /*&& points[i].Close < points[i - 2].Close*/)
+                    if (points[i - 4].Close > points[i - 6].Close && points[i - 2].Close > points[i - 4].Close)
                     {
                         if (points[i - 3].Close > points[i - 5].Close && points[i - 1].Close > points[i - 3].Close)
                         {
@@ -751,68 +747,29 @@ namespace Candlestick_Patterns
             {
                 if (!dateList.Contains(points[i - 12].IndexOHLCV))
                 {
-                    var highest = points[i - 7].Close;
-                    var lowest = new List<decimal>() { points[i - 8].Close, points[i - 6].Close };
-                    var changeLowest = Math.Abs((lowest.Max() - lowest.Min()) / lowest.Min());
-                    var diamondPoints = new List<decimal>() { points[i - 12].Close, points[i - 11].Close, points[i - 10].Close, points[i - 9].Close, points[i - 5].Close, points[i - 4].Close, points[i - 3].Close, points[i - 2].Close, points[i - 1].Close };
-                    
-                    if (highest > diamondPoints.Max() && lowest.Min() < diamondPoints.Min() &&  changeLowest < _percentageMargin)
+                    if (points[i - 4].Close > points[i - 6].Close && points[i - 6].Close > points[i - 8].Close && points[i - 4].Close > points[i - 2].Close && points[i - 2].Close > points[i - 1].Close)
                     {
-                        // first and last smallest than support level
-
-                        for (int x = -12; x < 1; x++)
+                        if (points[i - 3].Close > points[i - 5].Close && points[i - 3].Close < points[i - 2].Close && points[i - 5].Close < points[i - 7].Close)
                         {
-                            dateList.Add(points[i + x].IndexOHLCV);
-                        }
+                            var diff1 = Math.Abs(points[i - 2].Close - points[i - 3].Close);
+                            var diff2 = Math.Abs(points[i - 4].Close - points[i - 5].Close);
+                            var diff3 = Math.Abs(points[i - 8].Close - points[i - 9].Close);
 
-                        points[i].Signal = true;
-                        points[i - 12].Initiation = true;
-                    }
-                    else
-                    {
-                        var newLowest = points[i - 7].Close;
-                        var newHighest = new List<decimal>() { points[i - 8].Close, points[i - 6].Close };
-                        diamondPoints = new List<decimal>() { points[i - 10].Close, points[i - 9].Close, points[i - 5].Close, points[i - 4].Close, points[i - 3].Close, points[i - 2].Close, points[i - 1].Close };
-                        var changeNewHighest = Math.Abs((lowest.Max() - lowest.Min()) / lowest.Min());
-                        
-                        if (newHighest.Max() > diamondPoints.Max() && newLowest < diamondPoints.Min() && changeNewHighest < _percentageMargin)
-                        {
-                            //first and last larger than support level
-
-                            for (int x = -12; x < 1; x++)
+                            if (diff2 > diff1 && diff2 > diff3)
                             {
-                                dateList.Add(points[i + x].IndexOHLCV);
+                                for (int x = -10; x < 1; x++)
+                                {
+                                    dateList.Add(points[i + x].IndexOHLCV);
+                                }
+
+                                if (dateList.Count >= _formationsLenght.Count())
+                                {
+                                    points[i].Signal = true;
+                                    points[i - 10].Initiation = true;
+                                }
                             }
-
-                            points[i].Signal = true;
-                            points[i - 12].Initiation = true;
                         }
-
                     }
-
-                    //if (points[i - 4].Close > points[i - 6].Close && points[i - 6].Close > points[i - 8].Close && points[i - 4].Close > points[i - 2].Close && points[i - 2].Close > points[i - 1].Close)
-                    //{
-                    //    if (points[i - 3].Close > points[i - 5].Close && points[i - 3].Close < points[i - 2].Close && points[i - 5].Close < points[i - 7].Close)
-                    //    {
-                    //        var diff1 = Math.Abs(points[i - 2].Close - points[i - 3].Close);
-                    //        var diff2 = Math.Abs(points[i - 4].Close - points[i - 5].Close);
-                    //        var diff3 = Math.Abs(points[i - 8].Close - points[i - 9].Close);
-
-                    //        if (diff2 > diff1 && diff2 > diff3)
-                    //        {
-                    //            for (int x = -10; x < 1; x++)
-                    //            {
-                    //                dateList.Add(points[i + x].IndexOHLCV);
-                    //            }
-
-                    //            if (dateList.Count >= _formationsLenght.Count())
-                    //            {
-                    //                points[i].Signal = true;
-                    //                points[i - 10].Initiation = true;
-                    //            }
-                    //        }
-                    //    }
-                    //}
                 }
             }
 
