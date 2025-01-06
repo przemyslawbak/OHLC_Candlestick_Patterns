@@ -11,56 +11,56 @@ namespace Candlestick_Patterns
 
     public class Fibonacci : AbstractFibonnaci, IFibonacci
     { 
-        private static List<ZigZagObject> _data { get; set; }
+        private static List<ZigZagObject> Data { get; set; }
 
-        private static decimal _fibError { get; set; }
+        private static decimal FibError { get; set; }
 
-        private static Fibonacci3DrivePattern _drivePattern { get; set; }
-        private static SupportClass _support { get; set; }
+        private static Fibonacci3DrivePattern DrivePattern { get; set; }
+        private static SupportClass Support { get; set; }
 
-        private static List<ZigZagObject> _peaksFromZigZag { get; set; }
+        private static List<ZigZagObject> PeaksFromZigZag { get; set; }
 
-        private static List<ZigZagObject> _points { get; set; }
+        private static List<ZigZagObject> Points { get; set; }
 
-        public List<OhlcvObject> _dataOhlcv { get; }
+        public List<OhlcvObject> DataOhlcv { get; }
 
-        public static bool isDataLoaded { get; set; } = false;
+        public static bool IsDataLoaded { get; set; } = false;
 
-        internal static List<decimal> range382 { get { return _support.PointsRange(38.2M, _fibError); } }
-        internal static List<decimal> range786 { get { return _support.PointsRange(78.6M, _fibError); } }
-        internal static List<decimal> range618 { get { return _support.PointsRange(61.8M, _fibError); } }
-        internal static List<decimal> range886 { get { return _support.PointsRange(88.6M, _fibError); } }
-        internal static List<decimal> range127 { get { return _support.PointsRange(127.2M, _fibError); } }
-        internal static List<decimal> range161 { get { return _support.PointsRange(161.8M, _fibError); } }
-        internal static List<decimal> range224 { get { return _support.PointsRange(224M, _fibError); } }
+        internal static List<decimal> range382 { get { return Support.PointsRange(38.2M, FibError); } }
+        internal static List<decimal> range786 { get { return Support.PointsRange(78.6M, FibError); } }
+        internal static List<decimal> range618 { get { return Support.PointsRange(61.8M, FibError); } }
+        internal static List<decimal> range886 { get { return Support.PointsRange(88.6M, FibError); } }
+        internal static List<decimal> range127 { get { return Support.PointsRange(127.2M, FibError); } }
+        internal static List<decimal> range161 { get { return Support.PointsRange(161.8M, FibError); } }
+        internal static List<decimal> range224 { get { return Support.PointsRange(224M, FibError); } }
 
         public Fibonacci(List<OhlcvObject> dataOhlcv)
         {
-            _dataOhlcv = dataOhlcv;
-            _data = SetPeaksVallyes.GetCloseAndSignalsData(dataOhlcv);
-            _peaksFromZigZag = SetPeaksVallyes.PeaksFromZigZag(_data, 0.002M);
-            _fibError = 0.1M; // in all Fibonacci ratios, errors of no more than 10% of the ideal value are allowed.  
-            _drivePattern = new Fibonacci3DrivePattern();
-            _support = new SupportClass();
+            DataOhlcv = dataOhlcv;
+            Data = SetPeaksVallyes.GetCloseAndSignalsData(dataOhlcv);
+            PeaksFromZigZag = SetPeaksVallyes.PeaksFromZigZag(Data, 0.002M);
+            FibError = 0.1M; // in all Fibonacci ratios, errors of no more than 10% of the ideal value are allowed.  
+            DrivePattern = new Fibonacci3DrivePattern();
+            Support = new SupportClass();
         }
 
         public Fibonacci(List<OhlcvObject> dataOhlcv, decimal zigZagParam)
         {
-            _peaksFromZigZag = SetPeaksVallyes.PeaksFromZigZag(_data, zigZagParam);
+            PeaksFromZigZag = SetPeaksVallyes.PeaksFromZigZag(Data, zigZagParam);
         }
 
-        private List<ZigZagObject> BearishGartley() => Pattern("bearish", SetPeaksVallyes.GetPoints(_peaksFromZigZag), _fibError, "gartleyPattern", 4);
-        private List<ZigZagObject> BullishGartley() => Pattern("bullish", SetPeaksVallyes.GetPoints(_peaksFromZigZag), _fibError, "gartleyPattern", 4);
-        private List<ZigZagObject> BearishButterfly() => Pattern("bearish", SetPeaksVallyes.GetPoints(_peaksFromZigZag), _fibError, "butterflyPattern", 4);
-        private List<ZigZagObject> BullishButterfly() => Pattern("bullish", SetPeaksVallyes.GetPoints(_peaksFromZigZag), _fibError, "butterflyPattern", 4);
-        private List<ZigZagObject> BearishABCD() => Pattern("bearish", SetPeaksVallyes.GetPoints(_peaksFromZigZag), _fibError, "abcdPattern", 3);
-        private List<ZigZagObject> BullishABCD() => Pattern("bullish", SetPeaksVallyes.GetPoints(_peaksFromZigZag), _fibError, "abcdPattern", 3);
-        private List<ZigZagObject> Bearish3Extension() => Pattern("bearish", SetPeaksVallyes.GetPoints(_peaksFromZigZag), _fibError, "threeExtensionPattern", 3);
-        private List<ZigZagObject> Bullish3Extension() => Pattern("bullish", SetPeaksVallyes.GetPoints(_peaksFromZigZag), _fibError, "threeExtensionPattern", 3);
-        private List<ZigZagObject> Bearish3Retracement() => Pattern("bearish", SetPeaksVallyes.GetPoints(_peaksFromZigZag), _fibError, "threeRetracementPattern", 2);
-        private List<ZigZagObject> Bullish3Retracement() => Pattern("bullish", SetPeaksVallyes.GetPoints(_peaksFromZigZag), _fibError, "threeRetracementPattern", 2);
-        private List<ZigZagObject> Bearish3Drive() => Pattern("bearish", SetPeaksVallyes.GetPoints(_peaksFromZigZag), _fibError, "threeDrivePattern", 5);
-        private List<ZigZagObject> Bullish3Drive() => Pattern("bullish", SetPeaksVallyes.GetPoints(_peaksFromZigZag), _fibError, "threeDrivePattern", 5);
+        private List<ZigZagObject> BearishGartley() => Pattern("bearish", SetPeaksVallyes.GetPoints(PeaksFromZigZag), FibError, "gartleyPattern", 4);
+        private List<ZigZagObject> BullishGartley() => Pattern("bullish", SetPeaksVallyes.GetPoints(PeaksFromZigZag), FibError, "gartleyPattern", 4);
+        private List<ZigZagObject> BearishButterfly() => Pattern("bearish", SetPeaksVallyes.GetPoints(PeaksFromZigZag), FibError, "butterflyPattern", 4);
+        private List<ZigZagObject> BullishButterfly() => Pattern("bullish", SetPeaksVallyes.GetPoints(PeaksFromZigZag), FibError, "butterflyPattern", 4);
+        private List<ZigZagObject> BearishABCD() => Pattern("bearish", SetPeaksVallyes.GetPoints(PeaksFromZigZag), FibError, "abcdPattern", 3);
+        private List<ZigZagObject> BullishABCD() => Pattern("bullish", SetPeaksVallyes.GetPoints(PeaksFromZigZag), FibError, "abcdPattern", 3);
+        private List<ZigZagObject> Bearish3Extension() => Pattern("bearish", SetPeaksVallyes.GetPoints(PeaksFromZigZag), FibError, "threeExtensionPattern", 3);
+        private List<ZigZagObject> Bullish3Extension() => Pattern("bullish", SetPeaksVallyes.GetPoints(PeaksFromZigZag), FibError, "threeExtensionPattern", 3);
+        private List<ZigZagObject> Bearish3Retracement() => Pattern("bearish", SetPeaksVallyes.GetPoints(PeaksFromZigZag), FibError, "threeRetracementPattern", 2);
+        private List<ZigZagObject> Bullish3Retracement() => Pattern("bullish", SetPeaksVallyes.GetPoints(PeaksFromZigZag), FibError, "threeRetracementPattern", 2);
+        private List<ZigZagObject> Bearish3Drive() => Pattern("bearish", SetPeaksVallyes.GetPoints(PeaksFromZigZag), FibError, "threeDrivePattern", 5);
+        private List<ZigZagObject> Bullish3Drive() => Pattern("bullish", SetPeaksVallyes.GetPoints(PeaksFromZigZag), FibError, "threeDrivePattern", 5);
 
         internal virtual List<ZigZagObject> Pattern(string pattern, List<ZigZagObject> points, decimal priceMovement1, string fibbPattern, int startNumber)
         {
@@ -74,7 +74,7 @@ namespace Candlestick_Patterns
                     {
                         if (SecondCheck(points, i, pattern, fibbPattern))
                         {
-                            _support.AddPointsToList(points, i, dateList, startNumber);
+                            Support.AddPointsToList(points, i, dateList, startNumber);
                         }
                     }
                 }
@@ -170,17 +170,17 @@ namespace Candlestick_Patterns
 
         private bool SecondCheckFor3DrivePattern(List<ZigZagObject> points, int i, string pattern) 
         {
-            var retracementBcBa = _support.GetRetracement(points, i, 1, 2, 3); // 61,8% lub 78,6%
-            var retracementX0XA = _support.GetRetracement(points, i, 3, 4, 5); // 61,8% lub 78,6%
-            var extensionCdCb = _support.GetRetracement(points, i, 0, 1, 2);  // 127% 
-            var extensionAxAc = _support.GetRetracement(points, i, 2, 3, 4);  // 127% 
+            var retracementBcBa = Support.GetRetracement(points, i, 1, 2, 3); // 61,8% lub 78,6%
+            var retracementX0XA = Support.GetRetracement(points, i, 3, 4, 5); // 61,8% lub 78,6%
+            var extensionCdCb = Support.GetRetracement(points, i, 0, 1, 2);  // 127% 
+            var extensionAxAc = Support.GetRetracement(points, i, 2, 3, 4);  // 127% 
 
-            var check618retracementBcBa = _support.CheckIfRetracemntIsInRange(range618, range618, retracementBcBa);
-            var check786retracementBcBa = _support.CheckIfRetracemntIsInRange(range786, range786, retracementBcBa);
-            var check618retracementX0XA = _support.CheckIfRetracemntIsInRange(range618, range618, retracementX0XA);
-            var check786retracementX0XA = _support.CheckIfRetracemntIsInRange(range786, range786, retracementX0XA);
-            var check127extensionCdCb = _support.CheckIfRetracemntIsInRange(range127, range127, extensionCdCb);
-            var check127extensionAxAc = _support.CheckIfRetracemntIsInRange(range127, range127, extensionAxAc);
+            var check618retracementBcBa = Support.CheckIfRetracemntIsInRange(range618, range618, retracementBcBa);
+            var check786retracementBcBa = Support.CheckIfRetracemntIsInRange(range786, range786, retracementBcBa);
+            var check618retracementX0XA = Support.CheckIfRetracemntIsInRange(range618, range618, retracementX0XA);
+            var check786retracementX0XA = Support.CheckIfRetracemntIsInRange(range786, range786, retracementX0XA);
+            var check127extensionCdCb = Support.CheckIfRetracemntIsInRange(range127, range127, extensionCdCb);
+            var check127extensionAxAc = Support.CheckIfRetracemntIsInRange(range127, range127, extensionAxAc);
 
 
             if ((check618retracementBcBa || check786retracementBcBa) && (check786retracementX0XA || check618retracementX0XA) && check127extensionCdCb && check127extensionAxAc)
@@ -213,18 +213,18 @@ namespace Candlestick_Patterns
 
         private static bool SecondCheckForGartleyPattern(List<ZigZagObject> points, int i, string pattern)
         {
-            var retracementAbAx = _support.GetRetracement(points, i, 2, 3, 4); // 61,8% - 78,6%
-            var retracementBcBa = _support.GetRetracement(points, i, 1, 2, 3); // 38.2% – 88.6% 
-            var retracementCbBa = _support.GetRetracement(points, i, 1, 2, 3); // 61,8% - 78,6%
-            var retracementCdCb = _support.GetRetracement(points, i, 0, 1, 2); // between 127,2% and 161,8%
-            var retracementAdAX = _support.GetRetracement(points, i, 0, 3, 4); // between 78.6% and 88.6% 
+            var retracementAbAx = Support.GetRetracement(points, i, 2, 3, 4); // 61,8% - 78,6%
+            var retracementBcBa = Support.GetRetracement(points, i, 1, 2, 3); // 38.2% – 88.6% 
+            var retracementCbBa = Support.GetRetracement(points, i, 1, 2, 3); // 61,8% - 78,6%
+            var retracementCdCb = Support.GetRetracement(points, i, 0, 1, 2); // between 127,2% and 161,8%
+            var retracementAdAX = Support.GetRetracement(points, i, 0, 3, 4); // between 78.6% and 88.6% 
             //var retracementCdAb = (Math.Abs(points[i - 1].Close - points[i].Close) * 100) / (Math.Abs(points[i - 2].Close - points[i - 3].Close)); // 127,2% and 161,8%
 
-            var check618_786retracement1 = _support.CheckIfRetracemntIsInRange(range618, range786, retracementAbAx);
-            var check381_886retracement = _support.CheckIfRetracemntIsInRange(range382, range886, retracementBcBa);
-            var check786_886retracement = _support.CheckIfRetracemntIsInRange(range786, range886, retracementAdAX);
-            var check127_161retracement1 = _support.CheckIfRetracemntIsInRange(range127, range161, retracementCdCb);
-            var check618_786retracement2 = _support.CheckIfRetracemntIsInRange(range618, range786, retracementCbBa);
+            var check618_786retracement1 = Support.CheckIfRetracemntIsInRange(range618, range786, retracementAbAx);
+            var check381_886retracement = Support.CheckIfRetracemntIsInRange(range382, range886, retracementBcBa);
+            var check786_886retracement = Support.CheckIfRetracemntIsInRange(range786, range886, retracementAdAX);
+            var check127_161retracement1 = Support.CheckIfRetracemntIsInRange(range127, range161, retracementCdCb);
+            var check618_786retracement2 = Support.CheckIfRetracemntIsInRange(range618, range786, retracementCbBa);
             //var check127_161retracement2 = _support.CheckIfRetracemntIsInRange(range127, range161, retracementCdAb);
 
             if (check618_786retracement1 && (check381_886retracement || check618_786retracement2) && check786_886retracement && check127_161retracement1)
@@ -256,15 +256,15 @@ namespace Candlestick_Patterns
 
         private static bool SecondCheckForButterflyPattern(List<ZigZagObject> points, int i, string pattern)
         {
-            var retracementBaXa = _support.GetRetracement(points, i, 2, 3, 4); // 78,6%
+            var retracementBaXa = Support.GetRetracement(points, i, 2, 3, 4); // 78,6%
             //var retracementDaXa = _support.GetRetracement(points, i, 0, 3, 4); // 127,2% lub 161,8%
-            var retracementBcBa = _support.GetRetracement(points, i, 1, 2, 3); // 38,2%-88,6%
+            var retracementBcBa = Support.GetRetracement(points, i, 1, 2, 3); // 38,2%-88,6%
             //var retracementCdBc = _support.GetRetracement(points, i, 0, 1, 2); // 161,8%
             var retracementCdAb = (Math.Abs(points[i - 1].Close - points[i].Close) * 100) / (Math.Abs(points[i - 2].Close - points[i - 3].Close)); // 161,8% - 224%
 
-            var check786retracement = _support.CheckIfRetracemntIsInRange(range786, range786, retracementBaXa);
-            var check382_886retracement = _support.CheckIfRetracemntIsInRange(range382, range886, retracementBcBa);
-            var check161_224retracement = _support.CheckIfRetracemntIsInRange(range161, range224, retracementCdAb);
+            var check786retracement = Support.CheckIfRetracemntIsInRange(range786, range786, retracementBaXa);
+            var check382_886retracement = Support.CheckIfRetracemntIsInRange(range382, range886, retracementBcBa);
+            var check161_224retracement = Support.CheckIfRetracemntIsInRange(range161, range224, retracementCdAb);
 
             if (check786retracement && check382_886retracement && check161_224retracement)
             {
@@ -298,15 +298,15 @@ namespace Candlestick_Patterns
             var lenghtdc = GetLenght(points, i, 0, 1);
             var diffLenght = Math.Abs(lenghtdc - lenghtba);
 
-            if (diffLenght / ((lenghtba + lenghtdc)/2) <= _fibError)  // ustalić poziom różnicy, gdy ma być zbliżonae do zera
+            if (diffLenght / ((lenghtba + lenghtdc)/2) <= FibError)  // ustalić poziom różnicy, gdy ma być zbliżonae do zera
             {
-                var retracementBcBa = _support.GetRetracement(points, i, 1, 2, 3); // 61,8% lub 78,6%
-                var retracementCdCb = _support.GetRetracement(points, i, 0, 1, 2); // 127,2% lub 161,8%
+                var retracementBcBa = Support.GetRetracement(points, i, 1, 2, 3); // 61,8% lub 78,6%
+                var retracementCdCb = Support.GetRetracement(points, i, 0, 1, 2); // 127,2% lub 161,8%
 
-                var check618retracement = _support.CheckIfRetracemntIsInRange(range618, range618, retracementBcBa);
-                var check786retracement = _support.CheckIfRetracemntIsInRange(range786, range786, retracementBcBa);
-                var check127retracement = _support.CheckIfRetracemntIsInRange(range127, range127, retracementCdCb);
-                var check161retracement = _support.CheckIfRetracemntIsInRange(range161, range161, retracementCdCb);
+                var check618retracement = Support.CheckIfRetracemntIsInRange(range618, range618, retracementBcBa);
+                var check786retracement = Support.CheckIfRetracemntIsInRange(range786, range786, retracementBcBa);
+                var check127retracement = Support.CheckIfRetracemntIsInRange(range127, range127, retracementCdCb);
+                var check161retracement = Support.CheckIfRetracemntIsInRange(range161, range161, retracementCdCb);
 
 
                 if ((check618retracement || check786retracement) && (check127retracement || check161retracement))
@@ -317,7 +317,7 @@ namespace Candlestick_Patterns
             }
             if (lenghtdc > lenghtba && pattern == "bullish")
             {
-                var retracementBullishExtensionDcBa = _support.GetRetracement(points, i, 1, 2, 3); // 161,8% lub 127,2%
+                var retracementBullishExtensionDcBa = Support.GetRetracement(points, i, 1, 2, 3); // 161,8% lub 127,2%
                 if ((range161.Min() < retracementBullishExtensionDcBa && (range161.Max() > retracementBullishExtensionDcBa) || (range127.Min() < retracementBullishExtensionDcBa && range127.Max() > retracementBullishExtensionDcBa)))
                 {
                     return true;
@@ -354,7 +354,7 @@ namespace Candlestick_Patterns
 
         private static bool SecondCheckFor3RetracementPattern(List<ZigZagObject> points, int i, string pattern)
         {
-            var retracement = _support.GetRetracement(points, i, 0, 1, 2);//
+            var retracement = Support.GetRetracement(points, i, 0, 1, 2);//
             if (range618.Min() < retracement && range618.Max() > retracement)
             {
                 return true;
@@ -365,8 +365,8 @@ namespace Candlestick_Patterns
         private static bool SecondCheckFor3ExtensionPattern(List<ZigZagObject> points, int i, string pattern)
         {
 
-            var extension = _support.GetRetracement(points, i, 0, 2, 3); //signal for level 161,8% 
-            var retracement = _support.GetRetracement(points, i, 1, 2, 3);
+            var extension = Support.GetRetracement(points, i, 0, 2, 3); //signal for level 161,8% 
+            var retracement = Support.GetRetracement(points, i, 1, 2, 3);
             if (pattern == "bullish")
             {
                 if ((range618.Min() < retracement && range618.Max() > retracement) && (range161.Min() < extension /*&& range618.Max() > extension*/))
@@ -427,7 +427,7 @@ namespace Candlestick_Patterns
             }
             else
             {
-                return _data;
+                return Data;
             }
         }
 
@@ -466,7 +466,7 @@ namespace Candlestick_Patterns
             }
             else
             {
-                return _data;
+                return Data;
             }
         }
     }
