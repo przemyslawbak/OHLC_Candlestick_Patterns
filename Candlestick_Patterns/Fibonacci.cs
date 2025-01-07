@@ -12,18 +12,11 @@ namespace Candlestick_Patterns
     public class Fibonacci : AbstractFibonnaci, IFibonacci
     { 
         private static List<ZigZagObject> Data { get; set; }
-
         private static decimal FibError { get; set; }
-
-        private static Fibonacci3DrivePattern DrivePattern { get; set; }
         private static SupportClass Support { get; set; }
-
         private static List<ZigZagObject> PeaksFromZigZag { get; set; }
-
         private static List<ZigZagObject> Points { get; set; }
-
         public List<OhlcvObject> DataOhlcv { get; }
-
         public static bool IsDataLoaded { get; set; } = false;
 
         internal static List<decimal> range382 { get { return Support.PointsRange(38.2M, FibError); } }
@@ -40,7 +33,6 @@ namespace Candlestick_Patterns
             Data = SetPeaksVallyes.GetCloseAndSignalsData(dataOhlcv);
             PeaksFromZigZag = SetPeaksVallyes.PeaksFromZigZag(Data, 0.002M);
             FibError = 0.1M; // in all Fibonacci ratios, errors of no more than 10% of the ideal value are allowed.  
-            DrivePattern = new Fibonacci3DrivePattern();
             Support = new SupportClass();
         }
 
