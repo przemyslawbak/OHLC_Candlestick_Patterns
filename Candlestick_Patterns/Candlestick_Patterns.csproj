@@ -7,18 +7,18 @@
     <AssemblyVersion></AssemblyVersion>
     <PackageReadmeFile>README_NuGet.md</PackageReadmeFile>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <Version>1.0.2</Version>
+    <Version>2.0.0</Version>
     <AssemblyName>OHLC_Candlestick_Patterns</AssemblyName>
     <RootNamespace>OHLC_Candlestick_Patterns</RootNamespace>
     <ApplicationIcon>stock-price-candlestick-graph-pngrepo-com.ico</ApplicationIcon>
-    <Authors>Przemyslaw Bak</Authors>
-    <Description>You can test the OHLC candlestick list for 37 bullish and 37 bearish OHLC price action patterns.</Description>
+    <Authors>Przemyslaw Bak, Alicja Zalupska</Authors>
+    <Description>Pattern detection for 37 bullish and 37 bearish candlestick patterns, 9 bullish, 9 bearish and additionally 2 continuation classic chart formations, 6 bullish, 6 bearish fibonacci chart patterns. Additionally, you can test their effectiveness on the data provided.</Description>
     <Copyright>Przemyslaw Bak</Copyright>
     <PackageProjectUrl>https://github.com/przemyslawbak/OHLC_Candlestick_Patterns</PackageProjectUrl>
     <PackageIcon>stock-price-candlestick-graph-pngrepo-com.png</PackageIcon>
     <RepositoryUrl>https://github.com/przemyslawbak/OHLC_Candlestick_Patterns</RepositoryUrl>
-    <PackageTags>ohlc, candlestick, patterns, ta, technical analysis, price, action, price action, analysis, quant</PackageTags>
-    <PackageReleaseNotes>NuGet readme changed;</PackageReleaseNotes>
+    <PackageTags>ohlc;candlestick;patterns;ta;technical-analysis;price-action;analysis;quant;finance;quantitative;trading;analysis;stock;forex;fibonacci;formation-detection;pattern-detection;formations;trading-strategies;financial-analysis;candlestick;trading-system;fibo;</PackageTags>
+    <PackageReleaseNotes>Fibo analysis added; Formations analysis added; NuGet readme updated;</PackageReleaseNotes>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
     <Title>OHLC Candlestick Patterns</Title>
