@@ -29,6 +29,8 @@ Additionally in the solution:
   - Newtonsoft.Json in Console presentation project.
   - ScottPlot in Console presentation project.
 
+# Patterns and Formations
+
 ## Fibonacci Patterns
 
 [Complete list of supported Fibonacci patterns](docs/Fibonacci_list.md)
