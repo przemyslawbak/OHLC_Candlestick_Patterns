@@ -6,11 +6,12 @@ namespace Examples_Formations
 {
     internal class Program
     {
+        private static ISignals _signals = new Signals();
+        private static IAccuracyTrials _accuracy = new AccuracyTrials();
+
         static async Task Main(string[] args)
         {
             string json = string.Empty;
-            ISignals _signals = new Signals();
-            IAccuracyTrials _accuracy = new AccuracyTrials();
             var client = new HttpClient();
             var url = "https://gist.github.com/przemyslawbak/92c3d4bba27cfd2b88d0dd916bbdad14/raw/AAL_1min.json";
 
@@ -86,9 +87,33 @@ namespace Examples_Formations
             var zigZagMultiSignals = _signals.GetMultipleFormationsZigZagWithSignals(dataOhlcv, new string[] { "Bearish Double Tops", "Bearish Head And Shoulders" });
             Console.WriteLine("Number of lists returned: {0}", zigZagMultiSignals.Count());
 
+            var formationsBest = GetBestFormationsValue(accuracyBest, 1, dataOhlcv);
+
             //END
             Console.WriteLine("END");
             Console.ReadLine();
+        }
+
+        private static int GetBestFormationsValue(string[] accuracyBest, int multiplier, List<OhlcvObject> items)
+        {
+            var dataOhlcv = items
+                .Select(x => new OhlcvObject()
+                {
+                    Open = x.Open,
+                    High = x.High,
+                    Low = x.Low,
+                    Close = x.Close,
+                    Volume = x.Volume,
+                })
+                .Where(x => x.Open != 0 && x.High != 0 && x.Low != 0 && x.Close != 0)
+                .ToList();
+
+            var bullishBest = accuracyBest.Where(x => x.Contains("Bullish")).ToArray();
+            var bearishBest = accuracyBest.Where(x => x.Contains("Bearish")).ToArray();
+            var signalsBullishCountMulti = _signals.GetMultipleFiboSignalsCount(dataOhlcv, bullishBest);
+            var signalsBearishCountMulti = _signals.GetMultipleFiboSignalsCount(dataOhlcv, bearishBest);
+
+            return (signalsBullishCountMulti - signalsBearishCountMulti) * multiplier;
         }
     }
 }
