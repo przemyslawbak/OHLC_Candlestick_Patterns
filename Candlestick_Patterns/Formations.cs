@@ -1,9 +1,5 @@
 ﻿using OHLC_Candlestick_Patterns;
-using System.ComponentModel;
-using System.ComponentModel.Design;
 using System.Reflection;
-using System.Threading.Channels;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Candlestick_Patterns
 {
