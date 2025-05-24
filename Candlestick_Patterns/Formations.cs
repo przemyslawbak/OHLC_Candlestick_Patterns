@@ -15,6 +15,31 @@ namespace Candlestick_Patterns
         private readonly decimal _channelTolerancePercentage;
         private List<ZigZagObject> _peaksFromZigZag;
 
+        public enum FormationNameEnum
+        {
+            None,
+            BearishDoubleTops,
+            BearishTripleTops,
+            BullishDoubleBottoms,
+            BullishTripleBottoms,
+            BearishHeadAndShoulders,
+            BullishCupAndHandle,
+            BearishInverseCupAndHandle,
+            BullishInverseHeadAndShoulders,
+            BullishAscendingTriangle,
+            ContinuationSymmetricTriangle,
+            BearishDescendingTriangle,
+            BullishFallingWedge,
+            BearishRisingWedge,
+            BearishBearFlagsPennants,
+            BullishBullFlagsPennants,
+            BullishAscendingPriceChannel,
+            BearishDescendingPriceChannel,
+            BullishRoundingBottomPattern,
+            BearishRoundingTopPattern,
+            ContinuationDiamondFormation
+
+        }
         public Formations(List<OhlcvObject> dataOhlcv)
         {
             _dataOhlcv = dataOhlcv;
@@ -771,7 +796,34 @@ namespace Candlestick_Patterns
 
             return points;
         }
-        
+        public Dictionary<FormationNameEnum, List<ZigZagObject>> GetAllFormations()
+        {
+            Dictionary<FormationNameEnum, List<ZigZagObject>> dict = new();
+
+            dict.Add(FormationNameEnum.BearishDoubleTops,                  BearishDoubleTops               ());
+            dict.Add(FormationNameEnum.BearishTripleTops,                  BearishTripleTops               ());
+            dict.Add(FormationNameEnum.BullishDoubleBottoms,               BullishDoubleBottoms            ());
+            dict.Add(FormationNameEnum.BullishTripleBottoms,               BullishTripleBottoms            ());
+            dict.Add(FormationNameEnum.BearishHeadAndShoulders,            BearishHeadAndShoulders         ());
+            dict.Add(FormationNameEnum.BullishCupAndHandle,                BullishCupAndHandle             ());
+            dict.Add(FormationNameEnum.BearishInverseCupAndHandle,         BearishInverseCupAndHandle      ());
+            dict.Add(FormationNameEnum.BullishInverseHeadAndShoulders,     BullishInverseHeadAndShoulders  ());
+            dict.Add(FormationNameEnum.BullishAscendingTriangle,           BullishAscendingTriangle        ());
+            dict.Add(FormationNameEnum.ContinuationSymmetricTriangle,      ContinuationSymmetricTriangle   ());
+            dict.Add(FormationNameEnum.BearishDescendingTriangle,          BearishDescendingTriangle       ());
+            dict.Add(FormationNameEnum.BullishFallingWedge,                BullishFallingWedge             ());
+            dict.Add(FormationNameEnum.BearishRisingWedge,                 BearishRisingWedge              ());
+            dict.Add(FormationNameEnum.BearishBearFlagsPennants,           BearishBearFlagsPennants        ());
+            dict.Add(FormationNameEnum.BullishBullFlagsPennants,           BullishBullFlagsPennants        ());
+            dict.Add(FormationNameEnum.BullishAscendingPriceChannel,       BullishAscendingPriceChannel    ());
+            dict.Add(FormationNameEnum.BearishDescendingPriceChannel,      BearishDescendingPriceChannel   ());
+            dict.Add(FormationNameEnum.BullishRoundingBottomPattern,       BullishRoundingBottomPattern    ());
+            dict.Add(FormationNameEnum.BearishRoundingTopPattern,          BearishRoundingTopPattern       ());
+            dict.Add(FormationNameEnum.ContinuationDiamondFormation ,       ContinuationDiamondFormation());
+            
+            return dict;
+        }
+
         public List<string> GetFormationsAllMethodNames()
         {
             List<string> methods = new List<string>();
@@ -781,7 +833,56 @@ namespace Candlestick_Patterns
             }
             return methods;
         }
-
+        public static int MinimumOhlcvCount(FormationNameEnum formationName) => formationName switch
+        {
+            FormationNameEnum.BearishDoubleTops => 4,
+            FormationNameEnum.BearishTripleTops => 6,
+            FormationNameEnum.BullishDoubleBottoms => 4,
+            FormationNameEnum.BullishTripleBottoms => 6,
+            FormationNameEnum.BearishHeadAndShoulders => 6,
+            FormationNameEnum.BullishCupAndHandle => 13,
+            FormationNameEnum.BearishInverseCupAndHandle => 16,
+            FormationNameEnum.BullishInverseHeadAndShoulders => 6,
+            FormationNameEnum.BullishAscendingTriangle => 5,
+            FormationNameEnum.ContinuationSymmetricTriangle => 5,
+            FormationNameEnum.BearishDescendingTriangle => 5,
+            FormationNameEnum.BullishFallingWedge => 6,
+            FormationNameEnum.BearishRisingWedge => 6,
+            FormationNameEnum.BearishBearFlagsPennants => 5,
+            FormationNameEnum.BullishBullFlagsPennants => 5,
+            FormationNameEnum.BullishAscendingPriceChannel => 6,
+            FormationNameEnum.BearishDescendingPriceChannel => 6,
+            FormationNameEnum.BullishRoundingBottomPattern => 12,
+            FormationNameEnum.BearishRoundingTopPattern => 10,
+            FormationNameEnum.ContinuationDiamondFormation => 12
+        };
+        public List<ZigZagObject> GetFormationsSignalsList(FormationNameEnum formation)
+        {
+            switch (formation)
+            {
+                case FormationNameEnum.BearishDoubleTops: return BearishDoubleTops();
+                case FormationNameEnum.BearishTripleTops: return BearishTripleTops();
+                case FormationNameEnum.BullishDoubleBottoms: return BullishDoubleBottoms();
+                case FormationNameEnum.BullishTripleBottoms: return BullishTripleBottoms();
+                case FormationNameEnum.BearishHeadAndShoulders: return BearishHeadAndShoulders();
+                case FormationNameEnum.BullishCupAndHandle: return BullishCupAndHandle();
+                case FormationNameEnum.BearishInverseCupAndHandle: return BearishInverseCupAndHandle();
+                case FormationNameEnum.BullishInverseHeadAndShoulders: return BullishInverseHeadAndShoulders();
+                case FormationNameEnum.BullishAscendingTriangle: return BullishAscendingTriangle();
+                case FormationNameEnum.ContinuationSymmetricTriangle: return ContinuationSymmetricTriangle();
+                case FormationNameEnum.BearishDescendingTriangle: return BearishDescendingTriangle();
+                case FormationNameEnum.BullishFallingWedge: return BullishFallingWedge();
+                case FormationNameEnum.BearishRisingWedge: return BearishRisingWedge();
+                case FormationNameEnum.BearishBearFlagsPennants: return BearishBearFlagsPennants();
+                case FormationNameEnum.BullishBullFlagsPennants: return BullishBullFlagsPennants();
+                case FormationNameEnum.BullishAscendingPriceChannel: return BullishAscendingPriceChannel();
+                case FormationNameEnum.BearishDescendingPriceChannel: return BearishDescendingPriceChannel();
+                case FormationNameEnum.BullishRoundingBottomPattern: return BullishRoundingBottomPattern();
+                case FormationNameEnum.BearishRoundingTopPattern: return BearishRoundingTopPattern();
+                case FormationNameEnum.ContinuationDiamondFormation :return ContinuationDiamondFormation();
+            }
+            return null;
+        }
         public List<ZigZagObject> GetFormationsSignalsList(string formationName)
         {
             var methodName = formationName.Trim().Replace(" ", "");

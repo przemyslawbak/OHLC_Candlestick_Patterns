@@ -57,7 +57,8 @@ namespace OHLC_Candlestick_Patterns
         static List<ZigZagObject> GetValleysAndPeaksFromZigZAg(List<ZigZagObject> zigZagList)
         {
             var allPoints = new List<ZigZagObject>();
-
+            if (zigZagList.Count < 2)
+                return new();
             bool directionUp = zigZagList[0].Close <= zigZagList[1].Close;
             for (int i = 0; i < zigZagList.Count - 1; i++)
             {
