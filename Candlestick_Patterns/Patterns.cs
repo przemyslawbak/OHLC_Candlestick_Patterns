@@ -21,6 +21,84 @@ namespace Candlestick_Patterns
         private readonly decimal _maximumCandleSize;
         private readonly decimal _maximumOpenDifference;
         private readonly List<OhlcvObject> _data;
+        public enum PatternNameEnum
+        {
+            None,
+            Bearish2Crows,
+            Bearish3BlackCrows,
+            Bearish3InsideDown,
+            Bearish3OutsideDown,
+            Bearish3LineStrike,
+            BearishAdvanceBlock,
+            BearishBeltHold,
+            BearishBlackClosingMarubozu,
+            BearishBlackMarubozu,
+            BearishBlackOpeningMarubozu,
+            BearishBreakaway,
+            BearishDeliberation,
+            BearishDarkCloudCover,
+            BearishDojiStar,
+            BearishDownsideGap3Methods,
+            BearishDownsideTasukiGap,
+            BearishDragonflyDoji,
+            BearishEngulfing,
+            BearishEveningDojiStar,
+            BearishEveningStar,
+            BearishFalling3Methods,
+            BearishGravestoneDoji,
+            BearishHarami,
+            BearishIdentical3Crows,
+            BearishHaramiCross,
+            BearishInNeck,
+            BearishKicking,
+            BearishLongBlackCandelstick,
+            BearishMeetingLines,
+            BearishOnNeck,
+            BearishSeparatingLines,
+            BearishShootingStar,
+            BearishSideBySideWhiteLines,
+            BearishThrusting,
+            BearishTriStar,
+            BearishTweezerTop,
+            BearishUpsideGap2Crows,
+            Bullish3InsideUp,
+            Bullish3OutsideUp,
+            Bullish3StarsintheSouth,
+            Bullish3WhiteSoldiers,
+            Bullish3LineStrike,
+            BullishBeltHold,
+            BullishBreakaway,
+            BullishConcealingBabySwallow,
+            BullishDojiStar,
+            BullishDragonflyDoji,
+            BullishEngulfing,
+            BullishGravestoneDoji,
+            BullishHarami,
+            BullishHaramiCross,
+            BullishHomingPigeon,
+            BullishInvertedHammer,
+            BullishKicking,
+            BullishLadderBottom,
+            BullishLongWhiteCandlestick,
+            BullishMatHold,
+            BullishMatchingLow,
+            BullishMeetingLines,
+            BullishMorningDojiStar,
+            BullishMorningStar,
+            BullishPiercingLine,
+            BullishRising3Methods,
+            BullishSeparatingLines,
+            BullishSideBySideWhiteLines,
+            BullishStickSandwich,
+            BullishTriStar,
+            BullishTweezerBottom,
+            BullishUnique3RiverBottom,
+            BullishUpsideGap3Methods,
+            BullishUpsideTasukiGap,
+            BullishWhiteClosingMarubozu,
+            BullishWhiteMarubozu,
+            BullishWhiteOpeningMarubozu
+        }
 
         public Patterns(List<OhlcvObject> data)
         {
@@ -1532,6 +1610,162 @@ namespace Candlestick_Patterns
             }
             return data;
         }
+        public Dictionary<PatternNameEnum, List<OhlcvObject>> GetAllPatterns()
+        {
+            var dict = new Dictionary<PatternNameEnum,List<OhlcvObject>>();
+            dict.Add(PatternNameEnum.Bearish2Crows, Bearish2Crows());
+            dict.Add(PatternNameEnum.Bearish3BlackCrows,            Bearish3BlackCrows                    ());
+            dict.Add(PatternNameEnum.Bearish3InsideDown,            Bearish3InsideDown                    ());
+            dict.Add(PatternNameEnum.Bearish3OutsideDown,           Bearish3OutsideDown                   ());
+            dict.Add(PatternNameEnum.Bearish3LineStrike,            Bearish3LineStrike                    ());
+            dict.Add(PatternNameEnum.BearishAdvanceBlock,           BearishAdvanceBlock                   ());
+            dict.Add(PatternNameEnum.BearishBeltHold,               BearishBeltHold                       ());
+            dict.Add(PatternNameEnum.BearishBlackClosingMarubozu,   BearishBlackClosingMarubozu           ());
+            dict.Add(PatternNameEnum.BearishBlackMarubozu,          BearishBlackMarubozu                  ());
+            dict.Add(PatternNameEnum.BearishBlackOpeningMarubozu,   BearishBlackOpeningMarubozu           ());
+            dict.Add(PatternNameEnum.BearishBreakaway,              BearishBreakaway                      ());
+            dict.Add(PatternNameEnum.BearishDeliberation,           BearishDeliberation                   ());
+            dict.Add(PatternNameEnum.BearishDarkCloudCover,         BearishDarkCloudCover                 ());
+            dict.Add(PatternNameEnum.BearishDojiStar,               BearishDojiStar                       ());
+            dict.Add(PatternNameEnum.BearishDownsideGap3Methods,    BearishDownsideGap3Methods            ());
+            dict.Add(PatternNameEnum.BearishDownsideTasukiGap,      BearishDownsideTasukiGap              ());
+            dict.Add(PatternNameEnum.BearishDragonflyDoji,          BearishDragonflyDoji                  ());
+            dict.Add(PatternNameEnum.BearishEngulfing,              BearishEngulfing                      ());
+            dict.Add(PatternNameEnum.BearishEveningDojiStar,        BearishEveningDojiStar                ());
+            dict.Add(PatternNameEnum.BearishEveningStar,            BearishEveningStar                    ());
+            dict.Add(PatternNameEnum.BearishFalling3Methods,        BearishFalling3Methods                ());
+            dict.Add(PatternNameEnum.BearishGravestoneDoji,         BearishGravestoneDoji                 ());
+            dict.Add(PatternNameEnum.BearishHarami,                 BearishHarami                         ());
+            dict.Add(PatternNameEnum.BearishIdentical3Crows,        BearishIdentical3Crows                ());
+            dict.Add(PatternNameEnum.BearishHaramiCross,            BearishHaramiCross                    ());
+            dict.Add(PatternNameEnum.BearishInNeck,                 BearishInNeck                         ());
+            dict.Add(PatternNameEnum.BearishKicking,                BearishKicking                        ());
+            dict.Add(PatternNameEnum.BearishLongBlackCandelstick,   BearishLongBlackCandelstick           ());
+            dict.Add(PatternNameEnum.BearishMeetingLines,           BearishMeetingLines                   ());
+            dict.Add(PatternNameEnum.BearishOnNeck,                 BearishOnNeck                         ());
+            dict.Add(PatternNameEnum.BearishSeparatingLines,        BearishSeparatingLines                ());
+            dict.Add(PatternNameEnum.BearishShootingStar,           BearishShootingStar                   ());
+            dict.Add(PatternNameEnum.BearishSideBySideWhiteLines,   BearishSideBySideWhiteLines           ());
+            dict.Add(PatternNameEnum.BearishThrusting,              BearishThrusting                      ());
+            dict.Add(PatternNameEnum.BearishTriStar,                BearishTriStar                        ());
+            dict.Add(PatternNameEnum.BearishTweezerTop,             BearishTweezerTop                     ());
+            dict.Add(PatternNameEnum.BearishUpsideGap2Crows,        BearishUpsideGap2Crows                ());
+            dict.Add(PatternNameEnum.Bullish3InsideUp,              Bullish3InsideUp                      ());
+            dict.Add(PatternNameEnum.Bullish3OutsideUp,             Bullish3OutsideUp                     ());
+            dict.Add(PatternNameEnum.Bullish3StarsintheSouth,       Bullish3StarsintheSouth               ());
+            dict.Add(PatternNameEnum.Bullish3WhiteSoldiers,         Bullish3WhiteSoldiers                 ());
+            dict.Add(PatternNameEnum.Bullish3LineStrike,            Bullish3LineStrike                    ());
+            dict.Add(PatternNameEnum.BullishBeltHold,               BullishBeltHold                       ());
+            dict.Add(PatternNameEnum.BullishBreakaway,              BullishBreakaway                      ());
+            dict.Add(PatternNameEnum.BullishConcealingBabySwallow,  BullishConcealingBabySwallow          ());
+            dict.Add(PatternNameEnum.BullishDojiStar,               BullishDojiStar                       ());
+            dict.Add(PatternNameEnum.BullishDragonflyDoji,          BullishDragonflyDoji                  ());
+            dict.Add(PatternNameEnum.BullishEngulfing,              BullishEngulfing                      ());
+            dict.Add(PatternNameEnum.BullishGravestoneDoji,         BullishGravestoneDoji                 ());
+            dict.Add(PatternNameEnum.BullishHarami,                 BullishHarami                         ());
+            dict.Add(PatternNameEnum.BullishHaramiCross,            BullishHaramiCross                    ());
+            dict.Add(PatternNameEnum.BullishHomingPigeon,           BullishHomingPigeon                   ());
+            dict.Add(PatternNameEnum.BullishInvertedHammer,         BullishInvertedHammer                 ());
+            dict.Add(PatternNameEnum.BullishKicking,                BullishKicking                        ());
+            dict.Add(PatternNameEnum.BullishLadderBottom,           BullishLadderBottom                   ());
+            dict.Add(PatternNameEnum.BullishLongWhiteCandlestick,   BullishLongWhiteCandlestick           ());
+            dict.Add(PatternNameEnum.BullishMatHold,                BullishMatHold                        ());
+            dict.Add(PatternNameEnum.BullishMatchingLow,            BullishMatchingLow                    ());
+            dict.Add(PatternNameEnum.BullishMeetingLines,           BullishMeetingLines                   ());
+            dict.Add(PatternNameEnum.BullishMorningDojiStar,        BullishMorningDojiStar                ());
+            dict.Add(PatternNameEnum.BullishMorningStar,            BullishMorningStar                    ());
+            dict.Add(PatternNameEnum.BullishPiercingLine,           BullishPiercingLine                   ());
+            dict.Add(PatternNameEnum.BullishRising3Methods,         BullishRising3Methods                 ());
+            dict.Add(PatternNameEnum.BullishSeparatingLines,        BullishSeparatingLines                ());
+            dict.Add(PatternNameEnum.BullishSideBySideWhiteLines,   BullishSideBySideWhiteLines           ());
+            dict.Add(PatternNameEnum.BullishStickSandwich,          BullishStickSandwich                  ());
+            dict.Add(PatternNameEnum.BullishTriStar,                BullishTriStar                        ());
+            dict.Add(PatternNameEnum.BullishTweezerBottom,          BullishTweezerBottom                  ());
+            dict.Add(PatternNameEnum.BullishUnique3RiverBottom,     BullishUnique3RiverBottom             ());
+            dict.Add(PatternNameEnum.BullishUpsideGap3Methods,      BullishUpsideGap3Methods              ());
+            dict.Add(PatternNameEnum.BullishUpsideTasukiGap,        BullishUpsideTasukiGap                ());
+            dict.Add(PatternNameEnum.BullishWhiteClosingMarubozu,   BullishWhiteClosingMarubozu           ());
+            dict.Add(PatternNameEnum.BullishWhiteMarubozu,          BullishWhiteMarubozu                  ());
+            dict.Add(PatternNameEnum.BullishWhiteOpeningMarubozu, BullishWhiteOpeningMarubozu());
+
+            return dict;
+        }
+        public List<OhlcvObject> GetPatternsSignalsList(PatternNameEnum patternName) => patternName switch {
+            PatternNameEnum.Bearish2Crows => Bearish2Crows(),
+            PatternNameEnum.Bearish3BlackCrows => Bearish3BlackCrows(),
+            PatternNameEnum.Bearish3InsideDown => Bearish3InsideDown(),
+            PatternNameEnum.Bearish3OutsideDown => Bearish3OutsideDown(),
+            PatternNameEnum.Bearish3LineStrike => Bearish3LineStrike(),
+            PatternNameEnum.BearishAdvanceBlock => BearishAdvanceBlock(),
+            PatternNameEnum.BearishBeltHold => BearishBeltHold(),
+            PatternNameEnum.BearishBlackClosingMarubozu => BearishBlackClosingMarubozu(),
+            PatternNameEnum.BearishBlackMarubozu => BearishBlackMarubozu(),
+            PatternNameEnum.BearishBlackOpeningMarubozu => BearishBlackOpeningMarubozu(),
+            PatternNameEnum.BearishBreakaway => BearishBreakaway(),
+            PatternNameEnum.BearishDeliberation => BearishDeliberation(),
+            PatternNameEnum.BearishDarkCloudCover => BearishDarkCloudCover(),
+            PatternNameEnum.BearishDojiStar => BearishDojiStar(),
+            PatternNameEnum.BearishDownsideGap3Methods => BearishDownsideGap3Methods(),
+            PatternNameEnum.BearishDownsideTasukiGap => BearishDownsideTasukiGap(),
+            PatternNameEnum.BearishDragonflyDoji => BearishDragonflyDoji(),
+            PatternNameEnum.BearishEngulfing => BearishEngulfing(),
+            PatternNameEnum.BearishEveningDojiStar => BearishEveningDojiStar(),
+            PatternNameEnum.BearishEveningStar => BearishEveningStar(),
+            PatternNameEnum.BearishFalling3Methods => BearishFalling3Methods(),
+            PatternNameEnum.BearishGravestoneDoji => BearishGravestoneDoji(),
+            PatternNameEnum.BearishHarami => BearishHarami(),
+            PatternNameEnum.BearishIdentical3Crows => BearishIdentical3Crows(),
+            PatternNameEnum.BearishHaramiCross => BearishHaramiCross(),
+            PatternNameEnum.BearishInNeck => BearishInNeck(),
+            PatternNameEnum.BearishKicking => BearishKicking(),
+            PatternNameEnum.BearishLongBlackCandelstick => BearishLongBlackCandelstick(),
+            PatternNameEnum.BearishMeetingLines => BearishMeetingLines(),
+            PatternNameEnum.BearishOnNeck => BearishOnNeck(),
+            PatternNameEnum.BearishSeparatingLines => BearishSeparatingLines(),
+            PatternNameEnum.BearishShootingStar => BearishShootingStar(),
+            PatternNameEnum.BearishSideBySideWhiteLines => BearishSideBySideWhiteLines(),
+            PatternNameEnum.BearishThrusting => BearishThrusting(),
+            PatternNameEnum.BearishTriStar => BearishTriStar(),
+            PatternNameEnum.BearishTweezerTop => BearishTweezerTop(),
+            PatternNameEnum.BearishUpsideGap2Crows => BearishUpsideGap2Crows(),
+            PatternNameEnum.Bullish3InsideUp => Bullish3InsideUp(),
+            PatternNameEnum.Bullish3OutsideUp => Bullish3OutsideUp(),
+            PatternNameEnum.Bullish3StarsintheSouth => Bullish3StarsintheSouth(),
+            PatternNameEnum.Bullish3WhiteSoldiers => Bullish3WhiteSoldiers(),
+            PatternNameEnum.Bullish3LineStrike => Bullish3LineStrike(),
+            PatternNameEnum.BullishBeltHold => BullishBeltHold(),
+            PatternNameEnum.BullishBreakaway => BullishBreakaway(),
+            PatternNameEnum.BullishConcealingBabySwallow => BullishConcealingBabySwallow(),
+            PatternNameEnum.BullishDojiStar => BullishDojiStar(),
+            PatternNameEnum.BullishDragonflyDoji => BullishDragonflyDoji(),
+            PatternNameEnum.BullishEngulfing => BullishEngulfing(),
+            PatternNameEnum.BullishGravestoneDoji => BullishGravestoneDoji(),
+            PatternNameEnum.BullishHarami => BullishHarami(),
+            PatternNameEnum.BullishHaramiCross => BullishHaramiCross(),
+            PatternNameEnum.BullishHomingPigeon => BullishHomingPigeon(),
+            PatternNameEnum.BullishInvertedHammer => BullishInvertedHammer(),
+            PatternNameEnum.BullishKicking => BullishKicking(),
+            PatternNameEnum.BullishLadderBottom => BullishLadderBottom(),
+            PatternNameEnum.BullishLongWhiteCandlestick => BullishLongWhiteCandlestick(),
+            PatternNameEnum.BullishMatHold => BullishMatHold(),
+            PatternNameEnum.BullishMatchingLow => BullishMatchingLow(),
+            PatternNameEnum.BullishMeetingLines => BullishMeetingLines(),
+            PatternNameEnum.BullishMorningDojiStar => BullishMorningDojiStar(),
+            PatternNameEnum.BullishMorningStar => BullishMorningStar(),
+            PatternNameEnum.BullishPiercingLine => BullishPiercingLine(),
+            PatternNameEnum.BullishRising3Methods => BullishRising3Methods(),
+            PatternNameEnum.BullishSeparatingLines => BullishSeparatingLines(),
+            PatternNameEnum.BullishSideBySideWhiteLines => BullishSideBySideWhiteLines(),
+            PatternNameEnum.BullishStickSandwich => BullishStickSandwich(),
+            PatternNameEnum.BullishTriStar => BullishTriStar(),
+            PatternNameEnum.BullishTweezerBottom => BullishTweezerBottom(),
+            PatternNameEnum.BullishUnique3RiverBottom => BullishUnique3RiverBottom(),
+            PatternNameEnum.BullishUpsideGap3Methods => BullishUpsideGap3Methods(),
+            PatternNameEnum.BullishUpsideTasukiGap => BullishUpsideTasukiGap(),
+            PatternNameEnum.BullishWhiteClosingMarubozu => BullishWhiteClosingMarubozu(),
+            PatternNameEnum.BullishWhiteMarubozu => BullishWhiteMarubozu(),
+            PatternNameEnum.BullishWhiteOpeningMarubozu => BullishWhiteOpeningMarubozu()
+        };
 
         public List<OhlcvObject> GetPatternsSignalsList(string patternName)
         {
