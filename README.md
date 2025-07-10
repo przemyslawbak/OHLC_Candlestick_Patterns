@@ -23,7 +23,7 @@ NuGet package can be found here: https://www.nuget.org/packages/OHLC_Candlestick
 
 Library is using:
   - C# language,
-  - .NET 7.0 Standars Class Library.
+  - .NET 8.0 Standars Class Library.
 
 Additionally in the solution:
   - Newtonsoft.Json in Console presentation project.
