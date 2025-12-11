@@ -48,3 +48,10 @@ Additionally in the solution:
 [Complete list of supported Candlestick Patterns](docs/Patterns_list.md)
 
 [Examples using of methods with Candlestick Patterns](docs/Patterns_examples.md)
+
+If my repo helped you...
+
+[![Buy me a coffee](https://img.shields.io/badge/buy_me_a_coffee-FFDD00?style=for-the-badge&logo=buy-me-a-coffee&logoColor=black)](https://ko-fi.com/bakunet)
+
+[![Buy me a coffee](https://img.shields.io/github/stars/przemyslawbak/OHLC_Candlestick_Patterns?style=for-the-badge&logoColor=white)](https://github.com/przemyslawbak/OHLC_Candlestick_Patterns/stargazers)
+
