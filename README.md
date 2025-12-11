@@ -49,7 +49,7 @@ Additionally in the solution:
 
 [Examples using of methods with Candlestick Patterns](docs/Patterns_examples.md)
 
-If my repo helped you...
+If this repo helped you...
 
 [![Buy me a coffee](https://img.shields.io/badge/buy_me_a_coffee-FFDD00?style=for-the-badge&logo=buy-me-a-coffee&logoColor=black)](https://ko-fi.com/bakunet)
 
