@@ -14,32 +14,46 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <StackPanel x:Name="stackPanel" Orientation="Horizontal" Grid.Row="0">
+            <TextBlock
+                Text="Formation Name:"
+                VerticalAlignment="Center"
+                HorizontalAlignment="Center"
+                Margin="5"/>
             <TextBox
                 Name="patternNameTextBox"
-     Width="300"
-     HorizontalAlignment="Left"
+                Width="300"
+                HorizontalAlignment="Left"
                 Margin="5"
                 Text="{Binding Path=PatternName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-            
+
             <Button
                 Name="btnStart"
-     Width="100"
-     HorizontalAlignment="Left"
+                Width="100"
+                HorizontalAlignment="Left"
                 Margin="5"
-                Content="Start"
+                Content="Find"
                 Click="OnStartClick"/>
-
-            <Label>Found:</Label>
-            <TextBlock Text="{Binding Path=FoundXTimes, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-            <Label>  times.</Label>
+            <Label
+                VerticalAlignment="Center"
+                HorizontalAlignment="Center"
+                Margin="5">Found:</Label>   
+            <TextBlock Text="{Binding Path=FoundXTimes, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Center"
+                       Margin="5"/>
+            <Label
+                VerticalAlignment="Center"
+                HorizontalAlignment="Center"
+                Margin="5">times.</Label>
             
             <Button
-        Name="FundNext"
-    Width="80"
-    HorizontalAlignment="Left"
-       Margin="5"
-       Content="Next"
-       Click="OnFindNext"/>
+                Name="FundNext"
+                Width="80"
+                HorizontalAlignment="Left"
+                Margin="5"
+                Content="Go To Next"
+                Click="OnFindNext"
+        />
         </StackPanel>
         <Border Grid.Row="1">
             <ContentControl Content="{Binding WpfPlot1}" Visibility="Visible"/>
