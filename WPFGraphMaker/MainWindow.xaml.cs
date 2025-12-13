@@ -3,6 +3,7 @@ using ScottPlot;
 using ScottPlot.Palettes;
 using ScottPlot.WPF;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Net.Http;
 using System.Runtime.CompilerServices;
 using System.Windows;
@@ -300,82 +301,84 @@ namespace WPFGraphMaker
             }
             counter += 1;
         }
-             
+
         private async void OnStartClick(object sender, RoutedEventArgs e)
         {
+            GC.Collect(GC.MaxGeneration, GCCollectionMode.Forced, true, true);
+
             _foundPatternIndexList = new();
             FoundXTimes = 0;
             counter = 0;
             WpfPlot1.Plot.Clear();
-            var url = "https://gist.github.com/przemyslawbak/92c3d4bba27cfd2b88d0dd916bbdad14/raw/AAL_1min.json";
 
-            HttpClient client = new HttpClient();
-            HttpResponseMessage response = await client.GetAsync(url);
-            response.EnsureSuccessStatusCode();
-            string json = await response.Content.ReadAsStringAsync();
+            const string url = "https://gist.github.com/przemyslawbak/92c3d4bba27cfd2b88d0dd916bbdad14/raw/AAL_1min.json";
 
-            var patternName = patternNameTextBox.Text == string.Empty ? "BearishBlackClosingMarubozu" : patternNameTextBox.Text; // Bullish3InsideUp
-            patternName = patternName.Trim().Replace(" ", "").ToLower();
+            using var client = new HttpClient();
+            string json = await client.GetStringAsync(url);
+
+            var patternName = string.IsNullOrWhiteSpace(patternNameTextBox.Text)
+                ? "BearishBlackClosingMarubozu"
+                : patternNameTextBox.Text.Trim().Replace(" ", "").ToLower();
+
             var getSuitableMethodByGivenName = GetSuitableGroupByPatternName(patternName);
-            
+
             if (getSuitableMethodByGivenName == "patterns")
             {
-                _points = new ();
+                _points = new();
                 _pointsOhlcv = GetCandlestickData(patternName, json);
                 ViewCandlestickGraph(_pointsOhlcv);
                 MarkCandlestickOnGraph(_pointsOhlcv, patternName);
-                FoundXTimes = _pointsOhlcv.Where(x => x.Signal == true).Count();
 
-                var newModel = _pointsOhlcv.Select((x, index) => new ZigZagObject()
-                {
-                    Signal = x.Signal,
-                    IndexOHLCV = index,
-                }).ToList();
+                _foundPatternIndexList.Clear();
+                _foundPatternIndexList.Capacity = _pointsOhlcv.Count / 10;
 
-                var indexesForSignalTrue = newModel.Where(x => x.Signal == true).ToList();
-                for (int i = 0; i < indexesForSignalTrue.Count; i++)
+                for (int i = 0; i < _pointsOhlcv.Count; i++)
                 {
-                    _foundPatternIndexList.Add(indexesForSignalTrue[i].IndexOHLCV);
+                    if (_pointsOhlcv[i].Signal)
+                    {
+                        _foundPatternIndexList.Add(i);
+                    }
                 }
+                FoundXTimes = _foundPatternIndexList.Count;
             }
             else
             {
                 _pointsOhlcv = new();
                 _points = GetGraphData(patternName, json, getSuitableMethodByGivenName);
                 ViewGraph(_points);
-                FoundXTimes = _points.Where(x => x.Signal == true).Count();
-                
-                var newModel = _points.Select((x, index) => new ZigZagObject()
-                {
-                    Signal = x.Signal,
-                    IndexOHLCV = index,
-                }).ToList();
 
-                var indexesForSignalTrue = newModel.Where(x => x.Signal == true).ToList();
-                for (int i = 0; i < indexesForSignalTrue.Count; i++)
+                _foundPatternIndexList.Clear();
+                _foundPatternIndexList.Capacity = _points.Count / 10;
+
+                for (int i = 0; i < _points.Count; i++)
                 {
-                    _foundPatternIndexList.Add(indexesForSignalTrue[i].IndexOHLCV);
+                    if (_points[i].Signal)
+                    {
+                        _foundPatternIndexList.Add(i);
+                    }
                 }
+                FoundXTimes = _foundPatternIndexList.Count;
             }
 
-            if (getSuitableMethodByGivenName == "patterns" && _pointsOhlcv.Count > _startPoints)
+            bool hasEnoughData = getSuitableMethodByGivenName == "patterns"
+                ? _pointsOhlcv.Count > _startPoints
+                : _points.Count > _startPoints;
+
+            if (hasEnoughData)
             {
-                var yMinStart = GetYMinStartForCandlesticGraph();
-                var yMaxStart = GetYMaxStartForCandlesticGraph();
-
-                WpfPlot1.Plot.Axes.SetLimitsY((double)yMinStart - 0.1, (double)yMaxStart + 0.1);
-                WpfPlot1.Plot.Axes.SetLimitsX(-1, _startPoints);
-
-                WpfPlot1.Refresh();
-            }
-
-            else if (_points.Count > _startPoints)
-            {
-                var yMinStart = GetYMinStartForZigZagPoints();
-                var yMaxStart = GetYMaxStartForZigZagPoints(); 
-
-                OnDataLoadedScale(yMinStart, yMaxStart);
-
+                if (getSuitableMethodByGivenName == "patterns")
+                {
+                    var yMinStart = GetYMinStartForCandlesticGraph();
+                    var yMaxStart = GetYMaxStartForCandlesticGraph();
+                    WpfPlot1.Plot.Axes.SetLimitsY((double)yMinStart - 0.1, (double)yMaxStart + 0.1);
+                    WpfPlot1.Plot.Axes.SetLimitsX(-1, _startPoints);
+                }
+                else
+                {
+                    var yMinStart = GetYMinStartForZigZagPoints();
+                    var yMaxStart = GetYMaxStartForZigZagPoints();
+                    OnDataLoadedScale(yMinStart, yMaxStart);
+                }
                 WpfPlot1.Refresh();
             }
             else
