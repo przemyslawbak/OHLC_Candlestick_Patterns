@@ -304,7 +304,8 @@ namespace WPFGraphMaker
 
         private async void OnStartClick(object sender, RoutedEventArgs e)
         {
-            GC.Collect(GC.MaxGeneration, GCCollectionMode.Forced, true, true);
+            //var watch = Stopwatch.StartNew();
+            //GC.Collect(GC.MaxGeneration, GCCollectionMode.Forced, true, true);
 
             _foundPatternIndexList = new();
             FoundXTimes = 0;
@@ -385,6 +386,9 @@ namespace WPFGraphMaker
             {
                 MessageBox.Show("Not enough data loaded");
             }
+
+            //watch.Stop();
+            //MessageBox.Show($"{watch.Elapsed.TotalMilliseconds:F2} ms");
         }
 
         private decimal GetYMaxStartForZigZagPoints()
@@ -475,25 +479,35 @@ namespace WPFGraphMaker
 
         private void MarkCandlestickOnGraph(List<OhlcvObject> _pointsOhlcv, string patternName)
         {
-            var candlesNumnbers = _candle.GetCandlestickAmount();
-            var singleCandleAmount = candlesNumnbers.Where(x => x.Key.ToLower() == patternName).ToDictionary().Values.First();
-            var palette = new ScottPlot.Palettes.Normal();
-            var ohlcvList = new List<OhlcvObject>();
-            ohlcvList = _pointsOhlcv.Select(x => new OhlcvObject() { Open = x.Open, High = x.High, Low = x.Low, Close = x.Close, Signal = x.Signal, Volume = x.Volume}).ToList();
-            var myScatter = WpfPlot1.Plot.Add.Signal(ohlcvList.Select(x => x.Close).ToList());
-            for (int i = 0; i < ohlcvList.Count; i++)
+            var candlesNumbers = _candle.GetCandlestickAmount();
+            if (!candlesNumbers.TryGetValue(patternName, out var singleCandleAmount))
             {
-                var item = ohlcvList[i];
-                var x = i;
-                if (item.Signal == true)
+                WpfPlot1.Refresh();
+                return;
+            }
+
+            var palette = new ScottPlot.Palettes.Normal();
+
+            var closeValues = new List<decimal>(_pointsOhlcv.Count);
+            for (int i = 0; i < _pointsOhlcv.Count; i++)
+            {
+                closeValues.Add(_pointsOhlcv[i].Close);
+            }
+
+            var myScatter = WpfPlot1.Plot.Add.Signal(closeValues);
+            myScatter.Color = Colors.Orange;
+
+            for (int i = 0; i < _pointsOhlcv.Count; i++)
+            {
+                if (_pointsOhlcv[i].Signal == true)
                 {
-                    for (int j = 0; j < singleCandleAmount; j++)
+                    int startIdx = Math.Max(0, i - singleCandleAmount + 1);
+                    for (int j = startIdx; j <= i; j++)
                     {
-                        MarkCandleOnChart(i-j, item, palette, 0);
+                        MarkCandleOnChart(j, _pointsOhlcv[j], palette, 0);
                     }
                 }
             }
-            myScatter.Color = Colors.Orange;
 
             WpfPlot1.Refresh();
         }
