@@ -36,7 +36,7 @@
             <Label
                 VerticalAlignment="Center"
                 HorizontalAlignment="Center"
-                Margin="5">Found:</Label>   
+                Margin="5">Found:</Label>
             <TextBlock Text="{Binding Path=FoundXTimes, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                        VerticalAlignment="Center"
                        HorizontalAlignment="Center"
@@ -45,7 +45,7 @@
                 VerticalAlignment="Center"
                 HorizontalAlignment="Center"
                 Margin="5">times.</Label>
-            
+
             <Button
                 Name="FundNext"
                 Width="80"
@@ -58,6 +58,15 @@
         <Border Grid.Row="1">
             <ContentControl Content="{Binding WpfPlot1}" Visibility="Visible"/>
         </Border>
+        <Border Background="#B0808080" 
+                Visibility="{Binding IsTesting, Converter={StaticResource BoolToVis}}"
+                Grid.RowSpan="2">
+            <TextBlock Text="SEARCHING..." 
+                       FontSize="40" 
+                       FontWeight="Bold" 
+                       Foreground="Green" 
+                       HorizontalAlignment="Center" 
+                       VerticalAlignment="Center"/>
+        </Border>
     </Grid>
-
 </Window>

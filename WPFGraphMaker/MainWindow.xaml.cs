@@ -216,6 +216,17 @@ namespace WPFGraphMaker
             }
         }
 
+        private bool _isTesting;
+        public bool IsTesting
+        {
+            get => _isTesting;
+            set
+            {
+                _isTesting = value;
+                OnPropertyChanged();
+            }
+        }
+
         private string GetSuitableGroupByPatternName(string methodName)
         {
             var groupName = _dict.GetCategory().Where(x => x.Key.ToLower() == methodName).ToDictionary().Values.First();
@@ -304,6 +315,7 @@ namespace WPFGraphMaker
 
         private async void OnStartClick(object sender, RoutedEventArgs e)
         {
+            IsTesting = true;
             //var watch = Stopwatch.StartNew();
             //GC.Collect(GC.MaxGeneration, GCCollectionMode.Forced, true, true);
 
@@ -389,6 +401,7 @@ namespace WPFGraphMaker
 
             //watch.Stop();
             //MessageBox.Show($"{watch.Elapsed.TotalMilliseconds:F2} ms");
+            IsTesting = false;
         }
 
         private decimal GetYMaxStartForZigZagPoints()
