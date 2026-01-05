@@ -5,7 +5,7 @@
              xmlns:local="clr-namespace:WPFGraphMaker"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-
+        <BooleanToVisibilityConverter x:Key="BoolToVis"/>
     </Application.Resources>
 
 </Application>

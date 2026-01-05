@@ -21,7 +21,7 @@ Additionally, you can test their effectiveness on the OHLCV data provided. A lis
 
 Library is using:
   - C# language,
-  - .NET 7.0 Standars Class Library.
+  - .NET 8.0 Standars Class Library.
 
 Additionally in the solution:
   - Newtonsoft.Json in Console presentation project.
@@ -29,4 +29,4 @@ Additionally in the solution:
   
 ## Patterns and Formations
 
-Complete list of supported patterns and formations together with examples of usage can be found here: https://github.com/przemyslawbak/OHLC_Candlestick_Patterns/blob/main/README.md#patterns-and-formations
+Complete list of supported patterns and formations together with examples of usage can be found at this link: https://github.com/przemyslawbak/OHLC_Candlestick_Patterns/blob/main/README.md#patterns-and-formations
