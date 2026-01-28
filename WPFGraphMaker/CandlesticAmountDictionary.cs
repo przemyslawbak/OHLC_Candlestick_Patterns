@@ -8,7 +8,7 @@
     {
         public Dictionary<string, int> GetCandlestickAmount()
         {
-            return new Dictionary<string, int>()
+            return new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase)
             {
                 {"Bearish2Crows",3 },
                 {"Bearish3BlackCrows", 3 },
