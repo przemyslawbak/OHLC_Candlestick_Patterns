@@ -2,10 +2,13 @@
 using ScottPlot;
 using ScottPlot.Palettes;
 using ScottPlot.WPF;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.IO;
 using System.Net.Http;
 using System.Runtime.CompilerServices;
+using System.Text;
 using System.Windows;
 using System.Windows.Input;
 
@@ -22,7 +25,12 @@ namespace WPFGraphMaker
         private readonly int _scrollStep = 10;
         private int _lastPosition = 100;
         private List<int> _foundPatternIndexList = new();
-        int counter = 0; 
+        int counter = 0;
+
+        private bool HasOhlcvData => _pointsOhlcv != null && _pointsOhlcv.Count > 0 && _startPoints > 0;
+
+        public int CurrentPatternNumber => _foundPatternIndexList.Count == 0 ? 0 : counter + 1;
+        public int TotalPatterns => _foundPatternIndexList.Count;
 
         public MainWindow()
         {
@@ -54,6 +62,7 @@ namespace WPFGraphMaker
 
         private void DeltaPlus()
         {
+            if (!HasOhlcvData) return;
             if (_lastPosition - _startPoints < 0)
             {
                 _lastPosition = _startPoints;
@@ -72,6 +81,7 @@ namespace WPFGraphMaker
 
         private void DeltaMinus()
         {
+            if (!HasOhlcvData) return;
             _lastPosition = _lastPosition - _scrollStep;
             if (_points.Count != 0)
             {
@@ -85,6 +95,7 @@ namespace WPFGraphMaker
 
         private void DeltaMinusForZigZagPoints()
         {
+            if (!HasOhlcvData) return;
             if (_lastPosition - _startPoints <= 0)
             {
                 var yMinStart = GetYMinStartForZigZagPoints();
@@ -100,6 +111,7 @@ namespace WPFGraphMaker
 
         private void DeltaMinusForCandlestickOhlcvPoints()
         {
+            if (!HasOhlcvData) return;
             if (_lastPosition - _startPoints <= 0)
             {
                 var yMinStart = GetYMinStartForCandlesticGraph();
@@ -115,6 +127,7 @@ namespace WPFGraphMaker
 
         private void DeltaPlusForCandlestickOhlcvPoints()
         {
+            if (!HasOhlcvData) return;
             if (_lastPosition + _startPoints > _pointsOhlcv.Count)
             {
                 var yMinStart = _pointsOhlcv.Select(x => x.Low).TakeLast(_startPoints).Min();
@@ -131,6 +144,7 @@ namespace WPFGraphMaker
 
         private void DeltaPlusForZigZagPoints()
         {
+            if (!HasOhlcvData) return;
             if (_lastPosition + _startPoints > _points.Count)
             {
                 var yMinStart = _points.Select(x => x.Close).TakeLast(_startPoints).Min();
@@ -147,6 +161,7 @@ namespace WPFGraphMaker
 
         private void DoMouseWheelAction()
         {
+            if (!HasOhlcvData) return;
             var yMinStart = _points.Select(x => x.Close).Skip(_lastPosition - _startPoints).Take(_startPoints).Min();
             var yMaxStart = _points.Select(x => x.Close).Skip(_lastPosition - _startPoints).Take(_startPoints).Max();
 
@@ -155,6 +170,7 @@ namespace WPFGraphMaker
 
         private void DoMouseWheelActionForCandlestick()
         {
+            if (!HasOhlcvData) return;
             var yMinStart = _pointsOhlcv.Select(x => x.Low).Skip(_lastPosition - _startPoints).Take(_startPoints).Min();
             var yMaxStart = _pointsOhlcv.Select(x => x.High).Skip(_lastPosition - _startPoints).Take(_startPoints).Max();
             OnMouseWheelScale(yMinStart, yMaxStart);
@@ -274,6 +290,10 @@ namespace WPFGraphMaker
                     WpfPlot1.Plot.Axes.SetLimitsX(currentIndex - number, currentIndex + number);
                     _lastPosition = currentIndex;
                 }
+                var patternIndex = _foundPatternIndexList[counter];
+                var markerY = pointsOhlcv[patternIndex].Close;
+
+                OnPropertyChanged(nameof(CurrentPatternNumber));
                 WpfPlot1.Refresh();
             }
             counter += 1;
@@ -308,6 +328,8 @@ namespace WPFGraphMaker
                     WpfPlot1.Plot.Axes.SetLimitsX(currentIndex - number, currentIndex + number);
                     _lastPosition = currentIndex;
                 }
+
+                OnPropertyChanged(nameof(CurrentPatternNumber));
                 WpfPlot1.Refresh();
             }
             counter += 1;
@@ -324,8 +346,10 @@ namespace WPFGraphMaker
             counter = 0;
             WpfPlot1.Plot.Clear();
 
-            const string url = "https://gist.github.com/przemyslawbak/92c3d4bba27cfd2b88d0dd916bbdad14/raw/AAL_1min.json";
+            OnPropertyChanged(nameof(TotalPatterns));
+            OnPropertyChanged(nameof(CurrentPatternNumber));
 
+            const string url = "https://gist.github.com/przemyslawbak/92c3d4bba27cfd2b88d0dd916bbdad14/raw/AAL_1min.json";
             using var client = new HttpClient();
             string json = await client.GetStringAsync(url);
 
@@ -399,9 +423,12 @@ namespace WPFGraphMaker
                 MessageBox.Show("Not enough data loaded");
             }
 
+            WpfPlot1.Refresh();
             //watch.Stop();
             //MessageBox.Show($"{watch.Elapsed.TotalMilliseconds:F2} ms");
             IsTesting = false;
+            OnPropertyChanged(nameof(TotalPatterns));
+            OnPropertyChanged(nameof(CurrentPatternNumber));
         }
 
         private decimal GetYMaxStartForZigZagPoints()

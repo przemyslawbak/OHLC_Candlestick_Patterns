@@ -52,8 +52,14 @@
                 HorizontalAlignment="Left"
                 Margin="5"
                 Content="Go To Next"
-                Click="OnFindNext"
-        />
+                IsEnabled="{Binding TotalPatterns}"
+                Click="OnFindNext" />
+            
+            <TextBlock VerticalAlignment="Center">
+        <Run Text="{Binding CurrentPatternNumber, Mode=OneWay}" />
+        <Run Text=" / " />
+        <Run Text="{Binding TotalPatterns, Mode=OneWay}" />
+            </TextBlock>
         </StackPanel>
         <Border Grid.Row="1">
             <ContentControl Content="{Binding WpfPlot1}" Visibility="Visible"/>
