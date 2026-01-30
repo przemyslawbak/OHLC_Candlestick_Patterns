@@ -31,6 +31,7 @@ namespace WPFGraphMaker
 
         public int CurrentPatternNumber => _foundPatternIndexList.Count == 0 ? 0 : counter + 1;
         public int TotalPatterns => _foundPatternIndexList.Count;
+        private readonly string _sampleFile = Path.Combine(AppContext.BaseDirectory, @"..\..\..\sample_data.json");
 
         public MainWindow()
         {
@@ -349,9 +350,23 @@ namespace WPFGraphMaker
             OnPropertyChanged(nameof(TotalPatterns));
             OnPropertyChanged(nameof(CurrentPatternNumber));
 
-            const string url = "https://gist.github.com/przemyslawbak/92c3d4bba27cfd2b88d0dd916bbdad14/raw/AAL_1min.json";
-            using var client = new HttpClient();
-            string json = await client.GetStringAsync(url);
+            //const string url = "https://gist.github.com/przemyslawbak/92c3d4bba27cfd2b88d0dd916bbdad14/raw/AAL_1min.json";
+            //using var client = new HttpClient();
+            //string json = await client.GetStringAsync(url);
+
+            var json = string.Empty;
+            using var fileStream = new FileStream(
+                _sampleFile,
+                FileMode.Open,
+                FileAccess.Read,
+                FileShare.Read,
+                bufferSize: 1048576,
+                useAsync: true);
+
+            using (StreamReader reader = new StreamReader(fileStream, Encoding.UTF8))
+            {
+                json = await reader.ReadToEndAsync();
+            }
 
             var patternName = string.IsNullOrWhiteSpace(patternNameTextBox.Text)
                 ? "BearishBlackClosingMarubozu"
