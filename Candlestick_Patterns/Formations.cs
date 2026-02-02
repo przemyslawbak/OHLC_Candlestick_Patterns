@@ -15,6 +15,17 @@ namespace Candlestick_Patterns
         private readonly decimal _channelTolerancePercentage;
         private List<ZigZagObject> _peaksFromZigZag;
 
+        // ─── Precomputed slope boundaries (cached once, never reallocated) ───
+        private double _slopeMin;
+        private double _slopeMax;       // _graphSlope[3]
+        private double _slope2;         // _graphSlope[2]
+        private int _formationsLengthMax;
+        // ─── Cached points list (reused across every formation call) ───
+        private List<ZigZagObject> _cachedPoints;
+        private bool _pointsDirty = true;
+        private Dictionary<FormationNameEnum, Func<List<ZigZagObject>>> _dispatchTable;
+        private List<string> _formationNames;
+
         public enum FormationNameEnum
         {
             None,
@@ -29,7 +40,7 @@ namespace Candlestick_Patterns
             BullishAscendingTriangle,
             ContinuationSymmetricTriangle,
             BearishDescendingTriangle,
-            BullishFallingWedge,
+            BullishFallingWedge, // ok
             BearishRisingWedge,
             BearishBearFlagsPennants,
             BullishBullFlagsPennants,
@@ -51,12 +62,43 @@ namespace Candlestick_Patterns
             _advance = new List<double>() { 0.10, 0.20 };
             _graphSlope = new List<double>() { 5, 20, 30, 45, 60};
             _channelTolerancePercentage = 0.3M;
+
+            CacheScalars();
+            BuildDispatchTable();
         }
 
-        public Formations(List<OhlcvObject> dataOhlcv, int zigZagParam)
+        public Formations(List<OhlcvObject> dataOhlcv, int zigZagParam) : this(dataOhlcv) // call full constructor first
         {
             _peaksFromZigZag = SetPeaksVallyes.PeaksFromZigZag(_data, zigZagParam);
+            _pointsDirty = true;
         }
+        private void CacheScalars()
+        {
+            _slopeMin = _graphSlope.Min();
+            _slopeMax = _graphSlope[3];          // 45
+            _slope2 = _graphSlope[2];            // 30
+            _formationsLengthMax = _formationsLenght.Max();
+        }
+        private List<ZigZagObject> GetPoints()
+        {
+            if (_pointsDirty || _cachedPoints == null)
+            {
+                _cachedPoints = SetPeaksVallyes.GetPoints(_peaksFromZigZag);
+                _pointsDirty = false;
+            }
+            return _cachedPoints;
+        }
+
+        [ThreadStatic]
+        private static HashSet<decimal> _reusableDateSet;
+
+        private static HashSet<decimal> RentDateSet()
+        {
+            _reusableDateSet ??= new HashSet<decimal>();
+            _reusableDateSet.Clear();
+            return _reusableDateSet;
+        }
+
 
         private List<ZigZagObject> BearishDoubleTops()
         {
@@ -447,9 +489,58 @@ namespace Candlestick_Patterns
 
             return points;
         }
-        private List<ZigZagObject> BullishFallingWedge()
+        private List<ZigZagObject> BullishFallingWedge() 
         {
-            var dateList = new List<decimal>();
+            var points = GetPoints();
+            var seen = RentDateSet();
+            int count = points.Count;
+            for (int i = 6; i < count; i++)
+            {
+                if (seen.Contains(points[i - 6].IndexOHLCV)) continue;
+                decimal c0 = points[i - 6].Close;  // peak 0 (oldest)
+                decimal c1 = points[i - 5].Close;  // valley 0
+                decimal c2 = points[i - 4].Close;  // peak 1
+                decimal c3 = points[i - 3].Close;  // valley 1
+                decimal c4 = points[i - 2].Close;  // peak 2
+                decimal c5 = points[i - 1].Close;  // valley 2
+
+                if (c2 >= c0 || c4 >= c2) continue;
+                if (c3 >= c1 || c5 >= c3) continue;
+                var diff1 = Math.Abs(c2 - c1);
+                var diff2 = Math.Abs(c3 - c4);
+                var diff3 = Math.Abs(c0 - c1);
+                var diff4 = Math.Abs(c2 - c3);
+                var diff5 = Math.Abs(c5 - c4);
+                var change1 = c1 - c3;
+                var change2 = c2 - c4;
+                var change3 = c3 - c5;
+                if (diff2 >= diff1 || diff3 <= diff4 || diff4 <= diff5 || change2 <= change1 || change2 <= change3) continue;
+                decimal slope53 = (c1 - c3) / 1 * 100;
+                decimal slope31 = (c3 - c5) / 1 * 100;
+                decimal slope42 = (c2 - c4) / 1 * 100;
+                decimal slopeMinD = (decimal)_slopeMin;
+                decimal slopeMaxD = (decimal)_slopeMax;
+                decimal slope2D = (decimal)_slope2;
+
+                if (slope53 < slopeMinD || slope53 >= slopeMaxD) continue;
+                if (slope31 < slopeMinD || slope31 >= slopeMaxD) continue;
+                if (slope42 <= slope2D) continue;
+                // --- Formation confirmed — mark indices as seen ---
+                for (int x = i - 6; x <= i; x++)
+                    seen.Add(points[x].IndexOHLCV);
+
+                // Use precomputed max instead of .Max() every iteration
+                if (seen.Count > _formationsLengthMax)
+                {
+                    points[i].Signal = true;
+                    points[i - 6].Initiation = true;
+                }
+            }
+
+            return points;
+        
+
+            /*var dateList = new List<decimal>();
             var points = SetPeaksVallyes.GetPoints(_peaksFromZigZag);
             for (int i = 6; i < points.Count; i++)
             {
@@ -494,7 +585,7 @@ namespace Candlestick_Patterns
                 }
             }
 
-            return points;
+            return points;*/
         }
 
         private List<ZigZagObject> BearishRisingWedge()
@@ -796,31 +887,32 @@ namespace Candlestick_Patterns
 
             return points;
         }
+
         public Dictionary<FormationNameEnum, List<ZigZagObject>> GetAllFormations()
         {
             Dictionary<FormationNameEnum, List<ZigZagObject>> dict = new();
 
-            dict.Add(FormationNameEnum.BearishDoubleTops,                  BearishDoubleTops               ());
-            dict.Add(FormationNameEnum.BearishTripleTops,                  BearishTripleTops               ());
-            dict.Add(FormationNameEnum.BullishDoubleBottoms,               BullishDoubleBottoms            ());
-            dict.Add(FormationNameEnum.BullishTripleBottoms,               BullishTripleBottoms            ());
-            dict.Add(FormationNameEnum.BearishHeadAndShoulders,            BearishHeadAndShoulders         ());
-            dict.Add(FormationNameEnum.BullishCupAndHandle,                BullishCupAndHandle             ());
-            dict.Add(FormationNameEnum.BearishInverseCupAndHandle,         BearishInverseCupAndHandle      ());
-            dict.Add(FormationNameEnum.BullishInverseHeadAndShoulders,     BullishInverseHeadAndShoulders  ());
-            dict.Add(FormationNameEnum.BullishAscendingTriangle,           BullishAscendingTriangle        ());
-            dict.Add(FormationNameEnum.ContinuationSymmetricTriangle,      ContinuationSymmetricTriangle   ());
-            dict.Add(FormationNameEnum.BearishDescendingTriangle,          BearishDescendingTriangle       ());
-            dict.Add(FormationNameEnum.BullishFallingWedge,                BullishFallingWedge             ());
-            dict.Add(FormationNameEnum.BearishRisingWedge,                 BearishRisingWedge              ());
-            dict.Add(FormationNameEnum.BearishBearFlagsPennants,           BearishBearFlagsPennants        ());
-            dict.Add(FormationNameEnum.BullishBullFlagsPennants,           BullishBullFlagsPennants        ());
-            dict.Add(FormationNameEnum.BullishAscendingPriceChannel,       BullishAscendingPriceChannel    ());
-            dict.Add(FormationNameEnum.BearishDescendingPriceChannel,      BearishDescendingPriceChannel   ());
-            dict.Add(FormationNameEnum.BullishRoundingBottomPattern,       BullishRoundingBottomPattern    ());
-            dict.Add(FormationNameEnum.BearishRoundingTopPattern,          BearishRoundingTopPattern       ());
-            dict.Add(FormationNameEnum.ContinuationDiamondFormation ,       ContinuationDiamondFormation());
-            
+            dict.Add(FormationNameEnum.BearishDoubleTops, BearishDoubleTops());
+            dict.Add(FormationNameEnum.BearishTripleTops, BearishTripleTops());
+            dict.Add(FormationNameEnum.BullishDoubleBottoms, BullishDoubleBottoms());
+            dict.Add(FormationNameEnum.BullishTripleBottoms, BullishTripleBottoms());
+            dict.Add(FormationNameEnum.BearishHeadAndShoulders, BearishHeadAndShoulders());
+            dict.Add(FormationNameEnum.BullishCupAndHandle, BullishCupAndHandle());
+            dict.Add(FormationNameEnum.BearishInverseCupAndHandle, BearishInverseCupAndHandle());
+            dict.Add(FormationNameEnum.BullishInverseHeadAndShoulders, BullishInverseHeadAndShoulders());
+            dict.Add(FormationNameEnum.BullishAscendingTriangle, BullishAscendingTriangle());
+            dict.Add(FormationNameEnum.ContinuationSymmetricTriangle, ContinuationSymmetricTriangle());
+            dict.Add(FormationNameEnum.BearishDescendingTriangle, BearishDescendingTriangle());
+            dict.Add(FormationNameEnum.BullishFallingWedge, BullishFallingWedge());
+            dict.Add(FormationNameEnum.BearishRisingWedge, BearishRisingWedge());
+            dict.Add(FormationNameEnum.BearishBearFlagsPennants, BearishBearFlagsPennants());
+            dict.Add(FormationNameEnum.BullishBullFlagsPennants, BullishBullFlagsPennants());
+            dict.Add(FormationNameEnum.BullishAscendingPriceChannel, BullishAscendingPriceChannel());
+            dict.Add(FormationNameEnum.BearishDescendingPriceChannel, BearishDescendingPriceChannel());
+            dict.Add(FormationNameEnum.BullishRoundingBottomPattern, BullishRoundingBottomPattern());
+            dict.Add(FormationNameEnum.BearishRoundingTopPattern, BearishRoundingTopPattern());
+            dict.Add(FormationNameEnum.ContinuationDiamondFormation, ContinuationDiamondFormation());
+
             return dict;
         }
 
@@ -856,7 +948,44 @@ namespace Candlestick_Patterns
             FormationNameEnum.BearishRoundingTopPattern => 10,
             FormationNameEnum.ContinuationDiamondFormation => 12
         };
-        public List<ZigZagObject> GetFormationsSignalsList(FormationNameEnum formation)
+
+        // replace switch GetFormationsSignalsList
+        private void BuildDispatchTable()
+        {
+            _dispatchTable = new Dictionary<FormationNameEnum, Func<List<ZigZagObject>>>
+            {
+                { FormationNameEnum.BearishDoubleTops,              BearishDoubleTops },
+                { FormationNameEnum.BearishTripleTops,              BearishTripleTops },
+                { FormationNameEnum.BullishDoubleBottoms,           BullishDoubleBottoms },
+                { FormationNameEnum.BullishTripleBottoms,           BullishTripleBottoms },
+                { FormationNameEnum.BearishHeadAndShoulders,        BearishHeadAndShoulders },
+                { FormationNameEnum.BullishCupAndHandle,            BullishCupAndHandle },
+                { FormationNameEnum.BearishInverseCupAndHandle,     BearishInverseCupAndHandle },
+                { FormationNameEnum.BullishInverseHeadAndShoulders, BullishInverseHeadAndShoulders },
+                { FormationNameEnum.BullishAscendingTriangle,       BullishAscendingTriangle },
+                { FormationNameEnum.ContinuationSymmetricTriangle,  ContinuationSymmetricTriangle },
+                { FormationNameEnum.BearishDescendingTriangle,      BearishDescendingTriangle },
+                { FormationNameEnum.BullishFallingWedge,            BullishFallingWedge },
+                { FormationNameEnum.BearishRisingWedge,             BearishRisingWedge },
+                { FormationNameEnum.BearishBearFlagsPennants,       BearishBearFlagsPennants },
+                { FormationNameEnum.BullishBullFlagsPennants,       BullishBullFlagsPennants },
+                { FormationNameEnum.BullishAscendingPriceChannel,   BullishAscendingPriceChannel },
+                { FormationNameEnum.BearishDescendingPriceChannel,  BearishDescendingPriceChannel },
+                { FormationNameEnum.BullishRoundingBottomPattern,   BullishRoundingBottomPattern },
+                { FormationNameEnum.BearishRoundingTopPattern,      BearishRoundingTopPattern },
+                { FormationNameEnum.ContinuationDiamondFormation,   ContinuationDiamondFormation },
+            };
+
+            // Pre-build the name list so GetAllFormationNames() never allocates again.
+            _formationNames = Enum.GetValues(typeof(FormationNameEnum))
+                .Cast<FormationNameEnum>()
+                .Select(e => e.ToString())
+                .Where(name => name.Contains("Bullish")
+                            || name.Contains("Bearish")
+                            || name.Contains("Continuation")).ToList();
+        }
+
+        /*public List<ZigZagObject> GetFormationsSignalsList(FormationNameEnum formation)
         {
             switch (formation)
             {
@@ -882,11 +1011,28 @@ namespace Candlestick_Patterns
                 case FormationNameEnum.ContinuationDiamondFormation :return ContinuationDiamondFormation();
             }
             return null;
+        }*/
+        public List<ZigZagObject> GetFormationsSignalsList(FormationNameEnum formation)
+        {
+            return _dispatchTable.TryGetValue(formation, out var handler) ? handler() : null;
         }
+        public List<string> GetAllFormationNames()
+        {
+            return _formationNames;
+        }
+
         public List<ZigZagObject> GetFormationsSignalsList(string formationName)
         {
             var methodName = formationName.Trim().Replace(" ", "");
-            Type thisType = this.GetType();
+
+            if (Enum.TryParse(methodName, ignoreCase: true, out FormationNameEnum formation))
+            {
+                return GetFormationsSignalsList(formation);
+            }
+
+            return _data;
+
+            /*Type thisType = this.GetType();
             MethodInfo theMethod = thisType.GetMethod(methodName, BindingFlags.IgnoreCase | BindingFlags.NonPublic | BindingFlags.Instance);
             if (theMethod != null)
             {
@@ -896,30 +1042,37 @@ namespace Candlestick_Patterns
             else
             {
                 return _data;
-            }
+            }*/
         }
 
         public int GetFormationsSignalsCount(string formationName)
         {
-            var methodName = formationName.Trim().Replace(" ", "");
-            return GetFormationsSignalsList(methodName).Where(x => x.Signal == true).Count();
+            var signals = GetFormationsSignalsList(formationName);
+            return signals?.Count(x => x.Signal) ?? 0;
+
+            //var methodName = formationName.Trim().Replace(" ", "");
+            //return GetFormationsSignalsList(methodName).Where(x => x.Signal == true).Count();
         }
 
         public List<string> GetAllMethodNames()
         {
-            List<string> methods = new List<string>();
+            return GetAllFormationNames();
+
+            /*List<string> methods = new List<string>();
             foreach (MethodInfo item in typeof(Formations).GetMethods(BindingFlags.IgnoreCase | BindingFlags.NonPublic | BindingFlags.Instance))
             {
                 methods.Add(item.Name);
             }
 
-            return methods.Where(x => x.Contains("Bullish") || x.Contains("Bearish") || x.Contains("Continuation")).ToList();
+            return methods.Where(x => x.Contains("Bullish") || x.Contains("Bearish") || x.Contains("Continuation")).ToList();*/
         }
 
         public int GetSignalsCount(string formationName)
         {
-            var methodName = formationName.Trim().Replace(" ", "");
-            return GetFormationsSignalsList(methodName).Where(x => x.Signal == true).Count();
+            return GetFormationsSignalsCount(formationName);
+
+            //var methodName = formationName.Trim().Replace(" ", "");
+            //return GetFormationsSignalsList(methodName).Where(x => x.Signal == true).Count();
         }
     }
 }
