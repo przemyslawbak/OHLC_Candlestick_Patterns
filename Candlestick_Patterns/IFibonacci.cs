@@ -1,6 +1,6 @@
 ﻿namespace Candlestick_Patterns
 {
-   public interface IFibonacci
+   public interface IFibonacci: ISignalEngine
    {
        List<string> GetFibonacciAllMethodNames();
        List<ZigZagObject> GetFibonacciSignalsList(string patternName);

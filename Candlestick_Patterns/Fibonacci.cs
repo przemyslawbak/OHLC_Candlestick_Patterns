@@ -9,7 +9,7 @@ namespace Candlestick_Patterns
         internal abstract bool SecondCheck(List<ZigZagObject> points, int i, string pattern, string fibbPattern);
     }
 
-    public class Fibonacci : AbstractFibonnaci, IFibonacci
+    public class Fibonacci : AbstractFibonnaci, IFibonacci, ISignalEngine
     { 
         private static List<ZigZagObject> Data { get; set; }
         private static decimal FibError { get; set; }

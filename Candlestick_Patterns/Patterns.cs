@@ -3,7 +3,7 @@ using System.Collections.Concurrent;
 using System.Reflection;
 namespace Candlestick_Patterns
 {
-    public class Patterns : IPatterns
+    public class Patterns : IPatterns, ISignalEngine
     {
         private readonly decimal _insideBarMaxChange;
         private readonly decimal _minimumCandleSize;

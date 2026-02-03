@@ -1,6 +1,6 @@
 ﻿namespace Candlestick_Patterns
 {
-    public interface IPatterns
+    public interface IPatterns : ISignalEngine
     {
         List<string> GetAllMethodNames();
         List<OhlcvObject> GetPatternsSignalsList(string patternName);
