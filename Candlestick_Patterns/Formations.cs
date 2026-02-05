@@ -1,4 +1,5 @@
 ﻿using OHLC_Candlestick_Patterns;
+using System;
 using System.Reflection;
 using System.Security.Cryptography;
 
@@ -30,9 +31,9 @@ namespace Candlestick_Patterns
         public enum FormationNameEnum
         {
             None,
-            BearishDoubleTops, //ok
-            BearishTripleTops, //ok
-            BullishDoubleBottoms, //ok
+            BearishDoubleTops, 
+            BearishTripleTops, 
+            BullishDoubleBottoms, 
             BullishTripleBottoms,
             BearishHeadAndShoulders,
             BullishCupAndHandle,
@@ -41,7 +42,7 @@ namespace Candlestick_Patterns
             BullishAscendingTriangle,
             ContinuationSymmetricTriangle,
             BearishDescendingTriangle,
-            BullishFallingWedge, //ok
+            BullishFallingWedge, 
             BearishRisingWedge,
             BearishBearFlagsPennants,
             BullishBullFlagsPennants,
@@ -300,7 +301,49 @@ namespace Candlestick_Patterns
 
         private List<ZigZagObject> BullishTripleBottoms() 
         {
-            var dateList = new List<decimal>();
+            var points = GetPoints();
+            var seen = RentDateSet();
+            int count = points.Count;
+            var minNumber = MinimumOhlcvCount(FormationNameEnum.BullishTripleBottoms);
+            var _advanceMin = (decimal)_advance.Min();
+
+            for (int i = minNumber; i < count; i++)
+            {
+                if (seen.Contains(points[i - minNumber].IndexOHLCV)) continue;
+                decimal c0 = points[i - 6].Close;
+                decimal c1 = points[i - 5].Close;
+                decimal c2 = points[i - 4].Close;
+                decimal c3 = points[i - 3].Close;
+                decimal c4 = points[i - 2].Close;
+                decimal c5 = points[i - 1].Close;
+                decimal c6 = points[i].Close;
+                if (c0 <= c2 || c2 <= c3 || c4 <= c3 || c6 <= c4) continue;
+                if (c0 <= c4 || c2 >= c6) continue;
+
+                decimal neckMin = Math.Min(c2, c4);
+                decimal neckMax = Math.Max(c2, c4);
+                if ((neckMax - neckMin) / neckMin >= _percentageMargin) continue;
+                decimal change = Math.Abs(c1 - c3) / c1;
+                decimal change2 = Math.Abs(c5 - c3) / c3;
+                decimal change3 = Math.Abs(c5 - c1) / c1;
+                if (change >= _percentageMargin || change2 >= _percentageMargin || change3 >= _percentageMargin) continue;
+                if (c6 - neckMin <= _advanceMin || c0 - neckMin <= _advanceMin) continue;
+
+                for (int x = i - minNumber; x <= i; x++)
+                {
+                    seen.Add(points[x].IndexOHLCV);
+                }
+
+                if (seen.Count >= _formationsLengthMax)
+                {
+                    points[i].Signal = true;
+                    points[i - minNumber].Initiation = true;
+                }
+            }
+
+            return points;
+
+            /*var dateList = new List<decimal>();
             var points = SetPeaksVallyes.GetPoints(_peaksFromZigZag);
             for (int i = 6; i < points.Count; i++)
             {
@@ -333,12 +376,56 @@ namespace Candlestick_Patterns
                 }
             }
 
-            return points;
+            return points;*/
         }
 
         private List<ZigZagObject> BearishHeadAndShoulders()
         {
-            var dateList = new List<decimal>();
+            var points = GetPoints();
+            var seen = RentDateSet();
+            int count = points.Count;
+            var minNumber = MinimumOhlcvCount(FormationNameEnum.BearishHeadAndShoulders);
+
+            for (int i = minNumber; i < count; i++)
+            {
+                if (seen.Contains(points[i - minNumber].IndexOHLCV)) continue;
+                decimal c0 = points[i - 6].Close;
+                decimal c1 = points[i - 5].Close;
+                decimal c2 = points[i - 4].Close;
+                decimal c3 = points[i - 3].Close;
+                decimal c4 = points[i - 2].Close;
+                decimal c5 = points[i - 1].Close;
+                decimal c6 = points[i].Close;
+
+                if (c3 <= c1 || c3 <= c5) continue;
+                if (c2 >= c1 || c0 >= c1) continue;
+                if (c3 <= c4 || c4 >= c5) continue;
+                if (c5 <= c6) continue;
+                decimal neckMin = Math.Min(c2, c4);
+                decimal neckMax = Math.Max(c2, c4);
+                decimal changeNeckline = (neckMax - neckMin) / neckMin;
+                if (changeNeckline >= _percentageMargin) continue;
+                decimal shoulderMin = Math.Min(c1, c5);
+                decimal shoulderMax = Math.Max(c1, c5);
+                decimal changeShoulders = (shoulderMax - shoulderMin) / shoulderMin;
+                if (changeShoulders >= _percentageMargin) continue;
+                if (neckMax >= shoulderMax) continue;
+                if (shoulderMax >= c3) continue;
+                if (c3 - shoulderMax <= (decimal)_advance.Min()) continue;
+                if (c6 >= neckMin || c0 >= neckMin) continue;
+
+                for (int x = i - minNumber; x <= i; x++)
+                {
+                    seen.Add(points[x].IndexOHLCV);
+                }
+
+                points[i].Signal = true;
+                points[i - minNumber].Initiation = true;
+            }
+
+            return points;
+
+            /*var dateList = new List<decimal>();
             var points = SetPeaksVallyes.GetPoints(_peaksFromZigZag);
             for (int i = 6; i < points.Count; i++)
             {
@@ -365,50 +452,148 @@ namespace Candlestick_Patterns
                 }
             }
 
-            return points;
+            return points;*/
         }
 
         private List<ZigZagObject> BullishCupAndHandle()
         {
-            var dateList = new List<decimal>();
-            var points = SetPeaksVallyes.GetPoints(_peaksFromZigZag);
-            for (int i = 13; i < points.Count; i++)
+            var points = GetPoints();
+            var seen = RentDateSet();
+            int count = points.Count;
+            var minNumber = MinimumOhlcvCount(FormationNameEnum.BullishCupAndHandle);
+
+            for (int i = minNumber; i < count; i++)
             {
-                if (!dateList.Contains(points[i - 13].IndexOHLCV))
+                if (seen.Contains(points[i - minNumber].IndexOHLCV)) continue;
+                decimal c0 = points[i - 13].Close;
+                decimal c1 = points[i - 12].Close;
+                decimal c2 = points[i - 11].Close;
+                decimal c3 = points[i - 10].Close;
+                decimal c4 = points[i - 9].Close;
+                decimal c5 = points[i - 8].Close;
+                decimal c6 = points[i - 7].Close;
+                decimal c7 = points[i - 6].Close;
+                decimal c8 = points[i - 5].Close;
+                decimal c9 = points[i - 4].Close;
+                decimal c10 = points[i - 3].Close;
+                decimal c11 = points[i - 2].Close;
+                decimal c12 = points[i - 1].Close;
+                decimal c13 = points[i].Close;
+
+                if (c13 <= c12 || c12 >= c10 || c8 >= c10 || c9 <= c11 || c9 >= c13) continue;
+                if (c6 >= c8 || c6 <= c4 || c7 <= c5 || c2 <= c4 || c0 <= c2) continue;
+
+                decimal diff1 = Math.Abs(c11 - c10);
+                decimal diff2 = Math.Abs(c8 - c9);
+                decimal diff3 = Math.Abs(c8 - c7);
+                decimal diff4 = Math.Abs(c6 - c7);
+                decimal change1 = Math.Abs((c5 - c3) / c3);
+                decimal change2 = Math.Abs((c6 - c2) / c2);
+                if (diff2 < (decimal)_minShift * diff1) continue;
+                if (diff2 <= diff3 || diff3 >= diff4) continue;
+                if (change1 >= _percentageMargin || change2 >= _percentageMargin) continue;
+
+                for (int x = i - minNumber; x <= i; x++)
                 {
-                    if(points[i].Close> points[i - 1].Close && points[i - 1].Close< points[i - 3].Close && points[i - 5].Close < points[i - 3].Close && points[i - 4].Close > points[i -2].Close && points[i - 4].Close < points[i].Close && points[i - 5].Close< points[i - 3].Close)
-                    {
-                        if(points[i - 7].Close < points[i - 5].Close && points[i - 7].Close > points[i - 9].Close && points[i - 6].Close > points[i - 8].Close && points[i - 11].Close > points[i - 9].Close && points[i - 13].Close> points[i - 11].Close)
-                        {
-                            var diff1 = Math.Abs(points[i - 2].Close - points[i - 3].Close);
-                            var diff2 = Math.Abs(points[i - 5].Close - points[i - 4 ].Close);
-                            var diff3 = Math.Abs(points[i - 5].Close - points[i - 6].Close);
-                            var diff4 = Math.Abs(points[i - 7].Close - points[i - 6].Close);
-                            var change1 = Math.Abs((points[i - 8].Close - points[i - 10].Close) / points[i - 10].Close);
-                            var change2 = Math.Abs((points[i - 7].Close - points[i - 11].Close) / points[i - 11].Close);
-
-                            if (diff2 >= _minShift * diff1 && diff2 > diff3 && diff3 < diff4 && change1 < _percentageMargin && change2 < _percentageMargin)
-                            {
-                                for (int x = -13; x < 1; x++)
-                                {
-                                    dateList.Add(points[i + x].IndexOHLCV);
-                                }
-
-                                points[i].Signal = true;
-                                points[i - 13].Initiation = true;
-                            }
-                        }
-                    
-                    }
+                    seen.Add(points[x].IndexOHLCV);
                 }
+
+                points[i].Signal = true;
+                points[i - minNumber].Initiation = true;
             }
 
             return points;
+
+            /*var dateList = new List<decimal>();
+             var points = SetPeaksVallyes.GetPoints(_peaksFromZigZag);
+             for (int i = 13; i < points.Count; i++)
+             {
+                 if (!dateList.Contains(points[i - 13].IndexOHLCV))
+                 {
+                     if(points[i].Close> points[i - 1].Close && points[i - 1].Close< points[i - 3].Close && points[i - 5].Close < points[i - 3].Close && points[i - 4].Close > points[i -2].Close && points[i - 4].Close < points[i].Close && points[i - 5].Close< points[i - 3].Close)
+                     {
+                         if(points[i - 7].Close < points[i - 5].Close && points[i - 7].Close > points[i - 9].Close && points[i - 6].Close > points[i - 8].Close && points[i - 11].Close > points[i - 9].Close && points[i - 13].Close> points[i - 11].Close)
+                         {
+                             var diff1 = Math.Abs(points[i - 2].Close - points[i - 3].Close);
+                             var diff2 = Math.Abs(points[i - 5].Close - points[i - 4 ].Close);
+                             var diff3 = Math.Abs(points[i - 5].Close - points[i - 6].Close);
+                             var diff4 = Math.Abs(points[i - 7].Close - points[i - 6].Close);
+                             var change1 = Math.Abs((points[i - 8].Close - points[i - 10].Close) / points[i - 10].Close);
+                             var change2 = Math.Abs((points[i - 7].Close - points[i - 11].Close) / points[i - 11].Close);
+
+                             if (diff2 >= _minShift * diff1 && diff2 > diff3 && diff3 < diff4 && change1 < _percentageMargin && change2 < _percentageMargin)
+                             {
+                                 for (int x = -13; x < 1; x++)
+                                 {
+                                     dateList.Add(points[i + x].IndexOHLCV);
+                                 }
+
+                                 points[i].Signal = true;
+                                 points[i - 13].Initiation = true;
+                             }
+                         }
+
+                     }
+                 }
+             }
+
+             return points;*/
         }
         
         private List<ZigZagObject> BearishInverseCupAndHandle()
         {
-            var dateList = new List<decimal>();
+            var points = GetPoints();
+            var seen = RentDateSet();
+            int count = points.Count;
+            var minNumber = MinimumOhlcvCount(FormationNameEnum.BearishInverseCupAndHandle);
+
+            for (int i = minNumber; i < count; i++)
+            {
+                if (seen.Contains(points[i - 14].IndexOHLCV)) continue;
+
+                decimal c0 = points[i - 16].Close;
+                decimal c1 = points[i - 15].Close;
+                decimal c2 = points[i - 14].Close;
+                decimal c3 = points[i - 13].Close;
+                decimal c4 = points[i - 12].Close;
+                decimal c5 = points[i - 11].Close;
+                decimal c6 = points[i - 10].Close;
+                decimal c7 = points[i - 9].Close;
+                decimal c8 = points[i - 8].Close;
+                decimal c9 = points[i - 7].Close;
+                decimal c10 = points[i - 6].Close;
+                decimal c11 = points[i - 5].Close;
+                decimal c12 = points[i - 4].Close;
+                decimal c13 = points[i - 3].Close;
+                decimal c14 = points[i - 2].Close;
+                decimal c15 = points[i - 1].Close;
+                decimal c16 = points[i].Close;
+
+                decimal highMax = Math.Max(c5, Math.Max(c6, c7));
+                decimal cupMin = Math.Min(Math.Min(c1, Math.Min(c3, c4)),Math.Min(c8, Math.Min(c9, c10)));
+                decimal cupMax = Math.Max(Math.Max(c1, Math.Max(c3, c4)),Math.Max(c8, Math.Max(c9, c10)));
+                decimal handleMin = Math.Min(c12, Math.Min(c13, c14));
+                decimal handleMax = Math.Max(c12, Math.Max(c13, c14));
+
+                if (highMax <= cupMax) continue;
+                if (highMax <= handleMax) continue;
+                if (handleMin <= cupMin) continue;
+                if (c16 >= handleMin) continue;
+                if (c6 <= c4 || c8 <= c10) continue;
+                if ((handleMax - handleMin) / handleMin >= _percentageMargin) continue;
+
+                for (int x = i - minNumber; x <= i; x++)
+                {
+                    seen.Add(points[x].IndexOHLCV);
+                }
+
+                points[i].Signal = true;
+                points[i - minNumber].Initiation = true;
+            }
+
+            return points;
+
+            /*var dateList = new List<decimal>();
             var points = SetPeaksVallyes.GetPoints(_peaksFromZigZag);
             for (int i = 16; i < points.Count; i++)
             {
@@ -435,11 +620,52 @@ namespace Candlestick_Patterns
                 }
             }
 
-            return points;
+            return points;*/
         }
 
         private List<ZigZagObject> BullishInverseHeadAndShoulders()
         {
+            /*var points = GetPoints();
+            var seen = RentDateSet();
+            int count = points.Count;
+            var minNumber = MinimumOhlcvCount(FormationNameEnum.BullishInverseHeadAndShoulders);
+
+            for (int i = minNumber; i < count; i++)
+            {
+                if (seen.Contains(points[i - minNumber].IndexOHLCV)) continue;
+                decimal c0 = points[i - 6].Close;
+                decimal c1 = points[i - 5].Close;
+                decimal c2 = points[i - 4].Close;
+                decimal c3 = points[i - 3].Close;
+                decimal c4 = points[i - 2].Close;
+                decimal c5 = points[i - 1].Close;
+                decimal c6 = points[i].Close;
+                if (c3 >= c1 || c3 >= c5) continue;
+                if (c2 <= c1 || c0 <= c1) continue;
+                if (c3 >= c4 || c4 <= c5) continue;
+                if (c5 >= c6) continue;
+                decimal neckMin = Math.Min(c2, c4);
+                decimal neckMax = Math.Max(c2, c4);
+                decimal changeNeckline = (neckMax - neckMin) / neckMin;
+                if (changeNeckline >= _percentageMargin) continue;
+                decimal shoulderMin = Math.Min(c1, c5);
+                decimal shoulderMax = Math.Max(c1, c5);
+                decimal changeShoulders = (shoulderMax - shoulderMin) / shoulderMin;
+                if (changeShoulders >= _percentageMargin) continue;
+                if (neckMax <= shoulderMax) continue;
+                if (shoulderMax <= c3) continue;
+                if (shoulderMin - c3 <= (decimal)_advance.Min()) continue;
+
+                if (c6 <= neckMax || c0 <= neckMax) continue;
+                for (int x = i - minNumber; x <= i; x++)
+                    seen.Add(points[x].IndexOHLCV);
+
+                points[i].Signal = true;
+                points[i - minNumber].Initiation = true;
+            }
+
+            return points;*/
+            
             var dateList = new List<decimal>();
             var points = SetPeaksVallyes.GetPoints(_peaksFromZigZag);
             for (int i = 6; i < points.Count; i++)
@@ -472,7 +698,46 @@ namespace Candlestick_Patterns
 
         private List<ZigZagObject> BullishAscendingTriangle()
         {
-            var dateList = new List<decimal>();
+            var points = GetPoints();
+            var seen = RentDateSet();
+            int count = points.Count;
+            var minNumber = MinimumOhlcvCount(FormationNameEnum.BullishAscendingTriangle);
+
+            for (int i = minNumber; i < count; i++)
+            {
+                if (seen.Contains(points[i - minNumber].IndexOHLCV)) continue;
+                decimal c0 = points[i - 5].Close;
+                decimal c1 = points[i - 4].Close;
+                decimal c2 = points[i - 3].Close;
+                decimal c3 = points[i - 2].Close;
+                decimal c4 = points[i - 1].Close;
+                decimal c5 = points[i].Close;
+                decimal topMin = Math.Min(c1, c3);
+                decimal topMax = Math.Max(c1, c3);
+                decimal changeTop = (topMax - topMin) / topMin;
+                if (changeTop >= _percentageMargin) continue;
+                if (c5 - topMax <= (decimal)_advance.Min()) continue;
+                if (c5 <= c4) continue;
+                if (c2 >= c4 || c0 >= c2 || c0 >= c4) continue;
+                if (c2 - c0 <= (decimal)_advance.Min()) continue;
+                decimal diff1 = Math.Abs(c5 - c4);   
+                decimal diff2 = Math.Abs(c2 - c3);   
+                decimal diff3 = Math.Abs(c2 - c1);   
+                decimal diff4 = Math.Abs(c4 - c3);   
+                if (diff2 >= diff1 || diff4 >= diff3) continue;
+
+                for (int x = i - minNumber; x <= i; x++)
+                {
+                    seen.Add(points[x].IndexOHLCV);
+                }
+
+                points[i].Signal = true;
+                points[i - minNumber].Initiation = true;
+            }
+
+            return points;
+
+            /*var dateList = new List<decimal>();
             var points = SetPeaksVallyes.GetPoints(_peaksFromZigZag);
             for (int i = 5; i < points.Count; i++)
             {
@@ -503,11 +768,57 @@ namespace Candlestick_Patterns
                 }
             }
 
-            return points;
+            return points;*/
         }
 
         private List<ZigZagObject> ContinuationSymmetricTriangle()
         {
+            var points = GetPoints();
+            var seen = RentDateSet();
+            int count = points.Count;
+            var minNumber = MinimumOhlcvCount(FormationNameEnum.ContinuationSymmetricTriangle);
+
+            for (int i = minNumber; i < count; i++)
+            {
+                if (seen.Contains(points[i - minNumber].IndexOHLCV)) continue;
+                decimal c0 = points[i - 5].Close;
+                decimal c1 = points[i - 4].Close;
+                decimal c2 = points[i - 3].Close;
+                decimal c3 = points[i - 2].Close;
+                decimal c4 = points[i - 1].Close;
+                decimal c5 = points[i].Close;
+
+                bool bullishLeg = false;
+                bool bearishLeg = false;
+
+                if (c1 > c3 && c5 > c3)
+                {
+                    if (c0 < c2 && c4 > c2 && c5 > c4)
+                        bullishLeg = true;
+                }
+                else if (c1 < c3 && c5 < c3)
+                {
+                    if (c0 > c2 && c4 < c2 && c5 < c4)
+                        bearishLeg = true;
+                }
+
+                if (!bullishLeg && !bearishLeg) continue;
+
+                decimal innerRange = Math.Abs(c3 - c2);   
+                decimal outerRange = Math.Abs(c1 - c0);  
+                decimal innerRange2 = Math.Abs(c3 - c4); 
+                decimal outerRange2 = Math.Abs(c1 - c2);   
+                if (innerRange >= outerRange || innerRange2 >= outerRange2) continue;
+
+                for (int x = i - minNumber; x <= i; x++)
+                    seen.Add(points[x].IndexOHLCV);
+
+                points[i].Signal = true;
+                points[i - minNumber].Initiation = true;
+            }
+
+            return points;
+           /*
             var dateList = new List<decimal>();
             var points = SetPeaksVallyes.GetPoints(_peaksFromZigZag);
             for (int i = 5; i < points.Count; i++)
@@ -549,12 +860,47 @@ namespace Candlestick_Patterns
                 }
             }
 
-            return points;
+            return points;*/
         }
 
         private List<ZigZagObject> BearishDescendingTriangle()
         {
-            var dateList = new List<decimal>();
+            var points = GetPoints();
+            var seen = RentDateSet();
+            int count = points.Count;
+            var minNumber = MinimumOhlcvCount(FormationNameEnum.BearishDescendingTriangle);
+
+            for (int i = minNumber; i < count - 3; i++)
+            {
+                if (seen.Contains(points[i - minNumber].IndexOHLCV)) continue;
+                decimal c0 = points[i - 5].Close;
+                decimal c1 = points[i - 4].Close;
+                decimal c2 = points[i - 3].Close;
+                decimal c3 = points[i - 2].Close;
+                decimal c4 = points[i - 1].Close;
+                decimal c5 = points[i].Close;
+                decimal topMin = Math.Min(c1, c3);
+                decimal topMax = Math.Max(c1, c3);
+                decimal changeTop = (topMax - topMin) / topMin;
+                if (changeTop >= _percentageMargin) continue;
+                if (topMin - c5 <= (decimal)_advance.Min()) continue;
+                if (c5 >= c4) continue;
+                if (c2 <= c4 || c0 <= c2 || c0 <= c4) continue;
+                decimal diff1 = Math.Abs(c0 - c1);
+                decimal diff2 = Math.Abs(c2 - c3);
+                decimal diff3 = Math.Abs(c2 - c1);
+                decimal diff4 = Math.Abs(c4 - c3);
+                if (diff2 >= diff1 || diff4 >= diff3) continue;
+                for (int x = i - minNumber; x <= i; x++)
+                    seen.Add(points[x].IndexOHLCV);
+
+                points[i].Signal = true;
+                points[i - minNumber].Initiation = true;
+            }
+
+            return points;
+
+            /*var dateList = new List<decimal>();
             var points = SetPeaksVallyes.GetPoints(_peaksFromZigZag);
             for (int i = 5; i < points.Count - 3; i++)
             {
@@ -585,7 +931,7 @@ namespace Candlestick_Patterns
                 }
             }
 
-            return points;
+            return points;*/
         }
 
         private List<ZigZagObject> BullishFallingWedge() 
@@ -598,12 +944,12 @@ namespace Candlestick_Patterns
             for (int i = minNumber; i < count; i++)
             {
                 if (seen.Contains(points[i - 6].IndexOHLCV)) continue;
-                decimal c0 = points[i - 6].Close;  // peak 0 (oldest)
-                decimal c1 = points[i - 5].Close;  // valley 0
-                decimal c2 = points[i - 4].Close;  // peak 1
-                decimal c3 = points[i - 3].Close;  // valley 1
-                decimal c4 = points[i - 2].Close;  // peak 2
-                decimal c5 = points[i - 1].Close;  // valley 2
+                decimal c0 = points[i - 6].Close;  
+                decimal c1 = points[i - 5].Close;  
+                decimal c2 = points[i - 4].Close;  
+                decimal c3 = points[i - 3].Close; 
+                decimal c4 = points[i - 2].Close;  
+                decimal c5 = points[i - 1].Close;  
 
                 if (c2 >= c0 || c4 >= c2) continue;
                 if (c3 >= c1 || c5 >= c3) continue;
@@ -626,11 +972,12 @@ namespace Candlestick_Patterns
                 if (slope53 < slopeMinD || slope53 >= slopeMaxD) continue;
                 if (slope31 < slopeMinD || slope31 >= slopeMaxD) continue;
                 if (slope42 <= slope2D) continue;
-                // --- Formation confirmed — mark indices as seen ---
-                for (int x = i - minNumber; x <= i; x++)
-                    seen.Add(points[x].IndexOHLCV);
 
-                // Use precomputed max instead of .Max() every iteration
+                for (int x = i - minNumber; x <= i; x++)
+                {
+                    seen.Add(points[x].IndexOHLCV);
+                }
+
                 if (seen.Count > _formationsLengthMax)
                 {
                     points[i].Signal = true;
@@ -691,7 +1038,45 @@ namespace Candlestick_Patterns
 
         private List<ZigZagObject> BearishRisingWedge()
         {
-            var dateList = new List<decimal>();
+            var points = GetPoints();
+            var seen = RentDateSet();
+            int count = points.Count;
+            var minNumber = MinimumOhlcvCount(FormationNameEnum.BearishRisingWedge);
+
+            for (int i = minNumber; i < count; i++)
+            {
+                if (seen.Contains(points[i - 6].IndexOHLCV)) continue;
+                decimal c0 = points[i - 6].Close;
+                decimal c1 = points[i - 5].Close;
+                decimal c2 = points[i - 4].Close;
+                decimal c3 = points[i - 3].Close;
+                decimal c4 = points[i - 2].Close;
+                decimal c5 = points[i - 1].Close;
+
+                if (c2 <= c0 || c4 <= c2) continue;
+                if (c3 <= c1 || c5 <= c3) continue;
+                decimal diff1 = Math.Abs(c2 - c1);
+                decimal diff2 = Math.Abs(c3 - c4);
+                decimal diff3 = Math.Abs(c0 - c1);
+                decimal diff4 = Math.Abs(c2 - c3);
+                decimal diff5 = Math.Abs(c5 - c4);
+                decimal change1 = Math.Abs(c1 - c3);
+                decimal change2 = Math.Abs(c2 - c4);
+                decimal change3 = Math.Abs(c3 - c5);
+
+                if (diff2 >= diff1 || diff3 <= diff4 || diff4 <= diff5 || change2 <= change1 || change2 <= change3) continue;
+                for (int x = i - minNumber; x <= i; x++)
+                {
+                    seen.Add(points[x].IndexOHLCV);
+                }
+
+                points[i].Signal = true;
+                points[i - minNumber].Initiation = true;
+            }
+
+            return points;
+
+            /*var dateList = new List<decimal>();
             var points = SetPeaksVallyes.GetPoints(_peaksFromZigZag);
             for (int i = 6; i < points.Count; i++)
             {
@@ -727,11 +1112,47 @@ namespace Candlestick_Patterns
                 }
             }
 
-            return points;
+            return points;*/
         }
         private List<ZigZagObject> BearishBearFlagsPennants()
         {
-            var dateList = new List<decimal>();
+            var points = GetPoints();
+            var seen = RentDateSet();
+            int count = points.Count;
+            var minNumber = MinimumOhlcvCount(FormationNameEnum.BearishBearFlagsPennants);
+
+            for (int i = minNumber; i < count; i++)
+            {
+                if (seen.Contains(points[i - minNumber].IndexOHLCV)) continue;
+                decimal c0 = points[i - 5].Close;
+                decimal c1 = points[i - 4].Close;
+                decimal c2 = points[i - 3].Close;
+                decimal c3 = points[i - 2].Close;
+                decimal c4 = points[i - 1].Close;
+                decimal c5 = points[i].Close;
+
+                decimal smallerMax = Math.Max(c1, Math.Max(c2, Math.Max(c3, Math.Max(c4, c5))));
+                decimal largerMin = Math.Min(c0, Math.Min(c1, Math.Min(c2, Math.Min(c3, c4))));
+                if (c0 <= smallerMax) continue;
+                if (c5 >= largerMin) continue;
+                if (c1 >= c3) continue;
+                if (c2 <= c1 || c4 <= c2) continue;
+                decimal diff1 = Math.Abs(c1 - c2);
+                decimal diff2 = Math.Abs(c3 - c4);
+                decimal diff3 = Math.Abs(c1 - c0);
+                if (Math.Abs((c1 - c3) / c1) >= _percentageMargin) continue;
+                if ((decimal)_minShift * diff1 > diff3 || (decimal)_minShift * diff1 >= diff3) continue;
+                for (int x = i - minNumber; x <= i; x++)
+                    seen.Add(points[x].IndexOHLCV);
+
+                points[i].Signal = true;
+                points[i - minNumber].Initiation = true;
+            }
+
+            return points;
+        
+
+            /*var dateList = new List<decimal>();
             var points = SetPeaksVallyes.GetPoints(_peaksFromZigZag);
             for (int i = 5; i < points.Count; i++)
             {
@@ -765,12 +1186,52 @@ namespace Candlestick_Patterns
                 }
             }
 
-            return points;
+            return points;*/
         }
 
         private List<ZigZagObject> BullishBullFlagsPennants()
         {
-            var dateList = new List<decimal>();
+            var points = GetPoints();
+            var seen = RentDateSet();
+            int count = points.Count;
+            var minNumber = MinimumOhlcvCount(FormationNameEnum.BullishBullFlagsPennants);
+
+            for (int i = minNumber; i < count; i++)
+            {
+                if (seen.Contains(points[i - minNumber].IndexOHLCV)) continue;
+                decimal c0 = points[i - 5].Close;
+                decimal c1 = points[i - 4].Close;
+                decimal c2 = points[i - 3].Close;
+                decimal c3 = points[i - 2].Close;
+                decimal c4 = points[i - 1].Close;
+                decimal c5 = points[i].Close;
+
+                decimal largerMin = Math.Min(c1, Math.Min(c2, Math.Min(c3, Math.Min(c4, c5))));
+                decimal smallerMax = Math.Max(c0, Math.Max(c1, Math.Max(c2, Math.Max(c3, c4))));
+
+                // Guard A — structural checks
+                if (c1 <= c2) continue;
+                if (c0 >= largerMin) continue;
+                if (c5 <= smallerMax) continue;
+                if (c3 <= c2 || c3 >= c1 || c4 >= c2) continue;
+                decimal diff1 = Math.Abs(c2 - c3);
+                decimal diff2 = Math.Abs(c2 - c1);
+                decimal diff3 = Math.Abs(c4 - c3);
+                decimal diff4 = Math.Abs(c0 - c1);
+                decimal changePennant = Math.Abs((c2 - c4) / c2);
+                if (changePennant >= _percentageMargin || changePennant >= _percentageMargin) continue;
+                if ((decimal)_minShift * diff1 > diff4 || (decimal)_minShift * diff3 >= diff4) continue;
+
+                for (int x = i - minNumber; x <= i; x++)
+                    seen.Add(points[x].IndexOHLCV);
+
+                points[i].Signal = true;
+                points[i - minNumber].Initiation = true;
+            }
+
+            return points;
+
+            /*var dateList = new List<decimal>();
             var points = SetPeaksVallyes.GetPoints(_peaksFromZigZag);
             for (int i = 5; i < points.Count; i++)
             {
@@ -805,12 +1266,55 @@ namespace Candlestick_Patterns
                 }
             }
 
-            return points;
+            return points;*/
         }
 
         private List<ZigZagObject> BullishAscendingPriceChannel()
         {
-            var dateList = new List<decimal>();
+            var points = GetPoints();
+            var seen = RentDateSet();
+            int count = points.Count;
+            var minNumber = MinimumOhlcvCount(FormationNameEnum.BullishAscendingPriceChannel);
+
+            for (int i = minNumber; i < count; i++)
+            {
+                if (seen.Contains(points[i - minNumber].IndexOHLCV)) continue;
+                decimal c0 = points[i - 6].Close;
+                decimal c1 = points[i - 5].Close;
+                decimal c2 = points[i - 4].Close;
+                decimal c3 = points[i - 3].Close;
+                decimal c4 = points[i - 2].Close;
+                decimal c5 = points[i - 1].Close;
+                decimal c6 = points[i].Close;
+
+                if (c3 <= c1 || c5 <= c3) continue;
+                if (c2 >= c4 || c4 >= c6 || c2 <= c0) continue;
+                decimal diff1 = Math.Abs(c3 - c2);
+                decimal diff2 = Math.Abs(c4 - c5);
+                decimal diff3 = Math.Abs(c1 - c0);
+                decimal diff4 = Math.Abs(c1 - c2);
+                decimal diff5 = Math.Abs(c4 - c3);
+                decimal diff6 = Math.Abs(c6 - c5);
+                decimal change1 = Math.Abs((c4 - c2) / c2);
+                decimal change2 = Math.Abs((c5 - c3) / c3);
+
+                if (Math.Abs(diff3 - diff1) / diff3 > _channelTolerancePercentage) continue;
+                if (Math.Abs(diff2 - diff1) / diff1 > _channelTolerancePercentage) continue;
+                if (Math.Abs(diff4 - diff5) / diff4 > _channelTolerancePercentage) continue;
+                if (Math.Abs(diff3 - diff2) / diff3 > _channelTolerancePercentage) continue;
+                if (Math.Abs(diff5 - diff6) / diff5 > _channelTolerancePercentage) continue;
+                if (Math.Abs(change1 - change2) / change1 > _channelTolerancePercentage) continue;
+                for (int x = i - minNumber; x <= i; x++)
+                {
+                    seen.Add(points[x].IndexOHLCV);
+                }
+
+                points[i].Signal = true;
+                points[i - minNumber].Initiation = true;
+            }
+
+            return points;
+            /*var dateList = new List<decimal>();
             var points = SetPeaksVallyes.GetPoints(_peaksFromZigZag);
             for (int i = 6; i < points.Count; i++)
             {
@@ -844,12 +1348,57 @@ namespace Candlestick_Patterns
                 }
             }
 
-            return points;
+            return points;*/
         }
 
         private List<ZigZagObject> BearishDescendingPriceChannel()
         {
-            var dateList = new List<decimal>();
+            var points = GetPoints();
+            var seen = RentDateSet();
+            int count = points.Count;
+            var minNumber = MinimumOhlcvCount(FormationNameEnum.BearishDescendingPriceChannel);
+
+            for (int i = minNumber; i < count; i++)
+            {
+                if (seen.Contains(points[i - minNumber].IndexOHLCV)) continue;
+                decimal c0 = points[i - 6].Close;
+                decimal c1 = points[i - 5].Close;
+                decimal c2 = points[i - 4].Close;
+                decimal c3 = points[i - 3].Close;
+                decimal c4 = points[i - 2].Close;
+                decimal c5 = points[i - 1].Close;
+                decimal c6 = points[i].Close;
+                if (c6 >= c5 || c6 >= c4) continue;
+                if (c2 <= c4 || c0 <= c2) continue;
+                if (c5 >= c3 || c1 <= c3) continue;
+                if (c4 <= c6 || c4 >= c5) continue;
+
+                decimal diff1 = Math.Abs(c3 - c2);
+                decimal diff2 = Math.Abs(c4 - c5);
+                decimal diff3 = Math.Abs(c1 - c0);
+                decimal diff4 = Math.Abs(c1 - c2);
+                decimal diff5 = Math.Abs(c4 - c3);
+                decimal diff6 = Math.Abs(c6 - c5);
+                decimal change1 = Math.Abs((c4 - c2) / c2);
+                decimal change2 = Math.Abs((c5 - c3) / c3);
+
+                if (Math.Abs(diff3 - diff1) / diff3 > _channelTolerancePercentage) continue;
+                if (Math.Abs(diff2 - diff1) / diff1 > _channelTolerancePercentage) continue;
+                if (Math.Abs(diff4 - diff5) / diff4 > _channelTolerancePercentage) continue;
+                if (Math.Abs(diff3 - diff2) / diff3 > _channelTolerancePercentage) continue;
+                if (Math.Abs(diff5 - diff6) / diff5 > _channelTolerancePercentage) continue;
+                if (Math.Abs(change1 - change2) / change1 > _channelTolerancePercentage) continue;
+                for (int x = i - minNumber; x <= i; x++)
+                {
+                    seen.Add(points[x].IndexOHLCV);
+                }
+
+                points[i].Signal = true;
+                points[i - minNumber].Initiation = true;
+            }
+
+            return points;
+            /*var dateList = new List<decimal>();
             var points = SetPeaksVallyes.GetPoints(_peaksFromZigZag);
             for (int i = 6; i < points.Count; i++)
             {
@@ -883,12 +1432,54 @@ namespace Candlestick_Patterns
                 }
             }
 
-            return points;
+            return points;*/
         }
 
         private List<ZigZagObject> BullishRoundingBottomPattern()
         {
-            var dateList = new List<decimal>();
+            var points = GetPoints();
+            var seen = RentDateSet();
+            int count = points.Count;
+            var minNumber = MinimumOhlcvCount(FormationNameEnum.BullishRoundingBottomPattern);
+
+            for (int i = minNumber; i < count; i++)
+            {
+                if (seen.Contains(points[i - minNumber].IndexOHLCV)) continue;
+                decimal c0 = points[i - 12].Close;
+                decimal c1 = points[i - 11].Close;
+                decimal c2 = points[i - 10].Close;
+                decimal c3 = points[i - 9].Close;
+                decimal c4 = points[i - 8].Close;
+                decimal c5 = points[i - 7].Close;
+                decimal c6 = points[i - 6].Close;
+                decimal c7 = points[i - 5].Close;
+                decimal c8 = points[i - 4].Close;
+                decimal c9 = points[i - 3].Close;
+                decimal c10 = points[i - 2].Close;
+                decimal c11 = points[i - 1].Close;
+                decimal c12 = points[i].Close;
+
+                decimal resistanceMin = Math.Min(c4, c6);
+                decimal resistanceMax = Math.Max(c4, c6);
+                decimal roundedMin = Math.Min(c1, Math.Min(c2, Math.Min(c3, Math.Min(c7, Math.Min(c8, Math.Min(c9, c10))))));
+                decimal roundedMax = Math.Max(c1, Math.Max(c2, Math.Max(c3, Math.Max(c7, Math.Max(c8, Math.Max(c9, c10))))));
+
+                if (c5 >= roundedMin) continue;
+                if (roundedMax >= resistanceMin) continue;
+                decimal changeSupportLevel = (resistanceMax - resistanceMin) / resistanceMin;
+                if (changeSupportLevel >= _percentageMargin) continue;
+
+                for (int x = i - minNumber; x <= i; x++)
+                {
+                    seen.Add(points[x].IndexOHLCV);
+                }
+
+                points[i].Signal = true;
+                points[i - minNumber].Initiation = true;
+            }
+
+            return points;
+            /*var dateList = new List<decimal>();
             var points = SetPeaksVallyes.GetPoints(_peaksFromZigZag);
             for (int i = 12; i < points.Count; i++)
             {
@@ -914,12 +1505,63 @@ namespace Candlestick_Patterns
                 }
             }
 
-            return points;
+            return points;*/
         }
 
         private List<ZigZagObject> BearishRoundingTopPattern()
         {
-            var dateList = new List<decimal>();
+            var points = GetPoints();
+            var seen = RentDateSet();
+            int count = points.Count;
+            var minNumber = MinimumOhlcvCount(FormationNameEnum.BearishRoundingTopPattern);
+
+            for (int i = minNumber; i < count; i++)
+            {
+                if (seen.Contains(points[i - minNumber].IndexOHLCV)) continue;
+
+                // Point layout (mirror of RoundingBottomPattern):
+                //   c0   i-10
+                //   c1   i-9   rounded left region
+                //   c2   i-8   rounded left region
+                //   c3   i-7   rounded left region
+                //   c4   i-6   support left
+                //   c5   i-5   highest point (top of dome)
+                //   c6   i-4   support right
+                //   c7   i-3   rounded right region
+                //   c8   i-2   rounded right region
+                //   c9   i-1   rounded right region
+                //   c10  i     breakdown
+                decimal c0 = points[i - 10].Close;
+                decimal c1 = points[i - 9].Close;
+                decimal c2 = points[i - 8].Close;
+                decimal c3 = points[i - 7].Close;
+                decimal c4 = points[i - 6].Close;
+                decimal c5 = points[i - 5].Close;
+                decimal c6 = points[i - 4].Close;
+                decimal c7 = points[i - 3].Close;
+                decimal c8 = points[i - 2].Close;
+                decimal c9 = points[i - 1].Close;
+                decimal c10 = points[i].Close;
+
+                decimal supportMin = Math.Min(c4, c6);
+                decimal supportMax = Math.Max(c4, c6);
+                decimal roundedMin = Math.Min(c1, Math.Min(c2, Math.Min(c3, Math.Min(c7, Math.Min(c8, c9)))));
+                decimal roundedMax = Math.Max(c1, Math.Max(c2, Math.Max(c3, Math.Max(c7, Math.Max(c8, c9)))));
+
+                if (c5 <= roundedMax) continue;
+                if (roundedMin <= supportMin) continue;
+                decimal changeSupportLevel = (supportMax - supportMin) / supportMin;
+                if (changeSupportLevel >= _percentageMargin) continue;
+
+                for (int x = i - minNumber; x <= i; x++)
+                    seen.Add(points[x].IndexOHLCV);
+
+                points[i].Signal = true;
+                points[i - minNumber].Initiation = true;
+            }
+
+            return points;
+            /*var dateList = new List<decimal>();
             var points = SetPeaksVallyes.GetPoints(_peaksFromZigZag);
             for (int i = 10; i < points.Count; i++)
             {
@@ -949,12 +1591,56 @@ namespace Candlestick_Patterns
             }
 
 
-            return points;
+            return points;*/
         }
 
         private List<ZigZagObject> ContinuationDiamondFormation()
         {
-            var dateList = new List<decimal>();
+            var points = GetPoints();
+            var seen = RentDateSet();
+            int count = points.Count;
+            var minNumber = MinimumOhlcvCount(FormationNameEnum.ContinuationDiamondFormation);
+
+            for(int i = minNumber; i < count; i++)
+            {
+                if (seen.Contains(points[i - minNumber].IndexOHLCV)) continue;
+
+                decimal c0 = points[i - 12].Close;
+                decimal c1 = points[i - 11].Close;
+                decimal c2 = points[i - 10].Close;
+                decimal c3 = points[i - 9].Close;
+                decimal c4 = points[i - 8].Close;
+                decimal c5 = points[i - 7].Close;
+                decimal c6 = points[i - 6].Close;
+                decimal c7 = points[i - 5].Close;
+                decimal c8 = points[i - 4].Close;
+                decimal c9 = points[i - 3].Close;
+                decimal c10 = points[i - 2].Close;
+                decimal c11 = points[i - 1].Close;
+                decimal c12 = points[i].Close;
+
+                if (c8 <= c6 || c6 <= c4 || c8 <= c10 || c10 <= c11) continue;
+                if (c9 <= c7 || c9 >= c10 || c7 >= c5) continue;
+                decimal diff1 = Math.Abs(c10 - c9);
+                decimal diff2 = Math.Abs(c8 - c7);
+                decimal diff3 = Math.Abs(c4 - c3);
+                if (diff2 <= diff1 || diff2 <= diff3) continue;
+                if (diff2 <= diff1 || diff2 <= diff3) continue;
+
+                for (int x = -10; x < 1; x++)
+                {
+                    seen.Add(points[i + x].IndexOHLCV);
+                }
+
+                if (seen.Count >= _formationsLenght.Count())
+                {
+                    points[i].Signal = true;
+                    points[i - 10].Initiation = true;
+                }
+            }
+
+            return points;
+            /*var dateList = new List<decimal>();
             var points = SetPeaksVallyes.GetPoints(_peaksFromZigZag);
             for (int i = 12; i < points.Count; i++)
             {
@@ -986,7 +1672,7 @@ namespace Candlestick_Patterns
                 }
             }
 
-            return points;
+            return points;*/
         }
 
         public Dictionary<FormationNameEnum, List<ZigZagObject>> GetAllFormations()
