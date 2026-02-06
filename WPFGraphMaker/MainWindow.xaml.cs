@@ -1,19 +1,33 @@
 ﻿using Candlestick_Patterns;
 using ScottPlot;
+using ScottPlot.Colormaps;
 using ScottPlot.Palettes;
 using ScottPlot.WPF;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
+using System.Linq.Expressions;
 using System.Net.Http;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media.Imaging;
+using Image = System.Windows.Controls.Image;
 
 namespace WPFGraphMaker
 {
+    public class PatternInfo
+    {
+        public string Name { get; set; }
+        public string ImageUrl { get; set; }
+        public string NormalizedName { get; set; }
+        public string Category { get; set; } // e.g., "Patterns", "Formations", "Fibonacci"
+    }
+
     public partial class MainWindow : Window, INotifyPropertyChanged
     {
         private readonly IDataFromJson _data = new DataFromJson();
@@ -26,12 +40,17 @@ namespace WPFGraphMaker
         private int _lastPosition = 100;
         private List<int> _foundPatternIndexList = new();
         int counter = 0;
-
         private bool HasOhlcvData => _pointsOhlcv != null && _pointsOhlcv.Count > 0 && _startPoints > 0;
 
         public int CurrentPatternNumber => _foundPatternIndexList.Count == 0 ? 0 : counter + 1;
         public int TotalPatterns => _foundPatternIndexList.Count;
         private readonly string _sampleFile = Path.Combine(AppContext.BaseDirectory, @"..\..\..\sample_data.json");
+
+        private List<PatternInfo> _patterns;
+        private Window _patternPopup;
+        private string _lastSearchText = "";
+
+        private readonly string _searchPatternBasicPath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, @"..\..\..\..\docs"));
 
         public MainWindow()
         {
@@ -45,8 +64,480 @@ namespace WPFGraphMaker
             };
 
             mainWin.SizeChanged += OnSizeChangedEvent;
-
             WpfPlot1.MouseWheel += OnMouseWheelEvent;
+            InitializePatternSearch();
+        }
+
+        private void InitializePatternSearch()
+        {
+            _patterns = new List<PatternInfo>();
+
+            // Load patterns from multiple markdown files
+            string[] markdownFiles = new[]
+            {
+                "Fibonacci_list.md",
+                "Formations_list.md",
+                "Patterns_list.md",
+            };
+
+            foreach (var markdownPath in markdownFiles)
+            {
+                var path = Path.Combine(_searchPatternBasicPath, markdownPath);
+                if (File.Exists(path))
+                {
+                    LoadPatternsFromMarkdown(path);
+                }
+            }
+
+            patternNameTextBox.TextChanged += PatternNameTextBox_TextChanged;
+        }
+
+        private void LoadPatternsFromMarkdown(string filePath)
+        {
+            try
+            {
+                string content = File.ReadAllText(Path.Combine(_searchPatternBasicPath, filePath));
+
+                // Extract category from filename (e.g., "patterns_example.md" -> "Patterns")
+                string fileName = Path.GetFileNameWithoutExtension(filePath);
+                string category = fileName.Replace("_list", "").Replace("_", " ");
+                category = char.ToUpper(category[0]) + category.Substring(1);
+
+                var pattern = @"<img[^>]*alt\s*=\s*[""']([^""']+)[""'][^>]*src\s*=\s*[""']([^""']+)[""']";
+                var regex = new Regex(pattern, RegexOptions.IgnoreCase);
+
+                var matches = regex.Matches(content);
+
+                foreach (Match match in matches)
+                {
+                    if (match.Groups.Count >= 3)
+                    {
+                        string patternName = match.Groups[1].Value.Trim();
+                        string imageUrl = match.Groups[2].Value.Trim();
+
+                        if (!string.IsNullOrEmpty(patternName) && !string.IsNullOrEmpty(imageUrl))
+                        {
+                            _patterns.Add(new PatternInfo
+                            {
+                                Name = patternName,
+                                ImageUrl = imageUrl,
+                                NormalizedName = NormalizePatternName(patternName),
+                                Category = category
+                            });
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error loading patterns from {filePath}: {ex.Message}", "Error",
+                    MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private string NormalizePatternName(string name)
+        {
+            return name.Replace(" ", "").ToLower();
+        }
+
+        private void PatternNameTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (_suppressTextChanged) return;
+
+            string searchText = patternNameTextBox.Text.Trim();
+            if (searchText == _lastSearchText) return;
+
+            _lastSearchText = searchText;
+
+            if (string.IsNullOrWhiteSpace(searchText))
+            {
+                ClosePatternPopup();
+                return;
+            }
+
+            string normalizedSearch = NormalizePatternName(searchText);
+            var matchingPatterns = _patterns.Where(p => p.NormalizedName.Contains(normalizedSearch)).ToList();
+
+            if (matchingPatterns.Count == 0)
+            {
+                ClosePatternPopup();
+                return;
+            }
+
+            if (matchingPatterns.Count == 1)
+            {
+                SetPatternText(matchingPatterns[0].Name);
+                ShowPatternPopup(matchingPatterns[0]);
+            }
+
+            else
+            {
+                ShowMultiplePatternPopup(matchingPatterns, searchText);
+            }
+
+        }
+
+        private bool _suppressTextChanged;
+        private void SetPatternText(string text)
+        {
+            _suppressTextChanged = true;
+
+            patternNameTextBox.Text = text;
+            patternNameTextBox.CaretIndex = text.Length;
+
+            _lastSearchText = text;
+
+            _suppressTextChanged = false;
+        }
+
+        private void ShowPatternPopup(PatternInfo pattern)
+        {
+            ClosePatternPopup();
+            _patternPopup = new Window
+            {
+                Title = $"Pattern Found: {pattern.Name}",
+                Width = 450,
+                Height = 380,
+                WindowStartupLocation = WindowStartupLocation.CenterOwner,
+                Owner = this,
+                ResizeMode = ResizeMode.NoResize,
+                WindowStyle = WindowStyle.SingleBorderWindow
+            };
+
+            var grid = new Grid { Margin = new Thickness(20) };
+            grid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
+            grid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
+            grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
+            grid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
+
+            var foundText = new TextBlock
+            {
+                Text = pattern.Name,
+                FontSize = 10,
+                FontWeight = FontWeights.Bold,
+                HorizontalAlignment = System.Windows.HorizontalAlignment.Center,
+                Margin = new Thickness(0, 0, 0, 5)
+            };
+            Grid.SetRow(foundText, 0);
+            grid.Children.Add(foundText);
+
+            // Category text
+            var categoryText = new TextBlock
+            {
+                Text = $"Category: {pattern.Category}",
+                FontSize = 12,
+                FontStyle = FontStyles.Italic,
+                Foreground = System.Windows.Media.Brushes.Gray,
+                HorizontalAlignment = System.Windows.HorizontalAlignment.Center,
+                Margin = new Thickness(0, 0, 0, 15)
+            };
+            Grid.SetRow(categoryText, 1);
+            grid.Children.Add(categoryText);
+
+            // Image
+            var imageBorder = new Border
+            {
+                BorderBrush = System.Windows.Media.Brushes.LightGray,
+                BorderThickness = new Thickness(1),
+                Margin = new Thickness(0, 0, 0, 15),
+                MaxWidth = 400,
+                MaxHeight = 250
+            };
+
+            var image = new Image
+            {
+                Stretch = System.Windows.Media.Stretch.Uniform,
+                HorizontalAlignment = System.Windows.HorizontalAlignment.Center,
+                VerticalAlignment = System.Windows.VerticalAlignment.Center
+            };
+
+            imageBorder.Child = image;
+            Grid.SetRow(imageBorder, 2);
+            grid.Children.Add(imageBorder);
+
+            // OK Button
+            var okButton = new Button
+            {
+                Content = "OK",
+                Width = 100,
+                Height = 35,
+                FontSize = 14,
+                HorizontalAlignment = System.Windows.HorizontalAlignment.Center,
+                IsDefault = true
+            };
+            okButton.Click += (s, e) => ClosePatternPopup();
+            Grid.SetRow(okButton, 3);
+            grid.Children.Add(okButton);
+
+            _patternPopup.Content = grid;
+            LoadImageFromUrl(image, pattern.ImageUrl);
+
+            _patternPopup.Show();
+        }
+
+        private void ShowMultiplePatternPopup(List<PatternInfo> patterns, string searchText)
+        {
+            ClosePatternPopup();
+
+            _patternPopup = new Window
+            {
+                Title = $"Multiple Patterns Found ({patterns.Count} matches)",
+                Width = 600,
+                Height = 500,
+                WindowStartupLocation = WindowStartupLocation.CenterOwner,
+                Owner = this,
+                WindowStyle = WindowStyle.SingleBorderWindow
+            };
+
+            var grid = new Grid { Margin = new Thickness(20) };
+            grid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
+            grid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
+            grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
+            grid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
+
+            // Header
+            var header = new TextBlock
+            {
+                Text = "Multiple Patterns Found",
+                FontSize = 18,
+                FontWeight = FontWeights.Bold,
+                HorizontalAlignment = System.Windows.HorizontalAlignment.Center,
+                Margin = new Thickness(0, 0, 0, 10)
+            };
+            Grid.SetRow(header, 0);
+            grid.Children.Add(header);
+
+            // Refine search box
+            var refineBorder = new Border
+            {
+                BorderBrush = System.Windows.Media.Brushes.LightGray,
+                BorderThickness = new Thickness(1),
+                Padding = new Thickness(10),
+                Margin = new Thickness(0, 0, 0, 15),
+                Background = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(248, 248, 248))
+            };
+
+            var refineGrid = new Grid();
+            refineGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
+            refineGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+
+            var refineLabel = new TextBlock
+            {
+                Text = "Refine search:",
+                VerticalAlignment = System.Windows.VerticalAlignment.Center,
+                Margin = new Thickness(0, 0, 10, 0),
+                FontWeight = FontWeights.SemiBold
+            };
+            Grid.SetColumn(refineLabel, 0);
+            refineGrid.Children.Add(refineLabel);
+
+            var refineTextBox = new TextBox
+            {
+                FontSize = 14,
+                Padding = new Thickness(8),
+                Text = searchText
+            };
+            refineTextBox.CaretIndex = refineTextBox.Text.Length;
+            Grid.SetColumn(refineTextBox, 1);
+            refineGrid.Children.Add(refineTextBox);
+
+            refineBorder.Child = refineGrid;
+            Grid.SetRow(refineBorder, 1);
+            grid.Children.Add(refineBorder);
+
+            // ListBox for patterns
+            var listBox = new ListBox
+            {
+                BorderBrush = System.Windows.Media.Brushes.LightGray,
+                BorderThickness = new Thickness(1),
+                Margin = new Thickness(0, 0, 0, 15)
+            };
+
+            // Group patterns by category
+            var groupedPatterns = patterns.OrderBy(p => p.Category).ThenBy(p => p.Name);
+
+            foreach (var pattern in groupedPatterns)
+            {
+                // Create a custom display item
+                var itemPanel = new StackPanel { Orientation = System.Windows.Controls.Orientation.Horizontal, Margin = new Thickness(5) };
+
+                var nameText = new TextBlock
+                {
+                    Text = pattern.Name,
+                    FontWeight = FontWeights.SemiBold,
+                    VerticalAlignment = System.Windows.VerticalAlignment.Center,
+                    Width = 300
+                };
+
+                var categoryText = new TextBlock
+                {
+                    Text = $"[{pattern.Category}]",
+                    FontSize = 11,
+                    FontStyle = FontStyles.Italic,
+                    Foreground = System.Windows.Media.Brushes.Gray,
+                    VerticalAlignment = System.Windows.VerticalAlignment.Center,
+                    Margin = new Thickness(10, 0, 0, 0)
+                };
+
+                itemPanel.Children.Add(nameText);
+                itemPanel.Children.Add(categoryText);
+
+                var listItem = new ListBoxItem { Content = itemPanel, Tag = pattern };
+                listBox.Items.Add(listItem);
+            }
+
+            listBox.MouseDoubleClick += (s, e) =>
+            {
+                if (listBox.SelectedItem is ListBoxItem selectedItem && selectedItem.Tag is PatternInfo selected)
+                {
+                    SetPatternText(selected.NormalizedName);
+                    ShowPatternPopup(selected);
+                }
+            };
+
+            Grid.SetRow(listBox, 2);
+            grid.Children.Add(listBox);
+
+            // Refine search logic
+            refineTextBox.TextChanged += (s, e) =>
+            {
+                string refineSearch = refineTextBox.Text.Trim();
+                listBox.Items.Clear();
+
+                List<PatternInfo> filteredPatterns;
+
+                if (string.IsNullOrWhiteSpace(refineSearch))
+                {
+                    filteredPatterns = patterns;
+                }
+                else
+                {
+                    string normalized = NormalizePatternName(refineSearch);
+                    filteredPatterns = patterns.Where(p => p.NormalizedName.Contains(normalized)).ToList();
+                }
+
+                // Re-populate listbox with filtered patterns
+                var groupedFiltered = filteredPatterns.OrderBy(p => p.Category).ThenBy(p => p.Name);
+
+                foreach (var pattern in groupedFiltered)
+                {
+                    var itemPanel = new StackPanel { Orientation = System.Windows.Controls.Orientation.Horizontal, Margin = new Thickness(5) };
+
+                    var nameText = new TextBlock
+                    {
+                        Text = pattern.Name,
+                        FontWeight = FontWeights.SemiBold,
+                        VerticalAlignment = System.Windows.VerticalAlignment.Center,
+                        Width = 300
+                    };
+
+                    var categoryText = new TextBlock
+                    {
+                        Text = $"[{pattern.Category}]",
+                        FontSize = 11,
+                        FontStyle = FontStyles.Italic,
+                        Foreground = System.Windows.Media.Brushes.Gray,
+                        VerticalAlignment = System.Windows.VerticalAlignment.Center,
+                        Margin = new Thickness(10, 0, 0, 0)
+                    };
+
+                    itemPanel.Children.Add(nameText);
+                    itemPanel.Children.Add(categoryText);
+
+                    var listItem = new ListBoxItem { Content = itemPanel, Tag = pattern };
+                    listBox.Items.Add(listItem);
+                }
+
+                if (filteredPatterns.Count == 1)
+                    listBox.SelectedIndex = 0;
+            };
+
+            // Buttons
+            var buttonPanel = new StackPanel
+            {
+                Orientation = System.Windows.Controls.Orientation.Horizontal,
+                HorizontalAlignment = System.Windows.HorizontalAlignment.Center
+            };
+
+            var viewButton = new Button
+            {
+                Content = "View Selected",
+                Width = 120,
+                Height = 35,
+                FontSize = 14,
+                Margin = new Thickness(0, 0, 10, 0),
+                IsDefault = true,
+                IsEnabled = false
+            };
+            viewButton.Click += (s, e) =>
+            {
+                if (listBox.SelectedItem is ListBoxItem selectedItem && selectedItem.Tag is PatternInfo selected)
+                {
+                    ShowPatternPopup(selected);
+                }
+            };
+
+            listBox.SelectionChanged += (s, e) =>
+            {
+                viewButton.IsEnabled = listBox.SelectedItem != null;
+            };
+
+            var cancelButton = new Button
+            {
+                Content = "Cancel",
+                Width = 100,
+                Height = 35,
+                FontSize = 14,
+                IsCancel = true
+            };
+            cancelButton.Click += (s, e) => ClosePatternPopup();
+
+            buttonPanel.Children.Add(viewButton);
+            buttonPanel.Children.Add(cancelButton);
+
+            Grid.SetRow(buttonPanel, 3);
+            grid.Children.Add(buttonPanel);
+
+            _patternPopup.Content = grid;
+            _patternPopup.Show();
+
+            refineTextBox.Focus();
+        }
+
+        private async void LoadImageFromUrl(Image imageControl, string url)
+        {
+            try
+            {
+                using (var client = new HttpClient())
+                {
+                    var imageBytes = await client.GetByteArrayAsync(url);
+
+                    var bitmap = new BitmapImage();
+                    using (var stream = new MemoryStream(imageBytes))
+                    {
+                        bitmap.BeginInit();
+                        bitmap.CacheOption = BitmapCacheOption.OnLoad;
+                        bitmap.StreamSource = stream;
+                        bitmap.EndInit();
+                        bitmap.Freeze();
+                    }
+
+                    imageControl.Source = bitmap;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error loading image: {ex.Message}", "Error",
+                    MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+        private void ClosePatternPopup()
+        {
+            if (_patternPopup != null)
+            {
+                _patternPopup.Close();
+                _patternPopup = null;
+            }
         }
 
         private void OnMouseWheelEvent(object sender, MouseWheelEventArgs e)
