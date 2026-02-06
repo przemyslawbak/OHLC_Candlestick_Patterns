@@ -151,37 +151,7 @@ namespace Candlestick_Patterns
 
             return points;
         }
-
-        /*internal override bool FirstCheck(List<ZigZagObject> points, int i, string pattern, string fibbPattern)
-        {
-            if (fibbPattern == "abcdPattern")
-            {
-                return FirstCheckForABCDPattern(points, i, pattern);
-            }
-            if (fibbPattern == "gartleyPattern")
-            {
-                return FirstCheckForGartleyPattern(points, i, pattern);
-            }
-            if (fibbPattern == "butterflyPattern")
-            {
-                return FirstCheckButterflyPattern(points, i, pattern);
-            }
-            if (fibbPattern == "threeExtensionPattern")
-            {
-                return FirstCheckFor3ExtensionPattern(points, i, pattern);
-            }
-            if (fibbPattern == "threeRetracementPattern")
-            {
-                return FirstCheckFor3RetracementPattern(points, i, pattern);
-            }
-            if (fibbPattern == "threeDrivePattern")
-            {
-                return FirstCheckFor3DrivePattern(points, i, pattern);
-            }
-
-            return false;
-        }*/
-
+       
         internal override bool FirstCheck(List<ZigZagObject> points, int i, string pattern, string fibbPattern)
         {
             return fibbPattern switch
@@ -209,36 +179,7 @@ namespace Candlestick_Patterns
                 _ => false
             };
         }
-
-        /*internal override bool SecondCheck(List<ZigZagObject> points, int i, string pattern, string fibbPattern)
-        {
-            if (fibbPattern == "abcdPattern")
-            {
-                return SecondCheckForABCDPattern(points, i, pattern);
-            }
-            if (fibbPattern == "gartleyPattern")
-            {
-                return SecondCheckForGartleyPattern(points, i, pattern);
-            }
-            if (fibbPattern == "butterflyPattern")
-            {
-                return SecondCheckForButterflyPattern(points, i, pattern);
-            }
-            if (fibbPattern == "threeExtensionPattern")
-            {
-                return SecondCheckFor3ExtensionPattern(points, i, pattern);
-            } 
-            if (fibbPattern == "threeRetracementPattern")
-            {
-                return SecondCheckFor3RetracementPattern(points, i, pattern);
-            }
-            if (fibbPattern == "threeDrivePattern")
-            {
-                return SecondCheckFor3DrivePattern(points, i, pattern);
-            }
-            return false;
-        }*/
-
+       
         private readonly struct PriceWindow
         {
             public readonly decimal C0, C1, C2, C3, C4, C5;
@@ -272,30 +213,6 @@ namespace Candlestick_Patterns
             }
 
             return false;
-
-
-            if (pattern == "bullish")
-            {
-                if (points[i].Close < points[i - 1].Close && points[i - 1].Close > points[i - 2].Close && points[i - 2].Close < points[i - 3].Close && points[i - 3].Close > points[i - 4].Close && points[i - 4].Close < points[i - 5].Close)
-                {
-                    if (points[i - 1].Close < points[i - 3].Close && points[i - 3].Close < points[i - 5].Close && points[i - 2].Close > points[i].Close && points[i - 2].Close < points[i - 4].Close)
-                    {
-                        return true;
-                    }
-                }
-            }
-
-            if (pattern == "bearish")
-            {
-                if (points[i].Close > points[i - 1].Close && points[i - 1].Close < points[i - 2].Close && points[i - 2].Close > points[i - 3].Close && points[i - 3].Close < points[i - 4].Close && points[i - 4].Close > points[i - 5].Close)
-                {
-                    if (points[i - 1].Close > points[i - 3].Close && points[i - 3].Close > points[i - 5].Close && points[i - 2].Close < points[i].Close && points[i - 2].Close > points[i - 4].Close)
-                    {
-                        return true;
-                    }
-                }
-            }
-            return false;
         }
 
         private bool SecondCheckFor3DrivePattern(List<ZigZagObject> points, int i, string pattern) 
@@ -314,14 +231,8 @@ namespace Candlestick_Patterns
             var check127extensionCdCb = Support.CheckIfRetracemntIsInRange(range127, range127, extensionCdCb);
             if (!check127extensionCdCb) return false;
             var check127extensionAxAc = Support.CheckIfRetracemntIsInRange(range127, range127, extensionAxAc);
+
             return check127extensionAxAc;
-
-            if ((check618retracementBcBa || check786retracementBcBa) && (check786retracementX0XA || check618retracementX0XA) && check127extensionCdCb && check127extensionAxAc)
-            {
-                return true;
-            }
-
-            return false;
         }
 
         private static bool FirstCheckForGartleyPattern(List<ZigZagObject> points, int i, string pattern)
@@ -335,24 +246,6 @@ namespace Candlestick_Patterns
                 "bearish" => p.C0 > p.C1 && p.C1 < p.C2 && p.C2 > p.C3 && p.C3 < p.C4 && p.C2 < p.C0 && p.C2 < p.C4,
                 _ => false
             };
-
-
-            if (pattern == "bullish")
-            {
-                if (points[i].Close < points[i - 1].Close && points[i - 1].Close > points[i - 2].Close && points[i - 2].Close < points[i - 3].Close && points[i - 3].Close > points[i - 4].Close && points[i - 2].Close > points[i].Close && points[i - 2].Close > points[i - 4].Close)
-                {
-                    return true;
-                }
-            }
-            if (pattern == "bearish")
-            {
-                if (points[i].Close > points[i - 1].Close && points[i - 1].Close < points[i - 2].Close && points[i - 2].Close > points[i - 3].Close && points[i - 3].Close < points[i - 4].Close && points[i - 2].Close < points[i].Close && points[i - 2].Close < points[i - 4].Close)
-                {
-                    return true;
-                }
-            }
-            return false; 
-
         }
 
         private static bool SecondCheckForGartleyPattern(List<ZigZagObject> points, int i, string pattern)
@@ -372,14 +265,8 @@ namespace Candlestick_Patterns
             if (!check786_886retracement) return false;
             var check127_161retracement1 = Support.CheckIfRetracemntIsInRange(range127, range161, retracementCdCb);
             if (!check127_161retracement1) return false;
+
             return true;
-
-            if (check618_786retracement1 && (check381_886retracement || check618_786retracement2) && check786_886retracement && check127_161retracement1)
-            {
-                return true;
-            }
-
-            return false;
         }
 
         private static bool FirstCheckButterflyPattern(List<ZigZagObject> points, int i, string pattern)
@@ -394,22 +281,6 @@ namespace Candlestick_Patterns
                 "bearish" => p.C0 > p.C1 && p.C1 < p.C2 && p.C2 > p.C3 && p.C3 < p.C4 && p.C2 < p.C0 && p.C2 < p.C4,
                 _ => false
             };
-
-            if (pattern == "bullish")
-            {
-                if (points[i].Close < points[i - 1].Close && points[i - 1].Close > points[i - 2].Close && points[i - 2].Close < points[i - 3].Close && points[i - 3].Close > points[i - 4].Close && points[i - 2].Close > points[i].Close && points[i - 2].Close > points[i - 4].Close)
-                {
-                    return true;
-                }
-            }
-            if (pattern == "bearish")
-            {
-                if (points[i].Close > points[i - 1].Close && points[i - 1].Close < points[i - 2].Close && points[i - 2].Close > points[i - 3].Close && points[i - 3].Close < points[i - 4].Close && points[i - 2].Close < points[i].Close && points[i - 2].Close < points[i - 4].Close)
-                {
-                    return true;
-                }
-            }
-            return false;
         }
 
         private static bool SecondCheckForButterflyPattern(List<ZigZagObject> points, int i, string pattern)
@@ -425,13 +296,8 @@ namespace Candlestick_Patterns
             var check382_886retracement = Support.CheckIfRetracemntIsInRange(range382, range886, retracementBcBa);
             if (!check382_886retracement) return false;
             var check161_224retracement = Support.CheckIfRetracemntIsInRange(range161, range224, retracementCdAb);
-            return check161_224retracement;
 
-            if (check786retracement && check382_886retracement && check161_224retracement)
-            {
-                return true;
-            }
-            return false;
+            return check161_224retracement;
         }
 
         private static bool FirstCheckForABCDPattern(List<ZigZagObject> points, int i, string pattern)
@@ -445,22 +311,6 @@ namespace Candlestick_Patterns
                 "bearish" => p.C0 > p.C1 && p.C1 < p.C2 && p.C2 > p.C3,
                 _ => false
             };
-
-            if (pattern == "bullish")
-            {
-                if (points[i].Close < points[i - 1].Close && points[i - 1].Close > points[i - 2].Close && points[i - 2].Close < points[i - 3].Close)
-                {
-                    return true;
-                }
-            }
-            if (pattern == "bearish")
-            {
-                if (points[i].Close > points[i - 1].Close && points[i - 1].Close < points[i - 2].Close && points[i - 2].Close > points[i - 3].Close)
-                {
-                    return true;
-                }
-            }
-            return false;
         }
 
         private static bool SecondCheckForABCDPattern(List<ZigZagObject> points, int i, string pattern)
@@ -514,22 +364,6 @@ namespace Candlestick_Patterns
                 "bearish" => p.C2 < p.C1 && p.C1 > p.C2,
                 _ => false
             };
-
-            if (pattern == "bearish")
-            {
-                if (points[i - 1].Close < points[i - 2].Close && points[i - 1].Close < points[i].Close)
-                {
-                    return true;
-                }
-            }
-            if (pattern == "bullish")
-            {
-                if (points[i - 2].Close < points[i - 1].Close && points[i - 1].Close > points[i - 2].Close)
-                {
-                    return true;
-                }
-            }
-            return false;
         }
 
         private static bool SecondCheckFor3RetracementPattern(List<ZigZagObject> points, int i, string pattern)
@@ -576,22 +410,6 @@ namespace Candlestick_Patterns
                 "bearish" => p.C0 < p.C1 && p.C1 > p.C2 && p.C2 < p.C3,
                 _ => false
             };
-
-            if (pattern == "bullish") 
-            {
-                if (points[i].Close > points[i - 1].Close && points[i - 1].Close <points[i - 2].Close &&points[i - 2].Close > points[i - 3].Close)
-                {
-                    return true;
-                }
-            }
-            if (pattern == "bearish")
-            {
-                if (points[i].Close < points[i - 1].Close && points[i - 1].Close >points[i - 2].Close &&points[i - 2].Close < points[i - 3].Close)
-                {
-                    return true;
-                }
-            }
-            return false;
         }
 
         
@@ -599,13 +417,6 @@ namespace Candlestick_Patterns
         public List<string> GetFibonacciAllMethodNames()
         {
             return _patternNameMapping.Keys.ToList();
-
-            List<string> methods = new List<string>();
-            foreach (MethodInfo item in typeof(Fibonacci).GetMethods(BindingFlags.IgnoreCase |BindingFlags.NonPublic | BindingFlags.Instance))
-            {
-                methods.Add(item.Name);
-            }
-            return methods;
         }
 
         public List<ZigZagObject> GetFibonacciSignalsList(string patternName)
@@ -618,20 +429,8 @@ namespace Candlestick_Patterns
             }
 
             return Data;
-
-            var methodName = patternName.Trim().Replace(" ", "");
-            Type thisType = this.GetType();
-            MethodInfo theMethod = thisType.GetMethod(methodName, BindingFlags.IgnoreCase | BindingFlags.NonPublic | BindingFlags.Instance);
-            if (theMethod != null)
-            {
-                List<ZigZagObject> result = (List<ZigZagObject>)theMethod.Invoke(this, null);
-                return result;
-            }
-            else
-            {
-                return Data;
-            }
         }
+
         public List<ZigZagObject> GetPatternSignals(PatternType pattern)
         {
             if (_patternMethods.TryGetValue(pattern, out var method))
@@ -651,9 +450,6 @@ namespace Candlestick_Patterns
             }
 
             return 0;
-
-            var methodName = patternName.Trim().Replace(" ", "");
-            return GetFibonacciSignalsList(methodName).Where(x => x.Signal == true).Count();
         }
         public int GetPatternSignalsCount(PatternType pattern)
         {
@@ -671,15 +467,8 @@ namespace Candlestick_Patterns
         public List<string> GetAllMethodNames()
         {
             return _patternNameMapping.Keys.Where(x => x.Contains("Bullish") || x.Contains("Bearish") || x.Contains("Continuation")).ToList();
-
-            List<string> methods = new List<string>();
-            foreach (MethodInfo item in typeof(Fibonacci).GetMethods(BindingFlags.IgnoreCase | BindingFlags.NonPublic | BindingFlags.Instance))
-            {
-                methods.Add(item.Name);
-            }
-
-            return methods.Where(x => x.Contains("Bullish") || x.Contains("Bearish") || x.Contains("Continuation")).ToList();
         }
+
         public List<ZigZagObject> GetSignals(string patternName)
         {
             if (TryParsePattern(patternName, out PatternType patternType))
@@ -692,28 +481,13 @@ namespace Candlestick_Patterns
         public int GetSignalsCount(string formationName)
         {
             return GetFibonacciSignalsCount(formationName);
-
-            var methodName = formationName.Trim().Replace(" ", "");
-            return GetFormationsSignalsList(methodName).Where(x => x.Signal == true).Count();
         }
 
         public List<ZigZagObject> GetFormationsSignalsList(string formationName)
         {
             return GetFibonacciSignalsList(formationName);
-
-            var methodName = formationName.Trim().Replace(" ", "");
-            Type thisType = this.GetType();
-            MethodInfo theMethod = thisType.GetMethod(methodName, BindingFlags.IgnoreCase | BindingFlags.NonPublic | BindingFlags.Instance);
-            if (theMethod != null)
-            {
-                List<ZigZagObject> result = (List<ZigZagObject>)theMethod.Invoke(this, null);
-                return result;
-            }
-            else
-            {
-                return Data;
-            }
         }
+
         public Dictionary<PatternType, int> GetAllPatternCounts()
         {
             var results = new Dictionary<PatternType, int>(_patternMethods.Count);
