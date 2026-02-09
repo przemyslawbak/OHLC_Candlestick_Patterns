@@ -1,4 +1,5 @@
-﻿using OHLC_Candlestick_Patterns;
+﻿using Enumerators;
+using OHLC_Candlestick_Patterns;
 using System.Reflection;
 
 namespace Candlestick_Patterns
@@ -26,31 +27,6 @@ namespace Candlestick_Patterns
         private Dictionary<FormationNameEnum, Func<List<ZigZagObject>>> _dispatchTable;
         private List<string> _formationNames;
 
-        public enum FormationNameEnum
-        {
-            None,
-            BearishDoubleTops, 
-            BearishTripleTops, 
-            BullishDoubleBottoms, 
-            BullishTripleBottoms,
-            BearishHeadAndShoulders,
-            BullishCupAndHandle,
-            BearishInverseCupAndHandle,
-            BullishInverseHeadAndShoulders,
-            BullishAscendingTriangle,
-            ContinuationSymmetricTriangle,
-            BearishDescendingTriangle,
-            BullishFallingWedge, 
-            BearishRisingWedge,
-            BearishBearFlagsPennants,
-            BullishBullFlagsPennants,
-            BullishAscendingPriceChannel,
-            BearishDescendingPriceChannel,
-            BullishRoundingBottomPattern,
-            BearishRoundingTopPattern,
-            ContinuationDiamondFormation
-
-        }
         public Formations(List<OhlcvObject> dataOhlcv)
         {
             _dataOhlcv = dataOhlcv;
