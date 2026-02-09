@@ -66,7 +66,6 @@ namespace Candlestick_Patterns
             _maximumOpenDifference = _averageBodySize * 2;
         }
 
-        [PatternMethod(PatternType.Bearish, lookbackPeriod: 5)]
         private bool Is2Crows(int i)
         {
             var c0 = _data[i - 0];
@@ -87,12 +86,12 @@ namespace Candlestick_Patterns
             return false;
         }
 
+        [PatternMethod(PatternType.Bearish, lookbackPeriod: 5)]
         private List<OhlcvObject> Bearish2Crows()
         {
             return DetectPattern(Is2Crows, lookbackPeriod: 5);
         }
 
-        [PatternMethod(PatternType.Bearish, lookbackPeriod: 5)]
         private bool Is3BlackCrows(int i)
         {
             var c0 = _data[i - 0];
@@ -112,12 +111,12 @@ namespace Candlestick_Patterns
             return false;
         }
 
+        [PatternMethod(PatternType.Bearish, lookbackPeriod: 5)]
         private List<OhlcvObject> Bearish3BlackCrows()
         {
             return DetectPattern(Is3BlackCrows, lookbackPeriod: 5);
         }
 
-        [PatternMethod(PatternType.Bearish, lookbackPeriod: 5)]
         private bool IsInsideDown(int i)
         {
             var c0 = _data[i - 0];
@@ -138,12 +137,12 @@ namespace Candlestick_Patterns
             return false;
         }
 
+        [PatternMethod(PatternType.Bearish, lookbackPeriod: 5)]
         private List<OhlcvObject> Bearish3InsideDown()
         {
             return DetectPattern(IsInsideDown, lookbackPeriod: 5);
         }
 
-        [PatternMethod(PatternType.Bearish, lookbackPeriod: 5)]
         private bool Is3OutsideDown(int i)
         {
             var c0 = _data[i - 0];
@@ -164,12 +163,11 @@ namespace Candlestick_Patterns
             return false;
         }
 
+        [PatternMethod(PatternType.Bearish, lookbackPeriod: 5)]
         private List<OhlcvObject> Bearish3OutsideDown()
         {
             return DetectPattern(Is3OutsideDown, lookbackPeriod: 5);
         }
-
-        [PatternMethod(PatternType.Bearish, lookbackPeriod: 5)]
         private bool Is3LineStrike(int i)
         {
             var c0 = _data[i - 0];
@@ -193,12 +191,13 @@ namespace Candlestick_Patterns
             return false;
         }
 
+
+        [PatternMethod(PatternType.Bearish, lookbackPeriod: 5)]
         private List<OhlcvObject> Bearish3LineStrike()
         {
             return DetectPattern(Is3LineStrike, lookbackPeriod: 5);
         }
 
-        [PatternMethod(PatternType.Bearish, lookbackPeriod: 5)]
         private bool IsAdvanceBlock(int i)
         {
             var c0 = _data[i - 0];
@@ -219,12 +218,12 @@ namespace Candlestick_Patterns
             return false;
         }
 
+        [PatternMethod(PatternType.Bearish, lookbackPeriod: 5)]
         private List<OhlcvObject> BearishAdvanceBlock()
         {
             return DetectPattern(IsAdvanceBlock, lookbackPeriod: 5);
         }
 
-        [PatternMethod(PatternType.Bearish, lookbackPeriod: 5)]
         private bool IsBeltHold2(int i)
         {
             var c0 = _data[i - 0];
@@ -241,12 +240,12 @@ namespace Candlestick_Patterns
             return false;
         }
 
+        [PatternMethod(PatternType.Bearish, lookbackPeriod: 5)]
         private List<OhlcvObject> BearishBeltHold()
         {
             return DetectPattern(IsBeltHold2, lookbackPeriod: 5);
         }
 
-        [PatternMethod(PatternType.Bearish, lookbackPeriod: 5)]
         private bool IsBlackClosingMarubozu(int i)
         {
             var candle = _data[i - 0];
@@ -254,12 +253,12 @@ namespace Candlestick_Patterns
             return (candle.Open > candle.Close && candle.High > candle.Open && candle.Close == candle.Low && -GetBodySizePercentSigned(candle) > _minimumCandleSize);
         }
 
+        [PatternMethod(PatternType.Bearish, lookbackPeriod: 5)]
         private List<OhlcvObject> BearishBlackClosingMarubozu()
         {
             return DetectPattern(IsBlackClosingMarubozu, lookbackPeriod: 5);
         }
 
-        [PatternMethod(PatternType.Bearish, lookbackPeriod: 5)]
         private bool IsBlackMarubozu(int i)
         {
             var candle = _data[i - 0];
@@ -267,12 +266,11 @@ namespace Candlestick_Patterns
             return (candle.Open > candle.Close && candle.High == candle.Open && candle.Close == candle.Low && -GetBodySizePercentSigned(candle) > _minimumCandleSize);
         }
 
+        [PatternMethod(PatternType.Bearish, lookbackPeriod: 5)]
         private List<OhlcvObject> BearishBlackMarubozu()
         {
             return DetectPattern(IsBlackMarubozu, lookbackPeriod: 5);
         }
-
-        [PatternMethod(PatternType.Bearish, lookbackPeriod: 5)]
         private bool IsBlackOpeningMarubozu(int i)
         {
             var candle = _data[i - 0];
@@ -280,12 +278,13 @@ namespace Candlestick_Patterns
             return (candle.Open > candle.Close && candle.High == candle.Open && candle.Close > candle.Low && -GetBodySizePercentSigned(candle) > _minimumCandleSize);
         }
 
+
+        [PatternMethod(PatternType.Bearish, lookbackPeriod: 5)]
         private List<OhlcvObject> BearishBlackOpeningMarubozu()
         {
             return DetectPattern(IsBlackOpeningMarubozu, lookbackPeriod: 5);
         }
 
-        [PatternMethod(PatternType.Bearish, lookbackPeriod: 5)]
         private bool IsBreakaway(int i)
         {
             var c0 = _data[i - 0];
@@ -314,12 +313,12 @@ namespace Candlestick_Patterns
             return false;
         }
 
+        [PatternMethod(PatternType.Bearish, lookbackPeriod: 5)]
         private List<OhlcvObject> BearishBreakaway()
         {
             return DetectPattern(IsBreakaway, lookbackPeriod: 5);
         }
 
-        [PatternMethod(PatternType.Bearish, lookbackPeriod: 5)]
         private bool IsDeliberation(int i)
         {
             var c0 = _data[i - 0];
@@ -340,12 +339,12 @@ namespace Candlestick_Patterns
             return false;
         }
 
+        [PatternMethod(PatternType.Bearish, lookbackPeriod: 5)]
         private List<OhlcvObject> BearishDeliberation()
         {
             return DetectPattern(IsDeliberation, lookbackPeriod: 5);
         }
 
-        [PatternMethod(PatternType.Bearish, lookbackPeriod: 5)]
         private bool IsDarkCloudCover(int i)
         {
             var c0 = _data[i - 0];
@@ -362,12 +361,12 @@ namespace Candlestick_Patterns
             return false;
         }
 
+        [PatternMethod(PatternType.Bearish, lookbackPeriod: 5)]
         private List<OhlcvObject> BearishDarkCloudCover()
         {
             return DetectPattern(IsDarkCloudCover, lookbackPeriod: 5);
         }
 
-        [PatternMethod(PatternType.Bearish, lookbackPeriod: 5)]
         private bool IsDojiStar(int i)
         {
             var c0 = _data[i - 0];
@@ -384,12 +383,12 @@ namespace Candlestick_Patterns
             return false;
         }
 
+        [PatternMethod(PatternType.Bearish, lookbackPeriod: 5)]
         private List<OhlcvObject> BearishDojiStar()
         {
             return DetectPattern(IsDojiStar, lookbackPeriod: 5);
         }
 
-        [PatternMethod(PatternType.Bearish, lookbackPeriod: 5)]
         private bool IsDownsideGap3Methods(int i)
         {
             var c0 = _data[i - 0];
@@ -410,12 +409,12 @@ namespace Candlestick_Patterns
             return false;
         }
 
+        [PatternMethod(PatternType.Bearish, lookbackPeriod: 5)]
         private List<OhlcvObject> BearishDownsideGap3Methods()
         {
             return DetectPattern(IsDownsideGap3Methods, lookbackPeriod: 5);
         }
 
-        [PatternMethod(PatternType.Bearish, lookbackPeriod: 5)]
         private bool IsDownsideTasukiGap(int i)
         {
             var c0 = _data[i - 0];
@@ -436,12 +435,12 @@ namespace Candlestick_Patterns
             return false;
         }
 
+        [PatternMethod(PatternType.Bearish, lookbackPeriod: 5)]
         private List<OhlcvObject> BearishDownsideTasukiGap()
         {
             return DetectPattern(IsDownsideTasukiGap, lookbackPeriod: 5);
         }
 
-        [PatternMethod(PatternType.Bearish, lookbackPeriod: 5)]
         private bool IsDragonflyDoji(int index)
         {
             var c0 = _data[index - 0];
@@ -449,12 +448,12 @@ namespace Candlestick_Patterns
             return (Math.Abs(100 * (c0.High - c0.Close) / c0.High) < _maximumDojiBodySize && Math.Abs(GetBodySizePercentSigned(c0)) < _maximumDojiBodySize && Math.Abs(100 * (c0.High - c0.Low) / c0.High) > _minimumCandleShadowSize);
         }
 
+        [PatternMethod(PatternType.Bearish, lookbackPeriod: 5)]
         private List<OhlcvObject> BearishDragonflyDoji()
         {
             return DetectPattern(IsDragonflyDoji, lookbackPeriod: 5);
         }
 
-        [PatternMethod(PatternType.Bearish, lookbackPeriod: 5)]
         private bool IsEngulfing(int i)
         {
             var c0 = _data[i - 0];
@@ -472,12 +471,12 @@ namespace Candlestick_Patterns
         }
 
 
+        [PatternMethod(PatternType.Bearish, lookbackPeriod: 5)]
         private List<OhlcvObject> BearishEngulfing()
         {
             return DetectPattern(IsEngulfing, lookbackPeriod: 5);
         }
 
-        [PatternMethod(PatternType.Bearish, lookbackPeriod: 5)]
         private bool IsEveningDojiStar(int i)
         {
             var c0 = _data[i - 0];
@@ -498,12 +497,12 @@ namespace Candlestick_Patterns
             return false;
         }
 
+        [PatternMethod(PatternType.Bearish, lookbackPeriod: 5)]
         private List<OhlcvObject> BearishEveningDojiStar()
         {
             return DetectPattern(IsEveningDojiStar, lookbackPeriod: 5);
         }
 
-        [PatternMethod(PatternType.Bearish, lookbackPeriod: 5)]
         private bool IsEveningStar(int i)
         {
             var c0 = _data[i - 0];
@@ -524,12 +523,12 @@ namespace Candlestick_Patterns
             return false;
         }
 
+        [PatternMethod(PatternType.Bearish, lookbackPeriod: 5)]
         private List<OhlcvObject> BearishEveningStar()
         {
             return DetectPattern(IsEveningStar, lookbackPeriod: 5);
         }
 
-        [PatternMethod(PatternType.Bearish, lookbackPeriod: 5)]
         private bool IsFalling3Methods(int i)
         {
             var c0 = _data[i - 0];
@@ -558,12 +557,12 @@ namespace Candlestick_Patterns
             return false;
         }
 
+        [PatternMethod(PatternType.Bearish, lookbackPeriod: 5)]
         private List<OhlcvObject> BearishFalling3Methods()
         {
             return DetectPattern(IsFalling3Methods, lookbackPeriod: 5);
         }
 
-        [PatternMethod(PatternType.Bearish, lookbackPeriod: 5)]
         private bool IsGravestoneDoji(int i)
         {
             var c0 = _data[i - 0];
@@ -580,12 +579,12 @@ namespace Candlestick_Patterns
             return false;
         }
 
+        [PatternMethod(PatternType.Bearish, lookbackPeriod: 5)]
         private List<OhlcvObject> BearishGravestoneDoji()
         {
             return DetectPattern(IsGravestoneDoji, lookbackPeriod: 5);
         }
 
-        [PatternMethod(PatternType.Bearish, lookbackPeriod: 5)]
         private bool IsHarami(int i)
         {
             var c0 = _data[i - 0];
@@ -603,12 +602,12 @@ namespace Candlestick_Patterns
         }
 
 
+        [PatternMethod(PatternType.Bearish, lookbackPeriod: 5)]
         private List<OhlcvObject> BearishHarami()
         {
             return DetectPattern(IsHarami, lookbackPeriod: 5);
         }
 
-        [PatternMethod(PatternType.Bearish, lookbackPeriod: 5)]
         private bool IsIdentical3Crows(int i)
         {
             var c0 = _data[i - 0];
@@ -630,12 +629,12 @@ namespace Candlestick_Patterns
         }
 
 
+        [PatternMethod(PatternType.Bearish, lookbackPeriod: 5)]
         private List<OhlcvObject> BearishIdentical3Crows()
         {
             return DetectPattern(IsIdentical3Crows, lookbackPeriod: 5);
         }
 
-        [PatternMethod(PatternType.Bearish, lookbackPeriod: 5)]
         private bool IsHaramiCross(int i)
         {
             var c0 = _data[i - 0];
@@ -652,12 +651,12 @@ namespace Candlestick_Patterns
             return false;
         }
 
+        [PatternMethod(PatternType.Bearish, lookbackPeriod: 5)]
         private List<OhlcvObject> BearishHaramiCross()
         {
             return DetectPattern(IsHaramiCross, lookbackPeriod: 5);
         }
 
-        [PatternMethod(PatternType.Bearish, lookbackPeriod: 5)]
         private bool IsInNeck(int i)
         {
             var c0 = _data[i - 0];
@@ -675,12 +674,12 @@ namespace Candlestick_Patterns
         }
 
 
+        [PatternMethod(PatternType.Bearish, lookbackPeriod: 5)]
         private List<OhlcvObject> BearishInNeck()
         {
             return DetectPattern(IsInNeck, lookbackPeriod: 5);
         }
 
-        [PatternMethod(PatternType.Bearish, lookbackPeriod: 5)]
         private bool IsKicking(int i)
         {
             var c0 = _data[i - 0];
@@ -697,12 +696,12 @@ namespace Candlestick_Patterns
             return false;
         }
 
+        [PatternMethod(PatternType.Bearish, lookbackPeriod: 5)]
         private List<OhlcvObject> BearishKicking()
         {
             return DetectPattern(IsKicking, lookbackPeriod: 5);
         }
 
-        [PatternMethod(PatternType.Bearish, lookbackPeriod: 5)]
         private bool IsLongBlackCandelstick(int index)
         {
             var candle = _data[index];
@@ -710,12 +709,12 @@ namespace Candlestick_Patterns
             return (candle.Open > candle.Close && -GetBodySizePercentSigned(candle) > _minimumCandleSize);
         }
 
+        [PatternMethod(PatternType.Bearish, lookbackPeriod: 5)]
         private List<OhlcvObject> BearishLongBlackCandelstick()
         {
             return DetectPattern(IsLongBlackCandelstick, lookbackPeriod: 5);
         }
 
-        [PatternMethod(PatternType.Bearish, lookbackPeriod: 5)]
         private bool IsMeetingLines(int i)
         {
             var c0 = _data[i - 0];
@@ -732,12 +731,13 @@ namespace Candlestick_Patterns
             return false;
         }
 
+
+        [PatternMethod(PatternType.Bearish, lookbackPeriod: 5)]
         private List<OhlcvObject> BearishMeetingLines()
         {
             return DetectPattern(IsMeetingLines, lookbackPeriod: 5);
         }
 
-        [PatternMethod(PatternType.Bearish, lookbackPeriod: 5)]
         private bool IsOnNeck(int i)
         {
             var c0 = _data[i - 0];
@@ -754,12 +754,12 @@ namespace Candlestick_Patterns
             return false;
         }
 
+        [PatternMethod(PatternType.Bearish, lookbackPeriod: 5)]
         private List<OhlcvObject> BearishOnNeck()
         {
             return DetectPattern(IsOnNeck, lookbackPeriod: 5);
         }
 
-        [PatternMethod(PatternType.Bearish, lookbackPeriod: 5)]
         private bool IsSeparatingLines(int i)
         {
             var c0 = _data[i - 0];
@@ -776,12 +776,12 @@ namespace Candlestick_Patterns
             return false;
         }
 
+        [PatternMethod(PatternType.Bearish, lookbackPeriod: 5)]
         private List<OhlcvObject> BearishSeparatingLines()
         {
             return DetectPattern(IsSeparatingLines, lookbackPeriod: 5);
         }
 
-        [PatternMethod(PatternType.Bearish, lookbackPeriod: 5)]
         private bool IsShootingStar(int i)
         {
             var c0 = _data[i - 0];
@@ -798,12 +798,12 @@ namespace Candlestick_Patterns
             return false;
         }
 
+        [PatternMethod(PatternType.Bearish, lookbackPeriod: 5)]
         private List<OhlcvObject> BearishShootingStar()
         {
             return DetectPattern(IsShootingStar, lookbackPeriod: 5);
         }
 
-        [PatternMethod(PatternType.Bearish, lookbackPeriod: 5)]
         private bool IsSideBySideWhiteLines(int i)
         {
             var c0 = _data[i - 0];
@@ -825,12 +825,12 @@ namespace Candlestick_Patterns
         }
 
 
+        [PatternMethod(PatternType.Bearish, lookbackPeriod: 5)]
         private List<OhlcvObject> BearishSideBySideWhiteLines()
         {
             return DetectPattern(IsSideBySideWhiteLines, lookbackPeriod: 5);
         }
 
-        [PatternMethod(PatternType.Bearish, lookbackPeriod: 5)]
         private bool IsThrusting(int i)
         {
             var c0 = _data[i - 0];
@@ -847,12 +847,12 @@ namespace Candlestick_Patterns
             return false;
         }
 
+        [PatternMethod(PatternType.Bearish, lookbackPeriod: 5)]
         private List<OhlcvObject> BearishThrusting()
         {
             return DetectPattern(IsThrusting, lookbackPeriod: 5);
         }
 
-        [PatternMethod(PatternType.Bearish, lookbackPeriod: 5)]
         private bool IsTriStar(int i)
         {
             var c0 = _data[i - 0];
@@ -873,12 +873,12 @@ namespace Candlestick_Patterns
             return false;
         }
 
+        [PatternMethod(PatternType.Bearish, lookbackPeriod: 5)]
         private List<OhlcvObject> BearishTriStar()
         {
             return DetectPattern(IsTriStar, lookbackPeriod: 5);
         }
 
-        [PatternMethod(PatternType.Bearish, lookbackPeriod: 5)]
         private bool IsTweezerTop(int i)
         {
             var c0 = _data[i - 0];
@@ -895,12 +895,12 @@ namespace Candlestick_Patterns
             return false;
         }
 
+        [PatternMethod(PatternType.Bearish, lookbackPeriod: 5)]
         private List<OhlcvObject> BearishTweezerTop()
         {
             return DetectPattern(IsTweezerTop, lookbackPeriod: 5);
         }
 
-        [PatternMethod(PatternType.Bearish, lookbackPeriod: 5)]
         private bool IsUpsideGap2Crows(int i)
         {
             var c0 = _data[i - 0];
@@ -921,12 +921,11 @@ namespace Candlestick_Patterns
             return false;
         }
 
+        [PatternMethod(PatternType.Bearish, lookbackPeriod: 5)]
         private List<OhlcvObject> BearishUpsideGap2Crows()
         {
             return DetectPattern(IsUpsideGap2Crows, lookbackPeriod: 5);
         }
-
-        [PatternMethod(PatternType.Bullish, lookbackPeriod: 5)]
         private bool Is3InsideUp(int i)
         {
             var c0 = _data[i - 0];
@@ -947,12 +946,12 @@ namespace Candlestick_Patterns
             return false;
         }
 
+
+        [PatternMethod(PatternType.Bullish, lookbackPeriod: 5)]
         private List<OhlcvObject> Bullish3InsideUp()
         {
             return DetectPattern(Is3InsideUp, lookbackPeriod: 5);
         }
-
-        [PatternMethod(PatternType.Bullish, lookbackPeriod: 5)]
         private bool Is3OutsideUp(int i)
         {
             var c0 = _data[i - 0];
@@ -972,12 +971,13 @@ namespace Candlestick_Patterns
             return false;
         }
 
+
+        [PatternMethod(PatternType.Bullish, lookbackPeriod: 5)]
         private List<OhlcvObject> Bullish3OutsideUp()
         {
             return DetectPattern(Is3OutsideUp, lookbackPeriod: 5);
         }
 
-        [PatternMethod(PatternType.Bullish, lookbackPeriod: 5)]
         private bool Is3StarsintheSouth(int i)
         {
             var c0 = _data[i - 0];
@@ -998,12 +998,12 @@ namespace Candlestick_Patterns
             return false;
         }
 
+        [PatternMethod(PatternType.Bullish, lookbackPeriod: 5)]
         private List<OhlcvObject> Bullish3StarsintheSouth()
         {
             return DetectPattern(Is3StarsintheSouth, lookbackPeriod: 5);
         }
 
-        [PatternMethod(PatternType.Bullish, lookbackPeriod: 5)]
         private bool Is3WhiteSoldiers(int i)
         {
             var c0 = _data[i - 0];
@@ -1024,12 +1024,12 @@ namespace Candlestick_Patterns
             return false;
         }
 
+        [PatternMethod(PatternType.Bullish, lookbackPeriod: 5)]
         private List<OhlcvObject> Bullish3WhiteSoldiers()
         {
             return DetectPattern(Is3WhiteSoldiers, lookbackPeriod: 5);
         }
 
-        [PatternMethod(PatternType.Bullish, lookbackPeriod: 5)]
         private bool Is3LineStrike2(int i)
         {
             var c0 = _data[i - 0];
@@ -1053,14 +1053,14 @@ namespace Candlestick_Patterns
 
             return false;
         }
-        
 
+
+        [PatternMethod(PatternType.Bullish, lookbackPeriod: 5)]
         private List<OhlcvObject> Bullish3LineStrike()
         {
             return DetectPattern(Is3LineStrike2, lookbackPeriod: 5);
         }
 
-        [PatternMethod(PatternType.Bullish, lookbackPeriod: 5)]
         private bool IsBeltHold(int i)
         {
             var c0 = _data[i - 0];
@@ -1077,12 +1077,12 @@ namespace Candlestick_Patterns
             return false;
         }
 
+        [PatternMethod(PatternType.Bullish, lookbackPeriod: 5)]
         private List<OhlcvObject> BullishBeltHold()
         {
             return DetectPattern(IsBeltHold, lookbackPeriod: 5);
         }
 
-        [PatternMethod(PatternType.Bullish, lookbackPeriod: 5)]
         private bool IsBreakaway2(int i)
         {
             var c0 = _data[i - 0];
@@ -1111,12 +1111,12 @@ namespace Candlestick_Patterns
             return false;
         }
 
+        [PatternMethod(PatternType.Bullish, lookbackPeriod: 5)]
         private List<OhlcvObject> BullishBreakaway()
         {
             return DetectPattern(IsBreakaway2, lookbackPeriod: 5);
         }
 
-        [PatternMethod(PatternType.Bullish, lookbackPeriod: 5)]
         private bool IsConcealingBabySwallow(int i)
         {
             var c0 = _data[i - 0];
@@ -1141,12 +1141,12 @@ namespace Candlestick_Patterns
             return false;
         }
 
+        [PatternMethod(PatternType.Bullish, lookbackPeriod: 5)]
         private List<OhlcvObject> BullishConcealingBabySwallow()
         {
             return DetectPattern(IsConcealingBabySwallow, lookbackPeriod: 5);
         }
 
-        [PatternMethod(PatternType.Bullish, lookbackPeriod: 5)]
         private bool IshDojiStar(int i)
         {
             var c0 = _data[i - 0];
@@ -1163,12 +1163,12 @@ namespace Candlestick_Patterns
             return false;
         }
 
+        [PatternMethod(PatternType.Bullish, lookbackPeriod: 5)]
         private List<OhlcvObject> BullishDojiStar()
         {
             return DetectPattern(IshDojiStar, lookbackPeriod: 5);
         }
 
-        [PatternMethod(PatternType.Bullish, lookbackPeriod: 5)]
         private bool IsDragonflyDoji2(int i)
         {
             var c0 = _data[i - 0];
@@ -1176,12 +1176,12 @@ namespace Candlestick_Patterns
 
         }
 
+        [PatternMethod(PatternType.Bullish, lookbackPeriod: 5)]
         private List<OhlcvObject> BullishDragonflyDoji()
         {
             return DetectPattern(IsDragonflyDoji2, lookbackPeriod: 5);
         }
 
-        [PatternMethod(PatternType.Bullish, lookbackPeriod: 5)]
         private bool IsEngulfing2(int i)
         {
             var c0 = _data[i - 0];
@@ -1198,12 +1198,12 @@ namespace Candlestick_Patterns
             return false;
         }
 
+        [PatternMethod(PatternType.Bullish, lookbackPeriod: 5)]
         private List<OhlcvObject> BullishEngulfing()
         {
             return DetectPattern(IsEngulfing2, lookbackPeriod: 5);
         }
 
-        [PatternMethod(PatternType.Bullish, lookbackPeriod: 5)]
         private bool IsGravestoneDoji2(int i)
         {
             var c0 = _data[i - 0];
@@ -1220,12 +1220,12 @@ namespace Candlestick_Patterns
             return false;
         }
 
+        [PatternMethod(PatternType.Bullish, lookbackPeriod: 5)]
         private List<OhlcvObject> BullishGravestoneDoji()
         {
             return DetectPattern(IsGravestoneDoji2, lookbackPeriod: 5);
         }
 
-        [PatternMethod(PatternType.Bullish, lookbackPeriod: 5)]
         private bool IsHarami2(int i)
         {
             var c0 = _data[i - 0];
@@ -1242,12 +1242,12 @@ namespace Candlestick_Patterns
             return false;
         }
 
+        [PatternMethod(PatternType.Bullish, lookbackPeriod: 5)]
         private List<OhlcvObject> BullishHarami()
         {
             return DetectPattern(IsHarami2, lookbackPeriod: 5);
         }
 
-        [PatternMethod(PatternType.Bullish, lookbackPeriod: 5)]
         private bool IsHaramiCross2(int i)
         {
             var c0 = _data[i - 0];
@@ -1264,12 +1264,12 @@ namespace Candlestick_Patterns
             return false;
         }
 
+        [PatternMethod(PatternType.Bullish, lookbackPeriod: 5)]
         private List<OhlcvObject> BullishHaramiCross()
         {
             return DetectPattern(IsHaramiCross2, lookbackPeriod: 5);
         }
 
-        [PatternMethod(PatternType.Bullish, lookbackPeriod: 5)]
         private bool IsHomingPigeon(int i)
         {
             var c0 = _data[i - 0];
@@ -1286,12 +1286,12 @@ namespace Candlestick_Patterns
             return false;
         }
 
+        [PatternMethod(PatternType.Bullish, lookbackPeriod: 5)]
         private List<OhlcvObject> BullishHomingPigeon()
         {
             return DetectPattern(IsHomingPigeon, lookbackPeriod: 5);
         }
 
-        [PatternMethod(PatternType.Bullish, lookbackPeriod: 5)]
         private bool IsInvertedHammer(int i)
         {
             var c0 = _data[i - 0];
@@ -1309,12 +1309,12 @@ namespace Candlestick_Patterns
         }
 
 
+        [PatternMethod(PatternType.Bullish, lookbackPeriod: 5)]
         private List<OhlcvObject> BullishInvertedHammer()
         {
             return DetectPattern(IsInvertedHammer, lookbackPeriod: 5);
         }
 
-        [PatternMethod(PatternType.Bullish, lookbackPeriod: 5)]
         private bool IsKicking2(int i)
         {
             var c0 = _data[i - 0];
@@ -1331,12 +1331,12 @@ namespace Candlestick_Patterns
             return false;
         }
 
+        [PatternMethod(PatternType.Bullish, lookbackPeriod: 5)]
         private List<OhlcvObject> BullishKicking()
         {
             return DetectPattern(IsKicking2, lookbackPeriod: 5);
         }
 
-        [PatternMethod(PatternType.Bullish, lookbackPeriod: 5)]
         private bool IsLadderBottom(int i)
         {
             var c0 = _data[i - 0];
@@ -1365,12 +1365,12 @@ namespace Candlestick_Patterns
             return false;
         }
 
+        [PatternMethod(PatternType.Bullish, lookbackPeriod: 5)]
         private List<OhlcvObject> BullishLadderBottom()
         {
             return DetectPattern(IsLadderBottom, lookbackPeriod: 5);
         }
 
-        [PatternMethod(PatternType.Bullish, lookbackPeriod: 5)]
         private bool IsLongWhiteCandlestick(int i)
         {
             var c0 = _data[i - 0];
@@ -1378,12 +1378,12 @@ namespace Candlestick_Patterns
 
         }
 
+        [PatternMethod(PatternType.Bullish, lookbackPeriod: 5)]
         private List<OhlcvObject> BullishLongWhiteCandlestick()
         {
             return DetectPattern(IsLongWhiteCandlestick, lookbackPeriod: 5);
         }
 
-        [PatternMethod(PatternType.Bullish, lookbackPeriod: 5)]
         private bool IsMatHold(int i)
         {
             var c0 = _data[i - 0];
@@ -1412,12 +1412,13 @@ namespace Candlestick_Patterns
             return false;
         }
 
+
+        [PatternMethod(PatternType.Bullish, lookbackPeriod: 5)]
         private List<OhlcvObject> BullishMatHold()
         {
             return DetectPattern(IsMatHold, lookbackPeriod: 5);
         }
 
-        [PatternMethod(PatternType.Bullish, lookbackPeriod: 5)]
         private bool IsMatchingLow(int i)
         {
             var c0 = _data[i - 0];
@@ -1435,12 +1436,12 @@ namespace Candlestick_Patterns
             return false;
         }
 
+        [PatternMethod(PatternType.Bullish, lookbackPeriod: 5)]
         private List<OhlcvObject> BullishMatchingLow()
         {
             return DetectPattern(IsMatchingLow, lookbackPeriod: 5);
         }
 
-        [PatternMethod(PatternType.Bullish, lookbackPeriod: 5)]
         private bool IsMeetingLines2(int i)
         {
             var c0 = _data[i - 0];
@@ -1457,12 +1458,12 @@ namespace Candlestick_Patterns
             return false;
         }
 
+        [PatternMethod(PatternType.Bullish, lookbackPeriod: 5)]
         private List<OhlcvObject> BullishMeetingLines()
         {
             return DetectPattern(IsMeetingLines2, lookbackPeriod: 5);
         }
 
-        [PatternMethod(PatternType.Bullish, lookbackPeriod: 5)]
         private bool IsMorningDojiStar(int i)
         {
             var c0 = _data[i - 0];
@@ -1483,12 +1484,12 @@ namespace Candlestick_Patterns
             return false;
         }
 
+        [PatternMethod(PatternType.Bullish, lookbackPeriod: 5)]
         private List<OhlcvObject> BullishMorningDojiStar()
         {
             return DetectPattern(IsMorningDojiStar, lookbackPeriod: 5);
         }
 
-        [PatternMethod(PatternType.Bullish, lookbackPeriod: 5)]
         private bool IsMorningStar(int i)
         {
             var c0 = _data[i - 0];
@@ -1509,12 +1510,12 @@ namespace Candlestick_Patterns
             return false;
         }
 
+        [PatternMethod(PatternType.Bullish, lookbackPeriod: 5)]
         private List<OhlcvObject> BullishMorningStar()
         {
             return DetectPattern(IsMorningStar, lookbackPeriod: 5);
         }
 
-        [PatternMethod(PatternType.Bullish, lookbackPeriod: 5)]
         private bool IsPiercingLine(int i)
         {
             var c0 = _data[i - 0];
@@ -1531,12 +1532,12 @@ namespace Candlestick_Patterns
             return false;
         }
 
+        [PatternMethod(PatternType.Bullish, lookbackPeriod: 5)]
         private List<OhlcvObject> BullishPiercingLine()
         {
             return DetectPattern(IsPiercingLine, lookbackPeriod: 5);
         }
 
-        [PatternMethod(PatternType.Bullish, lookbackPeriod: 5)]
         private bool IsRising3Methods(int index)
         {
             var c0 = _data[index];      
@@ -1565,12 +1566,12 @@ namespace Candlestick_Patterns
         }
 
 
+        [PatternMethod(PatternType.Bullish, lookbackPeriod: 5)]
         private List<OhlcvObject> BullishRising3Methods()
         {
             return DetectPattern(IsRising3Methods, lookbackPeriod: 5);
         }
 
-        [PatternMethod(PatternType.Bullish, lookbackPeriod: 5)]
         private bool IsSeparatingLine(int i)
         {
             var c0 = _data[i];
@@ -1587,12 +1588,11 @@ namespace Candlestick_Patterns
             return false;
         }
 
+        [PatternMethod(PatternType.Bullish, lookbackPeriod: 5)]
         private List<OhlcvObject> BullishSeparatingLines()
         {
             return DetectPattern(IsSeparatingLine, lookbackPeriod: 5);
         }
-
-        [PatternMethod(PatternType.Bullish, lookbackPeriod: 5)]
         private bool IsSideBySideWhiteLines2(int i)
         {
             var c0 = _data[i];
@@ -1613,13 +1613,14 @@ namespace Candlestick_Patterns
         }
 
 
+
+        [PatternMethod(PatternType.Bullish, lookbackPeriod: 5)]
         private List<OhlcvObject> BullishSideBySideWhiteLines()
         {
             return DetectPattern(IsSideBySideWhiteLines2, lookbackPeriod: 5);
         }
 
-        [PatternMethod(PatternType.Bullish, lookbackPeriod: 5)]
-        private bool IstickSandwic(int i)
+        private bool IsStickSandwich(int i)
         {
             var c0 = _data[i];
             var c1 = _data[i - 1];
@@ -1639,12 +1640,12 @@ namespace Candlestick_Patterns
             return false;
         }
 
+        [PatternMethod(PatternType.Bullish, lookbackPeriod: 5)]
         private List<OhlcvObject> BullishStickSandwich()
         {
-            return DetectPattern(IstickSandwic, lookbackPeriod: 5);
+            return DetectPattern(IsStickSandwich, lookbackPeriod: 5);
         }
 
-        [PatternMethod(PatternType.Bullish, lookbackPeriod: 5)]
         private bool IsTriStar2(int i)
         {
             var c0 = _data[i];
@@ -1665,12 +1666,12 @@ namespace Candlestick_Patterns
             return false;
         }
 
+        [PatternMethod(PatternType.Bullish, lookbackPeriod: 5)]
         private List<OhlcvObject> BullishTriStar()
         {
             return DetectPattern(IsTriStar2, lookbackPeriod: 5);
         }
 
-        [PatternMethod(PatternType.Bullish, lookbackPeriod: 5)]
         private bool IsTweezerBottom(int i)
         {
             var c0 = _data[i];
@@ -1687,12 +1688,12 @@ namespace Candlestick_Patterns
             return false;
         }
 
+        [PatternMethod(PatternType.Bullish, lookbackPeriod: 5)]
         private List<OhlcvObject> BullishTweezerBottom()
         {
             return DetectPattern(IsTweezerBottom, lookbackPeriod: 5);
         }
 
-        [PatternMethod(PatternType.Bullish, lookbackPeriod: 5)]
         private bool IsUnique3RiverBottom(int i)
         {
             var c0 = _data[i - 0];
@@ -1713,13 +1714,13 @@ namespace Candlestick_Patterns
             return false;
         }
 
+        [PatternMethod(PatternType.Bullish, lookbackPeriod: 5)]
         private List<OhlcvObject> BullishUnique3RiverBottom()
         {
             return DetectPattern(IsUnique3RiverBottom, lookbackPeriod: 5);
         }
 
-        [PatternMethod(PatternType.Bullish, lookbackPeriod: 5)]
-        private bool IshUpsideGap3Methods(int i)
+        private bool IsUpsideGap3Methods(int i)
         {
             var c0 = _data[i - 0];
             var c1 = _data[i - 1];
@@ -1739,13 +1740,13 @@ namespace Candlestick_Patterns
             return false;
         }
 
+        [PatternMethod(PatternType.Bullish, lookbackPeriod: 5)]
         private List<OhlcvObject> BullishUpsideGap3Methods()
         {
-            return DetectPattern(IshUpsideGap3Methods, lookbackPeriod: 5);
+            return DetectPattern(IsUpsideGap3Methods, lookbackPeriod: 5);
         }
 
-        [PatternMethod(PatternType.Bullish, lookbackPeriod: 5)]
-        private bool IshUpsideTasukiGap(int i)
+        private bool IsUpsideTasukiGap(int i)
         {
             var c0 = _data[i - 0];
             var c1 = _data[i - 1];
@@ -1765,12 +1766,12 @@ namespace Candlestick_Patterns
             return false;
         }
 
+        [PatternMethod(PatternType.Bullish, lookbackPeriod: 5)]
         private List<OhlcvObject> BullishUpsideTasukiGap()
         {
-            return DetectPattern(IshUpsideTasukiGap, lookbackPeriod: 5);
+            return DetectPattern(IsUpsideTasukiGap, lookbackPeriod: 5);
         }
         
-        [PatternMethod(PatternType.Bullish, lookbackPeriod: 5)]
         private bool IsWhiteClosingMarubozu(int index)
         {
             var candle = _data[index];
@@ -1778,35 +1779,35 @@ namespace Candlestick_Patterns
             return candle.Open < candle.Close && candle.Close == candle.High && candle.Open != candle.Low && 100 * (candle.Close - candle.Open) / candle.Open > _minimumCandleSize;
         }
 
+        [PatternMethod(PatternType.Bullish, lookbackPeriod: 5)]
         private List<OhlcvObject> BullishWhiteClosingMarubozu()
         {
             return DetectPattern(IsWhiteClosingMarubozu, lookbackPeriod: 5);
         }
 
 
-        [PatternMethod(PatternType.Bullish, lookbackPeriod: 5)]
         private bool IsWhiteMarubozu(int index)
         {
             var candle = _data[index];
             return candle.Open < candle.Close && candle.Close == candle.High && candle.Open == candle.Low && GetBodySizePercentSigned(candle) > _minimumCandleSize;
         }
 
+        [PatternMethod(PatternType.Bullish, lookbackPeriod: 5)]
         private List<OhlcvObject> BullishWhiteMarubozu()
         {
             return DetectPattern(IsWhiteMarubozu, lookbackPeriod: 5);
         }
 
-
-        [PatternMethod(PatternType.Bullish, lookbackPeriod: 5)]
-        private bool IshWhiteOpeningMarubozu(int index)
+        private bool IsWhiteOpeningMarubozu(int index)
         {
             var candle = _data[index];
             return candle.Open < candle.Close && candle.Close < candle.High && candle.Open == candle.Low && GetBodySizePercentSigned(candle) > _minimumCandleSize;
         }
 
+        [PatternMethod(PatternType.Bullish, lookbackPeriod: 5)]
         private List<OhlcvObject> BullishWhiteOpeningMarubozu()
         {
-            return DetectPattern(IshWhiteOpeningMarubozu, lookbackPeriod: 5);
+            return DetectPattern(IsWhiteOpeningMarubozu, lookbackPeriod: 5);
         }
 
 
@@ -1864,7 +1865,7 @@ namespace Candlestick_Patterns
 
             return data;
         }
-       
+
         public List<OhlcvObject> GetPatternsSignalsList(PatternNameEnum patternName)
         {
             return GetPatternsSignalsList(patternName.ToString());
@@ -1910,7 +1911,7 @@ namespace Candlestick_Patterns
                 _cachedMethodNames = typeof(Patterns)
                 .GetMethods(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance)
                 .Where(m => m.GetCustomAttribute<PatternMethodAttribute>() != null)
-                .Select(m => m.Name.Replace("Is", "")) // Remove "Is" prefix if needed
+                .Select(m => m.Name/*.Replace("Is", "")*/) // Remove "Is" prefix if needed
                 .Distinct()
                 .OrderBy(name => name)
                 .ToList();
