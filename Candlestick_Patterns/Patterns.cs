@@ -1,4 +1,5 @@
-﻿using System.Collections.Concurrent;
+﻿using Enumerators;
+using System.Collections.Concurrent;
 using System.Reflection;
 namespace Candlestick_Patterns
 {
@@ -21,8 +22,10 @@ namespace Candlestick_Patterns
         private readonly decimal _maximumCloseHighChange;
         private readonly decimal _maximumCandleSize;
         private readonly decimal _maximumOpenDifference;
+
         private readonly List<OhlcvObject> _data;
         private static List<string>? _cachedMethodNames;
+        private static readonly object _methodNamesLock = new object();
         private readonly decimal _averageBodySize;
         private static readonly ConcurrentDictionary<string, MethodInfo> _methodCache = new();
 
@@ -38,96 +41,11 @@ namespace Candlestick_Patterns
                 LookbackPeriod = lookbackPeriod;
             }
         }
-
-        public enum PatternType
-        {
-            Bullish,
-            Bearish,
-            Continuation
-        }
-
-        public enum PatternNameEnum
-        {
-            None,
-            Bearish2Crows,
-            Bearish3BlackCrows,
-            Bearish3InsideDown,
-            Bearish3OutsideDown,
-            Bearish3LineStrike,
-            BearishAdvanceBlock,
-            BearishBeltHold,
-            BearishBlackClosingMarubozu,
-            BearishBlackMarubozu,
-            BearishBlackOpeningMarubozu,
-            BearishBreakaway,
-            BearishDeliberation,
-            BearishDarkCloudCover,
-            BearishDojiStar,
-            BearishDownsideGap3Methods,
-            BearishDownsideTasukiGap,
-            BearishDragonflyDoji,
-            BearishEngulfing,
-            BearishEveningDojiStar,
-            BearishEveningStar,
-            BearishFalling3Methods,
-            BearishGravestoneDoji,
-            BearishHarami,
-            BearishIdentical3Crows,
-            BearishHaramiCross,
-            BearishInNeck,
-            BearishKicking,
-            BearishLongBlackCandelstick,
-            BearishMeetingLines,
-            BearishOnNeck,
-            BearishSeparatingLines,
-            BearishShootingStar,
-            BearishSideBySideWhiteLines,
-            BearishThrusting,
-            BearishTriStar,
-            BearishTweezerTop,
-            BearishUpsideGap2Crows,
-            Bullish3InsideUp,
-            Bullish3OutsideUp,
-            Bullish3StarsintheSouth,
-            Bullish3WhiteSoldiers,
-            Bullish3LineStrike,
-            BullishBeltHold,
-            BullishBreakaway,
-            BullishConcealingBabySwallow,
-            BullishDojiStar,
-            BullishDragonflyDoji,
-            BullishEngulfing,
-            BullishGravestoneDoji,
-            BullishHarami,
-            BullishHaramiCross,
-            BullishHomingPigeon,
-            BullishInvertedHammer,
-            BullishKicking,
-            BullishLadderBottom,
-            BullishLongWhiteCandlestick,
-            BullishMatHold,
-            BullishMatchingLow,
-            BullishMeetingLines,
-            BullishMorningDojiStar,
-            BullishMorningStar,
-            BullishPiercingLine,
-            BullishRising3Methods,
-            BullishSeparatingLines,
-            BullishSideBySideWhiteLines,
-            BullishStickSandwich,
-            BullishTriStar,
-            BullishTweezerBottom,
-            BullishUnique3RiverBottom,
-            BullishUpsideGap3Methods,
-            BullishUpsideTasukiGap,
-            BullishWhiteClosingMarubozu,
-            BullishWhiteMarubozu,
-            BullishWhiteOpeningMarubozu
-        }
+        
 
         public Patterns(List<OhlcvObject> data)
         {
-            _data = data;
+            _data = new List<OhlcvObject>(data);
             _averageBodySize = data.Average(x => Math.Abs(x.Open - x.Close));
             _insideBarMaxChange = _averageBodySize / 2;
             _minimumCandleSize = _averageBodySize * 2;
@@ -1984,7 +1902,12 @@ namespace Candlestick_Patterns
             if (_cachedMethodNames != null)
                 return new List<string>(_cachedMethodNames);
 
-            _cachedMethodNames = typeof(Patterns)
+            lock (_methodNamesLock)
+            {
+                if (_cachedMethodNames != null)
+                    return new List<string>(_cachedMethodNames);
+
+                _cachedMethodNames = typeof(Patterns)
                 .GetMethods(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance)
                 .Where(m => m.GetCustomAttribute<PatternMethodAttribute>() != null)
                 .Select(m => m.Name.Replace("Is", "")) // Remove "Is" prefix if needed
@@ -1992,9 +1915,10 @@ namespace Candlestick_Patterns
                 .OrderBy(name => name)
                 .ToList();
 
-            return new List<string>(_cachedMethodNames);
-        
+                return new List<string>(_cachedMethodNames);
+            }
         }
+
         private bool IsStrongBullish(OhlcvObject candle)
         {
             return candle.Open < candle.Close &&
