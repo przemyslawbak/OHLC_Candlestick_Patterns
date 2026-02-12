@@ -1,13 +1,13 @@
 ﻿using Candlestick_Patterns;
+using System.Data;
 
 namespace OHLC_Candlestick_Patterns
 {
     internal interface ISupportClass
     {
         bool CheckPoint(decimal point, decimal pointAD, decimal _priceMovement, bool checkPoint);
-        decimal GetRetracement(List<ZigZagObject> points, int i, int number1, int number2, int number3);
+        decimal GetRetracement(IReadOnlyList<ZigZagObject> points, int i, int number1, int number2, int number3);
         List<decimal> PointsRange(decimal point, decimal _priceMovement);
-        List<ZigZagObject> AddPointsToList(List<ZigZagObject> points, int i, List<decimal> dateList, int number);
         bool CheckIfRetracemntIsInRange(List<decimal> range1, List<decimal> range2, decimal retracement);
     }
 
@@ -29,7 +29,7 @@ namespace OHLC_Candlestick_Patterns
             point + (point * _priceMovement),
         };
 
-        public decimal GetRetracement(List<ZigZagObject> points, int i, int number1, int number2, int number3)
+        public decimal GetRetracement(IReadOnlyList<ZigZagObject> points, int i, int number1, int number2, int number3)
         {
             var retracement = (Math.Abs(points[i - number1].Close - points[i - number2].Close) * 100) / (Math.Abs(points[i - number2].Close - points[i - number3].Close));
 
@@ -44,17 +44,6 @@ namespace OHLC_Candlestick_Patterns
                 return true;
             }
             return false;
-        }
-
-        public List<ZigZagObject> AddPointsToList(List<ZigZagObject> points, int i, List<decimal> dateList, int number)
-        {
-            for (int x = -number; x < 1; x++)
-            {
-                dateList.Add(points[i + x].IndexOHLCV);
-            }
-            points[i].Signal = true;
-            points[i - number].Initiation = true;
-            return points;
         }
     }
 }
