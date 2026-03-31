@@ -29,8 +29,18 @@ namespace Candlestick_Patterns
 
         public Formations(List<OhlcvObject> dataOhlcv)
         {
-            _dataOhlcv = dataOhlcv;
-            _data = SetPeaksVallyes.GetCloseAndSignalsData(dataOhlcv);
+            var deepCopy = dataOhlcv.Select(x => new OhlcvObject
+            {
+                Open = x.Open,
+                High = x.High,
+                Low = x.Low,
+                Close = x.Close,
+                Volume = x.Volume,
+                Signal = false
+            }).ToList();
+
+            _dataOhlcv = deepCopy;
+            _data = SetPeaksVallyes.GetCloseAndSignalsData(deepCopy);
             _peaksFromZigZag = SetPeaksVallyes.PeaksFromZigZag(_data, 0.002M);
             _percentageMargin = 0.0025M; 
             _formationsLenght = new List<int>() { 4, 7 };
@@ -66,7 +76,7 @@ namespace Candlestick_Patterns
 
         private List<ZigZagObject> GetPoints()
         {
-            return _cachedPoints.Value;
+            return SetPeaksVallyes.GetPoints(_cachedPoints.Value);
         }
 
         [ThreadStatic]

@@ -2,19 +2,45 @@
 {
     public class Signals : ISignals
     {
-        IPatterns _patterns;
+        private class AnalysisSnapshot
+        {
+            public List<OhlcvObject> Data { get; }
+            public IFormations Formations { get; }
+            public IPatterns Patterns { get; }
+            public IFibonacci Fibonacci { get; }
+
+            public AnalysisSnapshot(List<OhlcvObject> data)
+            {
+                Data = data;
+                Formations = new Formations(data);
+                Patterns = new Patterns(data);
+                Fibonacci = new Fibonacci(data);
+            }
+        }
+
+        private volatile AnalysisSnapshot _currentSnapshot;
+        private readonly object _lock = new object();
+
         IFormations _formations;
+        IPatterns _patterns;
         IFibonacci _fibonacci;
         List<OhlcvObject> _lastData;
 
-        private void EnsureInstances(List<OhlcvObject> dataOhlcv)
+        private AnalysisSnapshot EnsureSnapshot(List<OhlcvObject> dataOhlcv)
         {
-            if (ReferenceEquals(_lastData, dataOhlcv)) return;
+            var current = _currentSnapshot;
+            if (current != null && ReferenceEquals(current.Data, dataOhlcv))
+                return current;
 
-            _lastData = dataOhlcv;
-            _patterns = new Patterns(dataOhlcv);
-            _formations = new Formations(dataOhlcv);
-            _fibonacci = new Fibonacci(dataOhlcv);
+            lock (_lock)
+            {
+                current = _currentSnapshot;
+                if (current != null && ReferenceEquals(current.Data, dataOhlcv))
+                    return current;
+                var newSnapshot = new AnalysisSnapshot(dataOhlcv);
+                _currentSnapshot = newSnapshot;
+                return newSnapshot;
+            }
         }
 
         private int GetDirectionalCount(ISignalEngine engine, SignalDirection direction)
@@ -38,23 +64,9 @@
             return engine.GetSignalsCount(name) * weight;
         }
 
-        private static List<T> CollectLists<T>(string[] names, Func<string, T> getList)
-        {
-            return names.Select(getList).ToList();
-        }
-
-        private static int SumCounts(IEnumerable<string> names, Func<string, int> getCount)
-        {
-            return names.Sum(getCount);
-        }
         private decimal GetMultipleIndex(ISignalEngine engine, Dictionary<string, decimal> namesWithWeights)
         {
             return namesWithWeights.Sum(kv => engine.GetSignalsCount(kv.Key) * kv.Value);
-        }
-
-        private static decimal WeightedIndex(Dictionary<string, decimal> namesWithWeights, Func<string, int> getCount)
-        {
-            return namesWithWeights.Sum(kv => getCount(kv.Key) * kv.Value);
         }
 
         private T GetSingleList<T>(Func<string, T> listFetcher, string name)
@@ -62,129 +74,75 @@
             return listFetcher(name);
         }
 
-        private List<T> GetMultipleLists<T>(Func<string, T> listFetcher, string[] names)
+        private List<List<T>> GetMultipleLists<T>(Func<string, List<T>> listFetcher, string[] names)
         {
-            return names.Select(listFetcher).ToList();
-        }
+            var results = new List<List<T>>(names.Length);
 
+            foreach (var name in names)
+            {
+                var list = listFetcher(name);
+                results.Add(list != null ? new List<T>(list) : new List<T>());
+            }
+
+            return results;
+        }
 
         public int GetPatternsBearishSignalsCount(List<OhlcvObject> dataOhlcv)
         {
-            EnsureInstances(dataOhlcv);
-            return GetDirectionalCount(_patterns, SignalDirection.Bearish);
+            var snapshot = EnsureSnapshot(dataOhlcv);
 
-            _patterns = new Patterns(dataOhlcv);
-
-            var bullishMethodNames = _patterns.GetAllMethodNames().Where(x => x.StartsWith("Bullish")).ToList();
-
-            List<int> count = new List<int>();
-
-            foreach (var methodName in bullishMethodNames)
-            {
-                count.Add(_patterns.GetSignalsCount(methodName));
-            }
-
-            return count.Sum(x => x);
+            return GetDirectionalCount(snapshot.Patterns, SignalDirection.Bearish);
         }
 
         public int GetPatternsBullishSignalsCount(List<OhlcvObject> dataOhlcv)
         {
-            EnsureInstances(dataOhlcv); 
-            return GetDirectionalCount(_patterns, SignalDirection.Bullish);
+            var snapshot = EnsureSnapshot(dataOhlcv);
 
-            _patterns = new Patterns(dataOhlcv);
-
-            var bullishMethodNames = _patterns.GetAllMethodNames().Where(x => x.StartsWith("Bearish")).ToList();
-
-            List<int> count = new List<int>();
-
-            foreach (var methodName in bullishMethodNames)
-            {
-                count.Add(_patterns.GetSignalsCount(methodName));
-            }
-
-            return count.Sum(x => x);
+            return GetDirectionalCount(snapshot.Patterns, SignalDirection.Bullish);
         }
 
         public List<OhlcvObject> GetPatternsOhlcvWithSignals(List<OhlcvObject> dataOhlcv, string patternName)
         {
-            EnsureInstances(dataOhlcv);
-            return GetSingleList(_patterns.GetPatternsSignalsList, patternName);
-            
-            _patterns = new Patterns(dataOhlcv);
+            var snapshot = EnsureSnapshot(dataOhlcv);
 
-            return _patterns.GetPatternsSignalsList(patternName);
-            
+            return GetSingleList(snapshot.Patterns.GetPatternsSignalsList, patternName);
+
         }
 
         public List<List<OhlcvObject>> GetMultiplePatternsOhlcvWithSignals(List<OhlcvObject> dataOhlcv, string[] patternNames)
         {
-            EnsureInstances(dataOhlcv);
-            return GetMultipleLists(_patterns.GetPatternsSignalsList, patternNames);
+            var snapshot = EnsureSnapshot(dataOhlcv);
 
-
-            _patterns = new Patterns(dataOhlcv);
-
-            List<List<OhlcvObject>> list = new List<List<OhlcvObject>>();
-
-            foreach (var methodName in patternNames)
-            {
-                list.Add(_patterns.GetPatternsSignalsList(methodName));
-            }
-
-            return list;
+            return GetMultipleLists(snapshot.Patterns.GetPatternsSignalsList, patternNames);
         }
 
         public int GetMultiplePatternsSignalsCount(List<OhlcvObject> dataOhlcv, string[] patternNames)
         {
-            EnsureInstances(dataOhlcv);
-            return GetMultipleCount(_patterns, patternNames);
+            var snapshot = EnsureSnapshot(dataOhlcv);
 
-            _patterns = new Patterns(dataOhlcv);
-
-            List<int> count = new List<int>();
-
-            foreach (var methodName in patternNames)
-            {
-                count.Add(_patterns.GetSignalsCount(methodName));
-            }
-
-            return count.Sum(x => x);
+            return GetMultipleCount(snapshot.Patterns, patternNames);
         }
 
         public int GetPatternsSignalsCount(List<OhlcvObject> dataOhlcv, string patternName)
         {
-            EnsureInstances(dataOhlcv);
-            return GetSingleCount(_patterns, patternName);
+            var snapshot = EnsureSnapshot(dataOhlcv);
 
-            _patterns = new Patterns(dataOhlcv);
-
-            return _patterns.GetSignalsCount(patternName);
+            return GetSingleCount(snapshot.Patterns, patternName);
         }
 
         public decimal GetPatternSignalsIndex(List<OhlcvObject> dataOhlcv, string patternName, decimal weight)
         {
-            //_patterns = new Patterns(dataOhlcv);
-            EnsureInstances(dataOhlcv);
-            return GetSingleIndex(_patterns, patternName, weight);
+            var snapshot = EnsureSnapshot(dataOhlcv);
+
+            return GetSingleIndex(snapshot.Patterns, patternName, weight);
         }
 
         public decimal GetMultiplePatternsSignalsIndex(List<OhlcvObject> dataOhlcv, Dictionary<string, decimal> patternNamesWithWeights)
         {
-            EnsureInstances(dataOhlcv);
-            return GetMultipleIndex(_patterns, patternNamesWithWeights);
-            
-            _patterns = new Patterns(dataOhlcv);
+            var snapshot = EnsureSnapshot(dataOhlcv);
 
-            List<decimal> count = new List<decimal>();
+            return GetMultipleIndex(snapshot.Patterns, patternNamesWithWeights);
 
-            foreach (var methodName in patternNamesWithWeights.Keys)
-            {
-                count.Add(_patterns.GetSignalsCount(methodName) * patternNamesWithWeights[methodName]);
-            }
-
-            return count.Sum(x => x);
-            
         }
 
         /// <summary>
@@ -193,124 +151,64 @@
         /// <param name="dataOhlcv"></param>
         /// <param name="formationName"></param>
         /// <returns></returns>
+        /// 
+
         public int GetFormationSignalsCount(List<OhlcvObject> dataOhlcv, string formationName)
         {
-            EnsureInstances(dataOhlcv);
-            return GetSingleCount(_formations, formationName);
+            var snapshot = EnsureSnapshot(dataOhlcv);
 
-            _formations = new Formations(dataOhlcv);
-            return _formations.GetFormationsSignalsCount(formationName);
+            return GetSingleCount(snapshot.Formations, formationName);
         }
 
         public int GetFormationsBearishSignalsCount(List<OhlcvObject> dataOhlcv)
         {
-            EnsureInstances(dataOhlcv);
-            return GetDirectionalCount(_formations, SignalDirection.Bearish);
+            var snapshot = EnsureSnapshot(dataOhlcv);
 
-            _formations = new Formations(dataOhlcv);
-
-            var bearishMethodNames = _formations.GetAllMethodNames().Where(x => x.StartsWith("Bearish")).ToList(); 
-
-            List<int> count = new List<int>();
-
-            foreach (var methodName in bearishMethodNames)
-            {
-                count.Add(_formations.GetSignalsCount(methodName));
-            }
-
-            return count.Sum(x => x);
+            return GetDirectionalCount(snapshot.Formations, SignalDirection.Bearish);
         }
 
         public int GetFormationsBullishSignalsCount(List<OhlcvObject> dataOhlcv)
         {
-            EnsureInstances(dataOhlcv);
-            return GetDirectionalCount(_formations, SignalDirection.Bullish);
+            var snapshot = EnsureSnapshot(dataOhlcv);
 
-            _formations = new Formations(dataOhlcv);
-
-            var bullishMethodNames = _formations.GetAllMethodNames().Where(x => x.StartsWith("Bullish")).ToList();
-
-            List<int> count = new List<int>();
-
-            foreach (var methodName in bullishMethodNames)
-            {
-                count.Add(_formations.GetSignalsCount(methodName));
-            }
-
-            return count.Sum(x => x);
+            return GetDirectionalCount(snapshot.Formations, SignalDirection.Bullish);
         }
 
         public int GetMultipleFormationsSignalsCount(List<OhlcvObject> dataOhlcv, string[] formationNames)
         {
-            EnsureInstances(dataOhlcv);
-            return GetMultipleCount(_formations, formationNames);
+            var snapshot = EnsureSnapshot(dataOhlcv);
 
-            _formations = new Formations(dataOhlcv);
-
-            List<int> count = new List<int>();
-
-            foreach (var methodName in formationNames)
-            {
-                count.Add(_formations.GetSignalsCount(methodName));
-            }
-
-            return count.Sum(x => x);
+            return GetMultipleCount(snapshot.Formations, formationNames);
         }
 
         public decimal GetFormationSignalsIndex(List<OhlcvObject> dataOhlcv, string formationName, decimal weight)
         {
-            EnsureInstances(dataOhlcv);
-            return GetSingleIndex(_formations, formationName, weight);
+            var snapshot = EnsureSnapshot(dataOhlcv);
 
-            _formations = new Formations(dataOhlcv);
-
-            return _formations.GetSignalsCount(formationName) * weight;
+            return GetSingleIndex(snapshot.Formations, formationName, weight);
         }
 
         public decimal GetMultipleFormationsSignalsIndex(List<OhlcvObject> dataOhlcv, Dictionary<string, decimal> formationsNamesWithWeights)
         {
-            EnsureInstances(dataOhlcv);
-            return GetMultipleIndex(_formations, formationsNamesWithWeights);
+            var snapshot = EnsureSnapshot(dataOhlcv);
 
-            _formations = new Formations(dataOhlcv);
-
-            List<decimal> count = new List<decimal>();
-
-            foreach (var methodName in formationsNamesWithWeights.Keys)
-            {
-                count.Add(_formations.GetSignalsCount(methodName) * formationsNamesWithWeights[methodName]);
-            }
-
-            return count.Sum(x => x);
+            return GetMultipleIndex(snapshot.Formations, formationsNamesWithWeights);
         }
 
         public List<ZigZagObject> GetFormationsZigZagWithSignals(List<OhlcvObject> dataOhlcv, string formationName)
         {
-            EnsureInstances(dataOhlcv);
-            return GetSingleList(_formations.GetFormationsSignalsList, formationName);
+            var snapshot = EnsureSnapshot(dataOhlcv);
 
-
-            _formations = new Formations(dataOhlcv);
-
-            return _formations.GetFormationsSignalsList(formationName);
+            return GetSingleList(snapshot.Formations.GetFormationsSignalsList, formationName);
         }
 
         public List<List<ZigZagObject>> GetMultipleFormationsZigZagWithSignals(List<OhlcvObject> dataOhlcv, string[] formationsNames)
         {
-            EnsureInstances(dataOhlcv);
-            return GetMultipleLists(_formations.GetFormationsSignalsList, formationsNames);
+            var snapshot = EnsureSnapshot(dataOhlcv);
 
-            _formations = new Formations(dataOhlcv);
-
-            List<List<ZigZagObject>> list = new List<List<ZigZagObject>>();
-
-            foreach (var methodName in formationsNames)
-            {
-                list.Add(_formations.GetFormationsSignalsList(methodName));
-            }
-
-            return list;
+            return GetMultipleLists(snapshot.Formations.GetFormationsSignalsList, formationsNames);
         }
+
         /// <summary>
         /// Fibonacci
         /// </summary>
@@ -320,125 +218,63 @@
 
         public int GetFibonacciSignalsCount(List<OhlcvObject> dataOhlcv, string formationName)
         {
-            _fibonacci = new Fibonacci(dataOhlcv);
-            return _fibonacci.GetFibonacciSignalsCount(formationName);
+            var snapshot = EnsureSnapshot(dataOhlcv);
+
+            return GetSingleCount(snapshot.Fibonacci, formationName);
         }
 
         public int GetFiboBullishSignalsCount(List<OhlcvObject> dataOhlcv)
         {
-            EnsureInstances(dataOhlcv);
-            return GetDirectionalCount(_fibonacci, SignalDirection.Bullish);
+            var snapshot = EnsureSnapshot(dataOhlcv);
 
-            _fibonacci = new Fibonacci(dataOhlcv);
-
-            var bullishMethodNames = _fibonacci.GetAllMethodNames().Where(x => x.StartsWith("Bullish")).ToList();
-
-            List<int> count = new List<int>();
-
-            foreach (var methodName in bullishMethodNames)
-            {
-                count.Add(_fibonacci.GetSignalsCount(methodName));
-            }
-
-            return count.Sum(x => x);
+            return GetDirectionalCount(snapshot.Fibonacci, SignalDirection.Bullish);
         }
 
         public int GetFiboBearishSignalsCount(List<OhlcvObject> dataOhlcv)
         {
-            EnsureInstances(dataOhlcv);
-            return GetDirectionalCount(_fibonacci, SignalDirection.Bearish);
+            var snapshot = EnsureSnapshot(dataOhlcv);
 
-            _fibonacci = new Fibonacci(dataOhlcv);
-
-            var bullishMethodNames = _fibonacci.GetAllMethodNames().Where(x => x.StartsWith("Bearish")).ToList();
-
-            List<int> count = new List<int>();
-
-            foreach (var methodName in bullishMethodNames)
-            {
-                count.Add(_fibonacci.GetSignalsCount(methodName));
-            }
-
-            return count.Sum(x => x);
+            return GetDirectionalCount(snapshot.Fibonacci, SignalDirection.Bearish);
         }
 
         public int GetMultipleFiboSignalsCount(List<OhlcvObject> dataOhlcv, string[] fiboNames)
         {
-            EnsureInstances(dataOhlcv);
-            return GetMultipleCount(_fibonacci, fiboNames);
+            var snapshot = EnsureSnapshot(dataOhlcv);
 
-            _fibonacci = new Fibonacci(dataOhlcv);
-
-            List<int> count = new List<int>();
-
-            foreach (var methodName in fiboNames)
-            {
-                count.Add(_fibonacci.GetSignalsCount(methodName));
-            }
-
-            return count.Sum(x => x);
+            return GetMultipleCount(snapshot.Fibonacci, fiboNames);
         }
 
         public int GetFiboSignalsCount(List<OhlcvObject> dataOhlcv, string fiboName)
         {
             return GetFibonacciSignalsCount(dataOhlcv, fiboName);
-
-            _fibonacci = new Fibonacci(dataOhlcv);
-            return _fibonacci.GetFibonacciSignalsCount(fiboName);
         }
 
         public decimal GetFiboSignalsIndex(List<OhlcvObject> dataOhlcv, string fiboName, decimal weight)
         {
-            EnsureInstances(dataOhlcv);
-            return GetSingleIndex(_fibonacci, fiboName, weight);
+            var snapshot = EnsureSnapshot(dataOhlcv);
 
-            _fibonacci = new Fibonacci(dataOhlcv);
-
-            return _fibonacci.GetSignalsCount(fiboName) * weight;
+            return GetSingleIndex(snapshot.Fibonacci, fiboName, weight);
         }
 
         public decimal GetMultipleFiboSignalsIndex(List<OhlcvObject> dataOhlcv, Dictionary<string, decimal> fibosNamesWithWeights)
         {
-            EnsureInstances(dataOhlcv);
-            return GetMultipleIndex(_fibonacci, fibosNamesWithWeights);
+            var snapshot = EnsureSnapshot(dataOhlcv);
 
-            _fibonacci = new Fibonacci(dataOhlcv);
-
-            List<decimal> count = new List<decimal>();
-
-            foreach (var methodName in fibosNamesWithWeights.Keys)
-            {
-                count.Add(_fibonacci.GetSignalsCount(methodName) * fibosNamesWithWeights[methodName]);
-            }
-
-            return count.Sum(x => x);
+            return GetMultipleIndex(snapshot.Fibonacci, fibosNamesWithWeights);
         }
 
         public List<ZigZagObject> GetFiboZigZagWithSignals(List<OhlcvObject> dataOhlcv, string fiboName)
         {
-            EnsureInstances(dataOhlcv);
-            return GetSingleList(_fibonacci.GetFibonacciSignalsList, fiboName);
+            var snapshot = EnsureSnapshot(dataOhlcv);
 
-            _fibonacci = new Fibonacci(dataOhlcv);
-
-            return _fibonacci.GetFibonacciSignalsList(fiboName);
+            return GetSingleList(snapshot.Fibonacci.GetFibonacciSignalsList, fiboName);
         }
 
         public List<List<ZigZagObject>> GetMultipleFiboZigZagWithSignals(List<OhlcvObject> dataOhlcv, string[] fiboNames)
         {
-            EnsureInstances(dataOhlcv);
-            return GetMultipleLists(_fibonacci.GetFibonacciSignalsList, fiboNames);
+            var snapshot = EnsureSnapshot(dataOhlcv);
 
-            _fibonacci = new Fibonacci(dataOhlcv);
-
-            List<List<ZigZagObject>> list = new List<List<ZigZagObject>>();
-
-            foreach (var methodName in fiboNames)
-            {
-                list.Add(_fibonacci.GetFibonacciSignalsList(methodName));
-            }
-
-            return list;
+            return GetMultipleLists(snapshot.Fibonacci.GetFibonacciSignalsList, fiboNames);
         }
     }
 }

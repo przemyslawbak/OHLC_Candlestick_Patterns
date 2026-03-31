@@ -109,7 +109,7 @@ namespace Candlestick_Patterns
         public Fibonacci(List<OhlcvObject> dataOhlcv, decimal zigZagParam)
         {
             DataOhlcv = dataOhlcv.ToImmutableList();
-            _data = SetPeaksVallyes.GetCloseAndSignalsData(dataOhlcv);
+            _data = SetPeaksVallyes.GetCloseAndSignalsData(new List<OhlcvObject>(dataOhlcv));
             _peaksFromZigZag = SetPeaksVallyes.PeaksFromZigZag(_data, zigZagParam);
             _fibError = 0.1M;
             _cachedPoints = InitializeCachedPoints().ToImmutableList();

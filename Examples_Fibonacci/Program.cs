@@ -42,15 +42,15 @@ namespace Examples_Fibonacci
                 .ToList();
 
             //ACCURACY TRIALS
-            var accuracyPercentageSummary = _accuracy.GetAverPercentAccuracy(dataOhlcv, "Bullish 3 Inside Up");
+            var accuracyPercentageSummary = _accuracy.GetAverPercentAccuracy(dataOhlcv, "Bullish 3 Drive");
             Console.WriteLine("Accuracy percentage summary comparing to end of data set result: {0}", accuracyPercentageSummary.AccuracyToEndClose);
             Console.WriteLine("Accuracy percentage summary comparing to average close result: {0}", accuracyPercentageSummary.AccuracyToAverageClose);
 
-            var accuracyForSelectedFibo30CandlesAhead = _accuracy.GetAverPercentAccuracy(dataOhlcv, "Bullish 3 Inside Up", 30);
+            var accuracyForSelectedFibo30CandlesAhead = _accuracy.GetAverPercentAccuracy(dataOhlcv, "Bullish 3 Drive", 30);
             Console.WriteLine("Accuracy percentage summary 30 candles ahead comparing to end of data set result: {0}", accuracyForSelectedFibo30CandlesAhead.AccuracyToEndClose);
             Console.WriteLine("Accuracy percentage summary 30 candles ahead comparing to average close result: {0}", accuracyForSelectedFibo30CandlesAhead.AccuracyToAverageClose);
 
-            var accuracyAverPositive = _accuracy.GetPositiveAccuracyToAverFibos(dataOhlcv);
+            var accuracyAverPositive = _accuracy.GetPositiveAccuracyToAverFibo(dataOhlcv); // Fibonacci
             Console.WriteLine("Fibos with positive accuracy rate comaring to aver. close price: {0}", string.Join(",", accuracyAverPositive));
 
             var accuracyEndPositive = _accuracy.GetPositiveAccuracyToEndFibos(dataOhlcv);
@@ -63,7 +63,7 @@ namespace Examples_Fibonacci
             Console.WriteLine("25% of best fibos 30 candles ahead comparing to end and aver. close price: {0}", string.Join(",", accuracyBest30CandlesAhead));
 
             //SIGNALS
-            var bullishCount = _signals.GetFiboBullishSignalsCount(dataOhlcv);
+           /* var bullishCount = _signals.GetFiboBullishSignalsCount(dataOhlcv);
             Console.WriteLine("Bullish signals count: {0}", bullishCount);
 
             var bearishCount = _signals.GetFiboBearishSignalsCount(dataOhlcv);
@@ -87,7 +87,7 @@ namespace Examples_Fibonacci
             var zigZagMultiSignals = _signals.GetMultipleFiboZigZagWithSignals(dataOhlcv, new string[] { "BearishABCD", "Bearish 3 Drive" });
             Console.WriteLine("Number of lists returned: {0}", zigZagMultiSignals.Count());
 
-            var fiboBest = GetBestFibonaccisValue(accuracyBest, 1, dataOhlcv);
+            var fiboBest = GetBestFibonaccisValue(accuracyBest, 1, dataOhlcv);*/
 
             //END
             Console.WriteLine("END");

@@ -42,11 +42,13 @@ namespace Examples_Formations
                 .ToList();
 
             //ACCURACY TRIALS
-            var accuracyPercentageSummary = _accuracy.GetAverPercentAccuracy(dataOhlcv, "Bullish 3 Inside Up");
+            //var accuracyPercentageSummary = _accuracy.GetAverPercentAccuracy(dataOhlcv, "Bullish 3 Inside Up"); // should be GetAverPercentFormationAccuracy
+            var accuracyPercentageSummary = _accuracy.GetAverPercentFormationAccuracy(dataOhlcv, "Bullish Double Bottoms"); 
             Console.WriteLine("Accuracy percentage summary comparing to end of data set result: {0}", accuracyPercentageSummary.AccuracyToEndClose);
             Console.WriteLine("Accuracy percentage summary comparing to average close result: {0}", accuracyPercentageSummary.AccuracyToAverageClose);
 
-            var accuracyForSelectedFormation30CandlesAhead = _accuracy.GetAverPercentAccuracy(dataOhlcv, "Bullish 3 Inside Up", 30);
+            //var accuracyForSelectedFormation30CandlesAhead = _accuracy.GetAverPercentAccuracy(dataOhlcv, "Bullish 3 Inside Up", 30); // should be GetAverPercentFormationAccuracy
+            var accuracyForSelectedFormation30CandlesAhead = _accuracy.GetAverPercentFormationAccuracy(dataOhlcv, "Bullish Double Bottoms", 30); 
             Console.WriteLine("Accuracy percentage summary 30 candles ahead comparing to end of data set result: {0}", accuracyForSelectedFormation30CandlesAhead.AccuracyToEndClose);
             Console.WriteLine("Accuracy percentage summary 30 candles ahead comparing to average close result: {0}", accuracyForSelectedFormation30CandlesAhead.AccuracyToAverageClose);
 

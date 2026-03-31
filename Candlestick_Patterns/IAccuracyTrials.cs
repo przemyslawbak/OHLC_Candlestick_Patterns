@@ -31,6 +31,7 @@ namespace OHLC_Candlestick_Patterns
         /// <param name="formation">Selected formation</param>
         /// <returns>AccuracyObject containing values comparing to AVER and END closing</returns>
         AccuracyObject GetAverPercentAccuracy(List<OhlcvObject> dataOhlcv, string formation);
+        AccuracyObject GetAverPercentFormationAccuracy(List<OhlcvObject> dataOhlcv, string formation);
 
         /// <summary>
         /// Tests selected formation accuracy in given data 30 candles ahead comparing to average close prices after signal appears
@@ -41,6 +42,7 @@ namespace OHLC_Candlestick_Patterns
         /// <param name="candlesAheadQty">Qty of candles ahead to be evaluated</param>
         /// <returns>AccuracyObject containing values comparing to AVER and END closing</returns>
         AccuracyObject GetAverPercentAccuracy(List<OhlcvObject> dataOhlcv, string formation, int candlesAheadQty);
+        AccuracyObject GetAverPercentFormationAccuracy(List<OhlcvObject> dataOhlcv, string formation, int candlesAheadQty);
 
         /// <summary>
         /// Finds an array of candlestick pattern names resulting with positive accuracy in relation to average close prices in given data set
