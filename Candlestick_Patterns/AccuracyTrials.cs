@@ -59,6 +59,17 @@ namespace OHLC_Candlestick_Patterns
             return GetAccuracyResults(signalsListOhlcv, formationName);
         }
 
+        public AccuracyObject GetAverPercentFormationAccuracy(List<OhlcvObject> dataOhlcv, string formationName, int candlesAheadQty)
+        {
+            _formations = new Formations(dataOhlcv);
+
+            var signalsListZigZag = _formations.GetFormationsSignalsList(formationName);
+
+            var signalsListOhlcv = ConvertZigZagToOhlcv(signalsListZigZag, dataOhlcv);
+
+            return GetAccuracyResultsForNCandlesAhead(signalsListOhlcv, formationName, candlesAheadQty);
+        }
+
         private List<OhlcvObject> ConvertZigZagToOhlcv(List<ZigZagObject> signalsListZigZag, List<OhlcvObject> dataOhlcv)
         {
             foreach (var zigZagItem in signalsListZigZag)
@@ -319,7 +330,8 @@ namespace OHLC_Candlestick_Patterns
 
             foreach (var formation in allFormations)
             {
-                var acc = GetAverPercentAccuracy(dataOhlcv, formation);
+                //var acc = GetAverPercentAccuracy(dataOhlcv, formation);
+                var acc = GetAverPercentFormationAccuracy(dataOhlcv, formation);
 
                 if (acc.AccuracyToEndClose > 0 && acc.AccuracyToAverageClose > 0)
                 {
@@ -412,7 +424,8 @@ namespace OHLC_Candlestick_Patterns
 
             foreach (var formation in allFormations)
             {
-                var acc = GetAverPercentAccuracy(dataOhlcv, formation, candlesAhead);
+                //var acc = GetAverPercentAccuracy(dataOhlcv, formation, candlesAhead);
+                var acc = GetAverPercentFormationAccuracy(dataOhlcv, formation, candlesAhead);
 
                 if (acc.AccuracyToEndClose > 0 && acc.AccuracyToAverageClose > 0)
                 {
