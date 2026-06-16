@@ -1,5 +1,11 @@
 # OHLC_Candlestick_Patterns
 
+## Updates history
+Mar 2026 - Licence changed to MIT.
+Jan - Mar 2026 - Performance speed increased by code optimisation.
+Jan - Mar 2026 - Charting improved.
+Feb - Mar 2026 - Examples bugs fixed.
+
 ## Purpose
 
 The project was created due to the lack of a similar library for C#. It was preceded by the research for algorithmic formulas for individual OHLC patterns. As a result, you can test the OHLC candlestick list for:
