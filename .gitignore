@@ -9,7 +9,6 @@
 # User-specific files
 *.rsuser
 *.suo
-*.png
 *.zip
 *.bin
 *.gz
@@ -368,3 +367,4 @@ MigrationBackup/
 /Candlestick_Patterns/Patterns.cs
 /patterns_png/formations
 /patterns_png/fibo/1,2,3,4
+/patterns_png/patterns
