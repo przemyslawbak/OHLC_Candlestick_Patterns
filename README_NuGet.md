@@ -1,10 +1,10 @@
 # OHLC_Candlestick_Patterns
 
 ## Updates history
-Mar 2026 - Licence changed to MIT.
-Jan - Mar 2026 - Performance speed increased by code optimisation.
-Jan - Mar 2026 - Charting improved.
-Feb - Mar 2026 - Examples bugs fixed.
+- Mar 2026 - Licence changed to MIT.
+- Jan - Mar 2026 - Performance speed increased by code optimisation.
+- Jan - Mar 2026 - Charting improved.
+- Feb - Mar 2026 - Examples bugs fixed.
 
 ## Purpose
 
