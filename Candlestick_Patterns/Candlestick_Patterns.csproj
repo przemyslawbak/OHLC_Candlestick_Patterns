@@ -57,7 +57,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Enumerators\Enumerators.csproj" />
+    <ProjectReference Include="..\Enumerators\Enumerators.csproj" />
   </ItemGroup>
 
 </Project>
