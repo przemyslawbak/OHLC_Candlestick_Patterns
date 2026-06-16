@@ -7,7 +7,7 @@
     <AssemblyVersion></AssemblyVersion>
     <PackageReadmeFile>README_NuGet.md</PackageReadmeFile>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <Version>2.0.1</Version>
+    <Version>2.0.2</Version>
     <AssemblyName>OHLC_Candlestick_Patterns</AssemblyName>
     <RootNamespace>OHLC_Candlestick_Patterns</RootNamespace>
     <ApplicationIcon>stock-price-candlestick-graph-pngrepo-com.ico</ApplicationIcon>
@@ -18,7 +18,7 @@
     <PackageIcon>stock-price-candlestick-graph-pngrepo-com.png</PackageIcon>
     <RepositoryUrl>https://github.com/przemyslawbak/OHLC_Candlestick_Patterns</RepositoryUrl>
     <PackageTags>ohlc;candlestick;patterns;ta;technical-analysis;price-action;analysis;quant;finance;quantitative;trading;analysis;stock;forex;fibonacci;formation-detection;pattern-detection;formations;trading-strategies;financial-analysis;candlestick;trading-system;fibo;</PackageTags>
-    <PackageReleaseNotes>Optimization of patterns calculations; NuGet readme updated;</PackageReleaseNotes>
+    <PackageReleaseNotes>Optimization of patterns calculations; Bugs fixed; NuGet readme updated;</PackageReleaseNotes>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
     <Title>OHLC Candlestick Patterns</Title>
