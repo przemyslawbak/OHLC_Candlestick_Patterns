@@ -46,7 +46,8 @@ namespace Candlestick_Patterns
         public Patterns(List<OhlcvObject> data)
         {
             _data = new List<OhlcvObject>(data);
-            _averageBodySize = data.Average(x => Math.Abs(x.Open - x.Close));
+            //_averageBodySize = data.Average(x => Math.Abs(x.Open - x.Close));
+            _averageBodySize = data.Average(x => Math.Abs(GetBodySizePercentSigned(x)));
             _insideBarMaxChange = _averageBodySize / 2;
             _minimumCandleSize = _averageBodySize * 2;
             _maximumShortCandleSize = _averageBodySize / 2;
