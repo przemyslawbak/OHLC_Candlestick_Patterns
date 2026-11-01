@@ -1,4 +1,4 @@
-﻿using Candlestick_Patterns;
+using Candlestick_Patterns;
 using Newtonsoft.Json;
 using System.Net.Http;
 
@@ -7,6 +7,7 @@ namespace WPFGraphMaker
     public interface IDataFromJson
     {
         List<OhlcvObject> GetCandlestickDataFromJson(string patternName, string json);
+        List<OhlcvObject> GetOhlcvDataFromJson(string json);
         List<ZigZagObject> GetDataFromJson(string patternName, string json, string groupName);
     }
     
@@ -42,7 +43,7 @@ namespace WPFGraphMaker
             return signalList;
         }
 
-        public List<ZigZagObject> GetDataFromJson(string patternName, string json, string groupName)
+        public List<OhlcvObject> GetOhlcvDataFromJson(string json)
         {
             var settings = new JsonSerializerSettings
             {
@@ -50,16 +51,27 @@ namespace WPFGraphMaker
                 MissingMemberHandling = MissingMemberHandling.Ignore,
             };
 
-            var dataOhlcv = JsonConvert.DeserializeObject<List<OhlcvObject>>(json, settings).Select(x => new OhlcvObject()
-            {
-                Open = x.Open,
-                High = x.High,
-                Low = x.Low,
-                Close = x.Close,
-                Volume = x.Volume,
-            }).ToList();
+            var candles = JsonConvert.DeserializeObject<List<OhlcvObject>>(json, settings)
+                ?? throw new JsonSerializationException("The JSON document must contain an array of OHLCV candles.");
 
-            dataOhlcv = dataOhlcv.Where(x => x.Open != 0 && x.High != 0 && x.Low != 0 && x.Close != 0).ToList();
+            // Preserve the same input filtering rules used by the existing detectors.
+            return candles.Where(x => x != null && x.Open != 0M && x.High != 0M
+                    && x.Low != 0M && x.Close != 0M)
+                .Select(x => new OhlcvObject
+                {
+                    Open = x.Open,
+                    High = x.High,
+                    Low = x.Low,
+                    Close = x.Close,
+                    Volume = x.Volume,
+                    Signal = false
+                })
+                .ToList();
+        }
+
+        public List<ZigZagObject> GetDataFromJson(string patternName, string json, string groupName)
+        {
+            var dataOhlcv = GetOhlcvDataFromJson(json);
             var signalList = new List<ZigZagObject>();
             if (groupName == "fibonacci")
             {
@@ -76,22 +88,7 @@ namespace WPFGraphMaker
 
         public List<OhlcvObject> GetCandlestickDataFromJson(string patternName, string json)
         {
-            var settings = new JsonSerializerSettings
-            {
-                NullValueHandling = NullValueHandling.Ignore,
-                MissingMemberHandling = MissingMemberHandling.Ignore,
-            };
-
-            var dataOhlcv = JsonConvert.DeserializeObject<List<OhlcvObject>>(json, settings).Select(x => new OhlcvObject()
-            {
-                Open = x.Open,
-                High = x.High,
-                Low = x.Low,
-                Close = x.Close,
-                Volume = x.Volume,
-            }).ToList();
-
-            dataOhlcv = dataOhlcv.Where(x => x.Open != 0 && x.High != 0 && x.Low != 0 && x.Close != 0).ToList();
+            var dataOhlcv = GetOhlcvDataFromJson(json);
 
             _patterns = new Patterns(dataOhlcv);
 

@@ -4,7 +4,7 @@
     {
         Dictionary<string, int> GetCandlestickAmount();
     }
-    internal class CandlesticAmountDictionary: ICandlesticAmountDictionary
+    internal class CandlesticAmountDictionary : ICandlesticAmountDictionary
     {
         public Dictionary<string, int> GetCandlestickAmount()
         {
@@ -84,6 +84,15 @@
                 {"BullishWhiteClosingMarubozu",1 },
                 {"BullishWhiteMarubozu",1 },
                 {"BullishWhiteOpeningMarubozu",1 },
+                {"BullishHammer", 1 },
+                {"BearishHangingMan", 1 },
+                {"BullishAbandonedBaby", 3 },
+                {"BearishAbandonedBaby", 3 },
+                {"BullishHikkake", 4 },
+                {"BearishHikkake", 4 },
+                {"NeutralSpinningTop", 1 },
+                {"NeutralLongLeggedDoji", 1 },
+                {"NeutralHighWaveCandle", 1 },
             };
         }
     }

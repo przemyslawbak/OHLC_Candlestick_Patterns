@@ -1,16 +1,17 @@
-﻿<Window x:Class="WPFGraphMaker.MainWindow"
+<Window x:Class="WPFGraphMaker.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:ScottPlot="clr-namespace:ScottPlot.WPF;assembly=ScottPlot.WPF"
         mc:Ignorable="d"
-        Title="GraphWindow" Height="450" Width="800"
+        Title="GraphWindow" Height="450" Width="800" WindowState="Maximized"
         Name="mainWin">
 
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="40" />
+            <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <StackPanel x:Name="stackPanel" Orientation="Horizontal" Grid.Row="0">
@@ -62,12 +63,45 @@
             </TextBlock>
         </StackPanel>
         <Border Grid.Row="1">
-            <ContentControl Content="{Binding WpfPlot1}" Visibility="Visible"/>
+            <ContentControl Content="{Binding WpfPlot1}"
+                            HorizontalContentAlignment="Stretch"
+                            VerticalContentAlignment="Stretch"
+                            Visibility="Visible"/>
         </Border>
+        <Grid Grid.Row="2" Margin="12,4,12,10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0"
+                       Text="Scroll:"
+                       VerticalAlignment="Center"
+                       Margin="0,0,10,0" />
+            <Slider x:Name="ChartPositionSlider"
+                    Grid.Column="1"
+                    Minimum="0"
+                    Maximum="0"
+                    Value="0"
+                    SmallChange="1"
+                    LargeChange="10"
+                    TickFrequency="1"
+                    IsSnapToTickEnabled="True"
+                    IsEnabled="False"
+                    VerticalAlignment="Center"
+                    ValueChanged="OnChartPositionChanged" />
+            <TextBlock x:Name="ChartRangeLabel"
+                       Grid.Column="2"
+                       Text="No data"
+                       VerticalAlignment="Center"
+                       MinWidth="165"
+                       TextAlignment="Right"
+                       Margin="12,0,0,0" />
+        </Grid>
         <Border Background="#B0808080" 
                 Visibility="{Binding IsTesting, Converter={StaticResource BoolToVis}}"
-                Grid.RowSpan="2">
-            <TextBlock Text="SEARCHING..." 
+                Grid.RowSpan="3">
+            <TextBlock Text="{Binding LoadingMessage}" 
                        FontSize="40" 
                        FontWeight="Bold" 
                        Foreground="Green" 

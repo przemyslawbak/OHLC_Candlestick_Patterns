@@ -23,7 +23,19 @@
                 { "Bearish3Extension", "fibonacci" },
                 { "Bearish3Retracement", "fibonacci" },
                 { "Bearish3Drive", "fibonacci" },
-                
+                { "BullishBat", "fibonacci" },
+                { "BearishBat", "fibonacci" },
+                { "BullishCrab", "fibonacci" },
+                { "BearishCrab", "fibonacci" },
+                { "BullishDeepCrab", "fibonacci" },
+                { "BearishDeepCrab", "fibonacci" },
+                { "BullishCypher", "fibonacci" },
+                { "BearishCypher", "fibonacci" },
+                { "BullishShark", "fibonacci" },
+                { "BearishShark", "fibonacci" },
+                { "BullishFive0", "fibonacci" },
+                { "BearishFive0", "fibonacci" },
+
                 { "BearishDoubleTops", "formations" },
                 { "BearishTripleTops", "formations" },
                 { "BearishHeadAndShoulders", "formations" },
@@ -46,6 +58,14 @@
 
                 { "ContinuationSymmetricTriangle", "formations" },
                 { "ContinuationDiamondFormation", "formations" },
+                { "BullishRectangle", "formations" },
+                { "BearishRectangle", "formations" },
+                { "BearishBroadeningTop", "formations" },
+                { "BullishBroadeningBottom", "formations" },
+                { "BullishDescendingTriangle", "formations" },
+                { "BearishAscendingTriangle", "formations" },
+                { "BullishMeasuredMove", "formations" },
+                { "BearishMeasuredMove", "formations" },
 
                 {"Bearish2Crows","patterns" },
                 {"Bearish3BlackCrows", "patterns" },
@@ -121,6 +141,15 @@
                 {"BullishWhiteClosingMarubozu","patterns" },
                 {"BullishWhiteMarubozu","patterns" },
                 {"BullishWhiteOpeningMarubozu","patterns" },
+                {"BullishHammer", "patterns" },
+                {"BearishHangingMan", "patterns" },
+                {"BullishAbandonedBaby", "patterns" },
+                {"BearishAbandonedBaby", "patterns" },
+                {"BullishHikkake", "patterns" },
+                {"BearishHikkake", "patterns" },
+                {"NeutralSpinningTop", "patterns" },
+                {"NeutralLongLeggedDoji", "patterns" },
+                {"NeutralHighWaveCandle", "patterns" },
             };
         }
     }
