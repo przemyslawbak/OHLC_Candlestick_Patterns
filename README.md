@@ -65,6 +65,8 @@ The package exposes the `Candlestick_Patterns` namespace for signal analysis and
 
 [Complete list of supported Candlestick Patterns](docs/Patterns_list.md)
 
+[Examples using of methods with chart Formations](docs/Patterns_examples.md)
+
 ## Quick start
 
 ```csharp
