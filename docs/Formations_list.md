@@ -24,6 +24,29 @@
 | :-------------: | :-------------: | :-------------: |
 |<img width="300" height="200" alt="Bullish Bull Flags Pennants" src="https://github.com/user-attachments/assets/63ff1592-78e2-4d1d-b27f-013caf52ca7f">|<img width="300" height="200" alt="Bullish Ascending Price Channel" src="https://github.com/user-attachments/assets/716e00b7-c18d-47d0-b9be-0f858f7c2eb8">|<img width="300" height="200" alt="Bullish Rounding Bottom Pattern" src="https://github.com/user-attachments/assets/d4fc4fc9-b928-4334-835c-2b7d0428993f">|
 
+| Bullish Rectangle | Bearish Rectangle | Bearish Broadening Top |
+| :---: | :---: | :---: |
+| <img width="300" height="200" alt="Bullish Rectangle" src="https://github.com/user-attachments/assets/1b3c9cb2-8955-49b9-b9c9-bcdd67f9c11e" /> | <img width="300" height="200" alt="Bearish Rectangle" src="https://github.com/user-attachments/assets/9ec89b74-bde6-4414-994c-0f2d9b1e5298" /> | <img width="300" height="200" alt="Bearish Broadening Top" src="https://github.com/user-attachments/assets/c96bc1ce-a3f2-4e68-854a-1b01d8bac146" /> |
+
+| Bullish Broadening Bottom | Bullish Descending Triangle | Bearish Ascending Triangle |
+| :---: | :---: | :---: |
+| <img width="300" height="200" alt="Bullish Broadening Bottom" src="https://github.com/user-attachments/assets/29d6302f-e46b-410f-b39e-4a927d53a22e" /> | <img width="300" height="200" alt="Bullish Descending Triangle" src="https://github.com/user-attachments/assets/0d78db13-a1da-4e09-8bf9-7b9a0994c0f1" /> | <img width="300" height="200" alt="Bearish Ascending Triangle" src="https://github.com/user-attachments/assets/5f373e86-1690-4869-9474-22f590c07335" /> |
+
+| Bullish Measured Move | Bearish Measured Move |
+| :---: | :---: |
+| <img width="300" height="200" alt="Bullish Measured Move" src="https://github.com/user-attachments/assets/2bbe4722-e33e-434f-a107-81d9588ac003" /> | <img width="300" height="200" alt="Bearish Measured Move" src="https://github.com/user-attachments/assets/af684b14-79b8-4dfd-8ef9-5b4595c3c129" /> |
+
 | Continuation Diamond Formation | Continuation Symmetric Triangle |
 | :-------------: | :-------------: |
 |<img width="300" height="200" alt="Continuation Diamond Formation" src="https://github.com/user-attachments/assets/a5e10c6b-b9d2-4dd3-a978-a7d5b3d8eba8">|<img width="300" height="200" alt="Continuation Symmetric Triangle" src="https://github.com/user-attachments/assets/956a3587-3f86-47f0-ae5a-2de62cb0b3c7">|
+
+
+
+
+
+
+
+
+
+
+
