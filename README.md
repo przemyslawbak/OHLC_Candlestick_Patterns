@@ -10,9 +10,9 @@
 ## Purpose
 
 The project was created due to the lack of a similar library for C#. It was preceded by the research for algorithmic formulas for individual OHLC patterns. As a result, you can test the OHLC candlestick list for:
-- 37 bullish and 37 bearish candlestick patterns,
-- 9 bullish, 9 bearish and additionally 2 continuation classic chart formations,
-- 6 bullish, 6 bearish fibonacci chart patterns.
+- 40 bullish and 40 bearish candlestick patterns and additionally 2 continuation,
+- 13 bullish, 13 bearish and additionally 2 continuation classic chart formations,
+- 12 bullish, 12 bearish fibonacci chart patterns.
 
 Additionally, you can test their effectiveness on the OHLCV data provided. A list of patterns, formations and an example of use can be found below.
 
