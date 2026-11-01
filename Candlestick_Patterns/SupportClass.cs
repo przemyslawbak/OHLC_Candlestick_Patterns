@@ -1,49 +1,43 @@
 ﻿using Candlestick_Patterns;
-using System.Data;
 
 namespace OHLC_Candlestick_Patterns
 {
     internal interface ISupportClass
     {
-        bool CheckPoint(decimal point, decimal pointAD, decimal _priceMovement, bool checkPoint);
+        bool CheckPoint(decimal point, decimal pointAD, decimal priceMovement, bool checkPoint);
         decimal GetRetracement(IReadOnlyList<ZigZagObject> points, int i, int number1, int number2, int number3);
-        List<decimal> PointsRange(decimal point, decimal _priceMovement);
+        List<decimal> PointsRange(decimal point, decimal priceMovement);
         bool CheckIfRetracemntIsInRange(List<decimal> range1, List<decimal> range2, decimal retracement);
     }
 
     internal class SupportClass : ISupportClass
     {
-
-        public bool CheckPoint(decimal point, decimal pointAD, decimal _priceMovement, bool checkPoint)
+        public bool CheckPoint(decimal point, decimal pointAD, decimal priceMovement, bool checkPoint)
         {
-            if (PointsRange(pointAD, _priceMovement).First() >= point && PointsRange(pointAD, _priceMovement).Last() <= point)
-            {
-                checkPoint = true;
-            }
-            return checkPoint;
+            var range = PointsRange(pointAD, priceMovement);
+            return checkPoint || (point >= range[0] && point <= range[1]);
         }
 
-        public  List<decimal> PointsRange(decimal point, decimal _priceMovement) => new List<decimal>()
+        public List<decimal> PointsRange(decimal point, decimal priceMovement)
         {
-            point - (point * _priceMovement),
-            point + (point * _priceMovement),
-        };
+            if (priceMovement < 0M)
+                throw new ArgumentOutOfRangeException(nameof(priceMovement));
+            decimal tolerance = Math.Abs(point) * priceMovement;
+            return new List<decimal> { point - tolerance, point + tolerance };
+        }
 
         public decimal GetRetracement(IReadOnlyList<ZigZagObject> points, int i, int number1, int number2, int number3)
         {
-            var retracement = (Math.Abs(points[i - number1].Close - points[i - number2].Close) * 100) / (Math.Abs(points[i - number2].Close - points[i - number3].Close));
-
-            return retracement;
+            decimal numerator = Math.Abs(points[i - number1].Close - points[i - number2].Close);
+            decimal denominator = Math.Abs(points[i - number2].Close - points[i - number3].Close);
+            // A zero reference leg cannot define a Fibonacci ratio.
+            return denominator == 0M ? 0M : numerator * 100M / denominator;
         }
-
 
         public bool CheckIfRetracemntIsInRange(List<decimal> range1, List<decimal> range2, decimal retracement)
         {
-            if (range1.Min() < retracement && range2.Max() > retracement)
-            {
-                return true;
-            }
-            return false;
+            return retracement >= Math.Min(range1[0], range2[0])
+                && retracement <= Math.Max(range1[1], range2[1]);
         }
     }
 }

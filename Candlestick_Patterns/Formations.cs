@@ -16,10 +16,10 @@ namespace Candlestick_Patterns
         private readonly decimal _channelTolerancePercentage;
         private List<ZigZagObject> _peaksFromZigZag;
 
-        // ─── Precomputed slope boundaries (cached once, never reallocated) ───
+        // Precomputed slope boundaries (cached once and never reallocated).
         private double _slopeMin;
-        private double _slopeMax;       
-        private double _slope2;        
+        private double _slopeMax;
+        private double _slope2;
         private int _formationsLengthMax;
 
         private Lazy<List<ZigZagObject>> _cachedPoints;
@@ -42,11 +42,11 @@ namespace Candlestick_Patterns
             _dataOhlcv = deepCopy;
             _data = SetPeaksVallyes.GetCloseAndSignalsData(deepCopy);
             _peaksFromZigZag = SetPeaksVallyes.PeaksFromZigZag(_data, 0.002M);
-            _percentageMargin = 0.0025M; 
+            _percentageMargin = 0.0025M;
             _formationsLenght = new List<int>() { 4, 7 };
             _minShift = 2;
             _advance = new List<double>() { 0.10, 0.20 };
-            _graphSlope = new List<double>() { 5, 20, 30, 45, 60};
+            _graphSlope = new List<double>() { 5, 20, 30, 45, 60 };
             _channelTolerancePercentage = 0.3M;
 
             CacheScalars();
@@ -54,7 +54,13 @@ namespace Candlestick_Patterns
             BuildDispatchTable();
         }
 
-        public Formations(List<OhlcvObject> dataOhlcv, int zigZagParam) : this(dataOhlcv) 
+        // The legacy integer overload represents a percentage: 1 means 1%.
+        public Formations(List<OhlcvObject> dataOhlcv, int zigZagParam)
+            : this(dataOhlcv, zigZagParam / 100M)
+        {
+        }
+
+        public Formations(List<OhlcvObject> dataOhlcv, decimal zigZagParam) : this(dataOhlcv)
         {
             _peaksFromZigZag = SetPeaksVallyes.PeaksFromZigZag(_data, zigZagParam);
             _pointsDirty = true;
@@ -69,8 +75,8 @@ namespace Candlestick_Patterns
         private void CacheScalars()
         {
             _slopeMin = _graphSlope.Min();
-            _slopeMax = _graphSlope[3];          
-            _slope2 = _graphSlope[2];           
+            _slopeMax = _graphSlope[3];
+            _slope2 = _graphSlope[2];
             _formationsLengthMax = _formationsLenght.Max();
         }
 
@@ -112,7 +118,7 @@ namespace Candlestick_Patterns
             return (points, seen, count, minNumber);
         }
 
-        private void ConfirmFormation(List<ZigZagObject> points, HashSet<decimal> seen, int i, int minNumber, int? addRangeStart = null, int? addRangeEnd = null, int? initiationOffset = null, bool checkSeenCount = false)     
+        private void ConfirmFormation(List<ZigZagObject> points, HashSet<decimal> seen, int i, int minNumber, int? addRangeStart = null, int? addRangeEnd = null, int? initiationOffset = null, bool checkSeenCount = false)
         {
             int start = addRangeStart ?? (i - minNumber);
             int end = addRangeEnd ?? i;
@@ -122,7 +128,7 @@ namespace Candlestick_Patterns
                 seen.Add(points[x].IndexOHLCV);
             }
 
-            if (checkSeenCount && seen.Count < _formationsLengthMax)
+            if (checkSeenCount && seen.Count < minNumber + 1)
                 return;
 
             points[i].Signal = true;
@@ -152,11 +158,8 @@ namespace Candlestick_Patterns
                         seen.Add(points[x].IndexOHLCV);
                     }
 
-                    if (seen.Count > _formationsLengthMax)
-                    {
-                        points[i].Signal = true;
-                        points[i - minNumber].Initiation = true;
-                    }
+                    points[i].Signal = true;
+                    points[i - minNumber].Initiation = true;
                 }
 
                 return points;
@@ -225,7 +228,7 @@ namespace Candlestick_Patterns
                     if (seen.Contains(points[i - minNumber].IndexOHLCV)) continue;
                     decimal c0 = points[i - 4].Close;
                     decimal c1 = points[i - 3].Close;
-                    decimal c2 = points[i - 2].Close;  
+                    decimal c2 = points[i - 2].Close;
                     decimal c3 = points[i - 1].Close;
                     decimal c4 = points[i].Close;
                     if (c0 <= c2 || c2 >= c4) continue;
@@ -400,7 +403,7 @@ namespace Candlestick_Patterns
                 ReturnDateSet();
             }
         }
-        
+
         private List<ZigZagObject> BearishInverseCupAndHandle()
         {
             var (points, seen, count, minNumber) = SetupFormationScan(FormationNameEnum.BearishInverseCupAndHandle);
@@ -409,7 +412,7 @@ namespace Candlestick_Patterns
             {
                 for (int i = minNumber; i < count; i++)
                 {
-                    if (seen.Contains(points[i - 14].IndexOHLCV)) continue;
+                    if (seen.Contains(points[i - minNumber].IndexOHLCV)) continue;
 
                     decimal c0 = points[i - 16].Close;
                     decimal c1 = points[i - 15].Close;
@@ -556,8 +559,8 @@ namespace Candlestick_Patterns
         {
             var (points, seen, count, minNumber) = SetupFormationScan(FormationNameEnum.ContinuationSymmetricTriangle);
 
-           try
-           {
+            try
+            {
                 for (int i = minNumber; i < count; i++)
                 {
                     if (seen.Contains(points[i - minNumber].IndexOHLCV)) continue;
@@ -598,11 +601,11 @@ namespace Candlestick_Patterns
                 }
 
                 return points;
-           }
-           finally
-           {
+            }
+            finally
+            {
                 ReturnDateSet();
-           }
+            }
         }
 
         private List<ZigZagObject> BearishDescendingTriangle()
@@ -611,7 +614,7 @@ namespace Candlestick_Patterns
 
             try
             {
-                for (int i = minNumber; i < count - 3; i++)
+                for (int i = minNumber; i < count; i++)
                 {
                     if (seen.Contains(points[i - minNumber].IndexOHLCV)) continue;
                     decimal c0 = points[i - 5].Close;
@@ -690,11 +693,8 @@ namespace Candlestick_Patterns
                         seen.Add(points[x].IndexOHLCV);
                     }
 
-                    if (seen.Count > _formationsLengthMax)
-                    {
-                        points[i].Signal = true;
-                        points[i - minNumber].Initiation = true;
-                    }
+                    points[i].Signal = true;
+                    points[i - minNumber].Initiation = true;
                 }
 
                 return points;
@@ -776,7 +776,7 @@ namespace Candlestick_Patterns
                     decimal diff2 = Math.Abs(c3 - c4);
                     decimal diff3 = Math.Abs(c1 - c0);
                     if (Math.Abs((c1 - c3) / c1) >= _percentageMargin) continue;
-                    if ((decimal)_minShift * diff1 > diff3 || (decimal)_minShift * diff1 >= diff3) continue;
+                    if ((decimal)_minShift * diff1 >= diff3 || (decimal)_minShift * diff2 >= diff3) continue;
                     for (int x = i - minNumber; x <= i; x++)
                         seen.Add(points[x].IndexOHLCV);
 
@@ -819,7 +819,7 @@ namespace Candlestick_Patterns
                     decimal diff3 = Math.Abs(c4 - c3);
                     decimal diff4 = Math.Abs(c0 - c1);
                     decimal changePennant = Math.Abs((c2 - c4) / c2);
-                    if (changePennant >= _percentageMargin || changePennant >= _percentageMargin) continue;
+                    if (changePennant >= _percentageMargin) continue;
                     if ((decimal)_minShift * diff1 > diff4 || (decimal)_minShift * diff3 >= diff4) continue;
 
                     for (int x = i - minNumber; x <= i; x++)
@@ -1066,18 +1066,8 @@ namespace Candlestick_Patterns
                     decimal diff2 = Math.Abs(c8 - c7);
                     decimal diff3 = Math.Abs(c4 - c3);
                     if (diff2 <= diff1 || diff2 <= diff3) continue;
-                    if (diff2 <= diff1 || diff2 <= diff3) continue;
 
-                    for (int x = -10; x < 1; x++)
-                    {
-                        seen.Add(points[i + x].IndexOHLCV);
-                    }
-
-                    if (seen.Count >= _formationsLenght.Count())
-                    {
-                        points[i].Signal = true;
-                        points[i - 10].Initiation = true;
-                    }
+                    ConfirmFormation(points, seen, i, minNumber);
                 }
 
                 return points;
@@ -1118,12 +1108,7 @@ namespace Candlestick_Patterns
 
         public List<string> GetFormationsAllMethodNames()
         {
-            List<string> methods = new List<string>();
-            foreach (MethodInfo item in typeof(Formations).GetMethods(BindingFlags.IgnoreCase | BindingFlags.NonPublic | BindingFlags.Instance))
-            {
-                methods.Add(item.Name);
-            }
-            return methods;
+            return GetAllFormationNames();
         }
 
         public static int MinimumOhlcvCount(FormationNameEnum formationName) => formationName switch
@@ -1184,19 +1169,19 @@ namespace Candlestick_Patterns
 
         public List<ZigZagObject> GetFormationsSignalsList(FormationNameEnum formation)
         {
-            return _dispatchTable.TryGetValue(formation, out var handler) ? handler() : null;
+            return _dispatchTable.TryGetValue(formation, out var handler) ? handler() : GetPoints();
         }
 
         public List<ZigZagObject> GetFormationsSignalsList(string formationName)
         {
-            var methodName = formationName.Trim().Replace(" ", "");
+            var methodName = formationName?.Trim().Replace(" ", "") ?? string.Empty;
 
             if (Enum.TryParse(methodName, ignoreCase: true, out FormationNameEnum formation))
             {
                 return GetFormationsSignalsList(formation);
             }
 
-            return _data;
+            return GetPoints();
         }
 
         public int GetFormationsSignalsCount(string formationName)
@@ -1212,7 +1197,7 @@ namespace Candlestick_Patterns
 
         public List<string> GetAllFormationNames()
         {
-            return _formationNames;
+            return new List<string>(_formationNames);
         }
 
         public int GetSignalsCount(string formationName)

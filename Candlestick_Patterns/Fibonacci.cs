@@ -4,32 +4,25 @@ using System.Collections.Immutable;
 
 namespace Candlestick_Patterns
 {
-    //public abstract class AbstractFibonnaci
-    //{
-    //    internal abstract bool FirstCheck(List<ZigZagObject> points, int i, string pattern, string fibbPattern);
-    //    internal abstract bool SecondCheck(List<ZigZagObject> points, int i, string pattern, string fibbPattern);
-    //}
 
-    public class Fibonacci :/* AbstractFibonnaci,*/ IFibonacci, ISignalEngine
+    public class Fibonacci : IFibonacci, ISignalEngine
     {
         private readonly List<ZigZagObject> _data;
         private readonly decimal _fibError;
         private readonly List<ZigZagObject> _peaksFromZigZag;
-        //private  List<ZigZagObject> Points { get; set; }
         private readonly ImmutableList<OhlcvObject> DataOhlcv;
 
         private static readonly SupportClass Support = new();
-        //public  bool IsDataLoaded { get; set; } = false;
 
-        internal  List<decimal> GetRange382() => Support.PointsRange(38.2M, _fibError);
-        internal  List<decimal> GetRange786() => Support.PointsRange(78.6M, _fibError);
-        internal  List<decimal> GetRange618() => Support.PointsRange(61.8M, _fibError);
-        internal  List<decimal> GetRange886() => Support.PointsRange(88.6M, _fibError);
-        internal  List<decimal> GetRange127() => Support.PointsRange(127.2M, _fibError);
-        internal  List<decimal> GetRange161() => Support.PointsRange(161.8M, _fibError);
-        internal  List<decimal> GetRange224() => Support.PointsRange(224M, _fibError);
+        internal List<decimal> GetRange382() => Support.PointsRange(38.2M, _fibError);
+        internal List<decimal> GetRange786() => Support.PointsRange(78.6M, _fibError);
+        internal List<decimal> GetRange618() => Support.PointsRange(61.8M, _fibError);
+        internal List<decimal> GetRange886() => Support.PointsRange(88.6M, _fibError);
+        internal List<decimal> GetRange127() => Support.PointsRange(127.2M, _fibError);
+        internal List<decimal> GetRange161() => Support.PointsRange(161.8M, _fibError);
+        internal List<decimal> GetRange224() => Support.PointsRange(224M, _fibError);
 
-        private readonly ImmutableList<ZigZagObject> _cachedPoints; 
+        private readonly ImmutableList<ZigZagObject> _cachedPoints;
         private readonly Dictionary<PatternType, Func<IReadOnlyList<ZigZagObject>, ImmutableList<ZigZagObject>>> _patternMethods;
 
 
@@ -39,17 +32,7 @@ namespace Candlestick_Patterns
             return _cachedPoints;
         }
 
-        //private List<ZigZagObject> GetCachedPoints()
-        //{
-        //    return _cachedPoints.Value;
 
-        //    //if (_cachedPoints == null)
-        //    //{
-        //    //    _cachedPoints = PeaksFromZigZag; 
-        //    //    ResetSignals(_cachedPoints);
-        //    //}
-        //    //return _cachedPoints;
-        //}
         private List<ZigZagObject> InitializeCachedPoints()
         {
             var cachedCopy = new List<ZigZagObject>(_peaksFromZigZag.Count);
@@ -61,7 +44,8 @@ namespace Candlestick_Patterns
                 {
                     Close = point.Close,
                     IndexOHLCV = point.IndexOHLCV,
-                    Signal = false, 
+                    ConfirmationIndexOHLCV = point.ConfirmationIndexOHLCV,
+                    Signal = false,
                     Initiation = point.Initiation
                 });
             }
@@ -69,41 +53,10 @@ namespace Candlestick_Patterns
             return cachedCopy;
         }
 
-        //internal static void ResetSignals(List<ZigZagObject> _peaksFromZigZag)
-        //{
-        //    for (int i = 0; i < _peaksFromZigZag.Count; i++)
-        //    {
-        //        _peaksFromZigZag[i].Signal = false;
-        //    }
-        //}
 
-        //private void InitializePatternMethods()
-        //{
-        //    _patternMethods = new Dictionary<PatternType, Func<List<ZigZagObject>>>
-        //    {
-        //        { PatternType.BullishGartley, BullishGartley },
-        //        { PatternType.BearishGartley, BearishGartley },
-        //        { PatternType.Bullish3Drive, Bullish3Drive },
-        //        { PatternType.Bearish3Drive, Bearish3Drive },
-        //        { PatternType.BearishButterfly, BearishButterfly },
-        //        { PatternType.BullishButterfly, BullishButterfly },
-        //        { PatternType.BearishABCD, BearishABCD },
-        //        { PatternType.BullishABCD, BullishABCD },
-        //        { PatternType.Bearish3Extension, Bearish3Extension },
-        //        { PatternType.Bullish3Extension, Bullish3Extension },
-        //        { PatternType.Bullish3Retracement, Bullish3Retracement },
-        //        { PatternType.Bearish3Retracement, Bearish3Retracement },
-        //    };
-        //}
 
         public Fibonacci(List<OhlcvObject> dataOhlcv) : this(dataOhlcv, 0.002M)
         {
-            //DataOhlcv = dataOhlcv;
-            //Data = SetPeaksVallyes.GetCloseAndSignalsData(dataOhlcv);
-            //PeaksFromZigZag = SetPeaksVallyes.PeaksFromZigZag(Data, 0.002M);
-            //_fibError = 0.1M; // in all Fibonacci ratios, errors of no more than 10% of the ideal value are allowed.  
-            //Support = new SupportClass();
-            //InitializePatternMethods();
         }
 
         public Fibonacci(List<OhlcvObject> dataOhlcv, decimal zigZagParam)
@@ -131,12 +84,6 @@ namespace Candlestick_Patterns
 
             _patternResultsCache = new ConcurrentDictionary<PatternType, ImmutableList<ZigZagObject>>();
 
-            //DataOhlcv = dataOhlcv;
-            //Data = SetPeaksVallyes.GetCloseAndSignalsData(dataOhlcv);
-            //PeaksFromZigZag = SetPeaksVallyes.PeaksFromZigZag(Data, zigZagParam);
-            //_fibError = 0.1M;
-            //Support = new SupportClass();
-            //InitializePatternMethods();
         }
 
         private static readonly Dictionary<string, PatternType> _patternNameMapping = new Dictionary<string, PatternType>(StringComparer.OrdinalIgnoreCase)
@@ -184,95 +131,46 @@ namespace Candlestick_Patterns
         private ImmutableList<ZigZagObject> Bearish3Drive(IReadOnlyList<ZigZagObject> points) => Pattern("bearish", points, _fibError, "threeDrivePattern", 5);
         private ImmutableList<ZigZagObject> Bullish3Drive(IReadOnlyList<ZigZagObject> points) => Pattern("bullish", points, _fibError, "threeDrivePattern", 5);
 
-        private static void AddPointsToList(IReadOnlyList<ZigZagObject> points, int i, int number, HashSet<decimal> usedIndexes, List<ZigZagObject> result)
+        private static void AddPointsToList(IReadOnlyList<ZigZagObject> points, int i,
+            int number, Dictionary<int, ZigZagObject> selected)
         {
-            for (int x = -number; x <= 0; x++)
+            for (int index = i - number; index <= i; index++)
             {
-                int index = i + x;
-                if (index < 0 || index >= points.Count)
-                    continue;
-
-                var original = points[index];
-
-                if (!usedIndexes.Add(original.IndexOHLCV))
-                    continue;
-
-                result.Add(new ZigZagObject
+                var source = points[index];
+                if (!selected.TryGetValue(source.IndexOHLCV, out var existing))
                 {
-                    IndexOHLCV = original.IndexOHLCV,
-                    Close = original.Close,
-                    Signal = index == i,
-                    Initiation = index == i - number
-                });
+                    existing = new ZigZagObject
+                    {
+                        Close = source.Close,
+                        IndexOHLCV = source.IndexOHLCV,
+                        ConfirmationIndexOHLCV = source.ConfirmationIndexOHLCV
+                    };
+                    selected.Add(source.IndexOHLCV, existing);
+                }
+
+                // An overlapping pivot may be the end of one pattern and the start of another.
+                existing.Signal |= index == i;
+                existing.Initiation |= index == i - number;
             }
-
-            //for (int x = -number; x <= 0; x++)
-            //{
-            //    int index = i + x;
-            //    if (index >= 0 && index < points.Count)  // Extra safety
-            //    {
-            //        dateSet.Add(points[index].IndexOHLCV);
-            //    }
-            //}
-
-            //// Mark pattern points
-            //points[i].Signal = true;
-            //points[i - number].Initiation = true;
-
-            //return points;
-
-            /*
-            for (int x = -number; x < 1; x++)
-            {
-                dateList.Add(points[i + x].IndexOHLCV);
-            }
-            points[i].Signal = true;
-            points[i - number].Initiation = true;
-            return points;*/
         }
 
-        internal virtual ImmutableList<ZigZagObject> Pattern(string pattern, IReadOnlyList<ZigZagObject> points, decimal priceMovement1, string fibbPattern, int startNumber)
+        internal virtual ImmutableList<ZigZagObject> Pattern(string pattern,
+            IReadOnlyList<ZigZagObject> points, decimal priceMovement1,
+            string fibbPattern, int startNumber)
         {
-            var usedIndexes = new HashSet<decimal>();
-            var result = new List<ZigZagObject>();
-
+            var selected = new Dictionary<int, ZigZagObject>();
             for (int i = startNumber; i < points.Count; i++)
             {
-                var baseIndex = points[i - startNumber].IndexOHLCV;
-
-                if (usedIndexes.Contains(baseIndex))
-                    continue;
-
                 if (!FirstCheck(points, i, pattern, fibbPattern))
                     continue;
-
                 if (!SecondCheck(points, i, pattern, fibbPattern))
                     continue;
-
-                AddPointsToList(points, i, startNumber, usedIndexes, result);
+                AddPointsToList(points, i, startNumber, selected);
             }
 
-            return result.ToImmutableList(); 
-            ////var dateList = new List<decimal>();
-            //var dateList = new HashSet<decimal>();
-
-            //for (int i = startNumber; i < points.Count; i++)
-            //{
-            //    if (!dateList.Contains(points[i - startNumber].IndexOHLCV))
-            //    {
-            //        if (FirstCheck(points, i, pattern, fibbPattern))
-            //        {
-            //            if (SecondCheck(points, i, pattern, fibbPattern))
-            //            {
-            //                Support.AddPointsToList(points, i, dateList, startNumber);
-            //            }
-            //        }
-            //    }
-            //}
-
-            //return points;
+            return selected.Values.OrderBy(p => p.IndexOHLCV).ToImmutableList();
         }
-       
+
         internal bool FirstCheck(IReadOnlyList<ZigZagObject> points, int i, string pattern, string fibbPattern)
         {
             return fibbPattern switch
@@ -280,10 +178,10 @@ namespace Candlestick_Patterns
                 "abcdPattern" => FirstCheckForABCDPattern(points, i, pattern),
                 "gartleyPattern" => FirstCheckForGartleyPattern(points, i, pattern),
                 "butterflyPattern" => FirstCheckButterflyPattern(points, i, pattern),
-                "threeExtensionPattern"=> FirstCheckFor3ExtensionPattern(points, i, pattern),
+                "threeExtensionPattern" => FirstCheckFor3ExtensionPattern(points, i, pattern),
                 "threeRetracementPattern" => FirstCheckFor3RetracementPattern(points, i, pattern),
                 "threeDrivePattern" => FirstCheckFor3DrivePattern(points, i, pattern),
-                 _ => false
+                _ => false
             };
         }
 
@@ -300,7 +198,7 @@ namespace Candlestick_Patterns
                 _ => false
             };
         }
-       
+
         private readonly struct PriceWindow
         {
             public readonly decimal C0, C1, C2, C3, C4, C5;
@@ -336,12 +234,12 @@ namespace Candlestick_Patterns
             return false;
         }
 
-        private bool SecondCheckFor3DrivePattern(IReadOnlyList<ZigZagObject> points, int i, string pattern) 
+        private bool SecondCheckFor3DrivePattern(IReadOnlyList<ZigZagObject> points, int i, string pattern)
         {
-            var retracementBcBa = Support.GetRetracement(points, i, 1, 2, 3); // 61,8% lub 78,6%
-            var retracementX0XA = Support.GetRetracement(points, i, 3, 4, 5); // 61,8% lub 78,6%
-            var extensionCdCb = Support.GetRetracement(points, i, 0, 1, 2);  // 127% 
-            var extensionAxAc = Support.GetRetracement(points, i, 2, 3, 4);  // 127% 
+            var retracementBcBa = Support.GetRetracement(points, i, 1, 2, 3);
+            var retracementX0XA = Support.GetRetracement(points, i, 3, 4, 5);
+            var extensionCdCb = Support.GetRetracement(points, i, 0, 1, 2);
+            var extensionAxAc = Support.GetRetracement(points, i, 2, 3, 4);
 
             var range618 = GetRange618();
             var range786 = GetRange786();
@@ -375,29 +273,17 @@ namespace Candlestick_Patterns
 
         private bool SecondCheckForGartleyPattern(IReadOnlyList<ZigZagObject> points, int i, string pattern)
         {
-            var retracementAbAx = Support.GetRetracement(points, i, 2, 3, 4); // 61,8% - 78,6%
-            var retracementBcBa = Support.GetRetracement(points, i, 1, 2, 3); // 38.2% – 88.6% 
-            var retracementCbBa = Support.GetRetracement(points, i, 1, 2, 3); // 61,8% - 78,6%
-            var retracementCdCb = Support.GetRetracement(points, i, 0, 1, 2); // between 127,2% and 161,8%
-            var retracementAdAX = Support.GetRetracement(points, i, 0, 3, 4); // between 78.6% and 88.6% 
+            decimal abXa = Support.GetRetracement(points, i, 2, 3, 4);
+            decimal bcAb = Support.GetRetracement(points, i, 1, 2, 3);
+            decimal cdBc = Support.GetRetracement(points, i, 0, 1, 2);
+            decimal adXa = Support.GetRetracement(points, i, 0, 3, 4);
 
-            var range618 = GetRange618();
-            var range786 = GetRange786();
-            var range127 = GetRange127();
-            var range886 = GetRange886();
-            var range161 = GetRange161();
-            var range382 = GetRange382();
-            var check618_786retracement1 = Support.CheckIfRetracemntIsInRange(range618, range786, retracementAbAx);
-            if (!check618_786retracement1) return false;
-            var check381_886retracement = Support.CheckIfRetracemntIsInRange(range382, range886, retracementBcBa);
-            var check618_786retracement2 = Support.CheckIfRetracemntIsInRange(range618, range786, retracementCbBa);
-            if (!(check381_886retracement || check618_786retracement2)) return false;
-            var check786_886retracement = Support.CheckIfRetracemntIsInRange(range786, range886, retracementAdAX);
-            if (!check786_886retracement) return false;
-            var check127_161retracement1 = Support.CheckIfRetracemntIsInRange(range127, range161, retracementCdCb);
-            if (!check127_161retracement1) return false;
-
-            return true;
+            // Gartley: AB/XA = 0.618, BC/AB = 0.382..0.886,
+            // CD/BC = 1.272..1.618 and AD/XA = 0.786.
+            return InRange(abXa, 61.8M)
+                && InRange(bcAb, 38.2M, 88.6M)
+                && InRange(cdBc, 127.2M, 161.8M)
+                && InRange(adXa, 78.6M);
         }
 
         private static bool FirstCheckButterflyPattern(IReadOnlyList<ZigZagObject> points, int i, string pattern)
@@ -407,32 +293,26 @@ namespace Candlestick_Patterns
 
             return pattern switch
             {
-                "bullish" => p.C0 < p.C1 && p.C1 > p.C2 && p.C2 < p.C3 && p.C3 > p.C4 && p.C2 > p.C0 && p.C2 > p.C4,
+                "bullish" => p.C0 < p.C4 && p.C0 < p.C1 && p.C1 > p.C2 && p.C2 < p.C3 && p.C3 > p.C4,
 
-                "bearish" => p.C0 > p.C1 && p.C1 < p.C2 && p.C2 > p.C3 && p.C3 < p.C4 && p.C2 < p.C0 && p.C2 < p.C4,
+                "bearish" => p.C0 > p.C4 && p.C0 > p.C1 && p.C1 < p.C2 && p.C2 > p.C3 && p.C3 < p.C4,
                 _ => false
             };
         }
 
         private bool SecondCheckForButterflyPattern(IReadOnlyList<ZigZagObject> points, int i, string pattern)
         {
-            var retracementBaXa = Support.GetRetracement(points, i, 2, 3, 4); // 78,6%
-            //var retracementDaXa = _support.GetRetracement(points, i, 0, 3, 4); // 127,2% lub 161,8%
-            var retracementBcBa = Support.GetRetracement(points, i, 1, 2, 3); // 38,2%-88,6%
-            //var retracementCdBc = _support.GetRetracement(points, i, 0, 1, 2); // 161,8%
-            var retracementCdAb = (Math.Abs(points[i - 1].Close - points[i].Close) * 100) / (Math.Abs(points[i - 2].Close - points[i - 3].Close)); // 161,8% - 224%
-            var range786 = GetRange786();
-            var range886 = GetRange886();
-            var range161 = GetRange161();
-            var range224 = GetRange224();
-            var range382 = GetRange382();
-            var check786retracement = Support.CheckIfRetracemntIsInRange(range786, range786, retracementBaXa);
-            if (!check786retracement) return false;
-            var check382_886retracement = Support.CheckIfRetracemntIsInRange(range382, range886, retracementBcBa);
-            if (!check382_886retracement) return false;
-            var check161_224retracement = Support.CheckIfRetracemntIsInRange(range161, range224, retracementCdAb);
+            decimal abXa = Support.GetRetracement(points, i, 2, 3, 4);
+            decimal bcAb = Support.GetRetracement(points, i, 1, 2, 3);
+            decimal cdBc = Support.GetRetracement(points, i, 0, 1, 2);
+            decimal adXa = Support.GetRetracement(points, i, 0, 3, 4);
 
-            return check161_224retracement;
+            // Butterfly: AB/XA = 0.786, BC/AB = 0.382..0.886,
+            // CD/BC = 1.618..2.618, and AD/XA = 1.272..1.618.
+            return InRange(abXa, 78.6M)
+                && InRange(bcAb, 38.2M, 88.6M)
+                && InRange(cdBc, 161.8M, 261.8M)
+                && InRange(adXa, 127.2M, 161.8M);
         }
 
         private static bool FirstCheckForABCDPattern(IReadOnlyList<ZigZagObject> points, int i, string pattern)
@@ -450,40 +330,30 @@ namespace Candlestick_Patterns
 
         private bool SecondCheckForABCDPattern(IReadOnlyList<ZigZagObject> points, int i, string pattern)
         {
-            var lenghtba = GetLenght(points, i, 2, 3);
-            var lenghtdc = GetLenght(points, i, 0, 1);
-            var diffLenght = Math.Abs(lenghtdc - lenghtba);
+            decimal ab = GetLenght(points, i, 2, 3);
+            decimal cd = GetLenght(points, i, 0, 1);
+            if (ab == 0M || cd == 0M)
+                return false;
 
-            var range618 = GetRange618();
-            var range786 = GetRange786();
-            var range127 = GetRange127();
-            var range161 = GetRange161();
+            decimal bcAb = Support.GetRetracement(points, i, 1, 2, 3);
+            decimal cdBc = Support.GetRetracement(points, i, 0, 1, 2);
+            decimal relativeDifference = Math.Abs(cd - ab) / ((cd + ab) / 2M);
 
-            if (diffLenght / ((lenghtba + lenghtdc) / 2) <= _fibError)  // ustalić poziom różnicy, gdy ma być zbliżonae do zera
-            {
-                var retracementBcBa = Support.GetRetracement(points, i, 1, 2, 3); // 61,8% lub 78,6%
-                var retracementCdCb = Support.GetRetracement(points, i, 0, 1, 2); // 127,2% lub 161,8%
-                var check618retracement = Support.CheckIfRetracemntIsInRange(range618, range618, retracementBcBa);
-                var check786retracement = Support.CheckIfRetracemntIsInRange(range786, range786, retracementBcBa);
-                var check127retracement = Support.CheckIfRetracemntIsInRange(range127, range127, retracementCdCb);
-                var check161retracement = Support.CheckIfRetracemntIsInRange(range161, range161, retracementCdCb);
+            // The classic AB=CD completion requires equal impulse legs
+            // and reciprocal Fibonacci ratios for the intermediate correction.
+            return relativeDifference <= _fibError
+                && (InRange(bcAb, 61.8M) || InRange(bcAb, 78.6M))
+                && (InRange(cdBc, 127.2M) || InRange(cdBc, 161.8M));
+        }
 
-                if ((check618retracement || check786retracement) && (check127retracement || check161retracement))
-                {
-                    return true;
-                }
-
-            }
-            if (lenghtdc > lenghtba && pattern == "bullish")
-            {
-                var retracementBullishExtensionDcBa = Support.GetRetracement(points, i, 1, 2, 3); // 161,8% lub 127,2%
-                if ((range161.Min() < retracementBullishExtensionDcBa && (range161.Max() > retracementBullishExtensionDcBa) || (range127.Min() < retracementBullishExtensionDcBa && range127.Max() > retracementBullishExtensionDcBa)))
-                {
-                    return true;
-                }
-            }
-
-            return false;
+        private bool InRange(decimal actual, decimal lower, decimal? upper = null)
+        {
+            if (actual <= 0M)
+                return false;
+            decimal high = upper ?? lower;
+            return Support.CheckIfRetracemntIsInRange(
+                Support.PointsRange(lower, _fibError),
+                Support.PointsRange(high, _fibError), actual);
         }
 
         private static decimal GetLenght(IReadOnlyList<ZigZagObject> points, int i, int number1, int number2)
@@ -499,47 +369,25 @@ namespace Candlestick_Patterns
 
             return pattern switch
             {
-                "bullish" => p.C1 < p.C2 && p.C1 < p.C0,
-                "bearish" => p.C2 < p.C1 && p.C1 > p.C2,
+                "bullish" => p.C1 < p.C0 && p.C0 < p.C2,
+                "bearish" => p.C1 > p.C0 && p.C0 > p.C2,
                 _ => false
             };
         }
 
         private bool SecondCheckFor3RetracementPattern(IReadOnlyList<ZigZagObject> points, int i, string pattern)
         {
-            var retracement = Support.GetRetracement(points, i, 0, 1, 2);
-            var range618 = GetRange618();
-            if (range618.Min() < retracement && range618.Max() > retracement)
-            {
-                return true;
-            }
-            return false;
+            decimal retracement = Support.GetRetracement(points, i, 0, 1, 2);
+            return InRange(retracement, 61.8M);
         }
 
         private bool SecondCheckFor3ExtensionPattern(IReadOnlyList<ZigZagObject> points, int i, string pattern)
         {
-            var extension = Support.GetRetracement(points, i, 0, 2, 3); //signal for level 161,8% 
-            var retracement = Support.GetRetracement(points, i, 1, 2, 3);
-            var range618 = GetRange618();
-            var range161 = GetRange161();
+            decimal extension = Support.GetRetracement(points, i, 0, 2, 3);
+            decimal retracement = Support.GetRetracement(points, i, 1, 2, 3);
 
-            if (pattern == "bullish")
-            {
-                if ((range618.Min() < retracement && range618.Max() > retracement) && (range161.Min() < extension /*&& range618.Max() > extension*/))
-                {
-                    return true;
-                }
-            }
-
-            if (pattern == "bearish")
-            {
-                if ((range161.Min() < retracement && range161.Max() > retracement) && (range161.Min() < extension /*&& range618.Max() > extension*/))
-                {
-                    return true;
-
-                }
-            }
-            return false;
+            // Both directions use the same magnitudes; only their geometry differs.
+            return InRange(retracement, 61.8M) && InRange(extension, 161.8M);
         }
 
         private static bool FirstCheckFor3ExtensionPattern(IReadOnlyList<ZigZagObject> points, int i, string pattern)
@@ -555,7 +403,7 @@ namespace Candlestick_Patterns
             };
         }
 
-        
+
 
         public List<string> GetFibonacciAllMethodNames()
         {
@@ -564,7 +412,6 @@ namespace Candlestick_Patterns
 
         public List<ZigZagObject> GetFibonacciSignalsList(string patternName)
         {
-            //if (string.IsNullOrWhiteSpace(patternName)) return Data;
             if (string.IsNullOrWhiteSpace(patternName)) return _data.ToList();
 
             string normalizedName = patternName.Trim().Replace(" ", "");
@@ -573,7 +420,6 @@ namespace Candlestick_Patterns
                 return GetPatternSignals(patternType).ToList();
             }
 
-            //return Data;
             return _data.ToList();
         }
 
@@ -583,17 +429,12 @@ namespace Candlestick_Patterns
             {
                 if (_patternMethods.TryGetValue(pt, out var method))
                 {
-                    return method(GetCachedPoints()); // Pass points
+                    return method(GetCachedPoints());
                 }
 
                 return GetCachedPoints().ToImmutableList();
             });
 
-            //if (_patternMethods.TryGetValue(pattern, out var method))
-            //{
-            //    return method();
-            //}
-            //return Data;
         }
 
         public int GetFibonacciSignalsCount(string patternName)
@@ -619,15 +460,6 @@ namespace Candlestick_Patterns
             }
             return count;
 
-            //if (!_patternMethods.TryGetValue(pattern, out var method)) return 0;
-            //var result = method();
-            //int count = 0;
-            //for (int i = 0; i < result.Count; i++)
-            //{
-            //    if (result[i].Signal)
-            //        count++;
-            //}
-            //return count;
         }
 
         public List<string> GetAllMethodNames()
@@ -639,7 +471,7 @@ namespace Candlestick_Patterns
         {
             if (TryParsePattern(patternName, out PatternType patternType))
             {
-                return GetPatternSignals(patternType).ToList(); 
+                return GetPatternSignals(patternType).ToList();
             }
 
             return _data.ToList();
@@ -665,21 +497,7 @@ namespace Candlestick_Patterns
             }
             return results;
 
-            //var results = new Dictionary<PatternType, int>(_patternMethods.Count);
-            //foreach (var kvp in _patternMethods)
-            //{
-            //    //var signals = kvp.Value();
-            //    var signals = GetPatternSignals(kvp.Key);
-            //    int count = 0;
-            //    for (int i = 0; i < signals.Count; i++)
-            //    {
-            //        if (signals[i].Signal)
-            //            count++;
-            //    }
-            //    results[kvp.Key] = count;
-            //}
 
-            //return results;
         }
 
         public Dictionary<PatternType, List<ZigZagObject>> GetAllPatternSignals()
@@ -687,7 +505,6 @@ namespace Candlestick_Patterns
             var results = new Dictionary<PatternType, List<ZigZagObject>>(_patternMethods.Count);
             foreach (var kvp in _patternMethods)
             {
-                //results[kvp.Key] = kvp.Value();
                 results[kvp.Key] = GetPatternSignals(kvp.Key).ToList();
             }
 

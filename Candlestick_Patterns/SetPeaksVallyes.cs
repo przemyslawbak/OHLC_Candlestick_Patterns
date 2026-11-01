@@ -4,77 +4,126 @@ namespace OHLC_Candlestick_Patterns
 {
     internal class SetPeaksVallyes
     {
-        static decimal _priceMovementTenthOfPercent = 0.002M; //default value
-        
         internal static List<ZigZagObject> GetCloseAndSignalsData(List<OhlcvObject> data)
         {
-            var dataToShapeZigZag = data.Select((x, index) => new ZigZagObject()
+            ArgumentNullException.ThrowIfNull(data);
+            return data.Select((candle, index) => new ZigZagObject
             {
-                Signal = x.Signal,
-                Close = x.Close,
-                IndexOHLCV = index
+                Close = candle.Close,
+                Signal = candle.Signal,
+                IndexOHLCV = index,
+                ConfirmationIndexOHLCV = index
             }).ToList();
-
-            return dataToShapeZigZag;
         }
 
-        internal static List<ZigZagObject> GetPoints(List<ZigZagObject> _peaksFromZigZag)
+        internal static List<ZigZagObject> GetPoints(List<ZigZagObject> peaks)
         {
-            return _peaksFromZigZag.Select(x => new ZigZagObject() { Close = x.Close, Signal = false, IndexOHLCV = x.IndexOHLCV }).ToList();
-        }
-
-
-        internal static List<ZigZagObject> PeaksFromZigZag(List<ZigZagObject> _data, decimal zigZagParam)
-        {
-            _priceMovementTenthOfPercent = zigZagParam;
-            var change = 0M;
-            var zigZagList = new List<ZigZagObject>();
-            var dataZigZag = _data.Select(x => new ZigZagObject() { Close = x.Close, Signal = false }).ToList();
-
-            for (int i = 0; i < _data.Count; i++)
+            ArgumentNullException.ThrowIfNull(peaks);
+            return peaks.Select(point => new ZigZagObject
             {
-                if (zigZagList.Count == 0)
+                Close = point.Close,
+                IndexOHLCV = point.IndexOHLCV,
+                ConfirmationIndexOHLCV = point.ConfirmationIndexOHLCV,
+                Signal = false,
+                Initiation = false
+            }).ToList();
+        }
+
+        internal static List<ZigZagObject> PeaksFromZigZag(List<ZigZagObject> data, decimal zigZagParam)
+        {
+            ArgumentNullException.ThrowIfNull(data);
+            if (zigZagParam <= 0M || zigZagParam >= 1M)
+                throw new ArgumentOutOfRangeException(nameof(zigZagParam),
+                    "The reversal threshold must be a decimal fraction between zero and one.");
+
+            var pivots = new List<ZigZagObject>();
+            if (data.Count == 0)
+                return pivots;
+            if (data[0].Close <= 0M)
+                throw new ArgumentOutOfRangeException(nameof(data), "ZigZag requires positive closing prices.");
+            if (data.Count < 2)
+                return pivots;
+
+            // A pivot is confirmed only after a reversal of at least the given fraction.
+            // The unfinished final leg is intentionally excluded to avoid future leakage.
+            int direction = 0;
+            int highestIndex = 0;
+            int lowestIndex = 0;
+            int candidateIndex = 0;
+            decimal highest = data[0].Close;
+            decimal lowest = data[0].Close;
+            decimal candidatePrice = data[0].Close;
+
+            for (int i = 1; i < data.Count; i++)
+            {
+                decimal price = data[i].Close;
+                if (price <= 0M)
+                    throw new ArgumentOutOfRangeException(nameof(data), "ZigZag requires positive closing prices.");
+
+                if (direction == 0)
                 {
-                    zigZagList.Add(new ZigZagObject() { Close = _data[0].Close, Signal = false, IndexOHLCV = _data[0].IndexOHLCV });
+                    if (price > highest) { highest = price; highestIndex = i; }
+                    if (price < lowest) { lowest = price; lowestIndex = i; }
+
+                    if (price >= lowest * (1M + zigZagParam))
+                    {
+                        pivots.Add(CopyPivot(data[lowestIndex], i));
+                        direction = 1;
+                        candidatePrice = price;
+                        candidateIndex = i;
+                    }
+                    else if (price <= highest * (1M - zigZagParam))
+                    {
+                        pivots.Add(CopyPivot(data[highestIndex], i));
+                        direction = -1;
+                        candidatePrice = price;
+                        candidateIndex = i;
+                    }
+                    continue;
+                }
+
+                if (direction > 0)
+                {
+                    if (price >= candidatePrice)
+                    {
+                        candidatePrice = price;
+                        candidateIndex = i;
+                    }
+                    else if (price <= candidatePrice * (1M - zigZagParam))
+                    {
+                        pivots.Add(CopyPivot(data[candidateIndex], i));
+                        direction = -1;
+                        candidatePrice = price;
+                        candidateIndex = i;
+                    }
                 }
                 else
                 {
-                    change = zigZagList.Last().Close * _priceMovementTenthOfPercent;
-                }
-
-                var lastPoint = zigZagList.Last();
-                if ((_data[i].Close < (lastPoint.Close - change) || _data[i].Close > (lastPoint.Close + change)) && i != 0)
-                {
-                    var point = _data[i].Close;
-                    zigZagList.Add((new ZigZagObject() { Close = point, Signal = false, IndexOHLCV = _data[i].IndexOHLCV }));
-                    change = point * _priceMovementTenthOfPercent;
+                    if (price <= candidatePrice)
+                    {
+                        candidatePrice = price;
+                        candidateIndex = i;
+                    }
+                    else if (price >= candidatePrice * (1M + zigZagParam))
+                    {
+                        pivots.Add(CopyPivot(data[candidateIndex], i));
+                        direction = 1;
+                        candidatePrice = price;
+                        candidateIndex = i;
+                    }
                 }
             }
 
-            return GetValleysAndPeaksFromZigZAg(zigZagList);
+            return pivots;
         }
 
-        static List<ZigZagObject> GetValleysAndPeaksFromZigZAg(List<ZigZagObject> zigZagList)
+        private static ZigZagObject CopyPivot(ZigZagObject point, int confirmationIndex) => new()
         {
-            var allPoints = new List<ZigZagObject>();
-            if (zigZagList.Count < 2)
-                return new();
-            bool directionUp = zigZagList[0].Close <= zigZagList[1].Close;
-            for (int i = 0; i < zigZagList.Count - 1; i++)
-            {
-                if (directionUp && zigZagList[i + 1].Close < zigZagList[i].Close)
-                {
-                    allPoints.Add(zigZagList[i]);
-                    directionUp = false;
-                }
-                else if (!directionUp && zigZagList[i + 1].Close > zigZagList[i].Close)
-                {
-                    allPoints.Add(zigZagList[i]);
-                    directionUp = true;
-                }
-            }
-
-            return allPoints;
-        }
+            Close = point.Close,
+            IndexOHLCV = point.IndexOHLCV,
+            ConfirmationIndexOHLCV = confirmationIndex,
+            Signal = false,
+            Initiation = false
+        };
     }
 }
