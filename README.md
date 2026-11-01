@@ -1,18 +1,22 @@
 # OHLC_Candlestick_Patterns
 
 ## Updates history
+- 2026 Nov - Detection changes.
+		   - Optimization of detection.
+		   - New formations added.
+		   - Clean up.
 - 2026 Jun - Added missing Enumerators.
 - 2026 Mar - Licence changed to MIT.
 - 2026 Jan - Mar - Performance speed increased by code optimisation.
-- 2026 Jan - Mar - Charting improved.
+		   - Charting improved.
 - 2026 Feb - Mar - Examples bugs fixed.
 
 ## Purpose
 
 The project was created due to the lack of a similar library for C#. It was preceded by the research for algorithmic formulas for individual OHLC patterns. As a result, you can test the OHLC candlestick list for:
-- 37 bullish and 37 bearish candlestick patterns,
-- 9 bullish, 9 bearish and additionally 2 continuation classic chart formations,
-- 6 bullish, 6 bearish fibonacci chart patterns.
+- 40 bullish and 40 bearish candlestick patterns, 3 continuation patterns,
+- 13 bullish, 13 bearish and additionally 2 continuation classic chart formations,
+- 12 bullish, 12 bearish fibonacci chart patterns.
 
 Additionally, you can test their effectiveness on the OHLCV data provided. A list of patterns, formations and an example of use can be found below.
 
@@ -60,6 +64,8 @@ The package exposes the `Candlestick_Patterns` namespace for signal analysis and
 ## Candlestick Patterns
 
 [Complete list of supported Candlestick Patterns](docs/Patterns_list.md)
+
+[Examples using of methods with chart Formations](docs/Patterns_examples.md)
 
 ## Quick start
 
