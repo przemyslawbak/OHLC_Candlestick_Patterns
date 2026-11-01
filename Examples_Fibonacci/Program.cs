@@ -13,7 +13,7 @@ namespace Examples_Fibonacci
         {
             string json = string.Empty;
             var client = new HttpClient();
-            var url = "https://gist.github.com/przemyslawbak/92c3d4bba27cfd2b88d0dd916bbdad14/raw/AAL_1min.json";
+            var url = "https://gist.github.com/przemyslawbak/587bf2143c58845f81f4aae0f4ea0dda/raw/WPFGraphMakerV1.json";
 
             using (HttpResponseMessage response = await client.GetAsync(url))
             {
