@@ -1037,6 +1037,266 @@ namespace Candlestick_Patterns
             }
         }
 
+        private bool ApproximatelyEqual(decimal left, decimal right, decimal toleranceMultiplier = 1M)
+        {
+            if (left == 0M || right == 0M)
+                return false;
+
+            decimal baseValue = Math.Min(Math.Abs(left), Math.Abs(right));
+            if (baseValue == 0M)
+                return false;
+
+            return Math.Abs(left - right) / baseValue <= _percentageMargin * toleranceMultiplier;
+        }
+
+        private static decimal RelativeDifference(decimal left, decimal right)
+        {
+            decimal avg = (Math.Abs(left) + Math.Abs(right)) / 2M;
+            return avg == 0M ? 0M : Math.Abs(left - right) / avg;
+        }
+
+        private List<ZigZagObject> BullishRectangle()
+        {
+            var (points, seen, count, minNumber) = SetupFormationScan(FormationNameEnum.BullishRectangle);
+            try
+            {
+                for (int i = minNumber; i < count; i++)
+                {
+                    if (seen.Contains(points[i - minNumber].IndexOHLCV)) continue;
+
+                    decimal r1 = points[i - 5].Close;
+                    decimal s1 = points[i - 4].Close;
+                    decimal r2 = points[i - 3].Close;
+                    decimal s2 = points[i - 2].Close;
+                    decimal r3 = points[i - 1].Close;
+                    decimal breakout = points[i].Close;
+
+                    if (!ApproximatelyEqual(r1, r2, 2M) || !ApproximatelyEqual(r2, r3, 2M)) continue;
+                    if (!ApproximatelyEqual(s1, s2, 2M)) continue;
+                    if (!(r1 > s1 && r2 > s2 && r3 > s2)) continue;
+                    if (breakout <= Math.Max(r1, Math.Max(r2, r3))) continue;
+
+                    ConfirmFormation(points, seen, i, minNumber);
+                }
+
+                return points;
+            }
+            finally
+            {
+                ReturnDateSet();
+            }
+        }
+
+        private List<ZigZagObject> BearishRectangle()
+        {
+            var (points, seen, count, minNumber) = SetupFormationScan(FormationNameEnum.BearishRectangle);
+            try
+            {
+                for (int i = minNumber; i < count; i++)
+                {
+                    if (seen.Contains(points[i - minNumber].IndexOHLCV)) continue;
+
+                    decimal s1 = points[i - 5].Close;
+                    decimal r1 = points[i - 4].Close;
+                    decimal s2 = points[i - 3].Close;
+                    decimal r2 = points[i - 2].Close;
+                    decimal s3 = points[i - 1].Close;
+                    decimal breakdown = points[i].Close;
+
+                    if (!ApproximatelyEqual(s1, s2, 2M) || !ApproximatelyEqual(s2, s3, 2M)) continue;
+                    if (!ApproximatelyEqual(r1, r2, 2M)) continue;
+                    if (!(r1 > s1 && r2 > s2 && r2 > s3)) continue;
+                    if (breakdown >= Math.Min(s1, Math.Min(s2, s3))) continue;
+
+                    ConfirmFormation(points, seen, i, minNumber);
+                }
+
+                return points;
+            }
+            finally
+            {
+                ReturnDateSet();
+            }
+        }
+
+        private List<ZigZagObject> BearishBroadeningTop()
+        {
+            var (points, seen, count, minNumber) = SetupFormationScan(FormationNameEnum.BearishBroadeningTop);
+            try
+            {
+                for (int i = minNumber; i < count; i++)
+                {
+                    if (seen.Contains(points[i - minNumber].IndexOHLCV)) continue;
+
+                    decimal l1 = points[i - 4].Close;
+                    decimal h1 = points[i - 3].Close;
+                    decimal l2 = points[i - 2].Close;
+                    decimal h2 = points[i - 1].Close;
+                    decimal l3 = points[i].Close;
+
+                    if (!(h2 > h1 && l2 < l1 && l3 < l2)) continue;
+                    ConfirmFormation(points, seen, i, minNumber);
+                }
+
+                return points;
+            }
+            finally
+            {
+                ReturnDateSet();
+            }
+        }
+
+        private List<ZigZagObject> BullishBroadeningBottom()
+        {
+            var (points, seen, count, minNumber) = SetupFormationScan(FormationNameEnum.BullishBroadeningBottom);
+            try
+            {
+                for (int i = minNumber; i < count; i++)
+                {
+                    if (seen.Contains(points[i - minNumber].IndexOHLCV)) continue;
+
+                    decimal h1 = points[i - 4].Close;
+                    decimal l1 = points[i - 3].Close;
+                    decimal h2 = points[i - 2].Close;
+                    decimal l2 = points[i - 1].Close;
+                    decimal h3 = points[i].Close;
+
+                    if (!(h2 > h1 && l2 < l1 && h3 > h2)) continue;
+                    ConfirmFormation(points, seen, i, minNumber);
+                }
+
+                return points;
+            }
+            finally
+            {
+                ReturnDateSet();
+            }
+        }
+
+        private List<ZigZagObject> BullishDescendingTriangle()
+        {
+            var (points, seen, count, minNumber) = SetupFormationScan(FormationNameEnum.BullishDescendingTriangle);
+            try
+            {
+                for (int i = minNumber; i < count; i++)
+                {
+                    if (seen.Contains(points[i - minNumber].IndexOHLCV)) continue;
+
+                    decimal h1 = points[i - 5].Close;
+                    decimal l1 = points[i - 4].Close;
+                    decimal h2 = points[i - 3].Close;
+                    decimal l2 = points[i - 2].Close;
+                    decimal h3 = points[i - 1].Close;
+                    decimal breakout = points[i].Close;
+
+                    if (!(h1 > h2 && h2 > h3)) continue;
+                    if (!ApproximatelyEqual(l1, l2, 2M)) continue;
+                    if (breakout <= h3) continue;
+
+                    ConfirmFormation(points, seen, i, minNumber);
+                }
+
+                return points;
+            }
+            finally
+            {
+                ReturnDateSet();
+            }
+        }
+
+        private List<ZigZagObject> BearishAscendingTriangle()
+        {
+            var (points, seen, count, minNumber) = SetupFormationScan(FormationNameEnum.BearishAscendingTriangle);
+            try
+            {
+                for (int i = minNumber; i < count; i++)
+                {
+                    if (seen.Contains(points[i - minNumber].IndexOHLCV)) continue;
+
+                    decimal l1 = points[i - 5].Close;
+                    decimal h1 = points[i - 4].Close;
+                    decimal l2 = points[i - 3].Close;
+                    decimal h2 = points[i - 2].Close;
+                    decimal l3 = points[i - 1].Close;
+                    decimal breakdown = points[i].Close;
+
+                    if (!(l1 < l2 && l2 < l3)) continue;
+                    if (!ApproximatelyEqual(h1, h2, 2M)) continue;
+                    if (breakdown >= l3) continue;
+
+                    ConfirmFormation(points, seen, i, minNumber);
+                }
+
+                return points;
+            }
+            finally
+            {
+                ReturnDateSet();
+            }
+        }
+
+        private List<ZigZagObject> BullishMeasuredMove()
+        {
+            var (points, seen, count, minNumber) = SetupFormationScan(FormationNameEnum.BullishMeasuredMove);
+            try
+            {
+                for (int i = minNumber; i < count; i++)
+                {
+                    if (seen.Contains(points[i - minNumber].IndexOHLCV)) continue;
+
+                    decimal start = points[i - 3].Close;
+                    decimal firstLegEnd = points[i - 2].Close;
+                    decimal correction = points[i - 1].Close;
+                    decimal completion = points[i].Close;
+
+                    decimal firstLeg = firstLegEnd - start;
+                    decimal secondLeg = completion - correction;
+
+                    if (!(firstLeg > 0M && secondLeg > 0M && correction > start && correction < firstLegEnd)) continue;
+                    if (RelativeDifference(firstLeg, secondLeg) > 0.20M) continue;
+
+                    ConfirmFormation(points, seen, i, minNumber);
+                }
+
+                return points;
+            }
+            finally
+            {
+                ReturnDateSet();
+            }
+        }
+
+        private List<ZigZagObject> BearishMeasuredMove()
+        {
+            var (points, seen, count, minNumber) = SetupFormationScan(FormationNameEnum.BearishMeasuredMove);
+            try
+            {
+                for (int i = minNumber; i < count; i++)
+                {
+                    if (seen.Contains(points[i - minNumber].IndexOHLCV)) continue;
+
+                    decimal start = points[i - 3].Close;
+                    decimal firstLegEnd = points[i - 2].Close;
+                    decimal correction = points[i - 1].Close;
+                    decimal completion = points[i].Close;
+
+                    decimal firstLeg = start - firstLegEnd;
+                    decimal secondLeg = correction - completion;
+
+                    if (!(firstLeg > 0M && secondLeg > 0M && correction < start && correction > firstLegEnd)) continue;
+                    if (RelativeDifference(firstLeg, secondLeg) > 0.20M) continue;
+
+                    ConfirmFormation(points, seen, i, minNumber);
+                }
+
+                return points;
+            }
+            finally
+            {
+                ReturnDateSet();
+            }
+        }
+
         private List<ZigZagObject> ContinuationDiamondFormation()
         {
             var (points, seen, count, minNumber) = SetupFormationScan(FormationNameEnum.ContinuationDiamondFormation);
@@ -1102,6 +1362,14 @@ namespace Candlestick_Patterns
             dict.Add(FormationNameEnum.BullishRoundingBottomPattern, BullishRoundingBottomPattern());
             dict.Add(FormationNameEnum.BearishRoundingTopPattern, BearishRoundingTopPattern());
             dict.Add(FormationNameEnum.ContinuationDiamondFormation, ContinuationDiamondFormation());
+            dict.Add(FormationNameEnum.BullishRectangle, BullishRectangle());
+            dict.Add(FormationNameEnum.BearishRectangle, BearishRectangle());
+            dict.Add(FormationNameEnum.BearishBroadeningTop, BearishBroadeningTop());
+            dict.Add(FormationNameEnum.BullishBroadeningBottom, BullishBroadeningBottom());
+            dict.Add(FormationNameEnum.BullishDescendingTriangle, BullishDescendingTriangle());
+            dict.Add(FormationNameEnum.BearishAscendingTriangle, BearishAscendingTriangle());
+            dict.Add(FormationNameEnum.BullishMeasuredMove, BullishMeasuredMove());
+            dict.Add(FormationNameEnum.BearishMeasuredMove, BearishMeasuredMove());
 
             return dict;
         }
@@ -1132,7 +1400,15 @@ namespace Candlestick_Patterns
             FormationNameEnum.BearishDescendingPriceChannel => 6,
             FormationNameEnum.BullishRoundingBottomPattern => 12,
             FormationNameEnum.BearishRoundingTopPattern => 10,
-            FormationNameEnum.ContinuationDiamondFormation => 12
+            FormationNameEnum.ContinuationDiamondFormation => 12,
+            FormationNameEnum.BullishRectangle => 5,
+            FormationNameEnum.BearishRectangle => 5,
+            FormationNameEnum.BearishBroadeningTop => 4,
+            FormationNameEnum.BullishBroadeningBottom => 4,
+            FormationNameEnum.BullishDescendingTriangle => 5,
+            FormationNameEnum.BearishAscendingTriangle => 5,
+            FormationNameEnum.BullishMeasuredMove => 3,
+            FormationNameEnum.BearishMeasuredMove => 3
         };
 
         private void BuildDispatchTable()
@@ -1159,6 +1435,14 @@ namespace Candlestick_Patterns
                 { FormationNameEnum.BullishRoundingBottomPattern,   BullishRoundingBottomPattern },
                 { FormationNameEnum.BearishRoundingTopPattern,      BearishRoundingTopPattern },
                 { FormationNameEnum.ContinuationDiamondFormation,   ContinuationDiamondFormation },
+                { FormationNameEnum.BullishRectangle,               BullishRectangle },
+                { FormationNameEnum.BearishRectangle,               BearishRectangle },
+                { FormationNameEnum.BearishBroadeningTop,           BearishBroadeningTop },
+                { FormationNameEnum.BullishBroadeningBottom,        BullishBroadeningBottom },
+                { FormationNameEnum.BullishDescendingTriangle,      BullishDescendingTriangle },
+                { FormationNameEnum.BearishAscendingTriangle,       BearishAscendingTriangle },
+                { FormationNameEnum.BullishMeasuredMove,            BullishMeasuredMove },
+                { FormationNameEnum.BearishMeasuredMove,            BearishMeasuredMove },
             };
 
             _formationNames = Enum.GetValues(typeof(FormationNameEnum))

@@ -22,7 +22,15 @@
         BearishDescendingPriceChannel,
         BullishRoundingBottomPattern,
         BearishRoundingTopPattern,
-        ContinuationDiamondFormation
+        ContinuationDiamondFormation,
+        BullishRectangle,
+        BearishRectangle,
+        BearishBroadeningTop,
+        BullishBroadeningBottom,
+        BullishDescendingTriangle,
+        BearishAscendingTriangle,
+        BullishMeasuredMove,
+        BearishMeasuredMove
 
     }
 }

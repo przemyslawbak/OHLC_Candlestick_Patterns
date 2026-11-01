@@ -76,6 +76,15 @@
         BullishUpsideTasukiGap,
         BullishWhiteClosingMarubozu,
         BullishWhiteMarubozu,
-        BullishWhiteOpeningMarubozu
+        BullishWhiteOpeningMarubozu,
+        BullishHammer,
+        BearishHangingMan,
+        BullishAbandonedBaby,
+        BearishAbandonedBaby,
+        BullishHikkake,
+        BearishHikkake,
+        NeutralSpinningTop,
+        NeutralLongLeggedDoji,
+        NeutralHighWaveCandle
     }
 }

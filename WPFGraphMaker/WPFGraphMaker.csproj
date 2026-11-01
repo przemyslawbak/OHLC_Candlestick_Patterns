@@ -14,7 +14,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Candlestick_Patterns\Candlestick_Patterns.csproj" />
-    <ProjectReference Include="..\GraphMaker\GraphMaker.csproj" />
   </ItemGroup>
 
 </Project>

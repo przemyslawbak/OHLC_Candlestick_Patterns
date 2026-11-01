@@ -1848,6 +1848,248 @@ namespace Candlestick_Patterns
         }
 
 
+        private static decimal GetBodySize(OhlcvObject candle)
+        {
+            return Math.Abs(candle.Close - candle.Open);
+        }
+
+        private static decimal GetCandleRange(OhlcvObject candle)
+        {
+            return candle.High - candle.Low;
+        }
+
+        private static decimal GetUpperShadow(OhlcvObject candle)
+        {
+            return candle.High - Math.Max(candle.Open, candle.Close);
+        }
+
+        private static decimal GetLowerShadow(OhlcvObject candle)
+        {
+            return Math.Min(candle.Open, candle.Close) - candle.Low;
+        }
+
+        private static bool IsBullishCandle(OhlcvObject candle) => candle.Close > candle.Open;
+        private static bool IsBearishCandle(OhlcvObject candle) => candle.Close < candle.Open;
+
+        private static bool IsDojiCandle(OhlcvObject candle)
+        {
+            decimal range = GetCandleRange(candle);
+            if (range <= 0M)
+                return false;
+            return GetBodySize(candle) <= range * 0.1M;
+        }
+
+        private bool IsShortBody(OhlcvObject candle)
+        {
+            decimal range = GetCandleRange(candle);
+            if (range <= 0M)
+                return false;
+            return GetBodySize(candle) <= range * 0.25M || Math.Abs(GetBodySizePercentSigned(candle)) <= _maximumShortCandleSize;
+        }
+
+        private bool IsUptrend(int index, int lookback = 3)
+        {
+            if (index < lookback)
+                return false;
+
+            for (int i = index - lookback + 1; i <= index; i++)
+            {
+                if (_data[i].Close <= _data[i - 1].Close)
+                    return false;
+            }
+
+            return true;
+        }
+
+        private bool IsDowntrend(int index, int lookback = 3)
+        {
+            if (index < lookback)
+                return false;
+
+            for (int i = index - lookback + 1; i <= index; i++)
+            {
+                if (_data[i].Close >= _data[i - 1].Close)
+                    return false;
+            }
+
+            return true;
+        }
+
+        private bool IsHammerShape(OhlcvObject candle)
+        {
+            decimal body = GetBodySize(candle);
+            decimal range = GetCandleRange(candle);
+            if (range <= 0M || body <= 0M)
+                return false;
+
+            decimal upper = GetUpperShadow(candle);
+            decimal lower = GetLowerShadow(candle);
+
+            return lower >= body * 2M && upper <= Math.Max(body * 0.35M, range * 0.1M) && body <= range * 0.4M;
+        }
+
+        private bool IsBullishHammerPattern(int i)
+        {
+            return IsDowntrend(i - 1) && IsHammerShape(_data[i]);
+        }
+
+        [PatternMethod(PatternType.Bullish, lookbackPeriod: 3)]
+        private List<OhlcvObject> BullishHammer()
+        {
+            return DetectPattern(IsBullishHammerPattern, lookbackPeriod: 3);
+        }
+
+        private bool IsBearishHangingManPattern(int i)
+        {
+            return IsUptrend(i - 1) && IsHammerShape(_data[i]);
+        }
+
+        [PatternMethod(PatternType.Bearish, lookbackPeriod: 3)]
+        private List<OhlcvObject> BearishHangingMan()
+        {
+            return DetectPattern(IsBearishHangingManPattern, lookbackPeriod: 3);
+        }
+
+        private bool IsBullishAbandonedBabyPattern(int i)
+        {
+            var c0 = _data[i];
+            var c1 = _data[i - 1];
+            var c2 = _data[i - 2];
+
+            if (!IsDowntrend(i - 2) || !IsBearishCandle(c2) || !IsBullishCandle(c0) || !IsDojiCandle(c1))
+                return false;
+
+            bool gapDown = c1.High < c2.Low;
+            bool gapUp = c0.Low > c1.High;
+            decimal midpoint = c2.Close + (c2.Open - c2.Close) / 2M;
+
+            return gapDown && gapUp && c0.Close >= midpoint;
+        }
+
+        [PatternMethod(PatternType.Bullish, lookbackPeriod: 4)]
+        private List<OhlcvObject> BullishAbandonedBaby()
+        {
+            return DetectPattern(IsBullishAbandonedBabyPattern, lookbackPeriod: 2);
+        }
+
+        private bool IsBearishAbandonedBabyPattern(int i)
+        {
+            var c0 = _data[i];
+            var c1 = _data[i - 1];
+            var c2 = _data[i - 2];
+
+            if (!IsUptrend(i - 2) || !IsBullishCandle(c2) || !IsBearishCandle(c0) || !IsDojiCandle(c1))
+                return false;
+
+            bool gapUp = c1.Low > c2.High;
+            bool gapDown = c0.High < c1.Low;
+            decimal midpoint = c2.Open + (c2.Close - c2.Open) / 2M;
+
+            return gapUp && gapDown && c0.Close <= midpoint;
+        }
+
+        [PatternMethod(PatternType.Bearish, lookbackPeriod: 4)]
+        private List<OhlcvObject> BearishAbandonedBaby()
+        {
+            return DetectPattern(IsBearishAbandonedBabyPattern, lookbackPeriod: 2);
+        }
+
+        private bool IsBullishHikkakePattern(int i)
+        {
+            var c0 = _data[i];
+            var c1 = _data[i - 1];
+            var c2 = _data[i - 2];
+            var c3 = _data[i - 3];
+
+            bool insideBar = c2.High < c3.High && c2.Low > c3.Low;
+            bool falseBreakLower = c1.High < c2.High && c1.Low < c2.Low;
+            bool confirmation = c0.Close > c2.High;
+
+            return insideBar && falseBreakLower && confirmation;
+        }
+
+        [PatternMethod(PatternType.Bullish, lookbackPeriod: 4)]
+        private List<OhlcvObject> BullishHikkake()
+        {
+            return DetectPattern(IsBullishHikkakePattern, lookbackPeriod: 3);
+        }
+
+        private bool IsBearishHikkakePattern(int i)
+        {
+            var c0 = _data[i];
+            var c1 = _data[i - 1];
+            var c2 = _data[i - 2];
+            var c3 = _data[i - 3];
+
+            bool insideBar = c2.High < c3.High && c2.Low > c3.Low;
+            bool falseBreakHigher = c1.High > c2.High && c1.Low > c2.Low;
+            bool confirmation = c0.Close < c2.Low;
+
+            return insideBar && falseBreakHigher && confirmation;
+        }
+
+        [PatternMethod(PatternType.Bearish, lookbackPeriod: 4)]
+        private List<OhlcvObject> BearishHikkake()
+        {
+            return DetectPattern(IsBearishHikkakePattern, lookbackPeriod: 3);
+        }
+
+        private bool IsSpinningTopPattern(int i)
+        {
+            var candle = _data[i];
+            decimal range = GetCandleRange(candle);
+            if (range <= 0M)
+                return false;
+
+            decimal body = GetBodySize(candle);
+            decimal upper = GetUpperShadow(candle);
+            decimal lower = GetLowerShadow(candle);
+            return body > range * 0.05M && body <= range * 0.25M && upper >= body && lower >= body;
+        }
+
+        [PatternMethod(PatternType.Neutral, lookbackPeriod: 1)]
+        private List<OhlcvObject> NeutralSpinningTop()
+        {
+            return DetectPattern(IsSpinningTopPattern, lookbackPeriod: 0);
+        }
+
+        private bool IsLongLeggedDojiPattern(int i)
+        {
+            var candle = _data[i];
+            decimal range = GetCandleRange(candle);
+            if (range <= 0M)
+                return false;
+
+            decimal upper = GetUpperShadow(candle);
+            decimal lower = GetLowerShadow(candle);
+            return IsDojiCandle(candle) && upper >= range * 0.3M && lower >= range * 0.3M;
+        }
+
+        [PatternMethod(PatternType.Neutral, lookbackPeriod: 1)]
+        private List<OhlcvObject> NeutralLongLeggedDoji()
+        {
+            return DetectPattern(IsLongLeggedDojiPattern, lookbackPeriod: 0);
+        }
+
+        private bool IsHighWavePattern(int i)
+        {
+            var candle = _data[i];
+            decimal range = GetCandleRange(candle);
+            if (range <= 0M)
+                return false;
+
+            decimal body = GetBodySize(candle);
+            decimal upper = GetUpperShadow(candle);
+            decimal lower = GetLowerShadow(candle);
+            return body <= range * 0.25M && upper >= body * 2M && lower >= body * 2M && upper >= range * 0.25M && lower >= range * 0.25M;
+        }
+
+        [PatternMethod(PatternType.Neutral, lookbackPeriod: 1)]
+        private List<OhlcvObject> NeutralHighWaveCandle()
+        {
+            return DetectPattern(IsHighWavePattern, lookbackPeriod: 0);
+        }
+
         private decimal GetBodySizePercentSigned(OhlcvObject candle)
         {
             if (candle.Open == 0) return 0;

@@ -4,6 +4,7 @@
     {
         Bullish,
         Bearish,
-        Continuation
+        Continuation,
+        Neutral
     }
 }

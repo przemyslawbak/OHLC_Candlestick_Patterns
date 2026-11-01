@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 18
-VisualStudioVersion = 18.6.11828.311 oobstable
+VisualStudioVersion = 18.6.11828.311
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Candlestick_Patterns", "Candlestick_Patterns\Candlestick_Patterns.csproj", "{A3CBCF5C-54CC-4097-8C43-40EBFFE11A6E}"
 EndProject
@@ -12,8 +12,6 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Examples_Patterns", "Examples_Patterns\Examples_Patterns.csproj", "{23135CD8-163D-4C86-8017-1036D76F5C0D}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WPFGraphMaker", "WPFGraphMaker\WPFGraphMaker.csproj", "{98BBF6A3-A2CF-4A72-8D59-7C3D12F2F5EE}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraphMaker", "GraphMaker\GraphMaker.csproj", "{D1D128C3-B589-5882-18DE-769A361320F8}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Enumerators", "Enumerators\Enumerators.csproj", "{901F84C7-A033-33C4-704C-26F406A7B8A1}"
 EndProject
@@ -43,10 +41,6 @@ Global
 		{98BBF6A3-A2CF-4A72-8D59-7C3D12F2F5EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{98BBF6A3-A2CF-4A72-8D59-7C3D12F2F5EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{98BBF6A3-A2CF-4A72-8D59-7C3D12F2F5EE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D1D128C3-B589-5882-18DE-769A361320F8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D1D128C3-B589-5882-18DE-769A361320F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D1D128C3-B589-5882-18DE-769A361320F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D1D128C3-B589-5882-18DE-769A361320F8}.Release|Any CPU.Build.0 = Release|Any CPU
 		{901F84C7-A033-33C4-704C-26F406A7B8A1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{901F84C7-A033-33C4-704C-26F406A7B8A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{901F84C7-A033-33C4-704C-26F406A7B8A1}.Release|Any CPU.ActiveCfg = Release|Any CPU

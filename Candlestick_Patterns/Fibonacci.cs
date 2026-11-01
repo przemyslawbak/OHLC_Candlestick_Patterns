@@ -80,6 +80,18 @@ namespace Candlestick_Patterns
                 { PatternType.Bearish3Retracement, pts => Bearish3Retracement(pts) },
                 { PatternType.Bullish3Drive, pts => Bullish3Drive(pts) },
                 { PatternType.Bearish3Drive, pts => Bearish3Drive(pts) },
+                { PatternType.BullishBat, pts => BullishBat(pts) },
+                { PatternType.BearishBat, pts => BearishBat(pts) },
+                { PatternType.BullishCrab, pts => BullishCrab(pts) },
+                { PatternType.BearishCrab, pts => BearishCrab(pts) },
+                { PatternType.BullishDeepCrab, pts => BullishDeepCrab(pts) },
+                { PatternType.BearishDeepCrab, pts => BearishDeepCrab(pts) },
+                { PatternType.BullishCypher, pts => BullishCypher(pts) },
+                { PatternType.BearishCypher, pts => BearishCypher(pts) },
+                { PatternType.BullishShark, pts => BullishShark(pts) },
+                { PatternType.BearishShark, pts => BearishShark(pts) },
+                { PatternType.BullishFive0, pts => BullishFive0(pts) },
+                { PatternType.BearishFive0, pts => BearishFive0(pts) },
             };
 
             _patternResultsCache = new ConcurrentDictionary<PatternType, ImmutableList<ZigZagObject>>();
@@ -100,6 +112,18 @@ namespace Candlestick_Patterns
             { "Bullish3Extension", PatternType.Bullish3Extension },
             { "Bullish3Retracement", PatternType.Bullish3Retracement },
             { "Bearish3Retracement", PatternType.Bearish3Retracement },
+            { "BullishBat", PatternType.BullishBat },
+            { "BearishBat", PatternType.BearishBat },
+            { "BullishCrab", PatternType.BullishCrab },
+            { "BearishCrab", PatternType.BearishCrab },
+            { "BullishDeepCrab", PatternType.BullishDeepCrab },
+            { "BearishDeepCrab", PatternType.BearishDeepCrab },
+            { "BullishCypher", PatternType.BullishCypher },
+            { "BearishCypher", PatternType.BearishCypher },
+            { "BullishShark", PatternType.BullishShark },
+            { "BearishShark", PatternType.BearishShark },
+            { "BullishFive0", PatternType.BullishFive0 },
+            { "BearishFive0", PatternType.BearishFive0 },
         };
 
         public enum PatternType
@@ -116,6 +140,18 @@ namespace Candlestick_Patterns
             Bullish3Extension,
             Bullish3Retracement,
             Bearish3Retracement,
+            BullishBat,
+            BearishBat,
+            BullishCrab,
+            BearishCrab,
+            BullishDeepCrab,
+            BearishDeepCrab,
+            BullishCypher,
+            BearishCypher,
+            BullishShark,
+            BearishShark,
+            BullishFive0,
+            BearishFive0,
         }
 
         private ImmutableList<ZigZagObject> BearishGartley(IReadOnlyList<ZigZagObject> points) => Pattern("bearish", points, _fibError, "gartleyPattern", 4);
@@ -130,6 +166,18 @@ namespace Candlestick_Patterns
         private ImmutableList<ZigZagObject> Bullish3Retracement(IReadOnlyList<ZigZagObject> points) => Pattern("bullish", points, _fibError, "threeRetracementPattern", 2);
         private ImmutableList<ZigZagObject> Bearish3Drive(IReadOnlyList<ZigZagObject> points) => Pattern("bearish", points, _fibError, "threeDrivePattern", 5);
         private ImmutableList<ZigZagObject> Bullish3Drive(IReadOnlyList<ZigZagObject> points) => Pattern("bullish", points, _fibError, "threeDrivePattern", 5);
+        private ImmutableList<ZigZagObject> BearishBat(IReadOnlyList<ZigZagObject> points) => Pattern("bearish", points, _fibError, "batPattern", 4);
+        private ImmutableList<ZigZagObject> BullishBat(IReadOnlyList<ZigZagObject> points) => Pattern("bullish", points, _fibError, "batPattern", 4);
+        private ImmutableList<ZigZagObject> BearishCrab(IReadOnlyList<ZigZagObject> points) => Pattern("bearish", points, _fibError, "crabPattern", 4);
+        private ImmutableList<ZigZagObject> BullishCrab(IReadOnlyList<ZigZagObject> points) => Pattern("bullish", points, _fibError, "crabPattern", 4);
+        private ImmutableList<ZigZagObject> BearishDeepCrab(IReadOnlyList<ZigZagObject> points) => Pattern("bearish", points, _fibError, "deepCrabPattern", 4);
+        private ImmutableList<ZigZagObject> BullishDeepCrab(IReadOnlyList<ZigZagObject> points) => Pattern("bullish", points, _fibError, "deepCrabPattern", 4);
+        private ImmutableList<ZigZagObject> BearishCypher(IReadOnlyList<ZigZagObject> points) => Pattern("bearish", points, _fibError, "cypherPattern", 4);
+        private ImmutableList<ZigZagObject> BullishCypher(IReadOnlyList<ZigZagObject> points) => Pattern("bullish", points, _fibError, "cypherPattern", 4);
+        private ImmutableList<ZigZagObject> BearishShark(IReadOnlyList<ZigZagObject> points) => Pattern("bearish", points, _fibError, "sharkPattern", 4);
+        private ImmutableList<ZigZagObject> BullishShark(IReadOnlyList<ZigZagObject> points) => Pattern("bullish", points, _fibError, "sharkPattern", 4);
+        private ImmutableList<ZigZagObject> BearishFive0(IReadOnlyList<ZigZagObject> points) => Pattern("bearish", points, _fibError, "five0Pattern", 4);
+        private ImmutableList<ZigZagObject> BullishFive0(IReadOnlyList<ZigZagObject> points) => Pattern("bullish", points, _fibError, "five0Pattern", 4);
 
         private static void AddPointsToList(IReadOnlyList<ZigZagObject> points, int i,
             int number, Dictionary<int, ZigZagObject> selected)
@@ -181,6 +229,12 @@ namespace Candlestick_Patterns
                 "threeExtensionPattern" => FirstCheckFor3ExtensionPattern(points, i, pattern),
                 "threeRetracementPattern" => FirstCheckFor3RetracementPattern(points, i, pattern),
                 "threeDrivePattern" => FirstCheckFor3DrivePattern(points, i, pattern),
+                "batPattern" => FirstCheckForBatPattern(points, i, pattern),
+                "crabPattern" => FirstCheckForCrabPattern(points, i, pattern),
+                "deepCrabPattern" => FirstCheckForCrabPattern(points, i, pattern),
+                "cypherPattern" => FirstCheckForCypherPattern(points, i, pattern),
+                "sharkPattern" => FirstCheckForSharkPattern(points, i, pattern),
+                "five0Pattern" => FirstCheckForSharkPattern(points, i, pattern),
                 _ => false
             };
         }
@@ -195,6 +249,12 @@ namespace Candlestick_Patterns
                 "threeExtensionPattern" => SecondCheckFor3ExtensionPattern(points, i, pattern),
                 "threeRetracementPattern" => SecondCheckFor3RetracementPattern(points, i, pattern),
                 "threeDrivePattern" => SecondCheckFor3DrivePattern(points, i, pattern),
+                "batPattern" => SecondCheckForBatPattern(points, i, pattern),
+                "crabPattern" => SecondCheckForCrabPattern(points, i, pattern),
+                "deepCrabPattern" => SecondCheckForDeepCrabPattern(points, i, pattern),
+                "cypherPattern" => SecondCheckForCypherPattern(points, i, pattern),
+                "sharkPattern" => SecondCheckForSharkPattern(points, i, pattern),
+                "five0Pattern" => SecondCheckForFive0Pattern(points, i, pattern),
                 _ => false
             };
         }
@@ -405,6 +465,130 @@ namespace Candlestick_Patterns
 
 
 
+        private static decimal GetRatio(decimal numeratorStart, decimal numeratorEnd, decimal denominatorStart, decimal denominatorEnd)
+        {
+            decimal denominator = Math.Abs(denominatorEnd - denominatorStart);
+            if (denominator == 0M)
+                return 0M;
+            return Math.Abs(numeratorEnd - numeratorStart) * 100M / denominator;
+        }
+
+        private static bool FirstCheckForBatPattern(IReadOnlyList<ZigZagObject> points, int i, string pattern)
+        {
+            if (i < 4) return false;
+            var p = new PriceWindow(points, i);
+            return pattern switch
+            {
+                "bullish" => p.C0 > p.C4 && p.C0 < p.C1 && p.C1 > p.C2 && p.C2 < p.C3 && p.C3 > p.C4,
+                "bearish" => p.C0 < p.C4 && p.C0 > p.C1 && p.C1 < p.C2 && p.C2 > p.C3 && p.C3 < p.C4,
+                _ => false
+            };
+        }
+
+        private bool SecondCheckForBatPattern(IReadOnlyList<ZigZagObject> points, int i, string pattern)
+        {
+            decimal x = points[i - 4].Close;
+            decimal a = points[i - 3].Close;
+            decimal b = points[i - 2].Close;
+            decimal c = points[i - 1].Close;
+            decimal d = points[i].Close;
+            return InRange(GetRatio(a, b, x, a), 38.2M, 50M)
+                && InRange(GetRatio(b, c, a, b), 38.2M, 88.6M)
+                && InRange(GetRatio(c, d, b, c), 161.8M, 261.8M)
+                && InRange(GetRatio(a, d, x, a), 88.6M);
+        }
+
+        private static bool FirstCheckForCrabPattern(IReadOnlyList<ZigZagObject> points, int i, string pattern)
+        {
+            return FirstCheckButterflyPattern(points, i, pattern);
+        }
+
+        private bool SecondCheckForCrabPattern(IReadOnlyList<ZigZagObject> points, int i, string pattern)
+        {
+            decimal x = points[i - 4].Close;
+            decimal a = points[i - 3].Close;
+            decimal b = points[i - 2].Close;
+            decimal c = points[i - 1].Close;
+            decimal d = points[i].Close;
+            return InRange(GetRatio(a, b, x, a), 38.2M, 61.8M)
+                && InRange(GetRatio(b, c, a, b), 38.2M, 88.6M)
+                && InRange(GetRatio(c, d, b, c), 224M, 361.8M)
+                && InRange(GetRatio(a, d, x, a), 161.8M);
+        }
+
+        private bool SecondCheckForDeepCrabPattern(IReadOnlyList<ZigZagObject> points, int i, string pattern)
+        {
+            decimal x = points[i - 4].Close;
+            decimal a = points[i - 3].Close;
+            decimal b = points[i - 2].Close;
+            decimal c = points[i - 1].Close;
+            decimal d = points[i].Close;
+            return InRange(GetRatio(a, b, x, a), 88.6M)
+                && InRange(GetRatio(b, c, a, b), 38.2M, 88.6M)
+                && InRange(GetRatio(c, d, b, c), 224M, 361.8M)
+                && InRange(GetRatio(a, d, x, a), 161.8M);
+        }
+
+        private static bool FirstCheckForCypherPattern(IReadOnlyList<ZigZagObject> points, int i, string pattern)
+        {
+            if (i < 4) return false;
+            var p = new PriceWindow(points, i);
+            return pattern switch
+            {
+                "bullish" => p.C0 > p.C4 && p.C1 < p.C4 && p.C1 < p.C3 && p.C2 < p.C3,
+                "bearish" => p.C0 < p.C4 && p.C1 > p.C4 && p.C1 > p.C3 && p.C2 > p.C3,
+                _ => false
+            };
+        }
+
+        private bool SecondCheckForCypherPattern(IReadOnlyList<ZigZagObject> points, int i, string pattern)
+        {
+            decimal x = points[i - 4].Close;
+            decimal a = points[i - 3].Close;
+            decimal b = points[i - 2].Close;
+            decimal c = points[i - 1].Close;
+            decimal d = points[i].Close;
+            return InRange(GetRatio(a, b, x, a), 38.2M, 61.8M)
+                && InRange(GetRatio(x, c, x, a), 113M, 141.4M)
+                && InRange(GetRatio(c, d, x, c), 78.6M);
+        }
+
+        private static bool FirstCheckForSharkPattern(IReadOnlyList<ZigZagObject> points, int i, string pattern)
+        {
+            if (i < 4) return false;
+            var p = new PriceWindow(points, i);
+            return pattern switch
+            {
+                "bullish" => p.C0 < p.C2 && p.C1 > p.C2 && p.C1 > p.C3 && p.C3 > p.C4,
+                "bearish" => p.C0 > p.C2 && p.C1 < p.C2 && p.C1 < p.C3 && p.C3 < p.C4,
+                _ => false
+            };
+        }
+
+        private bool SecondCheckForSharkPattern(IReadOnlyList<ZigZagObject> points, int i, string pattern)
+        {
+            decimal x = points[i - 4].Close;
+            decimal a = points[i - 3].Close;
+            decimal b = points[i - 2].Close;
+            decimal c = points[i - 1].Close;
+            decimal d = points[i].Close;
+            return InRange(GetRatio(a, b, x, a), 113M, 161.8M)
+                && InRange(GetRatio(b, c, a, b), 113M, 224M)
+                && InRange(GetRatio(x, d, x, a), 88.6M, 113M);
+        }
+
+        private bool SecondCheckForFive0Pattern(IReadOnlyList<ZigZagObject> points, int i, string pattern)
+        {
+            decimal x = points[i - 4].Close;
+            decimal a = points[i - 3].Close;
+            decimal b = points[i - 2].Close;
+            decimal c = points[i - 1].Close;
+            decimal d = points[i].Close;
+            return InRange(GetRatio(a, b, x, a), 113M, 161.8M)
+                && InRange(GetRatio(b, c, a, b), 161.8M, 224M)
+                && InRange(GetRatio(c, d, b, c), 50M);
+        }
+
         public List<string> GetFibonacciAllMethodNames()
         {
             return _patternNameMapping.Keys.ToList();
@@ -414,7 +598,7 @@ namespace Candlestick_Patterns
         {
             if (string.IsNullOrWhiteSpace(patternName)) return _data.ToList();
 
-            string normalizedName = patternName.Trim().Replace(" ", "");
+            string normalizedName = patternName.Trim().Replace(" ", "").Replace("-", "");
             if (_patternNameMapping.TryGetValue(normalizedName, out PatternType patternType))
             {
                 return GetPatternSignals(patternType).ToList();
@@ -440,7 +624,7 @@ namespace Candlestick_Patterns
         public int GetFibonacciSignalsCount(string patternName)
         {
             if (string.IsNullOrWhiteSpace(patternName)) return 0;
-            string normalizedName = patternName.Trim().Replace(" ", "");
+            string normalizedName = patternName.Trim().Replace(" ", "").Replace("-", "");
             if (_patternNameMapping.TryGetValue(normalizedName, out PatternType patternType))
             {
                 return GetPatternSignalsCount(patternType);
@@ -519,7 +703,7 @@ namespace Candlestick_Patterns
                 return false;
             }
 
-            string normalizedName = patternName.Trim().Replace(" ", "");
+            string normalizedName = patternName.Trim().Replace(" ", "").Replace("-", "");
             return _patternNameMapping.TryGetValue(normalizedName, out patternType);
         }
     }
